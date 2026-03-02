@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../theme/app_theme.dart';
 import 'otp_verification_screen.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
@@ -20,23 +22,13 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-    final primaryColor = const Color(0xFF11E8B6);
-    final slate900 = isDarkMode ? Colors.white : const Color(0xFF0F172A);
-    final slate500 = isDarkMode
-        ? const Color(0xFF94A3B8)
-        : const Color(0xFF64748B);
-    final borderColor = isDarkMode
-        ? const Color(0xFF334155)
-        : const Color(0xFF0F172A);
-
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: slate900),
+          icon: const Icon(Icons.arrow_back, color: AppColors.text),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
@@ -56,13 +48,13 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       width: 100,
                       height: 100,
                       decoration: BoxDecoration(
-                        color: primaryColor.withValues(alpha: 0.1),
+                        color: AppColors.primary.withValues(alpha: 0.1),
                         shape: BoxShape.circle,
                       ),
-                      child: Icon(
+                      child: const Icon(
                         Icons.lock_reset_outlined,
                         size: 48,
-                        color: primaryColor,
+                        color: AppColors.primary,
                       ),
                     ),
                   ),
@@ -74,7 +66,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     style: GoogleFonts.inter(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
-                      color: slate900,
+                      color: AppColors.text,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -83,7 +75,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     'Enter your registered email to receive a password reset link.',
                     style: GoogleFonts.inter(
                       fontSize: 16,
-                      color: slate500,
+                      color: AppColors.subtext,
                       height: 1.5,
                     ),
                     textAlign: TextAlign.center,
@@ -99,7 +91,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         style: GoogleFonts.inter(
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
-                          color: slate900,
+                          color: AppColors.text,
                         ),
                       ),
                       const SizedBox(height: 8),
@@ -114,22 +106,26 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                           ),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide(color: borderColor),
+                            borderSide: const BorderSide(
+                              color: AppColors.inputBorder,
+                            ),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide(color: borderColor),
+                            borderSide: const BorderSide(
+                              color: AppColors.inputBorder,
+                            ),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide(
-                              color: primaryColor,
+                            borderSide: const BorderSide(
+                              color: AppColors.primary,
                               width: 2,
                             ),
                           ),
                         ),
                         keyboardType: TextInputType.emailAddress,
-                        style: GoogleFonts.inter(color: slate900),
+                        style: GoogleFonts.inter(color: AppColors.text),
                       ),
                     ],
                   ),
@@ -147,8 +143,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: primaryColor,
-                        foregroundColor: const Color(0xFF0F172A),
+                        backgroundColor: AppColors.primary,
+                        foregroundColor: Colors.black,
                         elevation: 0,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
@@ -173,7 +169,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       style: GoogleFonts.inter(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
-                        color: slate900,
+                        color: AppColors.text,
                       ),
                     ),
                   ),

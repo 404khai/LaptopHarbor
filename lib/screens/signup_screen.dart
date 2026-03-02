@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../theme/app_theme.dart';
+
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
 
@@ -25,12 +27,6 @@ class _SignupScreenState extends State<SignupScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-    final primaryColor = const Color(0xFF11E8B6);
-    final slate900 = isDarkMode ? Colors.white : const Color(0xFF0F172A);
-    final slate500 = isDarkMode ? const Color(0xFF94A3B8) : const Color(0xFF64748B);
-    final borderColor = isDarkMode ? const Color(0xFF334155) : const Color(0xFF0F172A);
-
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
@@ -39,7 +35,7 @@ class _SignupScreenState extends State<SignupScreen> {
         leading: const SizedBox(), // Hide default back button
         actions: [
           IconButton(
-            icon: Icon(Icons.close, color: slate900),
+            icon: const Icon(Icons.close, color: AppColors.text),
             onPressed: () => Navigator.of(context).pop(),
           ),
         ],
@@ -60,7 +56,7 @@ class _SignupScreenState extends State<SignupScreen> {
               style: GoogleFonts.inter(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
-                color: slate900,
+                color: AppColors.text,
               ),
             ),
           ],
@@ -69,7 +65,10 @@ class _SignupScreenState extends State<SignupScreen> {
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 24.0),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 24.0,
+              vertical: 24.0,
+            ),
             child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 448),
               child: Column(
@@ -80,7 +79,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     style: GoogleFonts.inter(
                       fontSize: 32,
                       fontWeight: FontWeight.bold,
-                      color: slate900,
+                      color: AppColors.text,
                       height: 1.1,
                     ),
                   ),
@@ -92,7 +91,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     style: GoogleFonts.inter(
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
-                      color: slate900,
+                      color: AppColors.text,
                       letterSpacing: 0.5,
                     ),
                   ),
@@ -102,21 +101,31 @@ class _SignupScreenState extends State<SignupScreen> {
                     decoration: InputDecoration(
                       hintText: 'Enter your full name',
                       hintStyle: GoogleFonts.inter(color: Colors.grey[400]),
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 16,
+                      ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(color: borderColor),
+                        borderSide: const BorderSide(
+                          color: AppColors.inputBorder,
+                        ),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(color: borderColor),
+                        borderSide: const BorderSide(
+                          color: AppColors.inputBorder,
+                        ),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(color: primaryColor, width: 2),
+                        borderSide: const BorderSide(
+                          color: AppColors.primary,
+                          width: 2,
+                        ),
                       ),
                     ),
-                    style: GoogleFonts.inter(color: slate900),
+                    style: GoogleFonts.inter(color: AppColors.text),
                   ),
                   const SizedBox(height: 24),
 
@@ -126,7 +135,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     style: GoogleFonts.inter(
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
-                      color: slate900,
+                      color: AppColors.text,
                       letterSpacing: 0.5,
                     ),
                   ),
@@ -136,22 +145,32 @@ class _SignupScreenState extends State<SignupScreen> {
                     decoration: InputDecoration(
                       hintText: 'name@example.com',
                       hintStyle: GoogleFonts.inter(color: Colors.grey[400]),
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 16,
+                      ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(color: borderColor),
+                        borderSide: const BorderSide(
+                          color: AppColors.inputBorder,
+                        ),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(color: borderColor),
+                        borderSide: const BorderSide(
+                          color: AppColors.inputBorder,
+                        ),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(color: primaryColor, width: 2),
+                        borderSide: const BorderSide(
+                          color: AppColors.primary,
+                          width: 2,
+                        ),
                       ),
                     ),
                     keyboardType: TextInputType.emailAddress,
-                    style: GoogleFonts.inter(color: slate900),
+                    style: GoogleFonts.inter(color: AppColors.text),
                   ),
                   const SizedBox(height: 24),
 
@@ -161,7 +180,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     style: GoogleFonts.inter(
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
-                      color: slate900,
+                      color: AppColors.text,
                       letterSpacing: 0.5,
                     ),
                   ),
@@ -172,22 +191,34 @@ class _SignupScreenState extends State<SignupScreen> {
                     decoration: InputDecoration(
                       hintText: '•••••••••••••',
                       hintStyle: GoogleFonts.inter(color: Colors.grey[400]),
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 16,
+                      ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(color: borderColor),
+                        borderSide: const BorderSide(
+                          color: AppColors.inputBorder,
+                        ),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(color: borderColor),
+                        borderSide: const BorderSide(
+                          color: AppColors.inputBorder,
+                        ),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(color: primaryColor, width: 2),
+                        borderSide: const BorderSide(
+                          color: AppColors.primary,
+                          width: 2,
+                        ),
                       ),
                       suffixIcon: IconButton(
                         icon: Icon(
-                          _obscurePassword ? Icons.visibility_outlined : Icons.visibility_off_outlined,
+                          _obscurePassword
+                              ? Icons.visibility_outlined
+                              : Icons.visibility_off_outlined,
                           color: Colors.grey[400],
                         ),
                         onPressed: () {
@@ -197,9 +228,9 @@ class _SignupScreenState extends State<SignupScreen> {
                         },
                       ),
                     ),
-                    style: GoogleFonts.inter(color: slate900),
+                    style: GoogleFonts.inter(color: AppColors.text),
                   ),
-                  
+
                   // Password Strength Indicator
                   const SizedBox(height: 8),
                   Row(
@@ -208,7 +239,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         child: Container(
                           height: 4,
                           decoration: BoxDecoration(
-                            color: primaryColor,
+                            color: AppColors.primary,
                             borderRadius: BorderRadius.circular(2),
                           ),
                         ),
@@ -218,7 +249,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         child: Container(
                           height: 4,
                           decoration: BoxDecoration(
-                            color: primaryColor,
+                            color: AppColors.primary,
                             borderRadius: BorderRadius.circular(2),
                           ),
                         ),
@@ -228,7 +259,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         child: Container(
                           height: 4,
                           decoration: BoxDecoration(
-                            color: primaryColor.withValues(alpha: 0.3),
+                            color: AppColors.primary.withValues(alpha: 0.3),
                             borderRadius: BorderRadius.circular(2),
                           ),
                         ),
@@ -241,7 +272,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     style: GoogleFonts.inter(
                       fontSize: 10,
                       fontWeight: FontWeight.bold,
-                      color: primaryColor,
+                      color: AppColors.primary,
                       letterSpacing: 0.5,
                     ),
                   ),
@@ -260,7 +291,9 @@ class _SignupScreenState extends State<SignupScreen> {
                               _agreedToTerms = value ?? false;
                             });
                           },
-                          activeColor: const Color(0xFF0F172A), // Use dark color for checked state based on image (black border/bg)
+                          activeColor: const Color(
+                            0xFF0F172A,
+                          ), // Use dark color for checked state based on image (black border/bg)
                           checkColor: Colors.white,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(4),
@@ -281,14 +314,14 @@ class _SignupScreenState extends State<SignupScreen> {
                               text: 'I agree to the ',
                               style: GoogleFonts.inter(
                                 fontSize: 14,
-                                color: slate500,
+                                color: AppColors.subtext,
                               ),
                               children: [
                                 TextSpan(
                                   text: 'Terms & Conditions',
                                   style: GoogleFonts.inter(
                                     fontWeight: FontWeight.bold,
-                                    color: slate900,
+                                    color: AppColors.text,
                                     decoration: TextDecoration.underline,
                                   ),
                                 ),
@@ -309,8 +342,8 @@ class _SignupScreenState extends State<SignupScreen> {
                         // TODO: Implement sign up logic
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: primaryColor,
-                        foregroundColor: const Color(0xFF0F172A),
+                        backgroundColor: AppColors.primary,
+                        foregroundColor: Colors.black,
                         elevation: 0,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
@@ -335,7 +368,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         "Already have an account? ",
                         style: GoogleFonts.inter(
                           fontSize: 14,
-                          color: slate500,
+                          color: AppColors.subtext,
                         ),
                       ),
                       GestureDetector(
@@ -347,7 +380,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           style: GoogleFonts.inter(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
-                            color: slate900,
+                            color: AppColors.text,
                           ),
                         ),
                       ),

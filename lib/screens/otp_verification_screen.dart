@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../theme/app_theme.dart';
+
 class OtpVerificationScreen extends StatefulWidget {
   const OtpVerificationScreen({super.key});
 
@@ -10,8 +12,10 @@ class OtpVerificationScreen extends StatefulWidget {
 
 class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   final List<FocusNode> _focusNodes = List.generate(6, (index) => FocusNode());
-  final List<TextEditingController> _controllers =
-      List.generate(6, (index) => TextEditingController());
+  final List<TextEditingController> _controllers = List.generate(
+    6,
+    (index) => TextEditingController(),
+  );
 
   @override
   void dispose() {
@@ -35,12 +39,6 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-    final primaryColor = const Color(0xFF11E8B6);
-    final slate900 = isDarkMode ? Colors.white : const Color(0xFF0F172A);
-    final slate500 = isDarkMode ? const Color(0xFF94A3B8) : const Color(0xFF64748B);
-    final borderColor = isDarkMode ? const Color(0xFF334155) : const Color(0xFF0F172A);
-
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
@@ -48,7 +46,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
         elevation: 0,
         centerTitle: true,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: slate900),
+          icon: const Icon(Icons.arrow_back, color: AppColors.text),
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Row(
@@ -58,12 +56,12 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
               width: 32,
               height: 32,
               decoration: BoxDecoration(
-                color: primaryColor,
+                color: AppColors.primary,
                 borderRadius: BorderRadius.circular(8),
               ),
               child: const Icon(
                 Icons.laptop_mac,
-                color: Color(0xFF0F172A),
+                color: Colors.black,
                 size: 20,
               ),
             ),
@@ -73,7 +71,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
               style: GoogleFonts.inter(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
-                color: slate900,
+                color: AppColors.text,
               ),
             ),
           ],
@@ -97,7 +95,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                         style: GoogleFonts.inter(
                           fontSize: 32,
                           fontWeight: FontWeight.bold,
-                          color: slate900,
+                          color: AppColors.text,
                           height: 1.1,
                         ),
                         textAlign: TextAlign.center,
@@ -107,7 +105,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                         'Enter the 6-digit code sent to your email address.',
                         style: GoogleFonts.inter(
                           fontSize: 16,
-                          color: slate500,
+                          color: AppColors.subtext,
                           height: 1.5,
                         ),
                         textAlign: TextAlign.center,
@@ -130,29 +128,29 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                               style: GoogleFonts.inter(
                                 fontSize: 24,
                                 fontWeight: FontWeight.bold,
-                                color: slate900,
+                                color: AppColors.text,
                               ),
                               decoration: InputDecoration(
                                 counterText: '',
                                 contentPadding: EdgeInsets.zero,
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(12),
-                                  borderSide: BorderSide(
-                                    color: borderColor,
+                                  borderSide: const BorderSide(
+                                    color: AppColors.inputBorder,
                                     width: 2,
                                   ),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(12),
-                                  borderSide: BorderSide(
-                                    color: primaryColor,
+                                  borderSide: const BorderSide(
+                                    color: AppColors.primary,
                                     width: 2,
                                   ),
                                 ),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(12),
-                                  borderSide: BorderSide(
-                                    color: borderColor,
+                                  borderSide: const BorderSide(
+                                    color: AppColors.inputBorder,
                                     width: 2,
                                   ),
                                 ),
@@ -172,8 +170,8 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                             // TODO: Implement verification logic
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: primaryColor,
-                            foregroundColor: const Color(0xFF0F172A),
+                            backgroundColor: AppColors.primary,
+                            foregroundColor: Colors.black,
                             elevation: 0,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12),
@@ -198,7 +196,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                             "Didn't receive the code? ",
                             style: GoogleFonts.inter(
                               fontSize: 14,
-                              color: slate500,
+                              color: AppColors.subtext,
                             ),
                           ),
                           GestureDetector(
@@ -210,7 +208,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                               style: GoogleFonts.inter(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
-                                color: primaryColor,
+                                color: AppColors.primary,
                               ),
                             ),
                           ),
@@ -233,12 +231,12 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                         width: 40,
                         height: 40,
                         decoration: BoxDecoration(
-                          color: isDarkMode ? Colors.grey[800] : Colors.grey[200],
+                          color: Colors.grey[200],
                           shape: BoxShape.circle,
                         ),
                         child: Icon(
                           Icons.security,
-                          color: isDarkMode ? Colors.grey[400] : Colors.grey[600],
+                          color: Colors.grey[600],
                           size: 20,
                         ),
                       ),
@@ -247,12 +245,12 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                         width: 40,
                         height: 40,
                         decoration: BoxDecoration(
-                          color: isDarkMode ? Colors.grey[800] : Colors.grey[200],
+                          color: Colors.grey[200],
                           shape: BoxShape.circle,
                         ),
                         child: Icon(
                           Icons.help_outline,
-                          color: isDarkMode ? Colors.grey[400] : Colors.grey[600],
+                          color: Colors.grey[600],
                           size: 20,
                         ),
                       ),
@@ -263,7 +261,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                     'Secure verification by LaptopHarbor',
                     style: GoogleFonts.inter(
                       fontSize: 12,
-                      color: slate500,
+                      color: AppColors.subtext,
                     ),
                   ),
                 ],
