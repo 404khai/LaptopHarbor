@@ -5,112 +5,188 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
         tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "primary": "#11e8b6",
-                        "background-light": "#ffffff",
-                        "background-dark": "#10221e",
-                    },
-                    fontFamily: {
-                        "display": ["Inter"]
-                    },
-                    borderRadius: {
-                        "DEFAULT": "0.5rem",
-                        "lg": "1rem",
-                        "xl": "1.5rem",
-                        "full": "9999px"
-                    },
-                },
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "primary": "#11e8b6",
+                "background-light": "#ffffff",
+                "background-dark": "#10221e",
+                "secondary-bg": "#F3F4F6",
+              },
+              fontFamily: {
+                "display": ["Inter", "sans-serif"]
+              },
+              borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
             },
+          },
         }
     </script>
-<title>LaptopHarbor - Create Account</title>
+<style>
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
 <style>
     body {
       min-height: max(884px, 100dvh);
     }
   </style>
   </head>
-<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100">
-<div class="relative flex min-h-screen w-full flex-col items-center justify-center p-4">
-<!-- Header / Logo Section -->
-<div class="w-full max-w-[440px] flex items-center justify-between mb-8">
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-slate-900 dark:text-slate-100">laptop_mac</span>
-<span class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-tight">LaptopHarbor</span>
-</div>
-<button class="text-slate-900 dark:text-slate-100">
-<span class="material-symbols-outlined">close</span>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased">
+<!-- Top Navigation & Search -->
+<header class="sticky top-0 z-50 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-md px-4 pt-4 pb-2">
+<div class="flex items-center justify-between mb-4">
+<h1 class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">LaptopHarbor</h1>
+<button aria-label="Notifications" class="w-11 h-11 flex items-center justify-center rounded-full bg-secondary-bg dark:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined text-slate-900 dark:text-white">notifications</span>
 </button>
 </div>
-<!-- Registration Card -->
-<div class="w-full max-w-[440px] bg-white dark:bg-slate-900">
-<h1 class="text-slate-900 dark:text-slate-100 tracking-tight text-[32px] font-bold leading-tight mb-8">Create Account</h1>
-<form class="space-y-5">
-<!-- Full Name Field -->
-<div class="flex flex-col gap-2">
-<label class="text-slate-900 dark:text-slate-100 text-sm font-semibold uppercase tracking-wider">Full Name</label>
-<input class="w-full h-14 px-4 bg-white dark:bg-slate-800 border border-slate-900 dark:border-slate-700 rounded-[12px] text-slate-900 dark:text-slate-100 placeholder:text-slate-400 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="Enter your full name" type="text"/>
-</div>
-<!-- Email Address Field -->
-<div class="flex flex-col gap-2">
-<label class="text-slate-900 dark:text-slate-100 text-sm font-semibold uppercase tracking-wider">Email Address</label>
-<input class="w-full h-14 px-4 bg-white dark:bg-slate-800 border border-slate-900 dark:border-slate-700 rounded-[12px] text-slate-900 dark:text-slate-100 placeholder:text-slate-400 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="name@example.com" type="email"/>
-</div>
-<!-- Password Field -->
-<div class="flex flex-col gap-2">
-<label class="text-slate-900 dark:text-slate-100 text-sm font-semibold uppercase tracking-wider">Password</label>
-<div class="relative">
-<input class="w-full h-14 px-4 bg-white dark:bg-slate-800 border border-slate-900 dark:border-slate-700 rounded-[12px] text-slate-900 dark:text-slate-100 placeholder:text-slate-400 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all pr-12" placeholder="Create a strong password" type="password" value="SecurePass123!"/>
-<button class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500" type="button">
-<span class="material-symbols-outlined">visibility</span>
-</button>
-</div>
-<!-- Password Strength Indicator -->
-<div class="mt-2 space-y-1">
-<div class="flex gap-1 h-1 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
-<div class="h-full w-1/3 bg-primary"></div>
-<div class="h-full w-1/3 bg-primary"></div>
-<div class="h-full w-1/3 bg-primary/30"></div>
-</div>
-<p class="text-[10px] text-primary font-bold uppercase tracking-widest">Strength: Strong</p>
-</div>
-</div>
-<!-- Terms and Conditions -->
-<div class="flex items-center gap-3 pt-2">
 <div class="relative flex items-center">
-<input class="peer h-5 w-5 cursor-pointer appearance-none rounded border border-slate-900 bg-white checked:bg-slate-900 focus:outline-none transition-all" id="terms" type="checkbox"/>
-<span class="material-symbols-outlined pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-white opacity-0 peer-checked:opacity-100 text-sm font-bold">
-                            check
-                        </span>
+<span class="material-symbols-outlined absolute left-4 text-slate-400">search</span>
+<input class="w-full h-12 pl-12 pr-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none text-slate-900 dark:text-white transition-all" placeholder="Search laptops, accessories..." type="text"/>
 </div>
-<label class="text-sm text-slate-600 dark:text-slate-400 cursor-pointer" for="terms">
-                        I agree to the <span class="text-slate-900 dark:text-slate-100 font-bold underline">Terms &amp; Conditions</span>
-</label>
+</header>
+<main class="pb-24">
+<!-- Categories -->
+<section class="mt-4 px-4">
+<div class="flex gap-3 overflow-x-auto no-scrollbar pb-2">
+<button class="flex-none px-5 py-2.5 rounded-full bg-slate-900 dark:bg-primary text-white dark:text-slate-900 font-semibold text-sm transition-all">
+                    All
+                </button>
+<button class="flex-none px-5 py-2.5 rounded-full bg-secondary-bg dark:bg-slate-800 text-slate-900 dark:text-slate-300 font-medium text-sm hover:bg-slate-200 transition-all">
+                    Gaming
+                </button>
+<button class="flex-none px-5 py-2.5 rounded-full bg-secondary-bg dark:bg-slate-800 text-slate-900 dark:text-slate-300 font-medium text-sm hover:bg-slate-200 transition-all">
+                    Business
+                </button>
+<button class="flex-none px-5 py-2.5 rounded-full bg-secondary-bg dark:bg-slate-800 text-slate-900 dark:text-slate-300 font-medium text-sm hover:bg-slate-200 transition-all">
+                    Ultra-portable
+                </button>
+<button class="flex-none px-5 py-2.5 rounded-full bg-secondary-bg dark:bg-slate-800 text-slate-900 dark:text-slate-300 font-medium text-sm hover:bg-slate-200 transition-all">
+                    Accessories
+                </button>
 </div>
-<!-- Submit Button -->
-<div class="pt-6">
-<button class="w-full h-14 bg-primary text-slate-900 font-bold text-lg rounded-[12px] hover:brightness-105 active:scale-[0.98] transition-all shadow-lg shadow-primary/20" type="submit">
-                        Create Account
-                    </button>
+</section>
+<!-- Deals of the Day -->
+<section class="mt-8">
+<div class="flex items-center justify-between px-4 mb-4">
+<h2 class="text-xl font-bold text-slate-900 dark:text-white">Deals of the Day</h2>
+<a class="text-primary font-semibold text-sm" href="#">View All</a>
 </div>
-</form>
-<!-- Footer Section -->
-<div class="mt-10 pt-8 border-t border-slate-100 dark:border-slate-800 text-center">
-<p class="text-slate-600 dark:text-slate-400">
-                    Already have an account? 
-                    <a class="text-slate-900 dark:text-slate-100 font-bold hover:underline" href="#">Sign In</a>
-</p>
+<div class="flex gap-4 overflow-x-auto no-scrollbar px-4 pb-4">
+<!-- Product Card 1 -->
+<div class="flex-none w-64 bg-white dark:bg-slate-900 rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] border border-slate-100 dark:border-slate-800 overflow-hidden">
+<div class="relative h-40 bg-secondary-bg dark:bg-slate-800 flex items-center justify-center">
+<img alt="" class="object-contain h-32" data-alt="Sleek silver gaming laptop on a dark background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAveIYKySf9INXZ1FzPrzED5nRqeyR9Y1NPf5RKdGsBLOzHObF6dXikSC3b8xSNSh_YMRdHEioVRRTb3Mv2MJe5gBwT-tqpZh8BZrEovylRWdMAat7VFY2D5hqXcLymMuLa4BkppMhS6TuQqrf0lr8SfkY8oxQcfbNiwWIarayJDfVzYQjcvCWQN3tHUU36L3rPog6ylXq0TzsN4dQWeP1GfwBQA-MNZuBYnw9nY9QYUYfpmOs6sBnQuw8f03SdcmFmZqY86HFgMl0-"/>
+<span class="absolute top-3 left-3 bg-primary text-slate-900 text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">20% OFF</span>
+</div>
+<div class="p-4">
+<p class="text-xs text-slate-400 font-medium mb-1">RAZER</p>
+<h3 class="text-slate-900 dark:text-white font-bold leading-snug mb-2 line-clamp-1">Blade 15 Advanced</h3>
+<div class="flex items-center gap-2">
+<span class="text-primary font-bold text-lg">$1,999</span>
+<span class="text-slate-400 text-sm line-through">$2,499</span>
 </div>
 </div>
-<!-- Decorative background elements -->
-<div class="fixed -bottom-24 -left-24 w-96 h-96 bg-primary/10 blur-[120px] rounded-full -z-10"></div>
-<div class="fixed -top-24 -right-24 w-96 h-96 bg-primary/5 blur-[120px] rounded-full -z-10"></div>
 </div>
+<!-- Product Card 2 -->
+<div class="flex-none w-64 bg-white dark:bg-slate-900 rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] border border-slate-100 dark:border-slate-800 overflow-hidden">
+<div class="relative h-40 bg-secondary-bg dark:bg-slate-800 flex items-center justify-center">
+<img alt="" class="object-contain h-32" data-alt="Minimalist modern thin laptop in space grey" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDnTSp0Gqh9XU6xxmQ9OrzeHZ89OYezLbK4fRHMbTHTpSuc0l8xvXtE3YQNuuPIyqhFOmz1hyUowRz2F4OvFmeewNExBKSptQlpW_O01mc8ptRYUI3e7zBOc6fkWo0Z2U8mM_jbtosuBYkb12cxgTYHSWfgpAV2svEFUs7d-iLRvbHJ9F_TXjP1ebWwGcv0S7pSplLbx-4PoPRU0wrqJ2_dgMNjjKNtyKNIPYmf81Qf-MmOMGr5uwudOKZrkFEq2bmnseSGRMUgRfWD"/>
+<span class="absolute top-3 left-3 bg-primary text-slate-900 text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">15% OFF</span>
+</div>
+<div class="p-4">
+<p class="text-xs text-slate-400 font-medium mb-1">DELL</p>
+<h3 class="text-slate-900 dark:text-white font-bold leading-snug mb-2 line-clamp-1">XPS 13 Plus 9320</h3>
+<div class="flex items-center gap-2">
+<span class="text-primary font-bold text-lg">$1,274</span>
+<span class="text-slate-400 text-sm line-through">$1,499</span>
+</div>
+</div>
+</div>
+<!-- Product Card 3 -->
+<div class="flex-none w-64 bg-white dark:bg-slate-900 rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] border border-slate-100 dark:border-slate-800 overflow-hidden">
+<div class="relative h-40 bg-secondary-bg dark:bg-slate-800 flex items-center justify-center">
+<img alt="" class="object-contain h-32" data-alt="High-end professional laptop with retina display" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAfqjMJCiXoFeMXb0NFMxFuWx3-bwzV_x1gvegSsMrDSnO3F-i56h4IuqAg7jQudv6hTgMX2f7OPATQ0pkdNEYX3_gHmPEmEw3X91v2gkKbAbprT9X06yOeL6cMPTFmPfbvd-G3hsLym-iceDeefbO2-JIEfIyuLKVsY4bCPnpiswbR5DJEQraNbFRRL_YylSq2bmuFruYEzVlesaR5HtyTQZq2LyEUam7WzTZRz9KQm-4GE6Myg09-gjKU8fQ3_aarEwTcTZRuKXTQ"/>
+<span class="absolute top-3 left-3 bg-primary text-slate-900 text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">SALE</span>
+</div>
+<div class="p-4">
+<p class="text-xs text-slate-400 font-medium mb-1">APPLE</p>
+<h3 class="text-slate-900 dark:text-white font-bold leading-snug mb-2 line-clamp-1">MacBook Pro M2</h3>
+<div class="flex items-center gap-2">
+<span class="text-primary font-bold text-lg">$2,199</span>
+<span class="text-slate-400 text-sm line-through">$2,399</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Top Brands -->
+<section class="mt-8 px-4">
+<h2 class="text-xl font-bold text-slate-900 dark:text-white mb-6">Top Brands</h2>
+<div class="grid grid-cols-4 gap-4 items-center">
+<div class="aspect-square flex items-center justify-center bg-secondary-bg dark:bg-slate-800 rounded-xl grayscale hover:grayscale-0 transition-all cursor-pointer">
+<img alt="" class="w-8 h-8 opacity-70" data-alt="Apple brand logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAlz_qVZYWcdwZrBbaIGz-zPP1CK3_Fe-XOpufm4VKYJNQCxsMRzRnrvZkUB7KkZx27so2G_BPi8a3XYJJq-amkzoP08ZxLdh2EpGVgwuItwiL6AqOUcHv8fIKQZAFEHLeWWWY2J44D-iGO50Xj32h2iBMMW-73fv8A-U-IirvgkukG-IDp8QH7jVdHuOnoGF2GMTb2Mn2f_GW6sO8mT8oGYWSwldofxgjSPHwCEyJPXNEejfZf3U5Zw4EQH0tN7UT3XxbVmKHG4tdt"/>
+</div>
+<div class="aspect-square flex items-center justify-center bg-secondary-bg dark:bg-slate-800 rounded-xl grayscale hover:grayscale-0 transition-all cursor-pointer">
+<img alt="" class="w-10 h-10 opacity-70" data-alt="Dell brand logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCrxHSjj1yD8baYVPkOfXXwSvJZzSlukbvR11AzNYDIHcdAeTcloiuTZa0vYAUGtQOLCQ4Qa5qmesMJvMiS8Iefr9udECcVExDCfvwu3nC1iwoND2i3V6ZMMdf8B8T_K1pp3N7D8fOpfX-bOzWEwYiIV9VyaArNyc_UHgdE0sZArBCDETQF2e7v0SoVOD4OlLZnOpjuqXNGZKhRehcjfBvDRqbvo_RD-HQAycCHbuv6OgeArc1tXogtY-Jw04T75XQ9zDJ1bcVeyVNG"/>
+</div>
+<div class="aspect-square flex items-center justify-center bg-secondary-bg dark:bg-slate-800 rounded-xl grayscale hover:grayscale-0 transition-all cursor-pointer">
+<img alt="" class="w-8 h-8 opacity-70" data-alt="HP brand logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCf-MWRJnr8wsl98yPhZHoiOzq-MQiEuWOnx7bBY3ZTrzSddd_6IAsYfIiqM2OtJw8OxtgVcDanlRXFVrhj91LrITdaA5HtqmEfeP_HL0A1RxxTr5vRrOL8HbQ3BjnuBHmfxoufM9xMUCKg3ASaFoYcYehay2a7vHOADyA-hcj82NXaJdVLcpAB5pmIzAktmAOvHRH-1OWPyucqqxSIGpRKPs_kb_mg0XI4PsBlPQozzEVF-mJ3hsLeG8ONph8LUtSjnNUvuJOyJN2X"/>
+</div>
+<div class="aspect-square flex items-center justify-center bg-secondary-bg dark:bg-slate-800 rounded-xl grayscale hover:grayscale-0 transition-all cursor-pointer">
+<img alt="" class="w-12 h-12 opacity-70" data-alt="Lenovo brand logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMVsfck77BEWKSqzgkVQax_GR_9LvCTL_uY1PkESxIscDljn_Lqun7lAOWeNlq53Asw-IjJbmoO1bgg8sFZOvN9gQ_gqHNv9Yij0xCiO0S9B_ci4nBxu13el-YYprjinQ8djzL_BvHVfxTnEj1QuoGfaVYLNPCXMdgrSXshKuKAykzvuTr3OulLP0Itc7AuENWKyBmlyaKFS5wnEg2tPzhtkBKespjZEqZ8Ond2u_CM0PUbLyfWJWD3T5fYk64hm2k2A5SG8zIDqNd"/>
+</div>
+</div>
+</section>
+<!-- Featured Section -->
+<section class="mt-8 px-4">
+<div class="relative w-full h-48 rounded-xl overflow-hidden bg-slate-900">
+<div class="absolute inset-0 bg-gradient-to-r from-black/80 to-transparent z-10 p-6 flex flex-col justify-center">
+<span class="text-primary font-bold text-xs uppercase tracking-widest mb-2">Editor's Choice</span>
+<h3 class="text-white text-2xl font-bold mb-3 max-w-[200px]">The Future of Workstations</h3>
+<button class="bg-primary text-slate-900 font-bold px-4 py-2 rounded-lg text-sm self-start">Shop Now</button>
+</div>
+<img alt="" class="absolute inset-0 w-full h-full object-cover opacity-60" data-alt="Cyberpunk style home office setup with dual monitors" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRdBtsrt_XkZz7jH5UnbmMaD9BKkz0lwoqk0OAzFNNASkPK0PMEWlvfsD3e8ufBsS8Co3subu5wJNGD32PvXnTfdsLq8AqWlSGl0ukt9h-luRFGvL4iEzFGNHSn_BMht_ZDCgQc5MLepnPqe_Yg5f92qYzuoiCN8BWFP_M6Lnad8JGMqbzOD4sFpN08B-uCj3N3affErmtjB4woQ56bLS25NOqKu9MEGDDfE1QrYK88I-fzlhJBl-wRnKwjuuR244fsH7cXn0YhBAJ"/>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 right-0 z-50 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 px-6 pb-6 pt-3 flex justify-between items-center shadow-2xl">
+<a class="flex flex-col items-center gap-1 group" href="#">
+<div aria-label="Home" class="text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1">home</span>
+</div>
+<p class="text-slate-900 dark:text-white text-[10px] font-bold tracking-tight">Home</p>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400 group" href="#">
+<div aria-label="Search" class="flex items-center justify-center">
+<span class="material-symbols-outlined text-[28px]">search</span>
+</div>
+<p class="text-[10px] font-medium tracking-tight">Search</p>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400 group" href="#">
+<div aria-label="Cart" class="flex items-center justify-center relative">
+<span class="material-symbols-outlined text-[28px]">shopping_cart</span>
+<span class="absolute -top-1 -right-1 bg-primary text-slate-900 text-[8px] font-bold w-4 h-4 rounded-full flex items-center justify-center">2</span>
+</div>
+<p class="text-[10px] font-medium tracking-tight">Cart</p>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400 group" href="#">
+<div aria-label="Wishlist" class="flex items-center justify-center">
+<span class="material-symbols-outlined text-[28px]">favorite</span>
+</div>
+<p class="text-[10px] font-medium tracking-tight">Wishlist</p>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400 group" href="#">
+<div aria-label="Profile" class="flex items-center justify-center">
+<span class="material-symbols-outlined text-[28px]">person</span>
+</div>
+<p class="text-[10px] font-medium tracking-tight">Profile</p>
+</a>
+</nav>
 </body></html>
