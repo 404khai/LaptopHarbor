@@ -14,75 +14,103 @@
                 extend: {
                     colors: {
                         "primary": "#11e8b6",
-                        "background-light": "#f6f8f8",
+                        "background-light": "#ffffff",
                         "background-dark": "#10221e",
                     },
                     fontFamily: {
                         "display": ["Inter"]
                     },
-                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
                 },
             },
         }
     </script>
-<title>Verify Your Email - LaptopHarbor</title>
+<title>LaptopHarbor - Create Account</title>
 <style>
     body {
       min-height: max(884px, 100dvh);
     }
   </style>
   </head>
-<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
-<header class="flex items-center justify-between p-4 md:p-6 max-w-2xl mx-auto w-full">
-<div class="flex items-center gap-2 cursor-pointer group">
-<span class="material-symbols-outlined text-slate-900 dark:text-slate-100 group-hover:text-primary transition-colors">arrow_back</span>
-</div>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100">
+<div class="relative flex min-h-screen w-full flex-col items-center justify-center p-4">
+<!-- Header / Logo Section -->
+<div class="w-full max-w-[440px] flex items-center justify-between mb-8">
 <div class="flex items-center gap-2">
-<div class="size-8 bg-primary rounded-lg flex items-center justify-center">
-<span class="material-symbols-outlined text-slate-900 text-xl font-bold">laptop_mac</span>
+<span class="material-symbols-outlined text-slate-900 dark:text-slate-100">laptop_mac</span>
+<span class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-tight">LaptopHarbor</span>
 </div>
-<h2 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-tight">LaptopHarbor</h2>
+<button class="text-slate-900 dark:text-slate-100">
+<span class="material-symbols-outlined">close</span>
+</button>
 </div>
-<div class="size-6"></div>
-</header>
-<main class="flex-1 flex flex-col items-center justify-center px-4 py-8 max-w-md mx-auto w-full">
-<div class="w-full space-y-8">
-<div class="text-center md:text-left">
-<h1 class="text-slate-900 dark:text-slate-100 text-4xl font-bold leading-tight mb-3">Verify Your Email</h1>
-<p class="text-slate-600 dark:text-slate-400 text-base font-normal">Enter the 6-digit code sent to your email address.</p>
+<!-- Registration Card -->
+<div class="w-full max-w-[440px] bg-white dark:bg-slate-900">
+<h1 class="text-slate-900 dark:text-slate-100 tracking-tight text-[32px] font-bold leading-tight mb-8">Create Account</h1>
+<form class="space-y-5">
+<!-- Full Name Field -->
+<div class="flex flex-col gap-2">
+<label class="text-slate-900 dark:text-slate-100 text-sm font-semibold uppercase tracking-wider">Full Name</label>
+<input class="w-full h-14 px-4 bg-white dark:bg-slate-800 border border-slate-900 dark:border-slate-700 rounded-[12px] text-slate-900 dark:text-slate-100 placeholder:text-slate-400 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="Enter your full name" type="text"/>
 </div>
-<div class="py-4">
-<fieldset class="flex justify-between gap-2 sm:gap-4">
-<input autocomplete="one-time-code" class="w-12 h-14 sm:w-14 sm:h-16 text-center text-2xl font-bold rounded-lg border-2 border-slate-900 dark:border-slate-700 bg-white dark:bg-slate-800 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none" inputmode="numeric" maxlength="1" type="text"/>
-<input class="w-12 h-14 sm:w-14 sm:h-16 text-center text-2xl font-bold rounded-lg border-2 border-slate-900 dark:border-slate-700 bg-white dark:bg-slate-800 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none" inputmode="numeric" maxlength="1" type="text"/>
-<input class="w-12 h-14 sm:w-14 sm:h-16 text-center text-2xl font-bold rounded-lg border-2 border-slate-900 dark:border-slate-700 bg-white dark:bg-slate-800 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none" inputmode="numeric" maxlength="1" type="text"/>
-<input class="w-12 h-14 sm:w-14 sm:h-16 text-center text-2xl font-bold rounded-lg border-2 border-slate-900 dark:border-slate-700 bg-white dark:bg-slate-800 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none" inputmode="numeric" maxlength="1" type="text"/>
-<input class="w-12 h-14 sm:w-14 sm:h-16 text-center text-2xl font-bold rounded-lg border-2 border-slate-900 dark:border-slate-700 bg-white dark:bg-slate-800 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none" inputmode="numeric" maxlength="1" type="text"/>
-<input class="w-12 h-14 sm:w-14 sm:h-16 text-center text-2xl font-bold rounded-lg border-2 border-slate-900 dark:border-slate-700 bg-white dark:bg-slate-800 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none" inputmode="numeric" maxlength="1" type="text"/>
-</fieldset>
+<!-- Email Address Field -->
+<div class="flex flex-col gap-2">
+<label class="text-slate-900 dark:text-slate-100 text-sm font-semibold uppercase tracking-wider">Email Address</label>
+<input class="w-full h-14 px-4 bg-white dark:bg-slate-800 border border-slate-900 dark:border-slate-700 rounded-[12px] text-slate-900 dark:text-slate-100 placeholder:text-slate-400 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="name@example.com" type="email"/>
 </div>
-<div class="space-y-6">
-<button class="w-full bg-primary hover:bg-primary/90 text-slate-900 h-14 rounded-xl text-lg font-bold transition-all shadow-lg shadow-primary/20 active:scale-[0.98]">
-                    Verify
-                </button>
-<div class="text-center">
-<p class="text-slate-600 dark:text-slate-400 text-sm">
-                        Didn't receive the code? 
-                        <button class="text-primary font-bold hover:underline ml-1">Resend Code</button>
+<!-- Password Field -->
+<div class="flex flex-col gap-2">
+<label class="text-slate-900 dark:text-slate-100 text-sm font-semibold uppercase tracking-wider">Password</label>
+<div class="relative">
+<input class="w-full h-14 px-4 bg-white dark:bg-slate-800 border border-slate-900 dark:border-slate-700 rounded-[12px] text-slate-900 dark:text-slate-100 placeholder:text-slate-400 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all pr-12" placeholder="Create a strong password" type="password" value="SecurePass123!"/>
+<button class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500" type="button">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</div>
+<!-- Password Strength Indicator -->
+<div class="mt-2 space-y-1">
+<div class="flex gap-1 h-1 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+<div class="h-full w-1/3 bg-primary"></div>
+<div class="h-full w-1/3 bg-primary"></div>
+<div class="h-full w-1/3 bg-primary/30"></div>
+</div>
+<p class="text-[10px] text-primary font-bold uppercase tracking-widest">Strength: Strong</p>
+</div>
+</div>
+<!-- Terms and Conditions -->
+<div class="flex items-center gap-3 pt-2">
+<div class="relative flex items-center">
+<input class="peer h-5 w-5 cursor-pointer appearance-none rounded border border-slate-900 bg-white checked:bg-slate-900 focus:outline-none transition-all" id="terms" type="checkbox"/>
+<span class="material-symbols-outlined pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-white opacity-0 peer-checked:opacity-100 text-sm font-bold">
+                            check
+                        </span>
+</div>
+<label class="text-sm text-slate-600 dark:text-slate-400 cursor-pointer" for="terms">
+                        I agree to the <span class="text-slate-900 dark:text-slate-100 font-bold underline">Terms &amp; Conditions</span>
+</label>
+</div>
+<!-- Submit Button -->
+<div class="pt-6">
+<button class="w-full h-14 bg-primary text-slate-900 font-bold text-lg rounded-[12px] hover:brightness-105 active:scale-[0.98] transition-all shadow-lg shadow-primary/20" type="submit">
+                        Create Account
+                    </button>
+</div>
+</form>
+<!-- Footer Section -->
+<div class="mt-10 pt-8 border-t border-slate-100 dark:border-slate-800 text-center">
+<p class="text-slate-600 dark:text-slate-400">
+                    Already have an account? 
+                    <a class="text-slate-900 dark:text-slate-100 font-bold hover:underline" href="#">Sign In</a>
 </p>
 </div>
 </div>
+<!-- Decorative background elements -->
+<div class="fixed -bottom-24 -left-24 w-96 h-96 bg-primary/10 blur-[120px] rounded-full -z-10"></div>
+<div class="fixed -top-24 -right-24 w-96 h-96 bg-primary/5 blur-[120px] rounded-full -z-10"></div>
 </div>
-</main>
-<footer class="p-8 mt-auto flex flex-col items-center">
-<div class="flex gap-4 mb-4">
-<div class="size-10 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center">
-<span class="material-symbols-outlined text-slate-600 dark:text-slate-400 text-xl">security</span>
-</div>
-<div class="size-10 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center">
-<span class="material-symbols-outlined text-slate-600 dark:text-slate-400 text-xl">help_outline</span>
-</div>
-</div>
-<p class="text-slate-500 dark:text-slate-500 text-xs">Secure verification by LaptopHarbor</p>
-</footer>
 </body></html>
