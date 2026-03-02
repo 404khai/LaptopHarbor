@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../theme/app_theme.dart';
 import 'forgot_password_screen.dart';
+import 'home_screen.dart';
 import 'signup_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -249,7 +250,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(
                     height: 56,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (context) => const HomeScreen(),
+                          ),
+                        );
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.primary,
                         foregroundColor: Colors.black,
