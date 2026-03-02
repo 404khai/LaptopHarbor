@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'otp_verification_screen.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
@@ -22,8 +23,12 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     final primaryColor = const Color(0xFF11E8B6);
     final slate900 = isDarkMode ? Colors.white : const Color(0xFF0F172A);
-    final slate500 = isDarkMode ? const Color(0xFF94A3B8) : const Color(0xFF64748B);
-    final borderColor = isDarkMode ? const Color(0xFF334155) : const Color(0xFF0F172A);
+    final slate500 = isDarkMode
+        ? const Color(0xFF94A3B8)
+        : const Color(0xFF64748B);
+    final borderColor = isDarkMode
+        ? const Color(0xFF334155)
+        : const Color(0xFF0F172A);
 
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -51,7 +56,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       width: 100,
                       height: 100,
                       decoration: BoxDecoration(
-                        color: primaryColor.withOpacity(0.1),
+                        color: primaryColor.withValues(alpha: 0.1),
                         shape: BoxShape.circle,
                       ),
                       child: Icon(
@@ -103,7 +108,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         decoration: InputDecoration(
                           hintText: 'example@laptopharbor.com',
                           hintStyle: GoogleFonts.inter(color: Colors.grey[400]),
-                          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 16,
+                          ),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
                             borderSide: BorderSide(color: borderColor),
@@ -114,7 +122,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide(color: primaryColor, width: 2),
+                            borderSide: BorderSide(
+                              color: primaryColor,
+                              width: 2,
+                            ),
                           ),
                         ),
                         keyboardType: TextInputType.emailAddress,
@@ -129,7 +140,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     height: 56,
                     child: ElevatedButton(
                       onPressed: () {
-                        // TODO: Implement password reset logic
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const OtpVerificationScreen(),
+                          ),
+                        );
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: primaryColor,
