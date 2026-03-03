@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../theme/app_theme.dart';
@@ -59,7 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       const SizedBox(height: 16),
                       Text(
-                        'LaptopHarbor',
+                        'Log In',
                         style: GoogleFonts.inter(
                           fontSize: 30,
                           fontWeight: FontWeight.bold,
@@ -104,15 +103,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide(
-                              color: AppColors.inputBorder,
-                            ),
+                            borderSide: BorderSide.none,
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide(
-                              color: AppColors.inputBorder,
-                            ),
+                            borderSide: BorderSide.none,
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
@@ -121,6 +116,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               width: 2,
                             ),
                           ),
+                          filled: true,
+                          fillColor: Colors.grey[100],
                         ),
                         keyboardType: TextInputType.emailAddress,
                         style: GoogleFonts.inter(color: AppColors.text),
@@ -148,15 +145,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide(
-                              color: AppColors.inputBorder,
-                            ),
+                            borderSide: BorderSide.none,
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide(
-                              color: AppColors.inputBorder,
-                            ),
+                            borderSide: BorderSide.none,
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
@@ -165,6 +158,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               width: 2,
                             ),
                           ),
+                          filled: true,
+                          fillColor: Colors.grey[100],
                           suffixIcon: IconButton(
                             icon: Icon(
                               _obscurePassword
@@ -266,7 +261,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       child: Text(
-                        'Sign In',
+                        'Log In',
                         style: GoogleFonts.inter(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -275,105 +270,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   const SizedBox(height: 32),
-
-                  // Divider
-                  Row(
-                    children: [
-                      Expanded(child: Divider(color: Colors.grey[200])),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Text(
-                          'Or continue with',
-                          style: GoogleFonts.inter(
-                            fontSize: 14,
-                            color: AppColors.subtext,
-                          ),
-                        ),
-                      ),
-                      Expanded(child: Divider(color: Colors.grey[200])),
-                    ],
-                  ),
-                  const SizedBox(height: 24),
-
-                  // Social Buttons
-                  Row(
-                    children: [
-                      Expanded(
-                        child: OutlinedButton(
-                          onPressed: () {},
-                          style: OutlinedButton.styleFrom(
-                            minimumSize: const Size.fromHeight(48),
-                            side: BorderSide(color: AppColors.inputBorder),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            backgroundColor: Colors.transparent,
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SizedBox(
-                                width: 20,
-                                height: 20,
-                                child: SvgPicture.asset(
-                                  'assets/icons/google.svg',
-                                ),
-                              ),
-                              const SizedBox(width: 8),
-                              Text(
-                                'Google',
-                                style: GoogleFonts.inter(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                  color: AppColors.text,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 16),
-                      Expanded(
-                        child: OutlinedButton(
-                          onPressed: () {},
-                          style: OutlinedButton.styleFrom(
-                            minimumSize: const Size.fromHeight(48),
-                            side: BorderSide(color: AppColors.inputBorder),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            backgroundColor: Colors.transparent,
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SizedBox(
-                                width: 20,
-                                height: 20,
-                                child: SvgPicture.asset(
-                                  'assets/icons/apple.svg',
-                                  colorFilter: ColorFilter.mode(
-                                    AppColors.text,
-                                    BlendMode.srcIn,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(width: 8),
-                              Text(
-                                'Apple',
-                                style: GoogleFonts.inter(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                  color: AppColors.text,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 40),
 
                   // Sign Up Link
                   Row(
@@ -400,7 +296,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
                             color: AppColors.text,
-                            decoration: TextDecoration.underline,
                             decorationColor: AppColors.primary,
                             decorationThickness: 2,
                           ),

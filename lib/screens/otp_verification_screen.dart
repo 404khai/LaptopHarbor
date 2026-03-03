@@ -3,6 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../theme/app_theme.dart';
 
+import '../widgets/custom_back_button.dart';
+
 class OtpVerificationScreen extends StatefulWidget {
   const OtpVerificationScreen({super.key});
 
@@ -45,10 +47,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: AppColors.text),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
+        leading: const Center(child: CustomBackButton()),
         title: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
