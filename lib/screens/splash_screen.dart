@@ -19,9 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(const Duration(seconds: 3), () {
       if (mounted) {
         Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const LoginScreen(),
-          ),
+          MaterialPageRoute(builder: (context) => const LoginScreen()),
         );
       }
     });
@@ -38,7 +36,7 @@ class _SplashScreenState extends State<SplashScreen> {
             ClipRRect(
               borderRadius: BorderRadius.circular(16),
               child: Image.asset(
-                'images/logo.jpeg',
+                'images/logo.jpg',
                 width: 120,
                 height: 120,
                 fit: BoxFit.cover,
