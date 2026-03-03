@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppColors {
-  static const Color primary = Color(0xFFFF7539);
+  static const Color primary = Color(0xFFFF7539); // Teal
   static const Color background = Colors.white;
   static const Color text = Colors.black;
   static const Color subtext = Colors.grey;
@@ -10,6 +10,13 @@ class AppColors {
   static const Color success = Colors.green;
   static const Color inputBorder = Color(0xFFE2E8F0); // Slate-200
   static const Color inputBorderFocused = primary;
+
+  // Slate colors
+  static const Color slate50 = Color(0xFFF8FAFC);
+  static const Color slate100 = Color(0xFFF1F5F9);
+  static const Color slate200 = Color(0xFFE2E8F0);
+  static const Color slate300 = Color(0xFFCBD5E1);
+  static const Color slate900 = Color(0xFF0F172A);
 }
 
 class AppTheme {
@@ -36,26 +43,21 @@ class AppTheme {
           fontSize: 24,
           fontWeight: FontWeight.bold,
         ),
-        bodyLarge: GoogleFonts.inter(
-          color: AppColors.text,
-          fontSize: 16,
-        ),
-        bodyMedium: GoogleFonts.inter(
-          color: AppColors.text,
-          fontSize: 14,
-        ),
-        bodySmall: GoogleFonts.inter(
-          color: AppColors.subtext,
-          fontSize: 12,
-        ),
-        labelLarge: GoogleFonts.inter( // Button text
+        bodyLarge: GoogleFonts.inter(color: AppColors.text, fontSize: 16),
+        bodyMedium: GoogleFonts.inter(color: AppColors.text, fontSize: 14),
+        bodySmall: GoogleFonts.inter(color: AppColors.subtext, fontSize: 12),
+        labelLarge: GoogleFonts.inter(
+          // Button text
           color: Colors.black, // Dark text on the bright primary color
           fontSize: 16,
           fontWeight: FontWeight.bold,
         ),
       ),
       inputDecorationTheme: InputDecorationTheme(
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 16,
+        ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: const BorderSide(color: AppColors.inputBorder),
@@ -66,7 +68,10 @@ class AppTheme {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: AppColors.inputBorderFocused, width: 2),
+          borderSide: const BorderSide(
+            color: AppColors.inputBorderFocused,
+            width: 2,
+          ),
         ),
         hintStyle: GoogleFonts.inter(color: Colors.grey[400]),
       ),
@@ -87,9 +92,7 @@ class AppTheme {
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
           foregroundColor: AppColors.primary, // Text color for text buttons
-          textStyle: GoogleFonts.inter(
-            fontWeight: FontWeight.bold,
-          ),
+          textStyle: GoogleFonts.inter(fontWeight: FontWeight.bold),
         ),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
@@ -99,9 +102,7 @@ class AppTheme {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
-          textStyle: GoogleFonts.inter(
-            fontWeight: FontWeight.w600,
-          ),
+          textStyle: GoogleFonts.inter(fontWeight: FontWeight.w600),
         ),
       ),
       checkboxTheme: CheckboxThemeData(
@@ -113,9 +114,7 @@ class AppTheme {
         }),
         checkColor: WidgetStateProperty.all(Colors.black),
         side: const BorderSide(color: AppColors.inputBorder, width: 2),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(4),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
       ),
       appBarTheme: const AppBarTheme(
         backgroundColor: Colors.transparent,
