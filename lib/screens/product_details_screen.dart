@@ -148,17 +148,42 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               ),
                             ),
                             content: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                                // Rating Summary
+                                _buildRatingSummary(),
+                                const SizedBox(height: 24),
+
+                                // Tabs
+                                _buildReviewTabs(),
+                                const SizedBox(height: 16),
+
+                                // Reviews List
                                 _buildReviewItem(
-                                  'Alex M.',
-                                  'VERIFIED BUYER',
-                                  '"Absolute beast of a machine. The RTX 4080 handles everything I throw at it with zero lag."',
+                                  'Alex Johnson',
+                                  'Oct 24, 2023',
+                                  'The build quality on this laptop is insane. Best purchase for my dev workflow. The keyboard travel is perfect for long coding sessions and the screen color accuracy is professional grade.',
+                                  5,
+                                  124,
+                                  2,
                                 ),
                                 const SizedBox(height: 12),
                                 _buildReviewItem(
-                                  'Sarah J.',
-                                  'VERIFIED BUYER',
-                                  '"The OLED display is the best I\'ve ever seen on a laptop. Perfect for color-accurate work."',
+                                  'Sarah Chen',
+                                  'Oct 15, 2023',
+                                  'Stunning display and the battery life actually lasts all day. Highly recommend! The OLED panel makes creative work a joy. Shipping was also faster than expected.',
+                                  5,
+                                  89,
+                                  0,
+                                ),
+                                const SizedBox(height: 12),
+                                _buildReviewItem(
+                                  'Michael Ross',
+                                  'Oct 08, 2023',
+                                  'Great performance, though it runs a bit hot under heavy loads. Overall, a solid machine for the price point.',
+                                  4,
+                                  42,
+                                  1,
                                 ),
                               ],
                             ),
@@ -437,12 +462,172 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     );
   }
 
-  Widget _buildReviewItem(String name, String badge, String review) {
+  Widget _buildRatingSummary() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '4.8',
+                  style: GoogleFonts.inter(
+                    fontSize: 48,
+                    fontWeight: FontWeight.w900,
+                    color: AppColors.slate900,
+                    height: 1,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Row(
+                  children: List.generate(
+                    5,
+                    (index) => Icon(
+                      index < 4 ? Icons.star : Icons.star_half,
+                      size: 20,
+                      color: AppColors.slate900,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  'Based on 1,240 verified reviews',
+                  style: GoogleFonts.inter(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.grey[500],
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(width: 24),
+            Expanded(
+              child: Column(
+                children: [
+                  _buildRatingBar(5, 0.85),
+                  _buildRatingBar(4, 0.10),
+                  _buildRatingBar(3, 0.03),
+                  _buildRatingBar(2, 0.01),
+                  _buildRatingBar(1, 0.01),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildRatingBar(int star, double percentage) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 2.0),
+      child: Row(
+        children: [
+          SizedBox(
+            width: 12,
+            child: Text(
+              '$star',
+              style: GoogleFonts.inter(
+                fontSize: 10,
+                fontWeight: FontWeight.bold,
+                color: AppColors.slate900,
+              ),
+            ),
+          ),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Container(
+              height: 6,
+              decoration: BoxDecoration(
+                color: AppColors.slate100,
+                borderRadius: BorderRadius.circular(3),
+              ),
+              child: FractionallySizedBox(
+                alignment: Alignment.centerLeft,
+                widthFactor: percentage,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: AppColors.slate900,
+                    borderRadius: BorderRadius.circular(3),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildReviewTabs() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          children: [
+            _buildTabItem('All', true),
+            const SizedBox(width: 24),
+            _buildTabItem('With Photos', false),
+            const SizedBox(width: 24),
+            _buildTabItem('Most Recent', false),
+          ],
+        ),
+        IconButton(
+          onPressed: () {},
+          icon: const Icon(Icons.filter_list, size: 20, color: Colors.grey),
+          padding: EdgeInsets.zero,
+          constraints: const BoxConstraints(),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildTabItem(String label, bool isActive) {
     return Container(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.only(bottom: 8),
       decoration: BoxDecoration(
-        color: AppColors.slate50,
-        borderRadius: BorderRadius.circular(8),
+        border: Border(
+          bottom: BorderSide(
+            color: isActive ? AppColors.slate900 : Colors.transparent,
+            width: 2,
+          ),
+        ),
+      ),
+      child: Text(
+        label,
+        style: GoogleFonts.inter(
+          fontSize: 14,
+          fontWeight: isActive ? FontWeight.bold : FontWeight.w500,
+          color: isActive ? AppColors.slate900 : Colors.grey[400],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildReviewItem(
+    String name,
+    String date,
+    String review,
+    int rating,
+    int likes,
+    int dislikes,
+  ) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: AppColors.slate100),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.02),
+            blurRadius: 4,
+            offset: const Offset(0, 2),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -450,33 +635,102 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                name,
-                style: GoogleFonts.inter(
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.slate900,
-                ),
+              Row(
+                children: [
+                  Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: AppColors.slate100,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Center(
+                      child: Text(
+                        name[0],
+                        style: GoogleFonts.inter(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.slate900,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        name,
+                        style: GoogleFonts.inter(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.slate900,
+                        ),
+                      ),
+                      Text(
+                        date,
+                        style: GoogleFonts.inter(
+                          fontSize: 11,
+                          color: Colors.grey[400],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-              Text(
-                badge,
-                style: GoogleFonts.inter(
-                  fontSize: 10,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey[400],
-                  letterSpacing: 1,
+              Row(
+                children: List.generate(
+                  5,
+                  (index) => Icon(
+                    index < rating ? Icons.star : Icons.star_border,
+                    size: 16,
+                    color: AppColors.slate900,
+                  ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 12),
           Text(
             review,
             style: GoogleFonts.inter(
-              fontSize: 12,
-              color: Colors.grey[600],
-              fontStyle: FontStyle.italic,
+              fontSize: 14,
+              color: AppColors.slate900, // Slightly darker text for readability
+              height: 1.5,
+              fontWeight: FontWeight.w500,
             ),
+          ),
+          const SizedBox(height: 16),
+          Row(
+            children: [
+              Icon(Icons.thumb_up_outlined, size: 18, color: Colors.grey[500]),
+              const SizedBox(width: 6),
+              Text(
+                '$likes',
+                style: GoogleFonts.inter(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey[500],
+                ),
+              ),
+              const SizedBox(width: 16),
+              Icon(
+                Icons.thumb_down_outlined,
+                size: 18,
+                color: Colors.grey[500],
+              ),
+              if (dislikes > 0) ...[
+                const SizedBox(width: 6),
+                Text(
+                  '$dislikes',
+                  style: GoogleFonts.inter(
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey[500],
+                  ),
+                ),
+              ],
+            ],
           ),
         ],
       ),
