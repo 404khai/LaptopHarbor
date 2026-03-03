@@ -1,107 +1,138 @@
 <!DOCTYPE html>
 
-<html class="light" lang="en"><head>
+<html lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>LaptopHarbor - Your Cart</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
         tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "primary": "#11e8b6",
-                        "background-light": "#f6f8f8",
-                        "background-dark": "#10221e",
-                    },
-                    fontFamily: {
-                        "display": ["Inter"]
-                    },
-                    borderRadius: {
-                        "DEFAULT": "0.5rem",
-                        "lg": "1rem",
-                        "xl": "1.5rem",
-                        "full": "9999px"
-                    },
-                },
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "primary": "#11e8b6",
+                "background-light": "#ffffff",
+                "background-dark": "#10221e",
+              },
+              fontFamily: {
+                "display": ["Inter"]
+              },
+              borderRadius: {"DEFAULT": "0.5rem", "lg": "0.75rem", "xl": "1.5rem", "full": "9999px"},
             },
+          },
         }
     </script>
+<title>LaptopHarbor - Your Cart</title>
 <style>
     body {
       min-height: max(884px, 100dvh);
     }
   </style>
   </head>
-<body class="bg-white dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased">
-<div class="relative flex h-screen w-full flex-col overflow-x-hidden">
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100">
+<div class="relative flex h-auto min-h-screen w-full flex-col max-w-md mx-auto overflow-x-hidden border-x border-slate-100 dark:border-slate-800">
 <!-- Header -->
-<header class="flex items-center bg-white dark:bg-background-dark p-4 border-b border-slate-100 dark:border-slate-800 justify-between sticky top-0 z-10">
-<div class="text-slate-900 dark:text-slate-100 flex size-10 shrink-0 items-center justify-center cursor-pointer">
+<div class="flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 justify-between sticky top-0 z-10">
+<div class="text-slate-900 dark:text-slate-100 flex size-12 shrink-0 items-center cursor-pointer">
 <span class="material-symbols-outlined">arrow_back</span>
 </div>
-<h1 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-tight flex-1 text-center pr-10">LaptopHarbor</h1>
-</header>
-<!-- Main Content -->
-<main class="flex flex-1 flex-col items-center justify-center px-6 py-12">
-<div class="flex flex-col items-center gap-8 w-full max-w-md">
-<!-- Minimalist Illustration Container -->
-<div class="relative flex items-center justify-center w-48 h-48 bg-slate-50 dark:bg-slate-900/50 rounded-full">
-<span class="material-symbols-outlined text-slate-300 dark:text-slate-700 !text-[120px] font-light">shopping_bag</span>
-<!-- Decorative Element -->
-<div class="absolute bottom-10 right-10 w-12 h-12 bg-primary/20 rounded-full blur-xl"></div>
+<h1 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-tight flex-1 text-center pr-12">Your Cart</h1>
 </div>
-<div class="flex flex-col items-center gap-3">
-<h2 class="text-slate-900 dark:text-slate-100 text-2xl font-bold leading-tight tracking-tight text-center">
-                        Your cart is empty
-                    </h2>
-<p class="text-slate-500 dark:text-slate-400 text-base font-normal leading-relaxed text-center max-w-[320px]">
-                        Looks like you haven't added any laptops to your cart yet.
-                    </p>
+<!-- Cart Items List -->
+<div class="flex flex-col gap-4 p-4">
+<!-- Item 1 -->
+<div class="flex items-stretch justify-between gap-4 rounded-lg bg-white dark:bg-slate-900 p-4 shadow-sm border border-slate-50 dark:border-slate-800">
+<div class="size-24 bg-slate-100 dark:bg-slate-800 rounded-lg overflow-hidden shrink-0">
+<div class="w-full h-full bg-center bg-no-repeat bg-cover" data-alt="High-end silver gaming laptop profile view" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCxrMe_vWKSvqucjYxVGwiTHcBO0SSuUpzWwo5mbctRUj0ZC2QMBdaySWKPHH7NkiF6pPf1mV6tLXOQOSnLVmEgR6RQji2jy5_OrLCPGqJIHFaMNQykFKmBdX8f3nAwAzLEyTreGrfTo_RqZSC37zkzGCnt66vAj7wB6_Ycdh2uvy-qIlD3MyCaghJQhwgxSzz4i5wX6loUgmk-07fhh-az753gozcCeNN0z2QkjAvRmLSRJhc9GbHJ6CS3HFhuoEeIT8ARour2KlbW");'></div>
+</div>
+<div class="flex flex-1 flex-col justify-between">
+<div class="flex flex-col gap-1">
+<div class="flex justify-between items-start">
+<p class="text-slate-900 dark:text-slate-100 text-base font-bold leading-tight">MacBook Pro M3</p>
+<p class="text-slate-900 dark:text-slate-100 text-sm font-bold">$1,999.00</p>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-xs font-normal">Space Gray, 16GB, 512GB SSD</p>
+</div>
+<div class="flex items-center justify-between mt-2">
+<div class="flex items-center bg-primary/10 rounded-lg p-1 gap-3">
+<button class="flex size-7 items-center justify-center rounded-md bg-primary text-slate-900 hover:bg-primary/80">
+<span class="material-symbols-outlined text-sm">remove</span>
+</button>
+<span class="text-slate-900 dark:text-slate-100 text-sm font-semibold">1</span>
+<button class="flex size-7 items-center justify-center rounded-md bg-primary text-slate-900 hover:bg-primary/80">
+<span class="material-symbols-outlined text-sm">add</span>
+</button>
+</div>
+<button class="text-slate-400 dark:text-slate-600 hover:text-red-500">
+<span class="material-symbols-outlined text-xl">delete</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="flex items-stretch justify-between gap-4 rounded-lg bg-white dark:bg-slate-900 p-4 shadow-sm border border-slate-50 dark:border-slate-800">
+<div class="size-24 bg-slate-100 dark:bg-slate-800 rounded-lg overflow-hidden shrink-0">
+<div class="w-full h-full bg-center bg-no-repeat bg-cover" data-alt="Ultrawide curved gaming monitor display" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB8OV9ZTy5fkJtdErvHMCW3T0wa0xcht0tMh2zvLxAniN0f2Gd733U0q3nPUBxuH_K2X41yUB9KQiXVv0Sc-FXOPV36Cv3jVlvcanta2imM8_5SpbvPPgqLg-nkiSwdohMoNcVzIZHXi7ZiJSkiXY4k-0AxEgFAqPUgSScxv9ELxXfct1121z8rb7upDdTerA3ZUnJY6qlwshLWucFeWf0kkTPBAZu5ErZ3k3IE8n1iivbGpFjieXf_oxCegx_OXj46Jd9PcwXUzNg2");'></div>
+</div>
+<div class="flex flex-1 flex-col justify-between">
+<div class="flex flex-col gap-1">
+<div class="flex justify-between items-start">
+<p class="text-slate-900 dark:text-slate-100 text-base font-bold leading-tight">Harbor Pro 34"</p>
+<p class="text-slate-900 dark:text-slate-100 text-sm font-bold">$499.00</p>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-xs font-normal">UltraWide, 144Hz, HDR</p>
+</div>
+<div class="flex items-center justify-between mt-2">
+<div class="flex items-center bg-primary/10 rounded-lg p-1 gap-3">
+<button class="flex size-7 items-center justify-center rounded-md bg-primary text-slate-900 hover:bg-primary/80">
+<span class="material-symbols-outlined text-sm">remove</span>
+</button>
+<span class="text-slate-900 dark:text-slate-100 text-sm font-semibold">2</span>
+<button class="flex size-7 items-center justify-center rounded-md bg-primary text-slate-900 hover:bg-primary/80">
+<span class="material-symbols-outlined text-sm">add</span>
+</button>
+</div>
+<button class="text-slate-400 dark:text-slate-600 hover:text-red-500">
+<span class="material-symbols-outlined text-xl">delete</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Promo Code Section -->
+<div class="px-4 py-2">
+<div class="flex gap-2">
+<input class="flex-1 rounded-lg border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 text-sm focus:border-primary focus:ring-primary dark:text-slate-100" placeholder="Promo code" type="text"/>
+<button class="bg-slate-900 dark:bg-slate-700 text-white dark:text-slate-100 px-4 py-2 rounded-lg text-sm font-medium">Apply</button>
+</div>
+</div>
+<!-- Order Summary -->
+<div class="mt-auto p-4 bg-white dark:bg-slate-900 rounded-t-xl border-t border-slate-100 dark:border-slate-800 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
+<h3 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight mb-4">Order Summary</h3>
+<div class="flex flex-col gap-3">
+<div class="flex justify-between">
+<p class="text-slate-500 dark:text-slate-400 text-sm font-normal">Subtotal</p>
+<p class="text-slate-900 dark:text-slate-100 text-sm font-medium">$2,997.00</p>
+</div>
+<div class="flex justify-between">
+<p class="text-slate-500 dark:text-slate-400 text-sm font-normal">Shipping</p>
+<p class="text-slate-900 dark:text-slate-100 text-sm font-medium">FREE</p>
+</div>
+<div class="flex justify-between items-center pt-2 border-t border-slate-100 dark:border-slate-800">
+<p class="text-slate-900 dark:text-slate-100 text-base font-bold">Total</p>
+<p class="text-slate-900 dark:text-slate-100 text-xl font-bold">$2,997.00</p>
+</div>
 </div>
 <!-- CTA Button -->
-<button class="flex min-w-[200px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-14 px-8 bg-primary hover:opacity-90 transition-opacity text-slate-900 text-base font-bold leading-normal tracking-wide shadow-lg shadow-primary/20">
-<span class="truncate">Start Shopping</span>
+<button class="w-full bg-primary text-slate-900 rounded-lg py-4 mt-6 font-bold text-base shadow-lg shadow-primary/20 hover:brightness-105 active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+                Proceed to Checkout
+                <span class="material-symbols-outlined">arrow_forward</span>
 </button>
-<!-- Secondary Helper -->
-<div class="mt-4 flex flex-col items-center gap-4">
-<p class="text-xs text-slate-400 dark:text-slate-500 font-medium uppercase tracking-widest">Recommended Categories</p>
-<div class="flex gap-2">
-<span class="px-3 py-1 bg-slate-100 dark:bg-slate-800 rounded-full text-xs font-semibold">Gaming</span>
-<span class="px-3 py-1 bg-slate-100 dark:bg-slate-800 rounded-full text-xs font-semibold">Ultrabooks</span>
-<span class="px-3 py-1 bg-slate-100 dark:bg-slate-800 rounded-full text-xs font-semibold">Workstations</span>
 </div>
-</div>
-</div>
-</main>
-<!-- Bottom Navigation Bar -->
-<nav class="sticky bottom-0 w-full border-t border-slate-100 dark:border-slate-800 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md px-4 pb-6 pt-3 flex justify-around items-center">
-<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500 hover:text-primary transition-colors" href="#">
-<span class="material-symbols-outlined">home</span>
-<p class="text-[10px] font-medium leading-normal">Home</p>
-</a>
-<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500 hover:text-primary transition-colors" href="#">
-<span class="material-symbols-outlined">search</span>
-<p class="text-[10px] font-medium leading-normal">Search</p>
-</a>
-<a class="flex flex-col items-center gap-1 text-primary" href="#">
-<div class="relative">
-<span class="material-symbols-outlined text-primary fill-1">shopping_cart</span>
-<span class="absolute -top-1 -right-1 flex h-2 w-2">
-<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-<span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-</span>
-</div>
-<p class="text-[10px] font-bold leading-normal">Cart</p>
-</a>
-<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500 hover:text-primary transition-colors" href="#">
-<span class="material-symbols-outlined">person</span>
-<p class="text-[10px] font-medium leading-normal">Profile</p>
-</a>
-</nav>
+<!-- Bottom Spacer for mobile bars -->
+<div class="h-6 bg-white dark:bg-slate-900"></div>
 </div>
 </body></html>
