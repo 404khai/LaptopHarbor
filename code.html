@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 
-<html lang="en"><head>
+<html class="light" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>LaptopHarbor Search</title>
+<title>LaptopHarbor - Your Cart</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
         tailwind.config = {
@@ -14,17 +14,17 @@
             theme: {
                 extend: {
                     colors: {
-                        "primary": "#17e8b6",
-                        "background-light": "#FFFFFF",
-                        "background-dark": "#0a0a0a",
+                        "primary": "#11e8b6",
+                        "background-light": "#f6f8f8",
+                        "background-dark": "#10221e",
                     },
                     fontFamily: {
-                        "display": ["Inter", "sans-serif"]
+                        "display": ["Inter"]
                     },
                     borderRadius: {
-                        "DEFAULT": "12px",
-                        "lg": "12px",
-                        "xl": "12px",
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
                         "full": "9999px"
                     },
                 },
@@ -32,161 +32,76 @@
         }
     </script>
 <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #FFFFFF;
-        }
-        .touch-target {
-            min-height: 44px;
-            min-width: 44px;
-        }
-    </style>
-<style>
     body {
       min-height: max(884px, 100dvh);
     }
   </style>
   </head>
-<body class="bg-background-light text-slate-900 font-display">
-<div class="relative flex h-screen w-full flex-col overflow-hidden max-w-md mx-auto border-x border-slate-100">
-<!-- TopAppBar / Search Header -->
-<header class="pt-6 px-4">
-<div class="flex items-center justify-between mb-4">
-<button aria-label="Back" class="touch-target flex items-center justify-center text-slate-900">
+<body class="bg-white dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased">
+<div class="relative flex h-screen w-full flex-col overflow-x-hidden">
+<!-- Header -->
+<header class="flex items-center bg-white dark:bg-background-dark p-4 border-b border-slate-100 dark:border-slate-800 justify-between sticky top-0 z-10">
+<div class="text-slate-900 dark:text-slate-100 flex size-10 shrink-0 items-center justify-center cursor-pointer">
 <span class="material-symbols-outlined">arrow_back</span>
-</button>
-<h1 class="text-xl font-bold flex-1 text-center pr-11">Search</h1>
 </div>
-<!-- Search Bar with Black Border -->
-<div class="relative w-full">
-<div class="flex items-center border-2 border-black rounded-lg h-12 bg-white px-3 overflow-hidden">
-<span class="material-symbols-outlined text-slate-400 mr-2">search</span>
-<input autofocus="" class="flex-1 border-none focus:ring-0 text-base placeholder-slate-400 p-0" placeholder="Search for your next laptop..." type="text"/>
-<button class="touch-target flex items-center justify-center text-slate-400">
-<span class="material-symbols-outlined text-sm">close</span>
-</button>
-</div>
-</div>
+<h1 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-tight flex-1 text-center pr-10">LaptopHarbor</h1>
 </header>
-<!-- Recent Searches Section -->
-<section class="px-4 mt-6">
-<div class="flex justify-between items-center mb-3">
-<h2 class="font-bold text-sm uppercase tracking-wider text-slate-500">Recent Searches</h2>
-<button class="text-xs font-semibold text-slate-400">Clear All</button>
+<!-- Main Content -->
+<main class="flex flex-1 flex-col items-center justify-center px-6 py-12">
+<div class="flex flex-col items-center gap-8 w-full max-w-md">
+<!-- Minimalist Illustration Container -->
+<div class="relative flex items-center justify-center w-48 h-48 bg-slate-50 dark:bg-slate-900/50 rounded-full">
+<span class="material-symbols-outlined text-slate-300 dark:text-slate-700 !text-[120px] font-light">shopping_bag</span>
+<!-- Decorative Element -->
+<div class="absolute bottom-10 right-10 w-12 h-12 bg-primary/20 rounded-full blur-xl"></div>
 </div>
-<div class="flex gap-2 flex-wrap">
-<div class="flex h-9 items-center justify-center rounded-lg bg-black px-4 touch-target">
-<span class="text-white text-sm font-medium">MacBook Pro</span>
+<div class="flex flex-col items-center gap-3">
+<h2 class="text-slate-900 dark:text-slate-100 text-2xl font-bold leading-tight tracking-tight text-center">
+                        Your cart is empty
+                    </h2>
+<p class="text-slate-500 dark:text-slate-400 text-base font-normal leading-relaxed text-center max-w-[320px]">
+                        Looks like you haven't added any laptops to your cart yet.
+                    </p>
 </div>
-<div class="flex h-9 items-center justify-center rounded-lg bg-black px-4 touch-target">
-<span class="text-white text-sm font-medium">Gaming Laptops</span>
+<!-- CTA Button -->
+<button class="flex min-w-[200px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-14 px-8 bg-primary hover:opacity-90 transition-opacity text-slate-900 text-base font-bold leading-normal tracking-wide shadow-lg shadow-primary/20">
+<span class="truncate">Start Shopping</span>
+</button>
+<!-- Secondary Helper -->
+<div class="mt-4 flex flex-col items-center gap-4">
+<p class="text-xs text-slate-400 dark:text-slate-500 font-medium uppercase tracking-widest">Recommended Categories</p>
+<div class="flex gap-2">
+<span class="px-3 py-1 bg-slate-100 dark:bg-slate-800 rounded-full text-xs font-semibold">Gaming</span>
+<span class="px-3 py-1 bg-slate-100 dark:bg-slate-800 rounded-full text-xs font-semibold">Ultrabooks</span>
+<span class="px-3 py-1 bg-slate-100 dark:bg-slate-800 rounded-full text-xs font-semibold">Workstations</span>
 </div>
-<div class="flex h-9 items-center justify-center rounded-lg bg-black px-4 touch-target">
-<span class="text-white text-sm font-medium">Dell XPS</span>
-</div>
-</div>
-</section>
-<!-- Real-time Search Suggestions -->
-<main class="flex-1 overflow-y-auto px-4 mt-8 pb-72">
-<h2 class="font-bold text-sm uppercase tracking-wider text-slate-500 mb-4">Suggestions</h2>
-<div class="space-y-4">
-<!-- Suggestion Item 1 -->
-<div class="flex items-center gap-4 p-2 hover:bg-slate-50 rounded-lg transition-colors cursor-pointer touch-target">
-<div class="size-16 bg-slate-100 rounded-lg flex-shrink-0 overflow-hidden border border-slate-100">
-<img class="w-full h-full object-cover" data-alt="Silver Apple MacBook Pro on a desk" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBHZloT4uoJ5qEyy27P4jjeXRGJIZtblE0_4s_9D1QMj_qy8csCyqPK3H0fC2DAU4PYZV8xTGElI535hgIqt9t-j4-jTxvrpbZYOmjM8u4sCdyraHcM4SYSOTSKVBsZX27tCtpb9SMNqZ_cl7Om3ehjEG2i8_fMAv6TqDlIejRncPjmnv1K00bknd_Bwzdd6SufC0UFjCC6UDjB4KAAKaNyfBXQvRfRqJ4PFRrvlvhcVGion4Irzuq3R3nbZ05_9SQITRWzJlvVoLJ_"/>
-</div>
-<div class="flex flex-col flex-1">
-<span class="font-bold text-black leading-snug">Apple MacBook Pro 14" M3</span>
-<span class="text-primary font-bold text-sm tracking-tight">$1,599.00</span>
-</div>
-<span class="material-symbols-outlined text-slate-300">north_west</span>
-</div>
-<!-- Suggestion Item 2 -->
-<div class="flex items-center gap-4 p-2 hover:bg-slate-50 rounded-lg transition-colors cursor-pointer touch-target">
-<div class="size-16 bg-slate-100 rounded-lg flex-shrink-0 overflow-hidden border border-slate-100">
-<img class="w-full h-full object-cover" data-alt="High performance gaming laptop with backlit keyboard" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLHYlWGKzDb7WltqSsPMrEC4AVTPfK8bpUoUK-9ptmBD8Kq5RgwhyDMaB0r5epFNhnVgpkGH7oWyA7yiv-1_3J62pPSUw3zQmTFFNYAVDIaKuwWzUqaYCfVGO8wJF8ccUeQTPpGyGMb_uiuITYC4dmjv9cf8rW8t3gttUHHB_Sg__3m4A_xuzSMOe-sCwESTeIoIYGnlsNiZ5YjyTwfiJs48Mq_UswRnYch-pLAVzwET7vhy0wbbKl-z0FXLYXBkZF1QIoWzwY1FGI"/>
-</div>
-<div class="flex flex-col flex-1">
-<span class="font-bold text-black leading-snug">Razer Blade 16 Gaming Laptop</span>
-<span class="text-primary font-bold text-sm tracking-tight">$2,999.99</span>
-</div>
-<span class="material-symbols-outlined text-slate-300">north_west</span>
-</div>
-<!-- Suggestion Item 3 -->
-<div class="flex items-center gap-4 p-2 hover:bg-slate-50 rounded-lg transition-colors cursor-pointer touch-target">
-<div class="size-16 bg-slate-100 rounded-lg flex-shrink-0 overflow-hidden border border-slate-100">
-<img class="w-full h-full object-cover" data-alt="Dell XPS laptop showing slim bezels" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBrmW127igLS55Y9Pl734zl9rbw3Cxxeaoha68McyxNykSrt3eEpghd_zyyAIbry--n1QOw-sjLKPEVNtTv8S8f43aBu86ga2-xvMGIHEW5Xxb-i_kwwwMW3XW6AbmHEvUWE6VesGaSES7nXClXfNYIi1sjHJLHTybT1CUYqlNuOnu03H56lUdCU1kd85Y0pgiHOjFDBlltpdiX1jxFeJLk4sSHm8LhyQlNPLZPIttKHQbvybuFMzxzuYmfPGF6GyZo6WRdS8mg-ZRQ"/>
-</div>
-<div class="flex flex-col flex-1">
-<span class="font-bold text-black leading-snug">Dell XPS 13 Plus 9320</span>
-<span class="text-primary font-bold text-sm tracking-tight">$1,249.00</span>
-</div>
-<span class="material-symbols-outlined text-slate-300">north_west</span>
-</div>
-<!-- Suggestion Item 4 -->
-<div class="flex items-center gap-4 p-2 hover:bg-slate-50 rounded-lg transition-colors cursor-pointer touch-target">
-<div class="size-16 bg-slate-100 rounded-lg flex-shrink-0 overflow-hidden border border-slate-100">
-<img class="w-full h-full object-cover" data-alt="Microsoft Surface Laptop studio" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmoPaT-qMZvHLWT_MJf8dfFEnueN_RA82xol-GzSaYvdk59Xux-Rmx4hzZoCephjSAsC7FLYPTQLktaH0RNhfsHsMUPzzRj_m5rXu-MTIXVXgRl53Uwhjt-VFOdJ8eD8r_5miVG6X_wzNJ5v5frZG1tPhBq2nJNwpEabJNAsCvXxCrby_S7_OE0RIbtYe7ir_dnIVTwSgL2ebRalLHGN5gvH6bYVQGV6yj98MSKY1LdQsvR590-Nqzt-z4fWURDoyCmNFG5YBhE_vj"/>
-</div>
-<div class="flex flex-col flex-1">
-<span class="font-bold text-black leading-snug">Microsoft Surface Laptop 5</span>
-<span class="text-primary font-bold text-sm tracking-tight">$999.00</span>
-</div>
-<span class="material-symbols-outlined text-slate-300">north_west</span>
 </div>
 </div>
 </main>
-<!-- Mock System Keyboard -->
-<div class="absolute bottom-0 w-full bg-[#D1D5DB] p-2 flex flex-col gap-2">
-<!-- Row 1 -->
-<div class="flex justify-center gap-1.5 w-full">
-<div class="h-10 bg-white rounded flex-1 flex items-center justify-center font-medium shadow-sm">Q</div>
-<div class="h-10 bg-white rounded flex-1 flex items-center justify-center font-medium shadow-sm">W</div>
-<div class="h-10 bg-white rounded flex-1 flex items-center justify-center font-medium shadow-sm">E</div>
-<div class="h-10 bg-white rounded flex-1 flex items-center justify-center font-medium shadow-sm">R</div>
-<div class="h-10 bg-white rounded flex-1 flex items-center justify-center font-medium shadow-sm">T</div>
-<div class="h-10 bg-white rounded flex-1 flex items-center justify-center font-medium shadow-sm">Y</div>
-<div class="h-10 bg-white rounded flex-1 flex items-center justify-center font-medium shadow-sm">U</div>
-<div class="h-10 bg-white rounded flex-1 flex items-center justify-center font-medium shadow-sm">I</div>
-<div class="h-10 bg-white rounded flex-1 flex items-center justify-center font-medium shadow-sm">O</div>
-<div class="h-10 bg-white rounded flex-1 flex items-center justify-center font-medium shadow-sm">P</div>
+<!-- Bottom Navigation Bar -->
+<nav class="sticky bottom-0 w-full border-t border-slate-100 dark:border-slate-800 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md px-4 pb-6 pt-3 flex justify-around items-center">
+<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">home</span>
+<p class="text-[10px] font-medium leading-normal">Home</p>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">search</span>
+<p class="text-[10px] font-medium leading-normal">Search</p>
+</a>
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<div class="relative">
+<span class="material-symbols-outlined text-primary fill-1">shopping_cart</span>
+<span class="absolute -top-1 -right-1 flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+</span>
 </div>
-<!-- Row 2 -->
-<div class="flex justify-center gap-1.5 w-full px-4">
-<div class="h-10 bg-white rounded flex-1 flex items-center justify-center font-medium shadow-sm">A</div>
-<div class="h-10 bg-white rounded flex-1 flex items-center justify-center font-medium shadow-sm">S</div>
-<div class="h-10 bg-white rounded flex-1 flex items-center justify-center font-medium shadow-sm">D</div>
-<div class="h-10 bg-white rounded flex-1 flex items-center justify-center font-medium shadow-sm">F</div>
-<div class="h-10 bg-white rounded flex-1 flex items-center justify-center font-medium shadow-sm">G</div>
-<div class="h-10 bg-white rounded flex-1 flex items-center justify-center font-medium shadow-sm">H</div>
-<div class="h-10 bg-white rounded flex-1 flex items-center justify-center font-medium shadow-sm">J</div>
-<div class="h-10 bg-white rounded flex-1 flex items-center justify-center font-medium shadow-sm">K</div>
-<div class="h-10 bg-white rounded flex-1 flex items-center justify-center font-medium shadow-sm">L</div>
-</div>
-<!-- Row 3 -->
-<div class="flex justify-center gap-1.5 w-full">
-<div class="h-10 bg-[#A6ACB7] rounded w-10 flex items-center justify-center shadow-sm">
-<span class="material-symbols-outlined text-white text-base">shift</span>
-</div>
-<div class="h-10 bg-white rounded flex-1 flex items-center justify-center font-medium shadow-sm">Z</div>
-<div class="h-10 bg-white rounded flex-1 flex items-center justify-center font-medium shadow-sm">X</div>
-<div class="h-10 bg-white rounded flex-1 flex items-center justify-center font-medium shadow-sm">C</div>
-<div class="h-10 bg-white rounded flex-1 flex items-center justify-center font-medium shadow-sm">V</div>
-<div class="h-10 bg-white rounded flex-1 flex items-center justify-center font-medium shadow-sm">B</div>
-<div class="h-10 bg-white rounded flex-1 flex items-center justify-center font-medium shadow-sm">N</div>
-<div class="h-10 bg-white rounded flex-1 flex items-center justify-center font-medium shadow-sm">M</div>
-<div class="h-10 bg-[#A6ACB7] rounded w-10 flex items-center justify-center shadow-sm">
-<span class="material-symbols-outlined text-white text-base">backspace</span>
-</div>
-</div>
-<!-- Row 4 -->
-<div class="flex justify-center gap-1.5 w-full pb-2">
-<div class="h-10 bg-[#A6ACB7] rounded w-16 flex items-center justify-center font-medium shadow-sm">123</div>
-<div class="h-10 bg-white rounded flex-[3] flex items-center justify-center font-medium shadow-sm">space</div>
-<div class="h-10 bg-primary rounded flex-[1.5] flex items-center justify-center font-bold text-slate-900 shadow-sm">Go</div>
-</div>
-<!-- Bottom Handle -->
-<div class="w-32 h-1 bg-slate-900/30 rounded-full self-center mb-1 mt-1"></div>
-</div>
+<p class="text-[10px] font-bold leading-normal">Cart</p>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">person</span>
+<p class="text-[10px] font-medium leading-normal">Profile</p>
+</a>
+</nav>
 </div>
 </body></html>
