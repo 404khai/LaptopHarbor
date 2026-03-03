@@ -75,7 +75,7 @@ class _SearchScreenState extends State<SearchScreen> {
         centerTitle: true,
         leading: const Center(child: CustomBackButton()),
         title: Text(
-          'LaptopHarbor',
+          'Search',
           style: GoogleFonts.inter(
             fontSize: 20,
             fontWeight: FontWeight.bold,
