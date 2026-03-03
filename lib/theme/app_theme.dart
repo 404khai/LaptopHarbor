@@ -10,6 +10,7 @@ class AppColors {
   static const Color success = Colors.green;
   static const Color inputBorder = Color(0xFFE2E8F0); // Slate-200
   static const Color inputBorderFocused = primary;
+  static const Color ratingColor = Color(0xFFFFC107); // Yellow
 
   // Slate colors
   static const Color slate50 = Color(0xFFF8FAFC);
