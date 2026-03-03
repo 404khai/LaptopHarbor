@@ -188,6 +188,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               ],
                             ),
                           ),
+                          const SizedBox(height: 32),
+                          // Write a Review Section
+                          _buildWriteReviewSection(),
+                          const SizedBox(height: 32),
                         ],
                       ),
                     ),
@@ -684,7 +688,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   (index) => Icon(
                     index < rating ? Icons.star : Icons.star_border,
                     size: 16,
-                    color: AppColors.slate900,
+                    color: AppColors.ratingColor,
                   ),
                 ),
               ),
@@ -734,6 +738,201 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildWriteReviewSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Write a Review',
+          style: GoogleFonts.inter(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: AppColors.slate900,
+          ),
+        ),
+        const SizedBox(height: 16),
+        // Product Context (Optional but good for UX)
+        Container(
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            color: AppColors.slate50,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: Colors.grey[200]!),
+          ),
+          child: Row(
+            children: [
+              Container(
+                width: 60,
+                height: 60,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: Colors.grey[200]!),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: Image.network(
+                    widget.product['image'] ?? '',
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) =>
+                        const Icon(Icons.image, color: Colors.grey),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'REVIEWING',
+                      style: GoogleFonts.inter(
+                        fontSize: 10,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey[500],
+                        letterSpacing: 1,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      widget.product['title'] ?? '',
+                      style: GoogleFonts.inter(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.slate900,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 24),
+        // Overall Rating
+        Text(
+          'Overall Rating',
+          style: GoogleFonts.inter(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            color: AppColors.slate900,
+          ),
+        ),
+        const SizedBox(height: 8),
+        Row(
+          children: [
+            Row(
+              children: List.generate(
+                5,
+                (index) => IconButton(
+                  onPressed: () {}, // Make interactive if needed
+                  icon: const Icon(Icons.star_rounded, size: 32),
+                  color: index < 4
+                      ? const Color(0xFFFFC107)
+                      : Colors.grey[300], // Yellow stars
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(),
+                  style: IconButton.styleFrom(
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(width: 12),
+            Text(
+              '4.0',
+              style: GoogleFonts.inter(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.grey[400],
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 24),
+        // Review Body
+        Text(
+          'REVIEW BODY',
+          style: GoogleFonts.inter(
+            fontSize: 12,
+            fontWeight: FontWeight.bold,
+            color: AppColors.slate900,
+            letterSpacing: 0.5,
+          ),
+        ),
+        const SizedBox(height: 8),
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: TextField(
+            maxLines: 6,
+            decoration: InputDecoration(
+              hintText: 'Share your thoughts about this laptop...',
+              hintStyle: GoogleFonts.inter(color: Colors.grey[400]),
+              contentPadding: const EdgeInsets.all(16),
+              border: InputBorder.none,
+              enabledBorder: InputBorder.none,
+              focusedBorder: InputBorder.none,
+              filled: true,
+              fillColor: Colors.grey[100],
+            ),
+            style: GoogleFonts.inter(fontSize: 14, color: AppColors.slate900),
+          ),
+        ),
+        const SizedBox(height: 32),
+        // Submit Button
+        SizedBox(
+          width: double.infinity,
+          height: 56,
+          child: ElevatedButton(
+            onPressed: () {},
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.primary,
+              foregroundColor: AppColors.slate900,
+              elevation: 4,
+              shadowColor: AppColors.primary.withValues(alpha: 0.4),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+            ),
+            child: Text(
+              'SUBMIT REVIEW',
+              style: GoogleFonts.inter(
+                fontSize: 16,
+                fontWeight: FontWeight.w400,
+                letterSpacing: 1,
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 16),
+        Center(
+          child: Text.rich(
+            TextSpan(
+              text: 'By submitting, you agree to LaptopHarbor\'s ',
+              style: GoogleFonts.inter(fontSize: 12, color: Colors.grey[500]),
+              children: [
+                TextSpan(
+                  text: 'Community Guidelines',
+                  style: GoogleFonts.inter(
+                    decoration: TextDecoration.underline,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                const TextSpan(text: '.'),
+              ],
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ),
+      ],
     );
   }
 }
