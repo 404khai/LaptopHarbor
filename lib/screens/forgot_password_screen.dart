@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../theme/app_theme.dart';
+import '../widgets/custom_back_button.dart';
 import 'otp_verification_screen.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
@@ -27,10 +28,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: AppColors.text),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
+        leading: const Center(child: CustomBackButton()),
       ),
       body: SafeArea(
         child: Center(

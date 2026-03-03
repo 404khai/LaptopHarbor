@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../theme/app_theme.dart';
+import 'login_screen.dart';
+import 'home_screen.dart';
+
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -29,152 +32,110 @@ class _SignupScreenState extends State<SignupScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: const SizedBox(), // Hide default back button
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.close, color: AppColors.text),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
-        ],
-        title: Row(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(4),
-              child: Image.asset(
-                'images/logo.jpeg',
-                width: 24,
-                height: 24,
-                fit: BoxFit.cover,
-              ),
-            ),
-            const SizedBox(width: 8),
-            Text(
-              'LaptopHarbor',
-              style: GoogleFonts.inter(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: AppColors.text,
-              ),
-            ),
-          ],
-        ),
-      ),
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
             padding: const EdgeInsets.symmetric(
-              horizontal: 24.0,
-              vertical: 24.0,
+              horizontal: 16.0,
+              vertical: 48.0,
             ),
             child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 448),
+              constraints: const BoxConstraints(maxWidth: 448), // max-w-md
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text(
-                    'Create Account',
-                    style: GoogleFonts.inter(
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.text,
-                      height: 1.1,
-                    ),
+                  // Header Section
+                  Column(
+                    children: [
+                      Container(
+                        width: 64,
+                        height: 64,
+                        decoration: BoxDecoration(
+                          color: AppColors.text, // slate-900 always for logo bg
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Center(
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: Image.asset(
+                              'images/logo.jpeg',
+                              width: 64,
+                              height: 64,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        'Sign Up',
+                        style: GoogleFonts.inter(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.text,
+                          letterSpacing: -0.025,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        'Create an account to get started.',
+                        style: GoogleFonts.inter(
+                          fontSize: 14,
+                          color: AppColors.subtext,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 32),
 
-                  // Full Name
-                  Text(
-                    'FULL NAME',
-                    style: GoogleFonts.inter(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.text,
-                      letterSpacing: 0.5,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  TextFormField(
-                    controller: _nameController,
-                    decoration: InputDecoration(
-                      hintText: 'Enter your full name',
-                      hintStyle: GoogleFonts.inter(color: Colors.grey[400]),
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 16,
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: const BorderSide(
-                          color: AppColors.inputBorder,
+                  // Form Section
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Email Field
+                      Text(
+                        'Email Address',
+                        style: GoogleFonts.inter(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.text,
                         ),
                       ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: const BorderSide(
-                          color: AppColors.inputBorder,
+                      const SizedBox(height: 6),
+                      TextFormField(
+                        decoration: InputDecoration(
+                          hintText: 'name@company.com',
+                          hintStyle: GoogleFonts.inter(color: Colors.grey[400]),
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 16,
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide.none,
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide.none,
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide(
+                              color: AppColors.primary,
+                              width: 2,
+                            ),
+                          ),
+                          filled: true,
+                          fillColor: Colors.grey[100],
                         ),
+                        keyboardType: TextInputType.emailAddress,
+                        style: GoogleFonts.inter(color: AppColors.text),
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: const BorderSide(
-                          color: AppColors.primary,
-                          width: 2,
-                        ),
-                      ),
-                    ),
-                    style: GoogleFonts.inter(color: AppColors.text),
-                  ),
-                  const SizedBox(height: 24),
+                      const SizedBox(height: 16),
 
-                  // Email Address
-                  Text(
-                    'EMAIL ADDRESS',
-                    style: GoogleFonts.inter(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.text,
-                      letterSpacing: 0.5,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  TextFormField(
-                    controller: _emailController,
-                    decoration: InputDecoration(
-                      hintText: 'name@example.com',
-                      hintStyle: GoogleFonts.inter(color: Colors.grey[400]),
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 16,
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: const BorderSide(
-                          color: AppColors.inputBorder,
-                        ),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: const BorderSide(
-                          color: AppColors.inputBorder,
-                        ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: const BorderSide(
-                          color: AppColors.primary,
-                          width: 2,
-                        ),
-                      ),
-                    ),
-                    keyboardType: TextInputType.emailAddress,
-                    style: GoogleFonts.inter(color: AppColors.text),
-                  ),
-                  const SizedBox(height: 24),
-
-                  // Password
+                      // Password
                   Text(
                     'PASSWORD',
                     style: GoogleFonts.inter(
@@ -197,15 +158,11 @@ class _SignupScreenState extends State<SignupScreen> {
                       ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
-                        borderSide: const BorderSide(
-                          color: AppColors.inputBorder,
-                        ),
+                        borderSide: BorderSide.none,
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
-                        borderSide: const BorderSide(
-                          color: AppColors.inputBorder,
-                        ),
+                        borderSide: BorderSide.none,
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
@@ -214,6 +171,8 @@ class _SignupScreenState extends State<SignupScreen> {
                           width: 2,
                         ),
                       ),
+                      filled: true,
+                      fillColor: Colors.grey[100],
                       suffixIcon: IconButton(
                         icon: Icon(
                           _obscurePassword
@@ -277,6 +236,9 @@ class _SignupScreenState extends State<SignupScreen> {
                     ),
                   ),
                   const SizedBox(height: 24),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
 
                   // Terms & Conditions
                   Row(
@@ -334,12 +296,17 @@ class _SignupScreenState extends State<SignupScreen> {
                   ),
                   const SizedBox(height: 32),
 
-                  // Create Account Button
+
+                  // Sign In Button
                   SizedBox(
                     height: 56,
                     child: ElevatedButton(
                       onPressed: () {
-                        // TODO: Implement sign up logic
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (context) => const HomeScreen(),
+                          ),
+                        );
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.primary,
@@ -350,7 +317,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         ),
                       ),
                       child: Text(
-                        'Create Account',
+                        'Sign Up',
                         style: GoogleFonts.inter(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -358,9 +325,9 @@ class _SignupScreenState extends State<SignupScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 32),
 
-                  // Footer
+                  // Sign Up Link
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -373,14 +340,20 @@ class _SignupScreenState extends State<SignupScreen> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          Navigator.of(context).pop();
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const LoginScreen(),
+                            ),
+                          );
                         },
                         child: Text(
-                          'Sign In',
+                          'Log In',
                           style: GoogleFonts.inter(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
                             color: AppColors.text,
+                            decorationColor: AppColors.primary,
+                            decorationThickness: 2,
                           ),
                         ),
                       ),
