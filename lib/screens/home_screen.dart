@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../theme/app_theme.dart';
 import '../widgets/custom_bottom_nav_bar.dart';
+import '../widgets/laptops_section.dart';
+import '../widgets/accessories_section.dart';
+import '../widgets/components_section.dart';
 import 'cart_screen.dart';
 import 'search_screen.dart';
 
@@ -44,13 +47,10 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    'LaptopHarbor',
-                    style: GoogleFonts.inter(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.text,
-                    ),
+                  Image.asset(
+                    'images/logo2.png',
+                    height: 40, // Adjust height as needed to match design
+                    fit: BoxFit.contain,
                   ),
                   Container(
                     width: 40,
@@ -312,6 +312,18 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                     ),
+                    const SizedBox(height: 32),
+
+                    // Laptops Section
+                    const LaptopsSection(),
+                    const SizedBox(height: 32),
+
+                    // Accessories Section
+                    const AccessoriesSection(),
+                    const SizedBox(height: 32),
+
+                    // Components Section
+                    const ComponentsSection(),
                   ],
                 ),
               ),

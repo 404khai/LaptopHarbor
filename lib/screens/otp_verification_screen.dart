@@ -48,33 +48,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
         elevation: 0,
         centerTitle: true,
         leading: const Center(child: CustomBackButton()),
-        title: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              width: 32,
-              height: 32,
-              decoration: BoxDecoration(
-                color: AppColors.primary,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: const Icon(
-                Icons.laptop_mac,
-                color: Colors.black,
-                size: 20,
-              ),
-            ),
-            const SizedBox(width: 8),
-            Text(
-              'LaptopHarbor',
-              style: GoogleFonts.inter(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: AppColors.text,
-              ),
-            ),
-          ],
-        ),
+      
       ),
       body: SafeArea(
         child: Column(
@@ -132,26 +106,22 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                               decoration: InputDecoration(
                                 counterText: '',
                                 contentPadding: EdgeInsets.zero,
+                                filled: true,
+                                fillColor: Colors.grey[100],
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(12),
-                                  borderSide: const BorderSide(
-                                    color: AppColors.inputBorder,
-                                    width: 2,
-                                  ),
+                                  borderSide: BorderSide.none,
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(12),
-                                  borderSide: const BorderSide(
+                                  borderSide: BorderSide(
                                     color: AppColors.primary,
                                     width: 2,
                                   ),
                                 ),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(12),
-                                  borderSide: const BorderSide(
-                                    color: AppColors.inputBorder,
-                                    width: 2,
-                                  ),
+                                  borderSide: BorderSide.none,
                                 ),
                               ),
                               onChanged: (value) => _onOtpChanged(value, index),

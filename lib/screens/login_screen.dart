@@ -25,7 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Center(
           child: SingleChildScrollView(
             padding: const EdgeInsets.symmetric(
-              horizontal: 16.0,
+              horizontal: 30.0,
               vertical: 48.0,
             ),
             child: ConstrainedBox(
@@ -48,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(12),
                             child: Image.asset(
-                              'images/logo.jpeg',
+                              'images/logo.jpg',
                               width: 64,
                               height: 64,
                               fit: BoxFit.cover,
