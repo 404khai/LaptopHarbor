@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../theme/app_theme.dart';
 import '../widgets/custom_bottom_nav_bar.dart';
 import '../widgets/custom_back_button.dart';
+import 'profile_screen.dart';
 
 class WishlistScreen extends StatefulWidget {
   const WishlistScreen({super.key});
@@ -105,6 +106,13 @@ class _WishlistScreenState extends State<WishlistScreen> {
               onTap: (index) {
                 if (index == 0) {
                   Navigator.popUntil(context, (route) => route.isFirst);
+                } else if (index == 4) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ProfileScreen(),
+                    ),
+                  );
                 }
               },
             ),
@@ -128,11 +136,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
               shape: BoxShape.circle,
             ),
             child: Center(
-              child: Icon(
-                Icons.favorite, 
-                color: Colors.grey[400], 
-                size: 80
-              ),
+              child: Icon(Icons.favorite, color: Colors.grey[400], size: 80),
             ),
           ),
           const SizedBox(height: 48),
