@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../theme/app_theme.dart';
 import '../widgets/custom_back_button.dart';
+import 'payment_processing_screen.dart';
 
 class PaymentMethodsScreen extends StatefulWidget {
   const PaymentMethodsScreen({super.key});
@@ -67,7 +68,10 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
                 backgroundColor: AppColors.primary,
                 foregroundColor: AppColors.slate900,
                 elevation: 0,
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 8,
+                ),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
@@ -118,7 +122,9 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
                       ),
                     ),
                     const SizedBox(height: 24),
-                    ..._paymentMethods.map((method) => _buildPaymentCard(method)),
+                    ..._paymentMethods.map(
+                      (method) => _buildPaymentCard(method),
+                    ),
                     const SizedBox(height: 24),
                     Container(
                       padding: const EdgeInsets.all(16),
@@ -159,7 +165,12 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
                 height: 56,
                 child: ElevatedButton(
                   onPressed: () {
-                    // Confirm & Pay logic
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const PaymentProcessingScreen(),
+                      ),
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.slate900,
@@ -251,9 +262,7 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      isWallet
-                          ? method['subtitle']
-                          : method['expiry'],
+                      isWallet ? method['subtitle'] : method['expiry'],
                       style: GoogleFonts.inter(
                         fontSize: 14,
                         color: Colors.grey[500],
@@ -262,10 +271,7 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
                   ],
                 ),
               ),
-              Icon(
-                Icons.more_vert,
-                color: Colors.grey[400],
-              ),
+              Icon(Icons.more_vert, color: Colors.grey[400]),
             ],
           ),
           const SizedBox(height: 16),
@@ -298,7 +304,7 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
                         }
                         method['isDefault'] = true;
                       } else {
-                         method['isDefault'] = false;
+                        method['isDefault'] = false;
                       }
                     }
                   });
