@@ -3,7 +3,7 @@
 <html lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Order Review - LaptopHarbor</title>
+<title>Payment Methods - LaptopHarbor</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
@@ -14,7 +14,7 @@
             theme: {
                 extend: {
                     colors: {
-                        "primary": "#11e8b6",
+                        "primary": "#17e8b6",
                         "background-light": "#ffffff",
                         "background-dark": "#10221e",
                     },
@@ -23,7 +23,7 @@
                     },
                     borderRadius: {
                         "DEFAULT": "0.5rem",
-                        "lg": "1rem",
+                        "lg": "0.75rem",
                         "xl": "1.5rem",
                         "full": "9999px"
                     },
@@ -36,8 +36,8 @@
             font-family: 'Inter', sans-serif;
             background-color: #ffffff;
         }
-        .section-shadow {
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        .shadow-subtle {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
         }
     </style>
 <style>
@@ -46,128 +46,118 @@
     }
   </style>
   </head>
-<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display">
-<div class="relative flex h-auto min-h-screen w-full max-w-md mx-auto flex-col bg-background-light dark:bg-background-dark overflow-x-hidden">
-<!-- Header -->
-<div class="flex items-center p-4 pb-2 justify-between sticky top-0 bg-background-light/80 backdrop-blur-md z-10">
-<button class="text-slate-900 dark:text-slate-100 flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
-<span class="material-symbols-outlined">arrow_back</span>
+<body class="bg-background-light text-slate-900 font-display">
+<div class="relative mx-auto max-w-md min-h-screen flex flex-col">
+<!-- Top App Bar -->
+<header class="flex items-center justify-between p-6 bg-white sticky top-0 z-10">
+<div class="flex items-center gap-4">
+<button aria-label="Go back" class="flex items-center justify-center w-11 h-11 rounded-full hover:bg-slate-100 transition-colors">
+<span class="material-symbols-outlined text-slate-900 text-[24px]">arrow_back</span>
 </button>
-<h2 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-tight flex-1 text-center pr-10">Order Review</h2>
+<h1 class="text-xl font-bold tracking-tight text-slate-900">Payment Methods</h1>
 </div>
-<!-- Progress Indicator -->
-<div class="flex flex-col gap-3 p-4">
-<div class="flex gap-6 justify-between items-end">
-<p class="text-slate-900 dark:text-slate-100 text-base font-semibold leading-normal">Review Order</p>
-<p class="text-slate-500 dark:text-slate-400 text-sm font-medium leading-normal">Step 4 of 4</p>
+<button class="flex items-center gap-1 bg-primary text-slate-900 px-4 py-2 rounded-lg font-bold text-sm hover:opacity-90 transition-opacity min-h-[44px]">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span>Add New</span>
+</button>
+</header>
+<main class="flex-1 px-6 py-4 space-y-6">
+<!-- Section Header -->
+<div class="space-y-1">
+<h2 class="text-sm font-semibold uppercase tracking-wider text-slate-500">Saved Cards</h2>
+<p class="text-xs text-slate-400">Manage your preferred payment options for faster checkout.</p>
 </div>
-<div class="h-2 w-full rounded-full bg-slate-100 dark:bg-slate-800">
-<div class="h-full rounded-full bg-primary" style="width: 100%;"></div>
+<!-- Card List -->
+<div class="space-y-4">
+<!-- Visa Card -->
+<div class="bg-white border border-slate-100 p-5 rounded-lg shadow-subtle flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-12 h-8 bg-slate-50 rounded flex items-center justify-center overflow-hidden border border-slate-100">
+<img alt="Visa" class="w-8" data-alt="Official Visa credit card logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIVmFCNDQGWCXavXJfqN4YKuX2DHMVxP1FLwvlf700dOOTuee0_KbbqQoin_9qKAgvV14Iet5DkpHI6BOVmllo1A7TrLIlaHCsezG4A-6K8mL6yH9S6l9vpAvAnEuhDCLfK_Zq5CX7fiTy2fzRP8SoINQAqzs6Q3uJrU0z3wD7Wuaut6AiJ6KgbSoLitktWz8H5SPPq6mVRXyQo18SIU8WfUA1T9oqhmjrrXLfiBWEYvkrGPJSWVxZbdgZSFzw9HCfoiKWzLmy4XT_"/>
 </div>
-<p class="text-slate-500 dark:text-slate-400 text-xs font-medium uppercase tracking-wider">Shipping → Payment → Review</p>
-</div>
-<!-- Collapsible Sections -->
-<div class="flex flex-col p-4 gap-4">
-<!-- Shipping Address -->
-<details class="flex flex-col rounded-xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 section-shadow px-4 py-2 group" open="">
-<summary class="flex cursor-pointer items-center justify-between gap-4 py-3 list-none">
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-slate-900 dark:text-slate-100">local_shipping</span>
-<p class="text-slate-900 dark:text-slate-100 text-sm font-semibold">Shipping Address</p>
-</div>
-<span class="material-symbols-outlined text-slate-400 group-open:rotate-180 transition-transform">expand_more</span>
-</summary>
-<div class="pb-4 pt-1 border-t border-slate-50 dark:border-slate-800 mt-1">
-<p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
-                        John Doe<br/>
-                        123 Tech Lane, Silicon Valley<br/>
-                        Tech City, CA 94025
-                    </p>
-</div>
-</details>
-<!-- Payment Method -->
-<details class="flex flex-col rounded-xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 section-shadow px-4 py-2 group">
-<summary class="flex cursor-pointer items-center justify-between gap-4 py-3 list-none">
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-slate-900 dark:text-slate-100">credit_card</span>
-<p class="text-slate-900 dark:text-slate-100 text-sm font-semibold">Payment Method</p>
-</div>
-<span class="material-symbols-outlined text-slate-400 group-open:rotate-180 transition-transform">expand_more</span>
-</summary>
-<div class="pb-4 pt-1 border-t border-slate-50 dark:border-slate-800 mt-1">
-<p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
-                        Credit Card ending in 4242<br/>
-                        Exp: 12/26
-                    </p>
-</div>
-</details>
-<!-- Order Items -->
-<details class="flex flex-col rounded-xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 section-shadow px-4 py-2 group" open="">
-<summary class="flex cursor-pointer items-center justify-between gap-4 py-3 list-none">
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-slate-900 dark:text-slate-100">shopping_bag</span>
-<p class="text-slate-900 dark:text-slate-100 text-sm font-semibold">Order Items</p>
-</div>
-<span class="material-symbols-outlined text-slate-400 group-open:rotate-180 transition-transform">expand_more</span>
-</summary>
-<div class="flex flex-col gap-4 pb-4 pt-1 border-t border-slate-50 dark:border-slate-800 mt-1">
-<!-- Item 1 -->
-<div class="flex items-center gap-4 py-2">
-<div class="bg-slate-100 dark:bg-slate-800 bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-16 shrink-0" data-alt="MacBook Pro M3 Space Gray laptop" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBt2jj16meEr_EJJ2c-urSC0jTL1FY-fF6ZF-viOHe3K-g2fCGUYgSKC9ym1_g7teczS3t0kLyuAJxiqtiKW-aJJk8C_6jOK-0oksv-rsK3m-EnvCweePMONffur_yjYaXlQb21Tpu9A-ruyYnlcY12VV4jcdCKz2ZhHTzC06PBQyhDwA0Bu3Ib-4y67MAhuA85QDPxs8ghqUBWT4yHAypfh0Kalvs9Yo9jxNxHG6uF3MeHD3_xvoHa6c_3ienWdz22OxFy4VwN-kn9");'></div>
-<div class="flex flex-col flex-1">
-<p class="text-slate-900 dark:text-slate-100 text-sm font-semibold line-clamp-1">MacBook Pro M3</p>
-<p class="text-slate-500 dark:text-slate-400 text-xs">Space Gray, 16GB RAM</p>
-<p class="text-slate-900 dark:text-slate-100 text-sm font-medium mt-1">$2,499.00</p>
+<div>
+<p class="font-bold text-slate-900">Visa •••• 4242</p>
+<p class="text-sm text-slate-500">Expires 12/26</p>
 </div>
 </div>
-<!-- Item 2 -->
-<div class="flex items-center gap-4 py-2">
-<div class="bg-slate-100 dark:bg-slate-800 bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-16 shrink-0" data-alt="Harbor Pro 34 inch curved monitor" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBd9lRFD9JQGMmgCDgvYhYTlyFBEpwfIqGlV89dNtwV5u6CL2hcfI3w-0oOiJjXT4ca5CEAh47IMY5ytWwlL7cO9_AxF5F4okKw347cexbjTDaot7H2XplgP4gDPMQMoMh_510Ov9hVH9spNZuKebeLXQQ7wiP5enKFe2lffcIj6n_OwqtXScvQPdj5RiWCmvMI4u3t7nYw2dXJzdA8at5Yng2la5Mpjw4fk-gkzISajbhOizX0KhHmbnS9fVrPKejGYPmhgB1xwaAl");'></div>
-<div class="flex flex-col flex-1">
-<p class="text-slate-900 dark:text-slate-100 text-sm font-semibold line-clamp-1">Harbor Pro 34"</p>
-<p class="text-slate-500 dark:text-slate-400 text-xs">Ultrawide Curved Display</p>
-<p class="text-slate-900 dark:text-slate-100 text-sm font-medium mt-1">$498.00</p>
+<button class="w-11 h-11 flex items-center justify-center text-slate-400 hover:text-slate-900">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
 </div>
-</div>
-</div>
-</details>
-</div>
-<!-- Price Breakdown -->
-<div class="flex flex-col p-6 mt-2 gap-3 border-t border-slate-100 dark:border-slate-800">
-<div class="flex justify-between items-center">
-<p class="text-slate-500 dark:text-slate-400 text-sm">Subtotal</p>
-<p class="text-slate-900 dark:text-slate-100 text-sm font-medium">$2,997.00</p>
-</div>
-<div class="flex justify-between items-center">
-<p class="text-slate-500 dark:text-slate-400 text-sm">Shipping</p>
-<p class="text-primary text-sm font-bold uppercase tracking-wide">Free</p>
-</div>
-<div class="flex justify-between items-center">
-<p class="text-slate-500 dark:text-slate-400 text-sm">Tax</p>
-<p class="text-slate-900 dark:text-slate-100 text-sm font-medium">$240.00</p>
-</div>
-<div class="flex justify-between items-center mt-2 pt-4 border-t border-slate-100 dark:border-slate-800">
-<p class="text-slate-900 dark:text-slate-100 text-lg font-bold">Total</p>
-<p class="text-slate-900 dark:text-slate-100 text-2xl font-extrabold">$3,237.00</p>
-</div>
-</div>
-<!-- Agreement and CTA -->
-<div class="flex flex-col p-4 gap-6 mb-8">
-<label class="flex items-start gap-3 cursor-pointer group">
-<div class="relative flex items-center">
-<input class="peer h-5 w-5 cursor-pointer appearance-none rounded border-2 border-slate-900 dark:border-slate-100 bg-transparent checked:bg-slate-900 dark:checked:bg-slate-100 transition-all" type="checkbox"/>
-<span class="material-symbols-outlined absolute opacity-0 peer-checked:opacity-100 text-white dark:text-slate-900 pointer-events-none text-sm font-bold flex items-center justify-center w-5 h-5">check</span>
-</div>
-<span class="text-slate-600 dark:text-slate-400 text-sm leading-tight">
-                    I agree to the <a class="text-slate-900 dark:text-slate-100 font-semibold underline underline-offset-2" href="#">Terms and Conditions</a> and authorize LaptopHarbor to process this payment.
-                </span>
+<div class="h-px bg-slate-50 w-full"></div>
+<div class="flex items-center justify-between">
+<span class="text-sm font-medium text-slate-600">Set as Default</span>
+<label class="relative flex h-[31px] w-[51px] cursor-pointer items-center rounded-full border-none bg-slate-200 p-0.5 has-[:checked]:justify-end has-[:checked]:bg-primary transition-all">
+<div class="h-full aspect-square rounded-full bg-white shadow-md"></div>
+<input checked="" class="invisible absolute" type="checkbox"/>
 </label>
-<button class="w-full bg-primary hover:brightness-105 active:scale-[0.98] transition-all text-slate-900 font-bold text-base py-4 rounded-xl shadow-lg shadow-primary/20 flex items-center justify-center gap-2">
-<span>Place Order</span>
-<span class="material-symbols-outlined text-lg">arrow_forward</span>
+</div>
+</div>
+<!-- Mastercard Card -->
+<div class="bg-white border border-slate-100 p-5 rounded-lg shadow-subtle flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-12 h-8 bg-slate-50 rounded flex items-center justify-center overflow-hidden border border-slate-100">
+<img alt="Mastercard" class="w-8" data-alt="Official Mastercard credit card logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnw56Q27M6boX2QXWzV_Q1ar7S_UY4Hn0NLLToPwcFHbNH8Wz5ybxTmdoPlH5hRKev3jMgZztFEfZTPb2y2UfdMMgmfW86LaY6ao_1GYv3z4QkX8Ej-IrVaFQPNOQxLmrp-RIDeSe7pmO4qZrXKalDt3R4SHblBnYlTF-liAVocOghkfSPyoLtcs7SErd7dxSWyriRD1bQCNi66aF3-My7LTPzqZDG4khzKgbM84c0zc8mYbpWHT1c2M8KqoNxaEUS_Tad8U1nNEK6"/>
+</div>
+<div>
+<p class="font-bold text-slate-900">Mastercard •••• 8899</p>
+<p class="text-sm text-slate-500">Expires 09/25</p>
+</div>
+</div>
+<button class="w-11 h-11 flex items-center justify-center text-slate-400 hover:text-slate-900">
+<span class="material-symbols-outlined">more_vert</span>
 </button>
 </div>
-<!-- Bottom Spacer -->
-<div class="h-4"></div>
+<div class="h-px bg-slate-50 w-full"></div>
+<div class="flex items-center justify-between">
+<span class="text-sm font-medium text-slate-600">Set as Default</span>
+<label class="relative flex h-[31px] w-[51px] cursor-pointer items-center rounded-full border-none bg-slate-200 p-0.5 has-[:checked]:justify-end has-[:checked]:bg-primary transition-all">
+<div class="h-full aspect-square rounded-full bg-white shadow-md"></div>
+<input class="invisible absolute" type="checkbox"/>
+</label>
+</div>
+</div>
+<!-- Digital Wallet -->
+<div class="bg-white border border-slate-100 p-5 rounded-lg shadow-subtle flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-12 h-8 bg-slate-50 rounded flex items-center justify-center overflow-hidden border border-slate-100">
+<span class="material-symbols-outlined text-slate-900">account_balance_wallet</span>
+</div>
+<div>
+<p class="font-bold text-slate-900">Apple Pay</p>
+<p class="text-sm text-slate-500">Quick checkout enabled</p>
+</div>
+</div>
+<button class="w-11 h-11 flex items-center justify-center text-slate-400 hover:text-slate-900">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+<div class="h-px bg-slate-50 w-full"></div>
+<div class="flex items-center justify-between">
+<span class="text-sm font-medium text-slate-600">Active</span>
+<label class="relative flex h-[31px] w-[51px] cursor-pointer items-center rounded-full border-none bg-slate-200 p-0.5 has-[:checked]:justify-end has-[:checked]:bg-primary transition-all">
+<div class="h-full aspect-square rounded-full bg-white shadow-md"></div>
+<input class="invisible absolute" type="checkbox"/>
+</label>
+</div>
+</div>
+</div>
+<!-- Info Message -->
+<div class="p-4 bg-primary/10 rounded-lg flex gap-3">
+<span class="material-symbols-outlined text-slate-900 shrink-0">info</span>
+<p class="text-sm text-slate-700 leading-snug">
+                    Your payment information is encrypted and securely stored. We never share your full card details.
+                </p>
+</div>
+</main>
+<!-- Bottom Navigation Spacer -->
+<footer class="p-6">
+<button class="w-full py-4 bg-slate-900 text-white font-bold rounded-lg hover:bg-slate-800 transition-colors shadow-lg min-h-[56px]">
+                Confirm &amp; Pay
+            </button>
+</footer>
 </div>
 </body></html>
