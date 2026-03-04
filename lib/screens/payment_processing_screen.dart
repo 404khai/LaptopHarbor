@@ -93,7 +93,7 @@ class _PaymentProcessingScreenState extends State<PaymentProcessingScreen>
                           ),
                           const SizedBox(width: 8),
                           Text(
-                            'LaptopHarbor',
+                            'Processing',
                             style: GoogleFonts.inter(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,

@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../theme/app_theme.dart';
 import '../widgets/custom_back_button.dart';
+import '../widgets/custom_bottom_nav_bar.dart';
+import 'search_screen.dart';
+import 'cart_screen.dart';
+import 'wishlist_screen.dart';
+import 'profile_screen.dart';
 
 class PackageTrackingScreen extends StatelessWidget {
   const PackageTrackingScreen({super.key});
@@ -46,18 +51,29 @@ class PackageTrackingScreen extends StatelessWidget {
         children: [
           // Status Steps
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 24.0, horizontal: 24.0),
+            padding: const EdgeInsets.symmetric(
+              vertical: 24.0,
+              horizontal: 24.0,
+            ),
             child: Row(
               children: [
                 _buildStatusStep('PLACED', true, true),
                 Expanded(child: _buildConnector(true)),
                 _buildStatusStep('SHIPPED', true, true),
                 Expanded(child: _buildConnector(true)),
-                _buildStatusStep('TRANSIT', true, true,
-                    icon: Icons.local_shipping),
+                _buildStatusStep(
+                  'TRANSIT',
+                  true,
+                  true,
+                  icon: Icons.local_shipping,
+                ),
                 Expanded(child: _buildConnector(false)),
-                _buildStatusStep('ARRIVED', false, false,
-                    icon: Icons.inventory_2),
+                _buildStatusStep(
+                  'ARRIVED',
+                  false,
+                  false,
+                  icon: Icons.inventory_2,
+                ),
               ],
             ),
           ),
@@ -74,7 +90,8 @@ class PackageTrackingScreen extends StatelessWidget {
                     color: Colors.grey,
                     image: DecorationImage(
                       image: NetworkImage(
-                          'https://lh3.googleusercontent.com/aida-public/AB6AXuCVgrShSJ6I29ydoR1Y1WBco-bAu20EfxKJRkgRzMyHuPN9kE3bFiEDpbaFhv5JzFJK5C5iUFgsfapZ1bF30oFyZy6VGZy43RNOLqLG2aAuve14r9kBZgh3L1w9lBF6de0Z0lJuguinhyCe_qk8QgHYtFWKXcBqqjcTUmp2NLgQVqYTnSCnYHHcwsdAwMil5pKoZYZASUD1-E-B41j0PekPnwEquu2Wi1c2EPXBoEBFA6TNcLqxaAVhX8yXGjL65vZ4FIdcpFfy80ke'),
+                        'https://lh3.googleusercontent.com/aida-public/AB6AXuCVgrShSJ6I29ydoR1Y1WBco-bAu20EfxKJRkgRzMyHuPN9kE3bFiEDpbaFhv5JzFJK5C5iUFgsfapZ1bF30oFyZy6VGZy43RNOLqLG2aAuve14r9kBZgh3L1w9lBF6de0Z0lJuguinhyCe_qk8QgHYtFWKXcBqqjcTUmp2NLgQVqYTnSCnYHHcwsdAwMil5pKoZYZASUD1-E-B41j0PekPnwEquu2Wi1c2EPXBoEBFA6TNcLqxaAVhX8yXGjL65vZ4FIdcpFfy80ke',
+                      ),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -90,7 +107,9 @@ class PackageTrackingScreen extends StatelessWidget {
                       children: [
                         Container(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 12, vertical: 6),
+                            horizontal: 12,
+                            vertical: 6,
+                          ),
                           decoration: BoxDecoration(
                             color: Colors.black,
                             borderRadius: BorderRadius.circular(20),
@@ -110,8 +129,10 @@ class PackageTrackingScreen extends StatelessWidget {
                           decoration: BoxDecoration(
                             color: Colors.black,
                             shape: BoxShape.circle,
-                            border:
-                                Border.all(color: AppColors.primary, width: 2),
+                            border: Border.all(
+                              color: AppColors.primary,
+                              width: 2,
+                            ),
                             boxShadow: [
                               BoxShadow(
                                 color: AppColors.primary.withOpacity(0.4),
@@ -120,8 +141,11 @@ class PackageTrackingScreen extends StatelessWidget {
                               ),
                             ],
                           ),
-                          child: const Icon(Icons.navigation,
-                              color: AppColors.primary, size: 20),
+                          child: const Icon(
+                            Icons.navigation,
+                            color: AppColors.primary,
+                            size: 20,
+                          ),
                         ),
                       ],
                     ),
@@ -182,8 +206,10 @@ class PackageTrackingScreen extends StatelessWidget {
                                 color: AppColors.primary.withOpacity(0.1),
                                 borderRadius: BorderRadius.circular(12),
                               ),
-                              child: const Icon(Icons.schedule,
-                                  color: AppColors.primary),
+                              child: const Icon(
+                                Icons.schedule,
+                                color: AppColors.primary,
+                              ),
                             ),
                           ],
                         ),
@@ -202,7 +228,8 @@ class PackageTrackingScreen extends StatelessWidget {
                                 color: Colors.grey[200],
                                 image: const DecorationImage(
                                   image: NetworkImage(
-                                      'https://lh3.googleusercontent.com/aida-public/AB6AXuCo5pdDUtDEurj_PkftmKLYNMtxvZBuDX5uYXqq2HQLr2Hg2YDbGPEkdpqO2DKmz96msZX0lomqOy5ZkzaTBOyQdPPyoADKMlrHMGoXBEdaTxDgO0_LaSPnH7V96lWgzuX-SnE5Mkxv_lTdaTsGrAb-exYIC1whGZ4u47NIIj_A9bhk638Tu6YsQs2mhtx5zBhOMnSCTMNTMq6hdx69-CQjvCcPHKZJM0m-UWtBRXMecV8A_zzlyOD2JdINbED_1gxEqMPKv-gnL-Pd'),
+                                    'https://lh3.googleusercontent.com/aida-public/AB6AXuCo5pdDUtDEurj_PkftmKLYNMtxvZBuDX5uYXqq2HQLr2Hg2YDbGPEkdpqO2DKmz96msZX0lomqOy5ZkzaTBOyQdPPyoADKMlrHMGoXBEdaTxDgO0_LaSPnH7V96lWgzuX-SnE5Mkxv_lTdaTsGrAb-exYIC1whGZ4u47NIIj_A9bhk638Tu6YsQs2mhtx5zBhOMnSCTMNTMq6hdx69-CQjvCcPHKZJM0m-UWtBRXMecV8A_zzlyOD2JdINbED_1gxEqMPKv-gnL-Pd',
+                                  ),
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -238,8 +265,11 @@ class PackageTrackingScreen extends StatelessWidget {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Icon(Icons.location_on,
-                                color: Colors.grey, size: 20),
+                            const Icon(
+                              Icons.location_on,
+                              color: Colors.grey,
+                              size: 20,
+                            ),
                             const SizedBox(width: 12),
                             Expanded(
                               child: Column(
@@ -309,46 +339,60 @@ class PackageTrackingScreen extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.white,
-        selectedItemColor: AppColors.primary,
-        unselectedItemColor: Colors.grey[400],
-        showUnselectedLabels: true,
-        selectedLabelStyle:
-            GoogleFonts.inter(fontSize: 10, fontWeight: FontWeight.bold),
-        unselectedLabelStyle:
-            GoogleFonts.inter(fontSize: 10, fontWeight: FontWeight.bold),
-        currentIndex: 1, // Orders
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'HOME'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.inventory_2), label: 'ORDERS'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_cart), label: 'CART'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'PROFILE'),
-        ],
+      bottomNavigationBar: CustomBottomNavBar(
+        currentIndex: 4, // Profile/Orders context
+        onTap: (index) {
+          if (index == 0) {
+            Navigator.popUntil(context, (route) => route.isFirst);
+          } else if (index == 1) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const SearchScreen()),
+            );
+          } else if (index == 2) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const CartScreen()),
+            );
+          } else if (index == 3) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const WishlistScreen()),
+            );
+          } else if (index == 4) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const ProfileScreen()),
+            );
+          }
+        },
       ),
     );
   }
 
-  Widget _buildStatusStep(String label, bool isCompleted, bool isActive,
-      {IconData? icon}) {
+  Widget _buildStatusStep(
+    String label,
+    bool isCompleted,
+    bool isActive, {
+    IconData? icon,
+  }) {
     return Column(
       children: [
         Container(
           width: 32,
           height: 32,
           decoration: BoxDecoration(
-            color:
-                isCompleted || isActive ? AppColors.primary : Colors.grey[100],
+            color: isCompleted || isActive
+                ? AppColors.primary
+                : Colors.grey[100],
             shape: BoxShape.circle,
           ),
           child: Icon(
             icon ?? Icons.check,
             size: 16,
-            color:
-                isCompleted || isActive ? AppColors.slate900 : Colors.grey[400],
+            color: isCompleted || isActive
+                ? AppColors.slate900
+                : Colors.grey[400],
           ),
         ),
         const SizedBox(height: 4),
@@ -357,8 +401,9 @@ class PackageTrackingScreen extends StatelessWidget {
           style: GoogleFonts.inter(
             fontSize: 10,
             fontWeight: FontWeight.bold,
-            color:
-                isCompleted || isActive ? AppColors.slate900 : Colors.grey[400],
+            color: isCompleted || isActive
+                ? AppColors.slate900
+                : Colors.grey[400],
           ),
         ),
       ],
@@ -370,7 +415,8 @@ class PackageTrackingScreen extends StatelessWidget {
       height: 2,
       color: isActive ? AppColors.primary : Colors.grey[200],
       margin: const EdgeInsets.only(
-          bottom: 14), // Align with circle center roughly
+        bottom: 14,
+      ), // Align with circle center roughly
     );
   }
 }

@@ -257,22 +257,7 @@ class _SavedAddressesScreenState extends State<SavedAddressesScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: Container(
-        padding: const EdgeInsets.symmetric(vertical: 16),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border(top: BorderSide(color: Colors.grey[100]!)),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            _buildNavItem(Icons.laptop_mac, 'SHOP', false),
-            _buildNavItem(Icons.search, 'SEARCH', false),
-            _buildNavItem(Icons.shopping_cart, 'CART', false),
-            _buildNavItem(Icons.person, 'PROFILE', true),
-          ],
-        ),
-      ),
+      
     );
   }
 
