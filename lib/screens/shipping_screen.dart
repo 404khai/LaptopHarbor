@@ -25,11 +25,10 @@ class _ShippingScreenState extends State<ShippingScreen> {
         centerTitle: true,
         leading: const Center(child: CustomBackButton()),
         title: Text(
-          'LAPTOPHARBOR',
+          'Shipping Address',
           style: GoogleFonts.inter(
             fontSize: 20,
             fontWeight: FontWeight.w800,
-            fontStyle: FontStyle.italic,
             color: AppColors.slate900,
             letterSpacing: 1.0,
           ),
@@ -253,57 +252,7 @@ class _ShippingScreenState extends State<ShippingScreen> {
                   ),
                   const SizedBox(height: 16),
 
-                  // Secondary Address Card
-                  Container(
-                    padding: const EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: Colors.grey[200]!),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Work (Innovation Hub)',
-                          style: GoogleFonts.inter(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.slate900,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          '456 Founders Circle, Floor 12\nAustin, TX 78701',
-                          style: GoogleFonts.inter(
-                            fontSize: 14,
-                            color: Colors.grey[600],
-                            height: 1.5,
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-                        OutlinedButton(
-                          onPressed: () {},
-                          style: OutlinedButton.styleFrom(
-                            foregroundColor: AppColors.slate900,
-                            side: const BorderSide(color: AppColors.slate900),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            minimumSize: const Size(0, 36),
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
-                          ),
-                          child: Text(
-                            'SELECT ADDRESS',
-                            style: GoogleFonts.inter(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 12,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  
                   const SizedBox(height: 32),
 
                   // Add New Address Form

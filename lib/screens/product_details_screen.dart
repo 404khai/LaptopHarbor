@@ -218,7 +218,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           const CustomBackButton(),
           Expanded(
             child: Text(
-              'LaptopHarbor',
+              'Product Details',
               textAlign: TextAlign.center,
               style: GoogleFonts.inter(
                 fontSize: 18,
