@@ -14,7 +14,7 @@
                 extend: {
                     colors: {
                         "primary": "#11e8b6",
-                        "background-light": "#ffffff",
+                        "background-light": "#f6f8f8",
                         "background-dark": "#10221e",
                     },
                     fontFamily: {
@@ -25,122 +25,123 @@
             },
         }
     </script>
-<title>Shipping Address - LaptopHarbor</title>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .radio-custom:checked {
+            background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='8' cy='8' r='3'/%3e%3c/svg%3e");
+        }
+    </style>
 <style>
     body {
       min-height: max(884px, 100dvh);
     }
   </style>
   </head>
-<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100">
-<div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
-<!-- Header Section -->
-<header class="flex items-center p-4 justify-between border-b border-slate-200 dark:border-slate-800">
-<button class="flex size-10 items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800">
-<span class="material-symbols-outlined">arrow_back</span>
+<body class="bg-background-light dark:bg-background-dark min-h-screen font-display">
+<div class="max-w-md mx-auto bg-white dark:bg-background-dark min-h-screen flex flex-col shadow-xl">
+<header class="flex items-center justify-between px-6 py-8">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-slate-900 dark:text-slate-100 cursor-pointer">arrow_back</span>
+<h1 class="text-2xl font-bold text-slate-900 dark:text-slate-100">Saved Addresses</h1>
+</div>
+<button class="flex items-center justify-center bg-primary/10 hover:bg-primary/20 text-primary p-2 rounded-lg transition-colors">
+<span class="material-symbols-outlined font-bold">add</span>
 </button>
-<h1 class="text-xl font-bold leading-tight tracking-tight text-center flex-1 pr-10 uppercase italic">LaptopHarbor</h1>
 </header>
-<!-- Progress Indicator -->
-<div class="flex flex-col gap-3 p-6">
-<div class="flex gap-6 justify-between items-center">
-<p class="text-slate-900 dark:text-slate-100 text-base font-bold uppercase tracking-wider">Shipping</p>
-<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Step 2 of 4</p>
+<main class="flex-1 px-6 space-y-4">
+<div class="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-lg p-5 shadow-sm relative group">
+<div class="flex justify-between items-start">
+<div class="flex gap-4">
+<div class="pt-1">
+<input checked="" class="radio-custom h-5 w-5 border-2 border-primary text-primary focus:ring-primary rounded-full bg-transparent checked:bg-primary" name="address" type="radio"/>
 </div>
-<div class="rounded-full bg-slate-200 dark:bg-slate-800 h-2 overflow-hidden">
-<div class="h-full bg-primary" style="width: 50%;"></div>
-</div>
-<p class="text-primary text-xs font-bold uppercase tracking-widest">Next: Payment</p>
-</div>
-<main class="flex flex-col gap-8 p-6">
-<!-- Saved Addresses Section -->
-<section class="flex flex-col gap-4">
-<h2 class="text-lg font-bold tracking-tight">Saved Addresses</h2>
-<!-- Selected Address Card -->
-<div class="flex flex-col gap-4 rounded-xl bg-white dark:bg-slate-900 p-5 border-2 border-primary shadow-lg shadow-primary/10 relative">
-<div class="absolute top-4 right-4 text-primary">
-<span class="material-symbols-outlined font-bold" style="font-variation-settings: 'FILL' 1">check_circle</span>
-</div>
-<div class="flex flex-col gap-1">
-<div class="flex items-center gap-2">
-<span class="text-xs font-bold uppercase bg-primary text-slate-900 px-2 py-0.5 rounded">Default</span>
-<p class="text-slate-900 dark:text-white text-base font-bold">Home (John Doe)</p>
-</div>
-<p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
-                            123 Tech Lane, Silicon Valley<br/>
-                            San Francisco, CA 94025<br/>
-                            United States
-                        </p>
-</div>
-<div class="flex gap-3 pt-2">
-<button class="flex-1 rounded-lg border-2 border-slate-900 dark:border-slate-100 h-10 text-sm font-bold uppercase hover:bg-slate-900 hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors">
-                            Edit
-                        </button>
-<button class="flex-1 rounded-lg border-2 border-slate-200 dark:border-slate-700 h-10 text-sm font-bold uppercase text-slate-400">
-                            Remove
-                        </button>
+<div>
+<p class="font-bold text-slate-900 dark:text-slate-100 text-lg">Alex Chen</p>
+<p class="text-slate-600 dark:text-slate-400 mt-1">888 Innovation Way</p>
+<p class="text-slate-600 dark:text-slate-400">Suite 404, Tech District</p>
+<p class="text-slate-600 dark:text-slate-400">San Francisco, CA 94105</p>
+<span class="inline-block mt-3 px-2 py-0.5 bg-primary/20 text-primary text-xs font-semibold rounded">DEFAULT</span>
 </div>
 </div>
-<!-- Secondary Address Card -->
-<div class="flex flex-col gap-4 rounded-xl bg-white dark:bg-slate-900 p-5 border border-slate-200 dark:border-slate-800">
-<div class="flex flex-col gap-1">
-<p class="text-slate-900 dark:text-white text-base font-bold">Work (Innovation Hub)</p>
-<p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
-                            456 Founders Circle, Floor 12<br/>
-                            Austin, TX 78701
-                        </p>
-</div>
-<button class="w-fit rounded-lg border border-slate-900 dark:border-slate-100 px-4 h-8 text-xs font-bold uppercase">
-                        Select Address
-                    </button>
-</div>
-</section>
-<!-- Add New Address Section -->
-<section class="flex flex-col gap-6 pt-4 border-t border-slate-100 dark:border-slate-800">
-<h2 class="text-lg font-bold tracking-tight uppercase tracking-widest">Add New Address</h2>
-<form class="flex flex-col gap-4">
-<div class="flex flex-col gap-2">
-<label class="text-xs font-bold uppercase text-slate-500 dark:text-slate-400 ml-1">Full Name</label>
-<input class="w-full bg-white dark:bg-slate-900 border-2 border-slate-900 dark:border-slate-700 rounded-lg h-12 px-4 text-slate-900 dark:text-white focus:border-primary outline-none transition-colors" placeholder="e.g. Alex Rivers" type="text"/>
-</div>
-<div class="flex flex-col gap-2">
-<label class="text-xs font-bold uppercase text-slate-500 dark:text-slate-400 ml-1">Street Address</label>
-<input class="w-full bg-white dark:bg-slate-900 border-2 border-slate-900 dark:border-slate-700 rounded-lg h-12 px-4 text-slate-900 dark:text-white focus:border-primary outline-none transition-colors" placeholder="123 Main St" type="text"/>
-</div>
-<div class="grid grid-cols-2 gap-4">
-<div class="flex flex-col gap-2">
-<label class="text-xs font-bold uppercase text-slate-500 dark:text-slate-400 ml-1">City</label>
-<input class="w-full bg-white dark:bg-slate-900 border-2 border-slate-900 dark:border-slate-700 rounded-lg h-12 px-4 text-slate-900 dark:text-white focus:border-primary outline-none transition-colors" placeholder="City" type="text"/>
-</div>
-<div class="flex flex-col gap-2">
-<label class="text-xs font-bold uppercase text-slate-500 dark:text-slate-400 ml-1">Zip Code</label>
-<input class="w-full bg-white dark:bg-slate-900 border-2 border-slate-900 dark:border-slate-700 rounded-lg h-12 px-4 text-slate-900 dark:text-white focus:border-primary outline-none transition-colors" placeholder="Zip" type="text"/>
-</div>
-</div>
-<div class="flex items-center gap-3 py-2">
-<input class="size-5 rounded border-2 border-slate-900 text-primary focus:ring-primary" id="default" type="checkbox"/>
-<label class="text-sm font-medium" for="default">Set as default address</label>
-</div>
-</form>
-</section>
-</main>
-<!-- Fixed Bottom CTA -->
-<footer class="sticky bottom-0 w-full bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 p-6 flex flex-col gap-4">
-<div class="flex justify-between items-center px-1">
-<span class="text-slate-500 text-sm font-medium">Estimated Delivery</span>
-<span class="text-slate-900 dark:text-white font-bold">2-3 Business Days</span>
-</div>
-<button class="w-full bg-primary hover:brightness-105 active:scale-[0.98] text-slate-900 h-14 rounded-xl flex items-center justify-center gap-2 font-black uppercase tracking-widest transition-all">
-                Continue to Payment
-                <span class="material-symbols-outlined">arrow_forward</span>
+<div class="flex flex-col gap-3">
+<button class="text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[20px]">edit</span>
 </button>
-</footer>
-<!-- Progress Indicator Dots -->
-<div class="flex w-full flex-row items-center justify-center gap-3 py-8">
-<div class="h-2 w-2 rounded-full bg-slate-900 dark:bg-slate-100"></div>
-<div class="h-3 w-8 rounded-full bg-primary"></div>
-<div class="h-2 w-2 rounded-full bg-slate-300 dark:bg-slate-700"></div>
-<div class="h-2 w-2 rounded-full bg-slate-300 dark:bg-slate-700"></div>
+<button class="text-slate-400 hover:text-red-500 transition-colors">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
 </div>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-lg p-5 shadow-sm relative group">
+<div class="flex justify-between items-start">
+<div class="flex gap-4">
+<div class="pt-1">
+<input class="radio-custom h-5 w-5 border-2 border-slate-300 dark:border-slate-600 text-primary focus:ring-primary rounded-full bg-transparent checked:bg-primary checked:border-primary" name="address" type="radio"/>
+</div>
+<div>
+<p class="font-bold text-slate-900 dark:text-slate-100 text-lg">Sarah Jenkins</p>
+<p class="text-slate-600 dark:text-slate-400 mt-1">LaptopHarbor HQ - Receiving</p>
+<p class="text-slate-600 dark:text-slate-400">24 Silicon Avenue</p>
+<p class="text-slate-600 dark:text-slate-400">Austin, TX 78701</p>
+</div>
+</div>
+<div class="flex flex-col gap-3">
+<button class="text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="text-slate-400 hover:text-red-500 transition-colors">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-lg p-5 shadow-sm relative group">
+<div class="flex justify-between items-start">
+<div class="flex gap-4">
+<div class="pt-1">
+<input class="radio-custom h-5 w-5 border-2 border-slate-300 dark:border-slate-600 text-primary focus:ring-primary rounded-full bg-transparent checked:bg-primary checked:border-primary" name="address" type="radio"/>
+</div>
+<div>
+<p class="font-bold text-slate-900 dark:text-slate-100 text-lg">Jordan River</p>
+<p class="text-slate-600 dark:text-slate-400 mt-1">101 Binary Blvd</p>
+<p class="text-slate-600 dark:text-slate-400">Seattle, WA 98101</p>
+</div>
+</div>
+<div class="flex flex-col gap-3">
+<button class="text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="text-slate-400 hover:text-red-500 transition-colors">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</div>
+</div>
+<div class="py-6">
+<button class="w-full border-2 border-dashed border-slate-200 dark:border-slate-700 rounded-lg p-4 flex items-center justify-center gap-2 text-slate-500 hover:text-primary hover:border-primary transition-all group">
+<span class="material-symbols-outlined">add_location</span>
+<span class="font-medium">Add New Address</span>
+</button>
+</div>
+</main>
+<nav class="sticky bottom-0 w-full border-t border-slate-100 dark:border-slate-800 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md px-6 py-4 flex justify-between items-center">
+<a class="flex flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">laptop_mac</span>
+<span class="text-[10px] font-medium uppercase tracking-wider">Shop</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">search</span>
+<span class="text-[10px] font-medium uppercase tracking-wider">Search</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="text-[10px] font-medium uppercase tracking-wider">Cart</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">person</span>
+<span class="text-[10px] font-medium uppercase tracking-wider">Profile</span>
+</a>
+</nav>
 </div>
 </body></html>
