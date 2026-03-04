@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../widgets/custom_back_button.dart';
 import '../theme/app_theme.dart';
 import 'saved_addresses_screen.dart';
+import 'payment_screen.dart';
 
 class ShippingScreen extends StatefulWidget {
   const ShippingScreen({super.key});
@@ -403,7 +404,12 @@ class _ShippingScreenState extends State<ShippingScreen> {
                   height: 56,
                   child: ElevatedButton(
                     onPressed: () {
-                      // Navigate to Payment
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const PaymentScreen(),
+                        ),
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primary,
