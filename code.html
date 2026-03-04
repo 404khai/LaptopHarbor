@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 
-<html class="light" lang="en"><head>
+<html lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>LaptopHarbor - Payment Selection</title>
+<title>Order Review - LaptopHarbor</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
@@ -34,10 +34,10 @@
 <style>
         body {
             font-family: 'Inter', sans-serif;
-            -webkit-tap-highlight-color: transparent;
+            background-color: #ffffff;
         }
-        .custom-radio:checked {
-            background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='black' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='8' cy='8' r='3'/%3e%3c/svg%3e");
+        .section-shadow {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
     </style>
 <style>
@@ -46,114 +46,128 @@
     }
   </style>
   </head>
-<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen">
-<div class="max-w-md mx-auto min-h-screen flex flex-col bg-white dark:bg-background-dark shadow-sm">
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display">
+<div class="relative flex h-auto min-h-screen w-full max-w-md mx-auto flex-col bg-background-light dark:bg-background-dark overflow-x-hidden">
 <!-- Header -->
-<header class="flex items-center px-4 py-6 justify-between">
-<button aria-label="Go back" class="flex size-11 shrink-0 items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
-<span class="material-symbols-outlined text-2xl">arrow_back</span>
+<div class="flex items-center p-4 pb-2 justify-between sticky top-0 bg-background-light/80 backdrop-blur-md z-10">
+<button class="text-slate-900 dark:text-slate-100 flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined">arrow_back</span>
 </button>
-<h1 class="text-xl font-bold leading-tight tracking-tight flex-1 text-center pr-11">Payment Method</h1>
-</header>
-<!-- Progress Indicator (Step 3 of 4) -->
-<div class="flex w-full flex-row items-center justify-center gap-3 py-4">
-<div class="h-1.5 w-8 rounded-full bg-slate-200 dark:bg-slate-700"></div>
-<div class="h-1.5 w-8 rounded-full bg-slate-200 dark:bg-slate-700"></div>
-<div class="h-1.5 w-8 rounded-full bg-primary"></div>
-<div class="h-1.5 w-8 rounded-full bg-slate-200 dark:bg-slate-700"></div>
+<h2 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-tight flex-1 text-center pr-10">Order Review</h2>
 </div>
-<main class="flex-1 px-4 pb-24">
-<h2 class="text-lg font-bold pt-6 pb-4">Select Payment Method</h2>
-<!-- Payment Options -->
-<div class="grid grid-cols-1 gap-3">
-<!-- Credit Card (Selected) -->
-<label class="flex items-center justify-between p-4 rounded-xl border-2 border-primary bg-primary/5 cursor-pointer min-h-[56px]">
+<!-- Progress Indicator -->
+<div class="flex flex-col gap-3 p-4">
+<div class="flex gap-6 justify-between items-end">
+<p class="text-slate-900 dark:text-slate-100 text-base font-semibold leading-normal">Review Order</p>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium leading-normal">Step 4 of 4</p>
+</div>
+<div class="h-2 w-full rounded-full bg-slate-100 dark:bg-slate-800">
+<div class="h-full rounded-full bg-primary" style="width: 100%;"></div>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-xs font-medium uppercase tracking-wider">Shipping → Payment → Review</p>
+</div>
+<!-- Collapsible Sections -->
+<div class="flex flex-col p-4 gap-4">
+<!-- Shipping Address -->
+<details class="flex flex-col rounded-xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 section-shadow px-4 py-2 group" open="">
+<summary class="flex cursor-pointer items-center justify-between gap-4 py-3 list-none">
 <div class="flex items-center gap-3">
-<span class="material-symbols-outlined">credit_card</span>
-<span class="font-semibold text-sm">Credit Card</span>
+<span class="material-symbols-outlined text-slate-900 dark:text-slate-100">local_shipping</span>
+<p class="text-slate-900 dark:text-slate-100 text-sm font-semibold">Shipping Address</p>
 </div>
-<input checked="" class="custom-radio h-5 w-5 border-2 border-slate-900 text-primary focus:ring-primary focus:ring-offset-0 bg-white" name="payment" type="radio"/>
-</label>
-<!-- PayPal -->
-<label class="flex items-center justify-between p-4 rounded-xl border border-slate-900 bg-white dark:bg-slate-800 cursor-pointer min-h-[56px] hover:border-primary transition-colors">
+<span class="material-symbols-outlined text-slate-400 group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="pb-4 pt-1 border-t border-slate-50 dark:border-slate-800 mt-1">
+<p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                        John Doe<br/>
+                        123 Tech Lane, Silicon Valley<br/>
+                        Tech City, CA 94025
+                    </p>
+</div>
+</details>
+<!-- Payment Method -->
+<details class="flex flex-col rounded-xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 section-shadow px-4 py-2 group">
+<summary class="flex cursor-pointer items-center justify-between gap-4 py-3 list-none">
 <div class="flex items-center gap-3">
-<span class="material-symbols-outlined">account_balance_wallet</span>
-<span class="font-semibold text-sm text-slate-900 dark:text-slate-100">PayPal</span>
+<span class="material-symbols-outlined text-slate-900 dark:text-slate-100">credit_card</span>
+<p class="text-slate-900 dark:text-slate-100 text-sm font-semibold">Payment Method</p>
 </div>
-<input class="custom-radio h-5 w-5 border-2 border-slate-300 dark:border-slate-600 text-primary focus:ring-primary focus:ring-offset-0 bg-white" name="payment" type="radio"/>
-</label>
-<!-- Apple Pay -->
-<label class="flex items-center justify-between p-4 rounded-xl border border-slate-900 bg-white dark:bg-slate-800 cursor-pointer min-h-[56px] hover:border-primary transition-colors">
+<span class="material-symbols-outlined text-slate-400 group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="pb-4 pt-1 border-t border-slate-50 dark:border-slate-800 mt-1">
+<p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                        Credit Card ending in 4242<br/>
+                        Exp: 12/26
+                    </p>
+</div>
+</details>
+<!-- Order Items -->
+<details class="flex flex-col rounded-xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 section-shadow px-4 py-2 group" open="">
+<summary class="flex cursor-pointer items-center justify-between gap-4 py-3 list-none">
 <div class="flex items-center gap-3">
-<span class="material-symbols-outlined">ios</span>
-<span class="font-semibold text-sm text-slate-900 dark:text-slate-100">Apple Pay</span>
+<span class="material-symbols-outlined text-slate-900 dark:text-slate-100">shopping_bag</span>
+<p class="text-slate-900 dark:text-slate-100 text-sm font-semibold">Order Items</p>
 </div>
-<input class="custom-radio h-5 w-5 border-2 border-slate-300 dark:border-slate-600 text-primary focus:ring-primary focus:ring-offset-0 bg-white" name="payment" type="radio"/>
-</label>
-<!-- Google Pay -->
-<label class="flex items-center justify-between p-4 rounded-xl border border-slate-900 bg-white dark:bg-slate-800 cursor-pointer min-h-[56px] hover:border-primary transition-colors">
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined">google</span>
-<span class="font-semibold text-sm text-slate-900 dark:text-slate-100">Google Pay</span>
+<span class="material-symbols-outlined text-slate-400 group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="flex flex-col gap-4 pb-4 pt-1 border-t border-slate-50 dark:border-slate-800 mt-1">
+<!-- Item 1 -->
+<div class="flex items-center gap-4 py-2">
+<div class="bg-slate-100 dark:bg-slate-800 bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-16 shrink-0" data-alt="MacBook Pro M3 Space Gray laptop" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBt2jj16meEr_EJJ2c-urSC0jTL1FY-fF6ZF-viOHe3K-g2fCGUYgSKC9ym1_g7teczS3t0kLyuAJxiqtiKW-aJJk8C_6jOK-0oksv-rsK3m-EnvCweePMONffur_yjYaXlQb21Tpu9A-ruyYnlcY12VV4jcdCKz2ZhHTzC06PBQyhDwA0Bu3Ib-4y67MAhuA85QDPxs8ghqUBWT4yHAypfh0Kalvs9Yo9jxNxHG6uF3MeHD3_xvoHa6c_3ienWdz22OxFy4VwN-kn9");'></div>
+<div class="flex flex-col flex-1">
+<p class="text-slate-900 dark:text-slate-100 text-sm font-semibold line-clamp-1">MacBook Pro M3</p>
+<p class="text-slate-500 dark:text-slate-400 text-xs">Space Gray, 16GB RAM</p>
+<p class="text-slate-900 dark:text-slate-100 text-sm font-medium mt-1">$2,499.00</p>
 </div>
-<input class="custom-radio h-5 w-5 border-2 border-slate-300 dark:border-slate-600 text-primary focus:ring-primary focus:ring-offset-0 bg-white" name="payment" type="radio"/>
-</label>
 </div>
-<!-- Card Details Form -->
-<section class="mt-8">
-<h2 class="text-lg font-bold pb-4">Card Details</h2>
-<div class="flex flex-col gap-4">
-<div class="flex flex-col gap-1.5">
-<label class="text-xs font-bold uppercase tracking-wider text-slate-500">Cardholder Name</label>
-<input class="w-full h-12 px-4 rounded-lg border-2 border-slate-900 focus:border-primary focus:ring-0 text-sm bg-white dark:bg-slate-900" placeholder="John Doe" type="text"/>
-</div>
-<div class="flex flex-col gap-1.5">
-<label class="text-xs font-bold uppercase tracking-wider text-slate-500">Card Number</label>
-<div class="relative">
-<input class="w-full h-12 px-4 rounded-lg border-2 border-slate-900 focus:border-primary focus:ring-0 text-sm bg-white dark:bg-slate-900" placeholder="0000 0000 0000 0000" type="text"/>
-<div class="absolute right-3 top-1/2 -translate-y-1/2 flex gap-1">
-<div class="w-8 h-5 bg-slate-200 rounded-sm" data-alt="Visa logo placeholder"></div>
-<div class="w-8 h-5 bg-slate-200 rounded-sm" data-alt="Mastercard logo placeholder"></div>
+<!-- Item 2 -->
+<div class="flex items-center gap-4 py-2">
+<div class="bg-slate-100 dark:bg-slate-800 bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-16 shrink-0" data-alt="Harbor Pro 34 inch curved monitor" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBd9lRFD9JQGMmgCDgvYhYTlyFBEpwfIqGlV89dNtwV5u6CL2hcfI3w-0oOiJjXT4ca5CEAh47IMY5ytWwlL7cO9_AxF5F4okKw347cexbjTDaot7H2XplgP4gDPMQMoMh_510Ov9hVH9spNZuKebeLXQQ7wiP5enKFe2lffcIj6n_OwqtXScvQPdj5RiWCmvMI4u3t7nYw2dXJzdA8at5Yng2la5Mpjw4fk-gkzISajbhOizX0KhHmbnS9fVrPKejGYPmhgB1xwaAl");'></div>
+<div class="flex flex-col flex-1">
+<p class="text-slate-900 dark:text-slate-100 text-sm font-semibold line-clamp-1">Harbor Pro 34"</p>
+<p class="text-slate-500 dark:text-slate-400 text-xs">Ultrawide Curved Display</p>
+<p class="text-slate-900 dark:text-slate-100 text-sm font-medium mt-1">$498.00</p>
 </div>
 </div>
 </div>
-<div class="grid grid-cols-2 gap-4">
-<div class="flex flex-col gap-1.5">
-<label class="text-xs font-bold uppercase tracking-wider text-slate-500">Expiry Date</label>
-<input class="w-full h-12 px-4 rounded-lg border-2 border-slate-900 focus:border-primary focus:ring-0 text-sm bg-white dark:bg-slate-900" placeholder="MM/YY" type="text"/>
+</details>
 </div>
-<div class="flex flex-col gap-1.5">
-<label class="text-xs font-bold uppercase tracking-wider text-slate-500">CVV</label>
-<input class="w-full h-12 px-4 rounded-lg border-2 border-slate-900 focus:border-primary focus:ring-0 text-sm bg-white dark:bg-slate-900" placeholder="123" type="password"/>
-</div>
-</div>
-</div>
-</section>
-<!-- Order Summary -->
-<section class="mt-8 p-6 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-100 dark:border-slate-800">
-<div class="flex flex-col gap-3">
+<!-- Price Breakdown -->
+<div class="flex flex-col p-6 mt-2 gap-3 border-t border-slate-100 dark:border-slate-800">
 <div class="flex justify-between items-center">
-<span class="text-slate-600 dark:text-slate-400">Subtotal</span>
-<span class="font-semibold">$1,299.00</span>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Subtotal</p>
+<p class="text-slate-900 dark:text-slate-100 text-sm font-medium">$2,997.00</p>
 </div>
 <div class="flex justify-between items-center">
-<span class="text-slate-600 dark:text-slate-400">Shipping</span>
-<span class="font-semibold">$0.00</span>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Shipping</p>
+<p class="text-primary text-sm font-bold uppercase tracking-wide">Free</p>
 </div>
-<div class="h-px bg-slate-200 dark:bg-slate-700 my-1"></div>
 <div class="flex justify-between items-center">
-<span class="text-lg font-bold">Total</span>
-<span class="text-lg font-bold">$1,299.00</span>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Tax</p>
+<p class="text-slate-900 dark:text-slate-100 text-sm font-medium">$240.00</p>
+</div>
+<div class="flex justify-between items-center mt-2 pt-4 border-t border-slate-100 dark:border-slate-800">
+<p class="text-slate-900 dark:text-slate-100 text-lg font-bold">Total</p>
+<p class="text-slate-900 dark:text-slate-100 text-2xl font-extrabold">$3,237.00</p>
 </div>
 </div>
-</section>
-</main>
-<!-- Footer Button -->
-<footer class="sticky bottom-0 w-full p-4 bg-white dark:bg-background-dark border-t border-slate-100 dark:border-slate-800">
-<button class="w-full h-14 bg-primary text-slate-900 font-bold rounded-xl text-lg hover:brightness-105 active:scale-[0.98] transition-all flex items-center justify-center gap-2">
-                Review Order
-                <span class="material-symbols-outlined">chevron_right</span>
+<!-- Agreement and CTA -->
+<div class="flex flex-col p-4 gap-6 mb-8">
+<label class="flex items-start gap-3 cursor-pointer group">
+<div class="relative flex items-center">
+<input class="peer h-5 w-5 cursor-pointer appearance-none rounded border-2 border-slate-900 dark:border-slate-100 bg-transparent checked:bg-slate-900 dark:checked:bg-slate-100 transition-all" type="checkbox"/>
+<span class="material-symbols-outlined absolute opacity-0 peer-checked:opacity-100 text-white dark:text-slate-900 pointer-events-none text-sm font-bold flex items-center justify-center w-5 h-5">check</span>
+</div>
+<span class="text-slate-600 dark:text-slate-400 text-sm leading-tight">
+                    I agree to the <a class="text-slate-900 dark:text-slate-100 font-semibold underline underline-offset-2" href="#">Terms and Conditions</a> and authorize LaptopHarbor to process this payment.
+                </span>
+</label>
+<button class="w-full bg-primary hover:brightness-105 active:scale-[0.98] transition-all text-slate-900 font-bold text-base py-4 rounded-xl shadow-lg shadow-primary/20 flex items-center justify-center gap-2">
+<span>Place Order</span>
+<span class="material-symbols-outlined text-lg">arrow_forward</span>
 </button>
-</footer>
+</div>
+<!-- Bottom Spacer -->
+<div class="h-4"></div>
 </div>
 </body></html>
