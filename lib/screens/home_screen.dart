@@ -53,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             // Header
             Padding(
-              padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+              padding: const EdgeInsets.fromLTRB(16, 16, 16, 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -61,6 +61,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     'images/logo2.png',
                     height: 40, // Adjust height as needed to match design
                     fit: BoxFit.contain,
+                  ),
+                  Text(
+                    'LaptopHarbor',
+                    style: GoogleFonts.inter(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.primary,
+                    ),
                   ),
                   Container(
                     width: 40,
