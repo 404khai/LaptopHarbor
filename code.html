@@ -8,163 +8,169 @@
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "primary": "#11e8b6",
-                        "background-light": "#ffffff",
-                        "background-dark": "#10221e",
-                        "tech-black": "#000000",
-                        "tech-gray": "#111111",
-                    },
-                    fontFamily: {
-                        "display": ["Inter", "sans-serif"]
-                    },
-                    borderRadius: {
-                        "DEFAULT": "0.5rem",
-                        "lg": "1rem",
-                        "xl": "1.5rem",
-                        "full": "9999px"
-                    },
-                },
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#11e8b6",
+              "background-light": "#ffffff",
+              "background-dark": "#10221e",
             },
-        }
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.5rem", "lg": "0.75rem", "xl": "1.5rem", "full": "9999px"},
+          },
+        },
+      }
     </script>
-<style>
-        .map-halo {
-            box-shadow: 0 0 15px 5px rgba(17, 232, 182, 0.4);
-        }
-        .details-card-shadow {
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-        }
-    </style>
+<title>LaptopHarbor - My Orders</title>
 <style>
     body {
       min-height: max(884px, 100dvh);
     }
   </style>
   </head>
-<body class="bg-background-light dark:bg-background-dark font-display text-tech-gray">
-<div class="relative flex min-h-screen w-full flex-col max-w-md mx-auto overflow-x-hidden border-x border-slate-100">
-<header class="sticky top-0 z-20 flex items-center bg-white/90 backdrop-blur-md p-4 justify-between border-b border-slate-100">
-<button aria-label="Go back" class="text-tech-black flex size-11 items-center justify-center rounded-full hover:bg-slate-50 transition-colors">
-<span class="material-symbols-outlined">arrow_back</span>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100">
+<div class="relative flex min-h-screen w-full flex-col max-w-md mx-auto bg-background-light dark:bg-background-dark shadow-xl">
+<!-- Header -->
+<header class="sticky top-0 z-10 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md px-4 pt-6 pb-2">
+<div class="flex items-center justify-between mb-4">
+<button class="flex items-center justify-center w-11 h-11 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined text-slate-900 dark:text-slate-100">arrow_back</span>
 </button>
-<div class="flex flex-col items-center">
-<h2 class="text-tech-black text-lg font-bold leading-tight tracking-tight">Order #LH-892341</h2>
-<p class="text-primary text-xs font-bold uppercase tracking-widest">In Transit</p>
+<button class="flex items-center justify-center w-11 h-11 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined text-slate-900 dark:text-slate-100">search</span>
+</button>
 </div>
-<button aria-label="Order info" class="text-tech-black flex size-11 items-center justify-center rounded-full hover:bg-slate-50 transition-colors">
-<span class="material-symbols-outlined">info</span>
-</button>
+<h1 class="text-[24pt] font-bold text-slate-900 dark:text-slate-100 px-2">My Orders</h1>
 </header>
-<main class="flex-1">
-<section class="px-6 py-8">
-<div class="relative flex justify-between">
-<div class="absolute top-4 left-0 w-full h-0.5 bg-slate-100 z-0">
-<div class="h-full bg-primary w-[75%] transition-all"></div>
+<!-- Filter Tabs -->
+<nav class="sticky top-[108px] z-10 bg-background-light dark:bg-background-dark px-4 border-b border-slate-100 dark:border-slate-800">
+<div class="flex gap-6 overflow-x-auto no-scrollbar">
+<a class="flex flex-col items-center justify-center border-b-2 border-primary py-4 min-w-[60px]" href="#">
+<span class="text-slate-900 dark:text-slate-100 text-sm font-bold">All</span>
+</a>
+<a class="flex flex-col items-center justify-center border-b-2 border-transparent py-4 min-w-[60px]" href="#">
+<span class="text-slate-400 dark:text-slate-500 text-sm font-medium">Active</span>
+</a>
+<a class="flex flex-col items-center justify-center border-b-2 border-transparent py-4 min-w-[60px]" href="#">
+<span class="text-slate-400 dark:text-slate-500 text-sm font-medium">Completed</span>
+</a>
+<a class="flex flex-col items-center justify-center border-b-2 border-transparent py-4 min-w-[60px]" href="#">
+<span class="text-slate-400 dark:text-slate-500 text-sm font-medium">Cancelled</span>
+</a>
 </div>
-<div class="relative z-10 flex flex-col items-center gap-2">
-<div class="bg-primary text-tech-black size-8 rounded-full flex items-center justify-center ring-4 ring-white">
-<span class="material-symbols-outlined text-sm font-bold">check</span>
+</nav>
+<!-- Orders List -->
+<main class="flex-1 p-4 space-y-4">
+<!-- Order Card 1 -->
+<div class="bg-white dark:bg-slate-900 rounded-lg p-4 shadow-[0_4px_12px_rgba(0,0,0,0.1)] border border-slate-50 dark:border-slate-800">
+<div class="flex justify-between items-center mb-4">
+<span class="text-slate-900 dark:text-white font-bold text-sm">#LH-892341</span>
+<span class="bg-primary text-slate-900 text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full">Delivered</span>
 </div>
-<span class="text-[10px] font-bold text-tech-black uppercase">Placed</span>
+<div class="flex gap-4 mb-4">
+<div class="w-20 h-20 rounded-lg bg-slate-100 dark:bg-slate-800 overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="Sleek silver high performance laptop on desk" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAoK5vBH-MRfZZSeWkhDBqhTHc9G36U9C0cGDtwFpJW4-5A0NHaFUi2GxW0IGnTcgASKwvsgRivqAjg6-hzPcu19gma1se-UhwJsmgW3b55OjVLDAmtPA6Z0Ah3EkbjRW1GLQKxZQKC1e_648O1FEZihJwEhrXD66O6L5yO7h2Bp6Qr2Ll-U045eS1Psx3b4FFcq4cXDP9UR1SC4kaN4tzeRkrtR3LDKgOF2Qt-SCMgKtibDbsQY3AiyGlTrXyzN2HxTStKIfLMnyvH"/>
 </div>
-<div class="relative z-10 flex flex-col items-center gap-2">
-<div class="bg-primary text-tech-black size-8 rounded-full flex items-center justify-center ring-4 ring-white">
-<span class="material-symbols-outlined text-sm font-bold">check</span>
-</div>
-<span class="text-[10px] font-bold text-tech-black uppercase">Shipped</span>
-</div>
-<div class="relative z-10 flex flex-col items-center gap-2">
-<div class="bg-primary text-tech-black size-8 rounded-full flex items-center justify-center ring-4 ring-white">
-<span class="material-symbols-outlined text-sm font-bold">local_shipping</span>
-</div>
-<span class="text-[10px] font-bold text-tech-black uppercase">Transit</span>
-</div>
-<div class="relative z-10 flex flex-col items-center gap-2">
-<div class="bg-slate-100 text-slate-400 size-8 rounded-full flex items-center justify-center ring-4 ring-white border-2 border-white">
-<span class="material-symbols-outlined text-sm font-bold">inventory_2</span>
-</div>
-<span class="text-[10px] font-bold text-slate-400 uppercase">Arrived</span>
-</div>
-</div>
-</section>
-<section class="relative h-80 w-full bg-slate-100 overflow-hidden">
-<div class="absolute inset-0 bg-cover bg-center" data-alt="High contrast detailed city map view" data-location="San Francisco" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCVgrShSJ6I29ydoR1Y1WBco-bAu20EfxKJRkgRzMyHuPN9kE3bFiEDpbaFhv5JzFJK5C5iUFgsfapZ1bF30oFyZy6VGZy43RNOLqLG2aAuve14r9kBZgh3L1w9lBF6de0Z0lJuguinhyCe_qk8QgHYtFWKXcBqqjcTUmp2NLgQVqYTnSCnYHHcwsdAwMil5pKoZYZASUD1-E-B41j0PekPnwEquu2Wi1c2EPXBoEBFA6TNcLqxaAVhX8yXGjL65vZ4FIdcpFfy80ke')"></div>
-<div class="absolute inset-0 bg-primary/5 pointer-events-none"></div>
-<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-<div class="relative">
-<div class="absolute inset-0 rounded-full map-halo animate-pulse"></div>
-<div class="relative z-10 bg-tech-black text-white p-2 rounded-full border-2 border-primary">
-<span class="material-symbols-outlined text-primary block">navigation</span>
+<div class="flex flex-col justify-center gap-1">
+<h3 class="text-slate-900 dark:text-slate-100 font-bold text-base leading-tight">High-Performance Laptop</h3>
+<p class="text-slate-500 dark:text-slate-400 text-xs">Quantity: 1x</p>
+<p class="text-slate-400 dark:text-slate-500 text-xs">Oct 22, 2024</p>
 </div>
 </div>
-</div>
-<div class="absolute top-1/3 left-1/4">
-<div class="bg-tech-black text-white px-3 py-1.5 rounded-lg text-xs font-bold border border-primary shadow-xl">
-                        Courier is nearby
-                    </div>
-</div>
-</section>
-<section class="p-4 -mt-10 relative z-20">
-<div class="bg-white rounded-xl details-card-shadow p-6 flex flex-col gap-6">
-<div class="flex items-start justify-between">
-<div class="flex flex-col gap-1">
-<p class="text-slate-500 text-xs font-semibold uppercase tracking-wider">Estimated Arrival</p>
-<h3 class="text-tech-black text-2xl font-bold">2:30 PM - 3:00 PM</h3>
-</div>
-<div class="bg-primary/10 p-3 rounded-lg">
-<span class="material-symbols-outlined text-primary leading-none">schedule</span>
-</div>
-</div>
-<div class="h-px bg-slate-100 w-full"></div>
-<div class="grid grid-cols-1 gap-5">
-<div class="flex items-center gap-4">
-<div class="size-12 rounded-full overflow-hidden bg-slate-100 border-2 border-slate-50">
-<img class="w-full h-full object-cover" data-alt="Portrait of the delivery courier" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCo5pdDUtDEurj_PkftmKLYNMtxvZBuDX5uYXqq2HQLr2Hg2YDbGPEkdpqO2DKmz96msZX0lomqOy5ZkzaTBOyQdPPyoADKMlrHMGoXBEdaTxDgO0_LaSPnH7V96lWgzuX-SnE5Mkxv_lTdaTsGrAb-exYIC1whGZ4u47NIIj_A9bhk638Tu6YsQs2mhtx5zBhOMnSCTMNTMq6hdx69-CQjvCcPHKZJM0m-UWtBRXMecV8A_zzlyOD2JdINbED_1gxEqMPKv-gnL-Pd"/>
-</div>
+<div class="flex justify-between items-center pt-4 border-t border-slate-100 dark:border-slate-800">
 <div class="flex flex-col">
-<p class="text-slate-500 text-xs font-semibold uppercase tracking-wider">Courier Name</p>
-<p class="text-tech-black font-bold text-base">Marcus Johnson</p>
+<span class="text-slate-400 dark:text-slate-500 text-[10px] uppercase font-bold">Total Price</span>
+<span class="text-slate-900 dark:text-white font-bold text-lg leading-none">$1,299.00</span>
 </div>
-</div>
-<div class="flex items-start gap-4">
-<div class="size-10 flex items-center justify-center shrink-0">
-<span class="material-symbols-outlined text-slate-400">location_on</span>
-</div>
-<div class="flex flex-col">
-<p class="text-slate-500 text-xs font-semibold uppercase tracking-wider">Delivery Address</p>
-<p class="text-tech-black font-medium leading-tight">245 Market St, Suite 1500<br/>San Francisco, CA 94105</p>
-</div>
-</div>
-</div>
-<button class="w-full bg-primary hover:bg-primary/90 text-tech-black font-bold py-4 rounded-xl transition-all shadow-lg shadow-primary/20 flex items-center justify-center gap-2 min-h-[44px]">
-<span class="material-symbols-outlined">chat_bubble</span>
-                        Contact Courier
+<button class="h-11 px-6 border-2 border-slate-900 dark:border-white rounded-lg text-slate-900 dark:text-white text-sm font-bold hover:bg-slate-900 hover:text-white dark:hover:bg-white dark:hover:text-slate-900 transition-colors">
+                        View Details
                     </button>
 </div>
-</section>
-</main>
-<nav class="sticky bottom-0 bg-white border-t border-slate-100 px-6 py-3 flex items-center justify-between z-30">
-<a class="flex flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors min-h-[44px] min-w-[44px] justify-center" href="#">
-<span class="material-symbols-outlined">home</span>
-<span class="text-[10px] font-bold uppercase tracking-tight">Home</span>
-</a>
-<a class="flex flex-col items-center gap-1 text-primary transition-colors min-h-[44px] min-w-[44px] justify-center" href="#">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">package_2</span>
-<span class="text-[10px] font-bold uppercase tracking-tight">Orders</span>
-</a>
-<a class="flex flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors min-h-[44px] min-w-[44px] justify-center" href="#">
-<span class="material-symbols-outlined">shopping_cart</span>
-<span class="text-[10px] font-bold uppercase tracking-tight">Cart</span>
-</a>
-<a class="flex flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors min-h-[44px] min-w-[44px] justify-center" href="#">
-<span class="material-symbols-outlined">person</span>
-<span class="text-[10px] font-bold uppercase tracking-tight">Profile</span>
-</a>
-</nav>
 </div>
+<!-- Order Card 2 -->
+<div class="bg-white dark:bg-slate-900 rounded-lg p-4 shadow-[0_4px_12px_rgba(0,0,0,0.1)] border border-slate-50 dark:border-slate-800">
+<div class="flex justify-between items-center mb-4">
+<span class="text-slate-900 dark:text-white font-bold text-sm">#LH-892342</span>
+<span class="bg-primary/20 text-slate-900 dark:text-primary text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full">In Transit</span>
+</div>
+<div class="flex gap-4 mb-4">
+<div class="w-20 h-20 rounded-lg bg-slate-100 dark:bg-slate-800 overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="Ergonomic vertical wireless gaming mouse" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDotNpGa1LstRfj4smJ3zVMIkIDZQTMPZOXgdGySc1sweFP_LByMbSUk0MyYTfeQuUoFSKk7lZiy9bQabzKxjXwkX-9WC3hE6exqboNIYUXLVgDg2Sf2swYBRNGPBVsj_oGIa_IrZaPx56FU3Gv4Ahlq5GWXVK_xol1zNhHO8bB2gZ20W20vXXE6aVPwgyt7rooTBOcT-22esOP5A2xMJORf7IBtiLsTFpydRv8CKHcnb6JrZvHhQeQ7MhU8Ii7jw6uNHMutyfdtR09"/>
+</div>
+<div class="flex flex-col justify-center gap-1">
+<h3 class="text-slate-900 dark:text-slate-100 font-bold text-base leading-tight">Wireless Gaming Mouse</h3>
+<p class="text-slate-500 dark:text-slate-400 text-xs">Quantity: 1x</p>
+<p class="text-slate-400 dark:text-slate-500 text-xs">Oct 21, 2024</p>
+</div>
+</div>
+<div class="flex justify-between items-center pt-4 border-t border-slate-100 dark:border-slate-800">
+<div class="flex flex-col">
+<span class="text-slate-400 dark:text-slate-500 text-[10px] uppercase font-bold">Total Price</span>
+<span class="text-slate-900 dark:text-white font-bold text-lg leading-none">$89.00</span>
+</div>
+<button class="h-11 px-6 border-2 border-slate-900 dark:border-white rounded-lg text-slate-900 dark:text-white text-sm font-bold hover:bg-slate-900 hover:text-white dark:hover:bg-white dark:hover:text-slate-900 transition-colors">
+                        View Details
+                    </button>
+</div>
+</div>
+<!-- Order Card 3 (Cancelled) -->
+<div class="bg-white dark:bg-slate-900 rounded-lg p-4 shadow-[0_4px_12px_rgba(0,0,0,0.1)] border border-slate-50 dark:border-slate-800 opacity-80">
+<div class="flex justify-between items-center mb-4">
+<span class="text-slate-900 dark:text-white font-bold text-sm">#LH-892339</span>
+<span class="bg-slate-100 dark:bg-slate-800 text-slate-500 text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full">Cancelled</span>
+</div>
+<div class="flex gap-4 mb-4">
+<div class="w-20 h-20 rounded-lg bg-slate-100 dark:bg-slate-800 overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover grayscale" data-alt="Professional tablet with stylus pencil" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAiTXQKrHZ1nOyRQU0CTJpt9uIgOcRa7IivQIDFGjPPiDF6CiyVYBKeCh29bp9ZjHxZWUUm4jSji9WOiMTXjS-4ob1s125hw_-uitcKWhGQnaIKIVUqn-wJyLkb8okFi9D8ycYZcMlm9sCh09eVLzskpsYP99H-Mns7lUvl1f4z74Gec_nntuFJcekHXAAR8Sj0TlLlQDKWSvIsYA2nJD4HElRwGR6ohTXdAZBP3iMM2GUpS9Szxhh63vn6w4wucq77L98sdCWU-swQ"/>
+</div>
+<div class="flex flex-col justify-center gap-1">
+<h3 class="text-slate-900 dark:text-slate-100 font-bold text-base leading-tight">Pro Tablet Gen 5</h3>
+<p class="text-slate-500 dark:text-slate-400 text-xs">Quantity: 1x</p>
+<p class="text-slate-400 dark:text-slate-500 text-xs">Oct 18, 2024</p>
+</div>
+</div>
+<div class="flex justify-between items-center pt-4 border-t border-slate-100 dark:border-slate-800">
+<div class="flex flex-col">
+<span class="text-slate-400 dark:text-slate-500 text-[10px] uppercase font-bold">Total Price</span>
+<span class="text-slate-900 dark:text-white font-bold text-lg leading-none">$799.00</span>
+</div>
+<button class="h-11 px-6 border-2 border-slate-900 dark:border-white rounded-lg text-slate-900 dark:text-white text-sm font-bold hover:bg-slate-900 hover:text-white dark:hover:bg-white dark:hover:text-slate-900 transition-colors">
+                        View Details
+                    </button>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Bar -->
+<footer class="sticky bottom-0 bg-background-light dark:bg-background-dark border-t border-slate-100 dark:border-slate-800 px-6 py-3 flex justify-between items-center">
+<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] font-bold uppercase">Home</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">search</span>
+<span class="text-[10px] font-bold uppercase">Search</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-900 dark:text-white" href="#">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1">receipt_long</span>
+<span class="text-[10px] font-bold uppercase">Orders</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-bold uppercase">Profile</span>
+</a>
+</footer>
+</div>
+<style>
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
 </body></html>
