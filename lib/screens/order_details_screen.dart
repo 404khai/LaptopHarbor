@@ -357,7 +357,7 @@ class OrderDetailsScreen extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Icon(Icons.map, size: 20),
+                      const Icon(Icons.local_shipping, size: 20),
                       const SizedBox(width: 8),
                       Text(
                         'Track Package',
