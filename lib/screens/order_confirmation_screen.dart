@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../theme/app_theme.dart';
 import '../widgets/custom_back_button.dart';
+import 'order_details_screen.dart';
 
 class OrderConfirmationScreen extends StatelessWidget {
   const OrderConfirmationScreen({super.key});
@@ -142,63 +143,73 @@ class OrderConfirmationScreen extends StatelessWidget {
               const SizedBox(height: 24),
 
               // Item Details Card
-              Container(
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: Colors.grey[50],
-                  borderRadius: BorderRadius.circular(24),
-                  border: Border.all(color: Colors.grey[100]!),
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'ITEM DETAILS',
-                            style: GoogleFonts.inter(
-                              fontSize: 10,
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.primary,
-                              letterSpacing: 1.0,
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            'High-Performance Laptop',
-                            style: GoogleFonts.inter(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.slate900,
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            '1x - \$1,299.00',
-                            style: GoogleFonts.inter(
-                              fontSize: 14,
-                              color: Colors.grey[500],
-                            ),
-                          ),
-                        ],
-                      ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const OrderDetailsScreen(),
                     ),
-                    const SizedBox(width: 16),
-                    Container(
-                      width: 80,
-                      height: 56,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        image: const DecorationImage(
-                          image: NetworkImage(
-                            'https://lh3.googleusercontent.com/aida-public/AB6AXuBAowkvZXZcuE13G-EE1gajlHFAN1aPvliVsr2sSkUwcCd3OVELHZ6jCbc0K48h0AeU1Rr6Ile_lhltJgg9PQ5NKGB1BiPv2diBTuByZhoMU8DHnAAoyYZDBwbHgTPbqHUbxYqAnabwEzaDGq1jZ9vfIjHh2mBW-fTdEr1rk-mZp0bkpTh2n7UjjHeckC12W48OlBEn2-U8_Rp0xJAJkxjp7dMEkovgyJDebVDcniKqlu45aJaK3gIg7YxQ227tKezBTo7aJh2b7O74',
-                          ),
-                          fit: BoxFit.cover,
+                  );
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: Colors.grey[50],
+                    borderRadius: BorderRadius.circular(24),
+                    border: Border.all(color: Colors.grey[100]!),
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'ITEM DETAILS',
+                              style: GoogleFonts.inter(
+                                fontSize: 10,
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.primary,
+                                letterSpacing: 1.0,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              'High-Performance Laptop',
+                              style: GoogleFonts.inter(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.slate900,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              '1x - \$1,299.00',
+                              style: GoogleFonts.inter(
+                                fontSize: 14,
+                                color: Colors.grey[500],
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ),
-                  ],
+                      const SizedBox(width: 16),
+                      Container(
+                        width: 80,
+                        height: 56,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          image: const DecorationImage(
+                            image: NetworkImage(
+                              'https://lh3.googleusercontent.com/aida-public/AB6AXuBAowkvZXZcuE13G-EE1gajlHFAN1aPvliVsr2sSkUwcCd3OVELHZ6jCbc0K48h0AeU1Rr6Ile_lhltJgg9PQ5NKGB1BiPv2diBTuByZhoMU8DHnAAoyYZDBwbHgTPbqHUbxYqAnabwEzaDGq1jZ9vfIjHh2mBW-fTdEr1rk-mZp0bkpTh2n7UjjHeckC12W48OlBEn2-U8_Rp0xJAJkxjp7dMEkovgyJDebVDcniKqlu45aJaK3gIg7YxQ227tKezBTo7aJh2b7O74',
+                            ),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(height: 32),
@@ -260,8 +271,11 @@ class OrderConfirmationScreen extends StatelessWidget {
               const SizedBox(height: 40),
 
               // Footer Info
-              _buildFooterInfo(Icons.mail_outline, 'Confirmation sent to ',
-                  'alex@example.com'),
+              _buildFooterInfo(
+                Icons.mail_outline,
+                'Confirmation sent to ',
+                'alex@example.com',
+              ),
               const SizedBox(height: 16),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -304,10 +318,7 @@ class OrderConfirmationScreen extends StatelessWidget {
         const SizedBox(width: 12),
         RichText(
           text: TextSpan(
-            style: GoogleFonts.inter(
-              fontSize: 14,
-              color: Colors.grey[500],
-            ),
+            style: GoogleFonts.inter(fontSize: 14, color: Colors.grey[500]),
             children: [
               TextSpan(text: label),
               TextSpan(
