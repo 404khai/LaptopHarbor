@@ -8,6 +8,7 @@ import '../widgets/components_section.dart';
 import 'cart_screen.dart';
 import 'search_screen.dart';
 import 'wishlist_screen.dart';
+import 'profile_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -32,6 +33,10 @@ class _HomeScreenState extends State<HomeScreen> {
       Navigator.of(
         context,
       ).push(MaterialPageRoute(builder: (context) => const WishlistScreen()));
+    } else if (index == 4) {
+      Navigator.of(
+        context,
+      ).push(MaterialPageRoute(builder: (context) => const ProfileScreen()));
     } else {
       setState(() {
         _currentIndex = index;
