@@ -98,7 +98,7 @@ class _CartScreenState extends State<CartScreen> {
             width: 192,
             height: 192,
             decoration: BoxDecoration(
-              color: Colors.grey[50],
+              color: Colors.grey[100],
               shape: BoxShape.circle,
             ),
             child: Stack(
@@ -107,23 +107,8 @@ class _CartScreenState extends State<CartScreen> {
                 Icon(
                   Icons.shopping_bag_outlined,
                   size: 120,
-                  color: Colors.grey[300],
+                  color: Colors.grey[400],
                   weight: 100,
-                ),
-                Positioned(
-                  bottom: 40,
-                  right: 40,
-                  child: Container(
-                    width: 48,
-                    height: 48,
-                    decoration: BoxDecoration(
-                      color: AppColors.primary.withValues(alpha: 0.2),
-                      shape: BoxShape.circle,
-                    ),
-                    child: Container(
-                      decoration: const BoxDecoration(shape: BoxShape.circle),
-                    ),
-                  ),
                 ),
               ],
             ),
