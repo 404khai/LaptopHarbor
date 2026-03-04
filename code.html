@@ -3,9 +3,10 @@
 <html lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Order Confirmed | LaptopHarbor</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
         tailwind.config = {
@@ -14,95 +15,91 @@
                 extend: {
                     colors: {
                         "primary": "#11e8b6",
-                        "background-light": "#ffffff",
+                        "background-light": "#f6f8f8",
                         "background-dark": "#10221e",
                     },
                     fontFamily: {
                         "display": ["Inter", "sans-serif"]
                     },
-                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                    borderRadius: {
+                        "DEFAULT": "0.75rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
                 },
             },
         }
     </script>
-<title>Processing Payment - LaptopHarbor</title>
 <style>
     body {
       min-height: max(884px, 100dvh);
     }
   </style>
   </head>
-<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
-<!-- Top Navigation (Simplified for checkout) -->
-<header class="w-full p-6 flex justify-between items-center max-w-7xl mx-auto">
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-primary text-3xl">laptop_mac</span>
-<span class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">LaptopHarbor</span>
+<body class="bg-background-light dark:bg-background-dark font-display antialiased">
+<div class="relative flex h-auto min-h-screen w-full flex-col bg-white dark:bg-background-dark group/design-root overflow-x-hidden max-w-md mx-auto shadow-2xl">
+<!-- Top Bar -->
+<div class="flex items-center bg-white dark:bg-background-dark p-4 pb-2 justify-between">
+<div class="text-slate-900 dark:text-slate-100 flex size-12 shrink-0 items-center justify-center cursor-pointer min-h-[44px] min-w-[44px]" data-icon="ArrowLeft">
+<span class="material-symbols-outlined text-2xl">arrow_back</span>
 </div>
-<div class="flex items-center text-slate-500 text-sm font-medium">
-<span class="material-symbols-outlined mr-2 text-sm">lock</span>
-            Secure Transaction
-        </div>
-</header>
-<!-- Main Content Area -->
-<main class="flex-1 flex flex-col items-center justify-center px-4 -mt-16">
-<!-- Loading Container -->
-<div class="relative flex items-center justify-center mb-12">
-<!-- Outer Ring -->
-<div class="w-24 h-24 rounded-full border-4 border-slate-100 dark:border-slate-800 border-t-primary animate-spin"></div>
-<!-- Inner Pulse -->
-<div class="absolute w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center">
-<span class="material-symbols-outlined text-primary text-2xl">credit_card</span>
+<h2 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-tight flex-1 text-center pr-12">Order Status</h2>
 </div>
+<!-- Success Animation/Icon Area -->
+<div class="flex flex-col items-center justify-center py-10 px-4">
+<div class="w-24 h-24 bg-primary/20 rounded-full flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-primary text-6xl font-bold">check_circle</span>
 </div>
-<!-- Text Content -->
-<div class="max-w-md text-center space-y-4">
-<h1 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white tracking-tight">
-                Processing Your Order...
-            </h1>
-<p class="text-slate-600 dark:text-slate-400 text-lg leading-relaxed">
-                Please do not refresh the page or go back. <br class="hidden md:block"/>
-                We are finalizing your secure transaction with our bank.
+<h1 class="text-slate-900 dark:text-slate-100 tracking-tight text-3xl font-extrabold leading-tight text-center pb-2">Order Confirmed!</h1>
+<p class="text-slate-600 dark:text-slate-400 text-base font-normal leading-relaxed text-center px-6">
+                Your order <span class="font-bold text-slate-900 dark:text-slate-100">#LH-892341</span> has been placed successfully. We'll notify you once it ships.
             </p>
 </div>
-<!-- Progress Indicator -->
-<div class="w-full max-w-xs mt-10">
-<div class="flex justify-between mb-2 text-xs font-bold uppercase tracking-widest text-slate-400">
-<span>Authenticating</span>
-<span>65%</span>
-</div>
-<div class="h-1.5 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
-<div class="h-full bg-primary rounded-full" style="width: 65%;"></div>
-</div>
-</div>
-</main>
-<!-- Footer Security Badges -->
-<footer class="w-full p-8 mt-auto border-t border-slate-100 dark:border-slate-800">
-<div class="max-w-4xl mx-auto flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-60 grayscale hover:grayscale-0 transition-all duration-300">
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-2xl">verified_user</span>
-<span class="text-xs font-bold uppercase tracking-tighter">PCI DSS Compliant</span>
-</div>
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-2xl">security</span>
-<span class="text-xs font-bold uppercase tracking-tighter">SSL Secure Connection</span>
-</div>
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-2xl">check_circle</span>
-<span class="text-xs font-bold uppercase tracking-tighter">Verified by Visa</span>
-</div>
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-2xl">brand_awareness</span>
-<span class="text-xs font-bold uppercase tracking-tighter">Mastercard ID Check</span>
+<!-- Map/Delivery Placeholder -->
+<div class="@container px-4">
+<div class="w-full bg-slate-100 dark:bg-slate-800 flex flex-col justify-end overflow-hidden rounded-xl min-h-[180px] border border-slate-200 dark:border-slate-700 relative">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Abstract map showing delivery route to destination" data-location="San Francisco" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDPfZczVSKuQa2gHCNHm2qr8JJDz_GlADs-YosG0rbg7UUPecIUH_T5WE9gtvrHroiTgVoT4V9EiIhMZ0LOmnvcaohLuJ9YChIkC3nhKzuJEFm4b01OYkM4WesuUgCs-QsQN4TKuIIx7Qn_fyLCNhPIWVQRJu6x7i2eItKkQfKjvc1dGxK05r69HHDUvKzM9pv4nj3upOr7Njbwya0xT7JLDTADtBvevB4Uvejahw6rsSwlGgeO_ytodcvLbH2_baZHqwu3iL_cXqQC");'></div>
+<div class="relative p-4 bg-gradient-to-t from-black/50 to-transparent">
+<p class="text-white text-xs font-semibold uppercase tracking-wider">Estimated Delivery</p>
+<p class="text-white text-lg font-bold">Oct 24 - Oct 26</p>
 </div>
 </div>
-<p class="text-center text-[10px] text-slate-400 mt-8 uppercase tracking-[0.2em]">
-            © 2024 LaptopHarbor Global Inc. All encrypted data is handled via 256-bit AES.
-        </p>
-</footer>
-<!-- Abstract Background Element (Subtle) -->
-<div class="fixed top-0 left-0 w-full h-full pointer-events-none -z-10 overflow-hidden">
-<div class="absolute -top-[10%] -right-[10%] w-[40%] h-[40%] bg-primary/5 rounded-full blur-[120px]"></div>
-<div class="absolute -bottom-[10%] -left-[10%] w-[30%] h-[30%] bg-primary/5 rounded-full blur-[100px]"></div>
+</div>
+<!-- Order Summary -->
+<div class="p-4 mt-4">
+<div class="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl border border-slate-100 dark:border-slate-800">
+<div class="flex items-center justify-between gap-4">
+<div class="flex flex-col gap-1 flex-1">
+<p class="text-primary text-xs font-bold uppercase tracking-widest">Item Details</p>
+<p class="text-slate-900 dark:text-slate-100 text-base font-bold leading-tight">High-Performance Laptop</p>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">1x - $1,299.00</p>
+</div>
+<div class="w-24 h-16 bg-center bg-no-repeat bg-cover rounded-lg border border-slate-200 dark:border-slate-700" data-alt="Sleek modern silver high-performance laptop" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBAowkvZXZcuE13G-EE1gajlHFAN1aPvliVsr2sSkUwcCd3OVELHZ6jCbc0K48h0AeU1Rr6Ile_lhltJgg9PQ5NKGB1BiPv2diBTuByZhoMU8DHnAAoyYZDBwbHgTPbqHUbxYqAnabwEzaDGq1jZ9vfIjHh2mBW-fTdEr1rk-mZp0bkpTh2n7UjjHeckC12W48OlBEn2-U8_Rp0xJAJkxjp7dMEkovgyJDebVDcniKqlu45aJaK3gIg7YxQ227tKezBTo7aJh2b7O74");'>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="mt-auto p-4 flex flex-col gap-3 pb-8">
+<button class="w-full h-[52px] bg-primary hover:bg-primary/90 text-slate-900 font-bold rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-xl">local_shipping</span>
+                Track Order
+            </button>
+<button class="w-full h-[52px] bg-transparent border-2 border-slate-900 dark:border-slate-100 text-slate-900 dark:text-slate-100 font-bold rounded-xl hover:bg-slate-900 hover:text-white dark:hover:bg-slate-100 dark:hover:text-slate-900 transition-all">
+                Continue Shopping
+            </button>
+</div>
+<!-- Additional Info -->
+<div class="px-4 pb-8 flex flex-col gap-4">
+<div class="flex items-center gap-3 px-2">
+<span class="material-symbols-outlined text-slate-400">mail</span>
+<p class="text-sm text-slate-500 dark:text-slate-400">Confirmation sent to <span class="text-slate-900 dark:text-slate-100 font-medium">alex@example.com</span></p>
+</div>
+<div class="flex items-center gap-3 px-2">
+<span class="material-symbols-outlined text-slate-400">help_outline</span>
+<p class="text-sm text-slate-500 dark:text-slate-400">Need help? <a class="text-primary font-medium hover:underline" href="#">Contact Support</a></p>
+</div>
+</div>
 </div>
 </body></html>

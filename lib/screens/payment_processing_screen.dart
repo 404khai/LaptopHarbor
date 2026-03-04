@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../theme/app_theme.dart';
+import 'order_confirmation_screen.dart';
 
 class PaymentProcessingScreen extends StatefulWidget {
   const PaymentProcessingScreen({super.key});
@@ -21,6 +22,18 @@ class _PaymentProcessingScreenState extends State<PaymentProcessingScreen>
       duration: const Duration(seconds: 2),
       vsync: this,
     )..repeat();
+
+    // Navigate to Order Confirmation after 3 seconds
+    Future.delayed(const Duration(seconds: 3), () {
+      if (mounted) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const OrderConfirmationScreen(),
+          ),
+        );
+      }
+    });
   }
 
   @override
@@ -126,7 +139,8 @@ class _PaymentProcessingScreenState extends State<PaymentProcessingScreen>
                               height: 96,
                               child: CircularProgressIndicator(
                                 valueColor: const AlwaysStoppedAnimation<Color>(
-                                    AppColors.primary),
+                                  AppColors.primary,
+                                ),
                                 strokeWidth: 4,
                                 backgroundColor: Colors.grey[100],
                               ),
@@ -240,13 +254,21 @@ class _PaymentProcessingScreenState extends State<PaymentProcessingScreen>
                         runSpacing: 24,
                         children: [
                           _buildSecurityBadge(
-                              Icons.verified_user, 'PCI DSS COMPLIANT'),
+                            Icons.verified_user,
+                            'PCI DSS COMPLIANT',
+                          ),
                           _buildSecurityBadge(
-                              Icons.security, 'SSL SECURE CONNECTION'),
+                            Icons.security,
+                            'SSL SECURE CONNECTION',
+                          ),
                           _buildSecurityBadge(
-                              Icons.check_circle, 'VERIFIED BY VISA'),
+                            Icons.check_circle,
+                            'VERIFIED BY VISA',
+                          ),
                           _buildSecurityBadge(
-                              Icons.verified, 'MASTERCARD ID CHECK'),
+                            Icons.verified,
+                            'MASTERCARD ID CHECK',
+                          ),
                         ],
                       ),
                       const SizedBox(height: 32),
