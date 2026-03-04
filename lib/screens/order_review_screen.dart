@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../theme/app_theme.dart';
 import '../widgets/custom_back_button.dart';
+import 'payment_methods_screen.dart';
 
 class OrderReviewScreen extends StatefulWidget {
   const OrderReviewScreen({super.key});
@@ -279,7 +280,12 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
                 height: 56,
                 child: ElevatedButton(
                   onPressed: () {
-                    // Place Order logic
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const PaymentMethodsScreen(),
+                      ),
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primary,
