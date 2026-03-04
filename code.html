@@ -3,9 +3,8 @@
 <html lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Order Confirmed | LaptopHarbor</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
@@ -15,14 +14,16 @@
                 extend: {
                     colors: {
                         "primary": "#11e8b6",
-                        "background-light": "#f6f8f8",
+                        "background-light": "#ffffff",
                         "background-dark": "#10221e",
+                        "tech-black": "#000000",
+                        "tech-gray": "#111111",
                     },
                     fontFamily: {
                         "display": ["Inter", "sans-serif"]
                     },
                     borderRadius: {
-                        "DEFAULT": "0.75rem",
+                        "DEFAULT": "0.5rem",
                         "lg": "1rem",
                         "xl": "1.5rem",
                         "full": "9999px"
@@ -32,74 +33,138 @@
         }
     </script>
 <style>
+        .map-halo {
+            box-shadow: 0 0 15px 5px rgba(17, 232, 182, 0.4);
+        }
+        .details-card-shadow {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+<style>
     body {
       min-height: max(884px, 100dvh);
     }
   </style>
   </head>
-<body class="bg-background-light dark:bg-background-dark font-display antialiased">
-<div class="relative flex h-auto min-h-screen w-full flex-col bg-white dark:bg-background-dark group/design-root overflow-x-hidden max-w-md mx-auto shadow-2xl">
-<!-- Top Bar -->
-<div class="flex items-center bg-white dark:bg-background-dark p-4 pb-2 justify-between">
-<div class="text-slate-900 dark:text-slate-100 flex size-12 shrink-0 items-center justify-center cursor-pointer min-h-[44px] min-w-[44px]" data-icon="ArrowLeft">
-<span class="material-symbols-outlined text-2xl">arrow_back</span>
+<body class="bg-background-light dark:bg-background-dark font-display text-tech-gray">
+<div class="relative flex min-h-screen w-full flex-col max-w-md mx-auto overflow-x-hidden border-x border-slate-100">
+<header class="sticky top-0 z-20 flex items-center bg-white/90 backdrop-blur-md p-4 justify-between border-b border-slate-100">
+<button aria-label="Go back" class="text-tech-black flex size-11 items-center justify-center rounded-full hover:bg-slate-50 transition-colors">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<div class="flex flex-col items-center">
+<h2 class="text-tech-black text-lg font-bold leading-tight tracking-tight">Order #LH-892341</h2>
+<p class="text-primary text-xs font-bold uppercase tracking-widest">In Transit</p>
 </div>
-<h2 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-tight flex-1 text-center pr-12">Order Status</h2>
+<button aria-label="Order info" class="text-tech-black flex size-11 items-center justify-center rounded-full hover:bg-slate-50 transition-colors">
+<span class="material-symbols-outlined">info</span>
+</button>
+</header>
+<main class="flex-1">
+<section class="px-6 py-8">
+<div class="relative flex justify-between">
+<div class="absolute top-4 left-0 w-full h-0.5 bg-slate-100 z-0">
+<div class="h-full bg-primary w-[75%] transition-all"></div>
 </div>
-<!-- Success Animation/Icon Area -->
-<div class="flex flex-col items-center justify-center py-10 px-4">
-<div class="w-24 h-24 bg-primary/20 rounded-full flex items-center justify-center mb-6">
-<span class="material-symbols-outlined text-primary text-6xl font-bold">check_circle</span>
+<div class="relative z-10 flex flex-col items-center gap-2">
+<div class="bg-primary text-tech-black size-8 rounded-full flex items-center justify-center ring-4 ring-white">
+<span class="material-symbols-outlined text-sm font-bold">check</span>
 </div>
-<h1 class="text-slate-900 dark:text-slate-100 tracking-tight text-3xl font-extrabold leading-tight text-center pb-2">Order Confirmed!</h1>
-<p class="text-slate-600 dark:text-slate-400 text-base font-normal leading-relaxed text-center px-6">
-                Your order <span class="font-bold text-slate-900 dark:text-slate-100">#LH-892341</span> has been placed successfully. We'll notify you once it ships.
-            </p>
+<span class="text-[10px] font-bold text-tech-black uppercase">Placed</span>
 </div>
-<!-- Map/Delivery Placeholder -->
-<div class="@container px-4">
-<div class="w-full bg-slate-100 dark:bg-slate-800 flex flex-col justify-end overflow-hidden rounded-xl min-h-[180px] border border-slate-200 dark:border-slate-700 relative">
-<div class="absolute inset-0 bg-cover bg-center" data-alt="Abstract map showing delivery route to destination" data-location="San Francisco" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDPfZczVSKuQa2gHCNHm2qr8JJDz_GlADs-YosG0rbg7UUPecIUH_T5WE9gtvrHroiTgVoT4V9EiIhMZ0LOmnvcaohLuJ9YChIkC3nhKzuJEFm4b01OYkM4WesuUgCs-QsQN4TKuIIx7Qn_fyLCNhPIWVQRJu6x7i2eItKkQfKjvc1dGxK05r69HHDUvKzM9pv4nj3upOr7Njbwya0xT7JLDTADtBvevB4Uvejahw6rsSwlGgeO_ytodcvLbH2_baZHqwu3iL_cXqQC");'></div>
-<div class="relative p-4 bg-gradient-to-t from-black/50 to-transparent">
-<p class="text-white text-xs font-semibold uppercase tracking-wider">Estimated Delivery</p>
-<p class="text-white text-lg font-bold">Oct 24 - Oct 26</p>
+<div class="relative z-10 flex flex-col items-center gap-2">
+<div class="bg-primary text-tech-black size-8 rounded-full flex items-center justify-center ring-4 ring-white">
+<span class="material-symbols-outlined text-sm font-bold">check</span>
 </div>
+<span class="text-[10px] font-bold text-tech-black uppercase">Shipped</span>
 </div>
+<div class="relative z-10 flex flex-col items-center gap-2">
+<div class="bg-primary text-tech-black size-8 rounded-full flex items-center justify-center ring-4 ring-white">
+<span class="material-symbols-outlined text-sm font-bold">local_shipping</span>
 </div>
-<!-- Order Summary -->
-<div class="p-4 mt-4">
-<div class="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl border border-slate-100 dark:border-slate-800">
-<div class="flex items-center justify-between gap-4">
-<div class="flex flex-col gap-1 flex-1">
-<p class="text-primary text-xs font-bold uppercase tracking-widest">Item Details</p>
-<p class="text-slate-900 dark:text-slate-100 text-base font-bold leading-tight">High-Performance Laptop</p>
-<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">1x - $1,299.00</p>
+<span class="text-[10px] font-bold text-tech-black uppercase">Transit</span>
 </div>
-<div class="w-24 h-16 bg-center bg-no-repeat bg-cover rounded-lg border border-slate-200 dark:border-slate-700" data-alt="Sleek modern silver high-performance laptop" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBAowkvZXZcuE13G-EE1gajlHFAN1aPvliVsr2sSkUwcCd3OVELHZ6jCbc0K48h0AeU1Rr6Ile_lhltJgg9PQ5NKGB1BiPv2diBTuByZhoMU8DHnAAoyYZDBwbHgTPbqHUbxYqAnabwEzaDGq1jZ9vfIjHh2mBW-fTdEr1rk-mZp0bkpTh2n7UjjHeckC12W48OlBEn2-U8_Rp0xJAJkxjp7dMEkovgyJDebVDcniKqlu45aJaK3gIg7YxQ227tKezBTo7aJh2b7O74");'>
+<div class="relative z-10 flex flex-col items-center gap-2">
+<div class="bg-slate-100 text-slate-400 size-8 rounded-full flex items-center justify-center ring-4 ring-white border-2 border-white">
+<span class="material-symbols-outlined text-sm font-bold">inventory_2</span>
 </div>
-</div>
-</div>
-</div>
-<!-- Action Buttons -->
-<div class="mt-auto p-4 flex flex-col gap-3 pb-8">
-<button class="w-full h-[52px] bg-primary hover:bg-primary/90 text-slate-900 font-bold rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-primary/20">
-<span class="material-symbols-outlined text-xl">local_shipping</span>
-                Track Order
-            </button>
-<button class="w-full h-[52px] bg-transparent border-2 border-slate-900 dark:border-slate-100 text-slate-900 dark:text-slate-100 font-bold rounded-xl hover:bg-slate-900 hover:text-white dark:hover:bg-slate-100 dark:hover:text-slate-900 transition-all">
-                Continue Shopping
-            </button>
-</div>
-<!-- Additional Info -->
-<div class="px-4 pb-8 flex flex-col gap-4">
-<div class="flex items-center gap-3 px-2">
-<span class="material-symbols-outlined text-slate-400">mail</span>
-<p class="text-sm text-slate-500 dark:text-slate-400">Confirmation sent to <span class="text-slate-900 dark:text-slate-100 font-medium">alex@example.com</span></p>
-</div>
-<div class="flex items-center gap-3 px-2">
-<span class="material-symbols-outlined text-slate-400">help_outline</span>
-<p class="text-sm text-slate-500 dark:text-slate-400">Need help? <a class="text-primary font-medium hover:underline" href="#">Contact Support</a></p>
+<span class="text-[10px] font-bold text-slate-400 uppercase">Arrived</span>
 </div>
 </div>
+</section>
+<section class="relative h-80 w-full bg-slate-100 overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="High contrast detailed city map view" data-location="San Francisco" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCVgrShSJ6I29ydoR1Y1WBco-bAu20EfxKJRkgRzMyHuPN9kE3bFiEDpbaFhv5JzFJK5C5iUFgsfapZ1bF30oFyZy6VGZy43RNOLqLG2aAuve14r9kBZgh3L1w9lBF6de0Z0lJuguinhyCe_qk8QgHYtFWKXcBqqjcTUmp2NLgQVqYTnSCnYHHcwsdAwMil5pKoZYZASUD1-E-B41j0PekPnwEquu2Wi1c2EPXBoEBFA6TNcLqxaAVhX8yXGjL65vZ4FIdcpFfy80ke')"></div>
+<div class="absolute inset-0 bg-primary/5 pointer-events-none"></div>
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+<div class="relative">
+<div class="absolute inset-0 rounded-full map-halo animate-pulse"></div>
+<div class="relative z-10 bg-tech-black text-white p-2 rounded-full border-2 border-primary">
+<span class="material-symbols-outlined text-primary block">navigation</span>
+</div>
+</div>
+</div>
+<div class="absolute top-1/3 left-1/4">
+<div class="bg-tech-black text-white px-3 py-1.5 rounded-lg text-xs font-bold border border-primary shadow-xl">
+                        Courier is nearby
+                    </div>
+</div>
+</section>
+<section class="p-4 -mt-10 relative z-20">
+<div class="bg-white rounded-xl details-card-shadow p-6 flex flex-col gap-6">
+<div class="flex items-start justify-between">
+<div class="flex flex-col gap-1">
+<p class="text-slate-500 text-xs font-semibold uppercase tracking-wider">Estimated Arrival</p>
+<h3 class="text-tech-black text-2xl font-bold">2:30 PM - 3:00 PM</h3>
+</div>
+<div class="bg-primary/10 p-3 rounded-lg">
+<span class="material-symbols-outlined text-primary leading-none">schedule</span>
+</div>
+</div>
+<div class="h-px bg-slate-100 w-full"></div>
+<div class="grid grid-cols-1 gap-5">
+<div class="flex items-center gap-4">
+<div class="size-12 rounded-full overflow-hidden bg-slate-100 border-2 border-slate-50">
+<img class="w-full h-full object-cover" data-alt="Portrait of the delivery courier" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCo5pdDUtDEurj_PkftmKLYNMtxvZBuDX5uYXqq2HQLr2Hg2YDbGPEkdpqO2DKmz96msZX0lomqOy5ZkzaTBOyQdPPyoADKMlrHMGoXBEdaTxDgO0_LaSPnH7V96lWgzuX-SnE5Mkxv_lTdaTsGrAb-exYIC1whGZ4u47NIIj_A9bhk638Tu6YsQs2mhtx5zBhOMnSCTMNTMq6hdx69-CQjvCcPHKZJM0m-UWtBRXMecV8A_zzlyOD2JdINbED_1gxEqMPKv-gnL-Pd"/>
+</div>
+<div class="flex flex-col">
+<p class="text-slate-500 text-xs font-semibold uppercase tracking-wider">Courier Name</p>
+<p class="text-tech-black font-bold text-base">Marcus Johnson</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<div class="size-10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-slate-400">location_on</span>
+</div>
+<div class="flex flex-col">
+<p class="text-slate-500 text-xs font-semibold uppercase tracking-wider">Delivery Address</p>
+<p class="text-tech-black font-medium leading-tight">245 Market St, Suite 1500<br/>San Francisco, CA 94105</p>
+</div>
+</div>
+</div>
+<button class="w-full bg-primary hover:bg-primary/90 text-tech-black font-bold py-4 rounded-xl transition-all shadow-lg shadow-primary/20 flex items-center justify-center gap-2 min-h-[44px]">
+<span class="material-symbols-outlined">chat_bubble</span>
+                        Contact Courier
+                    </button>
+</div>
+</section>
+</main>
+<nav class="sticky bottom-0 bg-white border-t border-slate-100 px-6 py-3 flex items-center justify-between z-30">
+<a class="flex flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors min-h-[44px] min-w-[44px] justify-center" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] font-bold uppercase tracking-tight">Home</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-primary transition-colors min-h-[44px] min-w-[44px] justify-center" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">package_2</span>
+<span class="text-[10px] font-bold uppercase tracking-tight">Orders</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors min-h-[44px] min-w-[44px] justify-center" href="#">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="text-[10px] font-bold uppercase tracking-tight">Cart</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors min-h-[44px] min-w-[44px] justify-center" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-bold uppercase tracking-tight">Profile</span>
+</a>
+</nav>
 </div>
 </body></html>
