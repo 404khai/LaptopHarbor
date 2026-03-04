@@ -3,10 +3,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:laptop_harbor/screens/saved_addresses_screen.dart';
 import '../theme/app_theme.dart';
 import '../widgets/custom_bottom_nav_bar.dart';
+import '../widgets/custom_back_button.dart';
 import 'payment_methods_screen.dart';
 import 'wishlist_screen.dart';
 import 'cart_screen.dart';
 import 'search_screen.dart';
+import 'my_orders_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -19,7 +21,7 @@ class ProfileScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0,
         centerTitle: true,
-        
+        leading: const Center(child: CustomBackButton()),
         title: Text(
           'Profile',
           style: GoogleFonts.inter(
@@ -49,16 +51,45 @@ class ProfileScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     // Profile Header
-                    Container(
-                      width: 100,
-                      height: 100,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(color: AppColors.primary, width: 2),
-                        image: const DecorationImage(
-                          image: AssetImage('images/user.jpeg'),
-                          fit: BoxFit.cover,
-                        ),
+                    Center(
+                      child: Stack(
+                        children: [
+                          Container(
+                            width: 100,
+                            height: 100,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: AppColors.primary,
+                                width: 2,
+                              ),
+                              image: const DecorationImage(
+                                image: AssetImage('images/user.jpeg'),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            bottom: 0,
+                            right: 0,
+                            child: Container(
+                              padding: const EdgeInsets.all(4),
+                              decoration: BoxDecoration(
+                                color: AppColors.primary,
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: Colors.white,
+                                  width: 2,
+                                ),
+                              ),
+                              child: const Icon(
+                                Icons.edit_rounded,
+                                color: AppColors.slate900,
+                                size: 16,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     const SizedBox(height: 16),
@@ -124,8 +155,14 @@ class ProfileScreen extends StatelessWidget {
                     _buildMenuItem(
                       icon: Icons.shopping_bag,
                       title: 'My Orders',
-                      onTap: () {},
-                      isHighlighted: true,
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const MyOrdersScreen(),
+                          ),
+                        );
+                      },
                     ),
                     const SizedBox(height: 16),
                     _buildMenuItem(
@@ -175,7 +212,9 @@ class ProfileScreen extends StatelessWidget {
                         onPressed: () {},
                         style: OutlinedButton.styleFrom(
                           side: const BorderSide(
-                              color: Colors.grey, width: 0.5), // Subtle border
+                            color: Colors.grey,
+                            width: 0.5,
+                          ), // Subtle border
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16),
                           ),
@@ -183,8 +222,11 @@ class ProfileScreen extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Icon(Icons.logout,
-                                color: Colors.red, size: 20),
+                            const Icon(
+                              Icons.logout,
+                              color: Colors.red,
+                              size: 20,
+                            ),
                             const SizedBox(width: 8),
                             Text(
                               'Log Out',
@@ -211,7 +253,8 @@ class ProfileScreen extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const SearchScreen()),
+                      builder: (context) => const SearchScreen(),
+                    ),
                   );
                 } else if (index == 2) {
                   Navigator.push(
@@ -222,7 +265,8 @@ class ProfileScreen extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const WishlistScreen()),
+                      builder: (context) => const WishlistScreen(),
+                    ),
                   );
                 }
               },
@@ -270,10 +314,7 @@ class ProfileScreen extends StatelessWidget {
               ),
               Text(
                 label,
-                style: GoogleFonts.inter(
-                  fontSize: 12,
-                  color: Colors.grey[500],
-                ),
+                style: GoogleFonts.inter(fontSize: 12, color: Colors.grey[500]),
               ),
             ],
           ),
@@ -295,6 +336,13 @@ class ProfileScreen extends StatelessWidget {
         decoration: BoxDecoration(
           color: isHighlighted ? AppColors.primary : Colors.white,
           borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            ),
+          ],
         ),
         child: Row(
           children: [
@@ -310,8 +358,9 @@ class ProfileScreen extends StatelessWidget {
                 style: GoogleFonts.inter(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
-                  color:
-                      isHighlighted ? AppColors.slate900 : AppColors.slate900,
+                  color: isHighlighted
+                      ? AppColors.slate900
+                      : AppColors.slate900,
                 ),
               ),
             ),
