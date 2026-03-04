@@ -3,10 +3,9 @@
 <html lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Payment Methods - LaptopHarbor</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
         tailwind.config = {
@@ -14,150 +13,96 @@
             theme: {
                 extend: {
                     colors: {
-                        "primary": "#17e8b6",
+                        "primary": "#11e8b6",
                         "background-light": "#ffffff",
                         "background-dark": "#10221e",
                     },
                     fontFamily: {
                         "display": ["Inter", "sans-serif"]
                     },
-                    borderRadius: {
-                        "DEFAULT": "0.5rem",
-                        "lg": "0.75rem",
-                        "xl": "1.5rem",
-                        "full": "9999px"
-                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
                 },
             },
         }
     </script>
-<style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #ffffff;
-        }
-        .shadow-subtle {
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-        }
-    </style>
+<title>Processing Payment - LaptopHarbor</title>
 <style>
     body {
       min-height: max(884px, 100dvh);
     }
   </style>
   </head>
-<body class="bg-background-light text-slate-900 font-display">
-<div class="relative mx-auto max-w-md min-h-screen flex flex-col">
-<!-- Top App Bar -->
-<header class="flex items-center justify-between p-6 bg-white sticky top-0 z-10">
-<div class="flex items-center gap-4">
-<button aria-label="Go back" class="flex items-center justify-center w-11 h-11 rounded-full hover:bg-slate-100 transition-colors">
-<span class="material-symbols-outlined text-slate-900 text-[24px]">arrow_back</span>
-</button>
-<h1 class="text-xl font-bold tracking-tight text-slate-900">Payment Methods</h1>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
+<!-- Top Navigation (Simplified for checkout) -->
+<header class="w-full p-6 flex justify-between items-center max-w-7xl mx-auto">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-3xl">laptop_mac</span>
+<span class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">LaptopHarbor</span>
 </div>
-<button class="flex items-center gap-1 bg-primary text-slate-900 px-4 py-2 rounded-lg font-bold text-sm hover:opacity-90 transition-opacity min-h-[44px]">
-<span class="material-symbols-outlined text-[20px]">add</span>
-<span>Add New</span>
-</button>
+<div class="flex items-center text-slate-500 text-sm font-medium">
+<span class="material-symbols-outlined mr-2 text-sm">lock</span>
+            Secure Transaction
+        </div>
 </header>
-<main class="flex-1 px-6 py-4 space-y-6">
-<!-- Section Header -->
-<div class="space-y-1">
-<h2 class="text-sm font-semibold uppercase tracking-wider text-slate-500">Saved Cards</h2>
-<p class="text-xs text-slate-400">Manage your preferred payment options for faster checkout.</p>
-</div>
-<!-- Card List -->
-<div class="space-y-4">
-<!-- Visa Card -->
-<div class="bg-white border border-slate-100 p-5 rounded-lg shadow-subtle flex flex-col gap-4">
-<div class="flex items-center justify-between">
-<div class="flex items-center gap-4">
-<div class="w-12 h-8 bg-slate-50 rounded flex items-center justify-center overflow-hidden border border-slate-100">
-<img alt="Visa" class="w-8" data-alt="Official Visa credit card logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIVmFCNDQGWCXavXJfqN4YKuX2DHMVxP1FLwvlf700dOOTuee0_KbbqQoin_9qKAgvV14Iet5DkpHI6BOVmllo1A7TrLIlaHCsezG4A-6K8mL6yH9S6l9vpAvAnEuhDCLfK_Zq5CX7fiTy2fzRP8SoINQAqzs6Q3uJrU0z3wD7Wuaut6AiJ6KgbSoLitktWz8H5SPPq6mVRXyQo18SIU8WfUA1T9oqhmjrrXLfiBWEYvkrGPJSWVxZbdgZSFzw9HCfoiKWzLmy4XT_"/>
-</div>
-<div>
-<p class="font-bold text-slate-900">Visa •••• 4242</p>
-<p class="text-sm text-slate-500">Expires 12/26</p>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col items-center justify-center px-4 -mt-16">
+<!-- Loading Container -->
+<div class="relative flex items-center justify-center mb-12">
+<!-- Outer Ring -->
+<div class="w-24 h-24 rounded-full border-4 border-slate-100 dark:border-slate-800 border-t-primary animate-spin"></div>
+<!-- Inner Pulse -->
+<div class="absolute w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-2xl">credit_card</span>
 </div>
 </div>
-<button class="w-11 h-11 flex items-center justify-center text-slate-400 hover:text-slate-900">
-<span class="material-symbols-outlined">more_vert</span>
-</button>
+<!-- Text Content -->
+<div class="max-w-md text-center space-y-4">
+<h1 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white tracking-tight">
+                Processing Your Order...
+            </h1>
+<p class="text-slate-600 dark:text-slate-400 text-lg leading-relaxed">
+                Please do not refresh the page or go back. <br class="hidden md:block"/>
+                We are finalizing your secure transaction with our bank.
+            </p>
 </div>
-<div class="h-px bg-slate-50 w-full"></div>
-<div class="flex items-center justify-between">
-<span class="text-sm font-medium text-slate-600">Set as Default</span>
-<label class="relative flex h-[31px] w-[51px] cursor-pointer items-center rounded-full border-none bg-slate-200 p-0.5 has-[:checked]:justify-end has-[:checked]:bg-primary transition-all">
-<div class="h-full aspect-square rounded-full bg-white shadow-md"></div>
-<input checked="" class="invisible absolute" type="checkbox"/>
-</label>
+<!-- Progress Indicator -->
+<div class="w-full max-w-xs mt-10">
+<div class="flex justify-between mb-2 text-xs font-bold uppercase tracking-widest text-slate-400">
+<span>Authenticating</span>
+<span>65%</span>
 </div>
+<div class="h-1.5 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 65%;"></div>
 </div>
-<!-- Mastercard Card -->
-<div class="bg-white border border-slate-100 p-5 rounded-lg shadow-subtle flex flex-col gap-4">
-<div class="flex items-center justify-between">
-<div class="flex items-center gap-4">
-<div class="w-12 h-8 bg-slate-50 rounded flex items-center justify-center overflow-hidden border border-slate-100">
-<img alt="Mastercard" class="w-8" data-alt="Official Mastercard credit card logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnw56Q27M6boX2QXWzV_Q1ar7S_UY4Hn0NLLToPwcFHbNH8Wz5ybxTmdoPlH5hRKev3jMgZztFEfZTPb2y2UfdMMgmfW86LaY6ao_1GYv3z4QkX8Ej-IrVaFQPNOQxLmrp-RIDeSe7pmO4qZrXKalDt3R4SHblBnYlTF-liAVocOghkfSPyoLtcs7SErd7dxSWyriRD1bQCNi66aF3-My7LTPzqZDG4khzKgbM84c0zc8mYbpWHT1c2M8KqoNxaEUS_Tad8U1nNEK6"/>
-</div>
-<div>
-<p class="font-bold text-slate-900">Mastercard •••• 8899</p>
-<p class="text-sm text-slate-500">Expires 09/25</p>
-</div>
-</div>
-<button class="w-11 h-11 flex items-center justify-center text-slate-400 hover:text-slate-900">
-<span class="material-symbols-outlined">more_vert</span>
-</button>
-</div>
-<div class="h-px bg-slate-50 w-full"></div>
-<div class="flex items-center justify-between">
-<span class="text-sm font-medium text-slate-600">Set as Default</span>
-<label class="relative flex h-[31px] w-[51px] cursor-pointer items-center rounded-full border-none bg-slate-200 p-0.5 has-[:checked]:justify-end has-[:checked]:bg-primary transition-all">
-<div class="h-full aspect-square rounded-full bg-white shadow-md"></div>
-<input class="invisible absolute" type="checkbox"/>
-</label>
-</div>
-</div>
-<!-- Digital Wallet -->
-<div class="bg-white border border-slate-100 p-5 rounded-lg shadow-subtle flex flex-col gap-4">
-<div class="flex items-center justify-between">
-<div class="flex items-center gap-4">
-<div class="w-12 h-8 bg-slate-50 rounded flex items-center justify-center overflow-hidden border border-slate-100">
-<span class="material-symbols-outlined text-slate-900">account_balance_wallet</span>
-</div>
-<div>
-<p class="font-bold text-slate-900">Apple Pay</p>
-<p class="text-sm text-slate-500">Quick checkout enabled</p>
-</div>
-</div>
-<button class="w-11 h-11 flex items-center justify-center text-slate-400 hover:text-slate-900">
-<span class="material-symbols-outlined">more_vert</span>
-</button>
-</div>
-<div class="h-px bg-slate-50 w-full"></div>
-<div class="flex items-center justify-between">
-<span class="text-sm font-medium text-slate-600">Active</span>
-<label class="relative flex h-[31px] w-[51px] cursor-pointer items-center rounded-full border-none bg-slate-200 p-0.5 has-[:checked]:justify-end has-[:checked]:bg-primary transition-all">
-<div class="h-full aspect-square rounded-full bg-white shadow-md"></div>
-<input class="invisible absolute" type="checkbox"/>
-</label>
-</div>
-</div>
-</div>
-<!-- Info Message -->
-<div class="p-4 bg-primary/10 rounded-lg flex gap-3">
-<span class="material-symbols-outlined text-slate-900 shrink-0">info</span>
-<p class="text-sm text-slate-700 leading-snug">
-                    Your payment information is encrypted and securely stored. We never share your full card details.
-                </p>
 </div>
 </main>
-<!-- Bottom Navigation Spacer -->
-<footer class="p-6">
-<button class="w-full py-4 bg-slate-900 text-white font-bold rounded-lg hover:bg-slate-800 transition-colors shadow-lg min-h-[56px]">
-                Confirm &amp; Pay
-            </button>
+<!-- Footer Security Badges -->
+<footer class="w-full p-8 mt-auto border-t border-slate-100 dark:border-slate-800">
+<div class="max-w-4xl mx-auto flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-60 grayscale hover:grayscale-0 transition-all duration-300">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-2xl">verified_user</span>
+<span class="text-xs font-bold uppercase tracking-tighter">PCI DSS Compliant</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-2xl">security</span>
+<span class="text-xs font-bold uppercase tracking-tighter">SSL Secure Connection</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-2xl">check_circle</span>
+<span class="text-xs font-bold uppercase tracking-tighter">Verified by Visa</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-2xl">brand_awareness</span>
+<span class="text-xs font-bold uppercase tracking-tighter">Mastercard ID Check</span>
+</div>
+</div>
+<p class="text-center text-[10px] text-slate-400 mt-8 uppercase tracking-[0.2em]">
+            © 2024 LaptopHarbor Global Inc. All encrypted data is handled via 256-bit AES.
+        </p>
 </footer>
+<!-- Abstract Background Element (Subtle) -->
+<div class="fixed top-0 left-0 w-full h-full pointer-events-none -z-10 overflow-hidden">
+<div class="absolute -top-[10%] -right-[10%] w-[40%] h-[40%] bg-primary/5 rounded-full blur-[120px]"></div>
+<div class="absolute -bottom-[10%] -left-[10%] w-[30%] h-[30%] bg-primary/5 rounded-full blur-[100px]"></div>
 </div>
 </body></html>
