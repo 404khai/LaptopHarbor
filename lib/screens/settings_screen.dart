@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../theme/app_theme.dart';
 import '../widgets/custom_back_button.dart';
 import 'edit_profile_screen.dart';
+import 'edit_password_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -59,7 +60,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   _buildSettingsTile(
                     icon: Icons.lock_outline,
                     title: 'Change Password',
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const EditPasswordScreen(),
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),
@@ -279,11 +287,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
               ),
               trailing ??
-                  Icon(
-                    Icons.chevron_right,
-                    color: Colors.grey[400],
-                    size: 20,
-                  ),
+                  Icon(Icons.chevron_right, color: Colors.grey[400], size: 20),
             ],
           ),
         ),
@@ -325,10 +329,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   Widget _buildDivider() {
-    return Divider(
-      height: 1,
-      thickness: 1,
-      color: Colors.grey[50],
-    );
+    return Divider(height: 1, thickness: 1, color: Colors.grey[50]);
   }
 }
