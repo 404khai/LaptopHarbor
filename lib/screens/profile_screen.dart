@@ -10,6 +10,7 @@ import 'cart_screen.dart';
 import 'search_screen.dart';
 import 'my_orders_screen.dart';
 import 'edit_profile_screen.dart';
+import 'settings_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -36,7 +37,7 @@ class ProfileScreen extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const CartScreen()),
+                MaterialPageRoute(builder: (context) => const SettingsScreen()),
               );
             },
             icon: const Icon(Icons.settings_rounded, color: AppColors.slate900),
