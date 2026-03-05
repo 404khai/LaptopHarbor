@@ -3,174 +3,98 @@
 <html lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Edit Profile - LaptopHarbor</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              "primary": "#11e8b6",
-              "background-light": "#ffffff",
-              "background-dark": "#10221e",
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#11e8b6",
+                        "background-light": "#ffffff",
+                        "background-dark": "#10221e",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px",
+                        "custom-form": "12px"
+                    },
+                },
             },
-            fontFamily: {
-              "display": ["Inter", "sans-serif"]
-            },
-            borderRadius: {"DEFAULT": "0.5rem", "lg": "0.75rem", "xl": "1.5rem", "full": "9999px"},
-          },
-        },
-      }
+        }
     </script>
-<title>LaptopHarbor - My Orders</title>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
 <style>
     body {
       min-height: max(884px, 100dvh);
     }
   </style>
   </head>
-<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100">
-<div class="relative flex min-h-screen w-full flex-col max-w-md mx-auto bg-background-light dark:bg-background-dark shadow-xl">
-<!-- Header -->
-<header class="sticky top-0 z-10 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md px-4 pt-6 pb-2">
-<div class="flex items-center justify-between mb-4">
-<button class="flex items-center justify-center w-11 h-11 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
-<span class="material-symbols-outlined text-slate-900 dark:text-slate-100">arrow_back</span>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased">
+<div class="relative flex h-auto min-h-screen w-full flex-col max-w-md mx-auto overflow-x-hidden">
+<!-- Top Navigation -->
+<div class="flex items-center p-6 pb-2 justify-between">
+<button class="text-slate-900 dark:text-slate-100 flex size-10 items-center justify-start focus:outline-none">
+<span class="material-symbols-outlined text-3xl">arrow_back</span>
 </button>
-<button class="flex items-center justify-center w-11 h-11 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
-<span class="material-symbols-outlined text-slate-900 dark:text-slate-100">search</span>
+<h1 class="text-slate-900 dark:text-slate-100 text-2xl font-semibold leading-tight tracking-tight flex-1 ml-4">Edit Profile</h1>
+</div>
+<!-- Profile Picture Section -->
+<div class="flex p-8 @container">
+<div class="flex w-full flex-col gap-4 items-center">
+<div class="relative group">
+<div class="bg-slate-200 dark:bg-slate-800 bg-center bg-no-repeat aspect-square bg-cover rounded-full min-h-32 w-32 border-2 border-slate-100 dark:border-slate-800 shadow-sm" data-alt="Professional portrait of a young man for user profile" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAWmEEk2CGNdqlvAKGFcsWkbCOsXsMbGzVYvjlAEy36C-d7ZQ67vweKXL6uTC9_jTDMlgLETa8Kwlay1sMEs0uel7H-0kvIAdTdbwowqhPZZogpz07AcZmX1_TICljn34yjSFBTt74-O2SBZlVOM_m_ZVGNmuFG0Ddju8o6tduH-0m1WXAIMe8R1aymUzrpvZy6KILivr6_WISXwBVry6StTZAFfnZKT210pPPEsfv0lvFgvYX8MX7Xv8AuYFTwoM3KV_9DJVcVcd95");'>
+</div>
+<button class="absolute bottom-0 right-0 bg-primary p-2 rounded-full border-4 border-white dark:border-background-dark shadow-md flex items-center justify-center">
+<span class="material-symbols-outlined text-slate-900 text-xl font-bold">photo_camera</span>
 </button>
 </div>
-<h1 class="text-[24pt] font-bold text-slate-900 dark:text-slate-100 px-2">My Orders</h1>
-</header>
-<!-- Filter Tabs -->
-<nav class="sticky top-[108px] z-10 bg-background-light dark:bg-background-dark px-4 border-b border-slate-100 dark:border-slate-800">
-<div class="flex gap-6 overflow-x-auto no-scrollbar">
-<a class="flex flex-col items-center justify-center border-b-2 border-primary py-4 min-w-[60px]" href="#">
-<span class="text-slate-900 dark:text-slate-100 text-sm font-bold">All</span>
-</a>
-<a class="flex flex-col items-center justify-center border-b-2 border-transparent py-4 min-w-[60px]" href="#">
-<span class="text-slate-400 dark:text-slate-500 text-sm font-medium">Active</span>
-</a>
-<a class="flex flex-col items-center justify-center border-b-2 border-transparent py-4 min-w-[60px]" href="#">
-<span class="text-slate-400 dark:text-slate-500 text-sm font-medium">Completed</span>
-</a>
-<a class="flex flex-col items-center justify-center border-b-2 border-transparent py-4 min-w-[60px]" href="#">
-<span class="text-slate-400 dark:text-slate-500 text-sm font-medium">Cancelled</span>
-</a>
-</div>
-</nav>
-<!-- Orders List -->
-<main class="flex-1 p-4 space-y-4">
-<!-- Order Card 1 -->
-<div class="bg-white dark:bg-slate-900 rounded-lg p-4 shadow-[0_4px_12px_rgba(0,0,0,0.1)] border border-slate-50 dark:border-slate-800">
-<div class="flex justify-between items-center mb-4">
-<span class="text-slate-900 dark:text-white font-bold text-sm">#LH-892341</span>
-<span class="bg-primary text-slate-900 text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full">Delivered</span>
-</div>
-<div class="flex gap-4 mb-4">
-<div class="w-20 h-20 rounded-lg bg-slate-100 dark:bg-slate-800 overflow-hidden flex-shrink-0">
-<img class="w-full h-full object-cover" data-alt="Sleek silver high performance laptop on desk" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAoK5vBH-MRfZZSeWkhDBqhTHc9G36U9C0cGDtwFpJW4-5A0NHaFUi2GxW0IGnTcgASKwvsgRivqAjg6-hzPcu19gma1se-UhwJsmgW3b55OjVLDAmtPA6Z0Ah3EkbjRW1GLQKxZQKC1e_648O1FEZihJwEhrXD66O6L5yO7h2Bp6Qr2Ll-U045eS1Psx3b4FFcq4cXDP9UR1SC4kaN4tzeRkrtR3LDKgOF2Qt-SCMgKtibDbsQY3AiyGlTrXyzN2HxTStKIfLMnyvH"/>
-</div>
-<div class="flex flex-col justify-center gap-1">
-<h3 class="text-slate-900 dark:text-slate-100 font-bold text-base leading-tight">High-Performance Laptop</h3>
-<p class="text-slate-500 dark:text-slate-400 text-xs">Quantity: 1x</p>
-<p class="text-slate-400 dark:text-slate-500 text-xs">Oct 22, 2024</p>
+<button class="text-primary text-base font-semibold leading-normal text-center hover:opacity-80 transition-opacity">
+                    Change Photo
+                </button>
 </div>
 </div>
-<div class="flex justify-between items-center pt-4 border-t border-slate-100 dark:border-slate-800">
-<div class="flex flex-col">
-<span class="text-slate-400 dark:text-slate-500 text-[10px] uppercase font-bold">Total Price</span>
-<span class="text-slate-900 dark:text-white font-bold text-lg leading-none">$1,299.00</span>
+<!-- Form Fields -->
+<div class="flex flex-col gap-5 px-6 pb-24">
+<div class="flex flex-col gap-2">
+<label class="text-slate-900 dark:text-slate-100 text-sm font-semibold uppercase tracking-wider ml-1">Full Name</label>
+<input class="form-input flex w-full rounded-custom-form text-slate-900 border-2 border-slate-900 bg-transparent focus:ring-2 focus:ring-primary focus:border-primary h-14 px-4 text-base font-medium placeholder:text-slate-400" placeholder="Enter your name" type="text" value="Alex Rivera"/>
 </div>
-<button class="h-11 px-6 border-2 border-slate-900 dark:border-white rounded-lg text-slate-900 dark:text-white text-sm font-bold hover:bg-slate-900 hover:text-white dark:hover:bg-white dark:hover:text-slate-900 transition-colors">
-                        View Details
-                    </button>
+<div class="flex flex-col gap-2">
+<label class="text-slate-900 dark:text-slate-100 text-sm font-semibold uppercase tracking-wider ml-1">Email Address</label>
+<input class="form-input flex w-full rounded-custom-form text-slate-900 border-2 border-slate-900 bg-transparent focus:ring-2 focus:ring-primary focus:border-primary h-14 px-4 text-base font-medium placeholder:text-slate-400" placeholder="Enter your email" type="email" value="alex.rivera@laptopharbor.com"/>
 </div>
+<div class="flex flex-col gap-2">
+<label class="text-slate-900 dark:text-slate-100 text-sm font-semibold uppercase tracking-wider ml-1">Phone Number</label>
+<input class="form-input flex w-full rounded-custom-form text-slate-900 border-2 border-slate-900 bg-transparent focus:ring-2 focus:ring-primary focus:border-primary h-14 px-4 text-base font-medium placeholder:text-slate-400" placeholder="Enter phone number" type="tel" value="+1 (555) 000-1234"/>
 </div>
-<!-- Order Card 2 -->
-<div class="bg-white dark:bg-slate-900 rounded-lg p-4 shadow-[0_4px_12px_rgba(0,0,0,0.1)] border border-slate-50 dark:border-slate-800">
-<div class="flex justify-between items-center mb-4">
-<span class="text-slate-900 dark:text-white font-bold text-sm">#LH-892342</span>
-<span class="bg-primary/20 text-slate-900 dark:text-primary text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full">In Transit</span>
-</div>
-<div class="flex gap-4 mb-4">
-<div class="w-20 h-20 rounded-lg bg-slate-100 dark:bg-slate-800 overflow-hidden flex-shrink-0">
-<img class="w-full h-full object-cover" data-alt="Ergonomic vertical wireless gaming mouse" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDotNpGa1LstRfj4smJ3zVMIkIDZQTMPZOXgdGySc1sweFP_LByMbSUk0MyYTfeQuUoFSKk7lZiy9bQabzKxjXwkX-9WC3hE6exqboNIYUXLVgDg2Sf2swYBRNGPBVsj_oGIa_IrZaPx56FU3Gv4Ahlq5GWXVK_xol1zNhHO8bB2gZ20W20vXXE6aVPwgyt7rooTBOcT-22esOP5A2xMJORf7IBtiLsTFpydRv8CKHcnb6JrZvHhQeQ7MhU8Ii7jw6uNHMutyfdtR09"/>
-</div>
-<div class="flex flex-col justify-center gap-1">
-<h3 class="text-slate-900 dark:text-slate-100 font-bold text-base leading-tight">Wireless Gaming Mouse</h3>
-<p class="text-slate-500 dark:text-slate-400 text-xs">Quantity: 1x</p>
-<p class="text-slate-400 dark:text-slate-500 text-xs">Oct 21, 2024</p>
+<div class="flex flex-col gap-2">
+<label class="text-slate-900 dark:text-slate-100 text-sm font-semibold uppercase tracking-wider ml-1">Bio</label>
+<textarea class="form-textarea flex w-full rounded-custom-form text-slate-900 border-2 border-slate-900 bg-transparent focus:ring-2 focus:ring-primary focus:border-primary p-4 text-base font-medium placeholder:text-slate-400 resize-none" placeholder="Tell us about yourself" rows="4">Tech enthusiast and developer. Looking for the ultimate laptop setup for mobile coding.</textarea>
 </div>
 </div>
-<div class="flex justify-between items-center pt-4 border-t border-slate-100 dark:border-slate-800">
-<div class="flex flex-col">
-<span class="text-slate-400 dark:text-slate-500 text-[10px] uppercase font-bold">Total Price</span>
-<span class="text-slate-900 dark:text-white font-bold text-lg leading-none">$89.00</span>
+<!-- Bottom Action Button -->
+<div class="fixed bottom-0 left-0 right-0 max-w-md mx-auto p-6 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md">
+<button class="w-full bg-primary py-4 rounded-xl text-slate-900 text-lg font-bold shadow-lg hover:shadow-primary/20 transition-all active:scale-[0.98]">
+                Save Changes
+            </button>
 </div>
-<button class="h-11 px-6 border-2 border-slate-900 dark:border-white rounded-lg text-slate-900 dark:text-white text-sm font-bold hover:bg-slate-900 hover:text-white dark:hover:bg-white dark:hover:text-slate-900 transition-colors">
-                        View Details
-                    </button>
+<div class="h-24 bg-transparent"></div>
 </div>
-</div>
-<!-- Order Card 3 (Cancelled) -->
-<div class="bg-white dark:bg-slate-900 rounded-lg p-4 shadow-[0_4px_12px_rgba(0,0,0,0.1)] border border-slate-50 dark:border-slate-800 opacity-80">
-<div class="flex justify-between items-center mb-4">
-<span class="text-slate-900 dark:text-white font-bold text-sm">#LH-892339</span>
-<span class="bg-slate-100 dark:bg-slate-800 text-slate-500 text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full">Cancelled</span>
-</div>
-<div class="flex gap-4 mb-4">
-<div class="w-20 h-20 rounded-lg bg-slate-100 dark:bg-slate-800 overflow-hidden flex-shrink-0">
-<img class="w-full h-full object-cover grayscale" data-alt="Professional tablet with stylus pencil" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAiTXQKrHZ1nOyRQU0CTJpt9uIgOcRa7IivQIDFGjPPiDF6CiyVYBKeCh29bp9ZjHxZWUUm4jSji9WOiMTXjS-4ob1s125hw_-uitcKWhGQnaIKIVUqn-wJyLkb8okFi9D8ycYZcMlm9sCh09eVLzskpsYP99H-Mns7lUvl1f4z74Gec_nntuFJcekHXAAR8Sj0TlLlQDKWSvIsYA2nJD4HElRwGR6ohTXdAZBP3iMM2GUpS9Szxhh63vn6w4wucq77L98sdCWU-swQ"/>
-</div>
-<div class="flex flex-col justify-center gap-1">
-<h3 class="text-slate-900 dark:text-slate-100 font-bold text-base leading-tight">Pro Tablet Gen 5</h3>
-<p class="text-slate-500 dark:text-slate-400 text-xs">Quantity: 1x</p>
-<p class="text-slate-400 dark:text-slate-500 text-xs">Oct 18, 2024</p>
-</div>
-</div>
-<div class="flex justify-between items-center pt-4 border-t border-slate-100 dark:border-slate-800">
-<div class="flex flex-col">
-<span class="text-slate-400 dark:text-slate-500 text-[10px] uppercase font-bold">Total Price</span>
-<span class="text-slate-900 dark:text-white font-bold text-lg leading-none">$799.00</span>
-</div>
-<button class="h-11 px-6 border-2 border-slate-900 dark:border-white rounded-lg text-slate-900 dark:text-white text-sm font-bold hover:bg-slate-900 hover:text-white dark:hover:bg-white dark:hover:text-slate-900 transition-colors">
-                        View Details
-                    </button>
-</div>
-</div>
-</main>
-<!-- Bottom Navigation Bar -->
-<footer class="sticky bottom-0 bg-background-light dark:bg-background-dark border-t border-slate-100 dark:border-slate-800 px-6 py-3 flex justify-between items-center">
-<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500 hover:text-primary transition-colors" href="#">
-<span class="material-symbols-outlined">home</span>
-<span class="text-[10px] font-bold uppercase">Home</span>
-</a>
-<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500 hover:text-primary transition-colors" href="#">
-<span class="material-symbols-outlined">search</span>
-<span class="text-[10px] font-bold uppercase">Search</span>
-</a>
-<a class="flex flex-col items-center gap-1 text-slate-900 dark:text-white" href="#">
-<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1">receipt_long</span>
-<span class="text-[10px] font-bold uppercase">Orders</span>
-</a>
-<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500 hover:text-primary transition-colors" href="#">
-<span class="material-symbols-outlined">person</span>
-<span class="text-[10px] font-bold uppercase">Profile</span>
-</a>
-</footer>
-</div>
-<style>
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-    </style>
 </body></html>

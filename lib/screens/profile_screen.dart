@@ -9,6 +9,7 @@ import 'wishlist_screen.dart';
 import 'cart_screen.dart';
 import 'search_screen.dart';
 import 'my_orders_screen.dart';
+import 'edit_profile_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -72,20 +73,31 @@ class ProfileScreen extends StatelessWidget {
                           Positioned(
                             bottom: 0,
                             right: 0,
-                            child: Container(
-                              padding: const EdgeInsets.all(4),
-                              decoration: BoxDecoration(
-                                color: AppColors.primary,
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: Colors.white,
-                                  width: 2,
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const EditProfileScreen(),
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.all(4),
+                                decoration: BoxDecoration(
+                                  color: AppColors.primary,
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: Colors.white,
+                                    width: 2,
+                                  ),
                                 ),
-                              ),
-                              child: const Icon(
-                                Icons.edit_rounded,
-                                color: AppColors.slate900,
-                                size: 16,
+                                child: const Icon(
+                                  Icons.edit_rounded,
+                                  color: AppColors.slate900,
+                                  size: 16,
+                                ),
                               ),
                             ),
                           ),
