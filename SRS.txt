@@ -1,0 +1,143 @@
+
+Index
+Introduction
+
+Objectives
+
+Problem Statement
+
+Hardware/ Software Requirements
+
+
+
+
+
+
+
+
+	
+
+
+Introduction
+
+The thirst for learning, upgrading technical skills and applying the concepts in real life environment at a fast pace is what the industry demands from IT professionals today. However busy work schedules, far-flung locations, unavailability of convenient time-slots pose as major barriers when it comes to applying the concepts into realism.  And hence the need to look out for alternative means of implementation in the form of laddered approach. 
+
+The above truly pose as constraints especially for our students too! With their busy schedules, it is indeed difficult for our students to keep up with the genuine and constant need for integrated application which can be seen live especially so in the field of IT education where technology can change on the spur of a moment. Well, technology does come to our rescue at such times!!
+
+Keeping the above in mind and in tune with our constant endeavour to use Technology in our training model, we at Aptech have thought of revolutionizing the way our students learn and implement the concepts using tools themselves by providing a live and synchronous eProject   learning environment!
+
+So what is this eProject?
+
+eProject is a step by step learning environment that closely simulates the classroom and Lab based learning environment into actual implementation. It is a project implementation at your fingertips!! An electronic, live juncture on the machine that allows you to 
+
+Practice step by step i.e. laddered approach.
+Build a larger more robust application.
+Usage of certain utilities in applications designed by user.
+Single program to unified code leading to a complete application.
+Learn implementation of concepts in a phased manner.
+Enhance skills and add value.
+Work on real life projects. 
+Give a real life scenario and help to create applications more complicated and useful.
+Mentoring through email support.
+
+The students at the centre are expected to complete this eProject and send complete documentation with source code to eProjects Team 
+
+Looking forward to a positive response from your end!!
+
+
+Objectives of the project
+
+The Objective of this program is to give a sample project to work on real life projects. These applications help you build a larger more robust application. 
+
+The objective is not to teach you the concepts but to provide you with a real life scenario and help you create applications using the tools.
+
+You can revise them before you start with the project. 
+
+It is very essential that a student has a clear understanding of the subject. 
+Kindly get back to eProjects Team, in case of any doubts regarding the application or its objectives.
+
+
+
+Background  
+
+The LaptopHarbor app is designed to provide a convenient and efficient platform for users to browse, compare, and purchase laptops and related accessories. It aims to streamline the laptop shopping experience by offering a wide range of laptop models, specifications, and competitive prices. The app seeks to bridge the gap between consumers looking for the perfect laptop and retailers or vendors offering these products. Key goals of the app include user-friendliness, accessibility, and enhancing the overall laptop shopping process.
+
+Functional Requirements-
+
+User Registration and Authentication:
+a. Users must be able to create an account.
+b. The app must provide a secure login mechanism.
+
+Product Listings:
+a. Users must be able to browse laptop products by category, brand, price, and specifications.
+b. The app should support product filtering and sorting options.
+c. Product listings should display essential information such as product name, image, price, and ratings.
+
+Product Details and Reviews:
+a. Users should be able to view detailed product descriptions, specifications, and high-quality images.
+b. Product pages must display user reviews and ratings.
+c. Users should have the ability to leave reviews and rate products.
+
+Shopping Cart:
+a. Users must be able to add products to their shopping cart.
+b. The cart should display a summary of selected products and their quantities.
+c. Users should have the option to modify or remove items from the cart.
+
+Checkout:
+a. Users should be able to enter shipping and billing information.
+b. The checkout process must calculate the total order amount, including taxes and shipping fees.
+c. Users must receive order confirmation emails upon successful payment.
+
+Order Tracking:
+a. Users should be able to view their order history and track the status of their current orders.
+b. The app must provide real-time order tracking with shipping details.
+c. Users should receive notifications for order status updates.
+
+User Profile and Settings:
+a. Users should have a profile section to manage their personal information and preferences.
+b. The app should allow users to update their profile picture and contact information.
+c. Users must have the option to change account password.
+
+Search Functionality:
+a. Users should be able to search for specific laptop models or brands.
+b. The app must provide filters to enhance the search experience.
+
+Wish List:
+a. Users should be able to add products to a wish list for future reference.
+b. The wish list should be accessible from the user's profile.
+
+Feedback and Support:
+a. Users should have the ability to contact customer support within the app.
+b. The app should include a feedback or contact form for user inquiries and issues.
+
+
+Non-Functional Requirements-
+
+Responsiveness: The app should respond to user interactions within 1-2 seconds, ensuring a smooth and lag-free experience.
+Loading Time: The app's initial loading time should be minimized to ensure users can access it quickly.
+User Interface: The app's user interface should be intuitive, following best design practices for mobile apps to ensure ease of use.
+Accessible: The application should have clear and legible fonts, user-interface elements, and navigation elements.
+User-friendly: The application should be easy to navigate with clear menus and other elements and easy to understand.
+Operability: The application should operate in a reliably efficient manner.
+Error Handling: Implement robust error handling to provide clear error messages to users and gracefully handle unexpected situations.
+Scalability: The application architecture and infrastructure should be designed to handle increasing user traffic, data storage, and feature expansions.
+Security: The application should implement adequate security measures such as authentication. For example, only registered users can access certain features.
+User Documentation: Provide user guides, FAQs, and tutorials to help users understand and navigate the application.
+Developer Documentation: Maintain developer documentation to assist in further development and maintenance.
+Video: Provide video displaying complete working of the application. 
+
+
+Hardware/ Software Requirements
+
+
+Hardware 
+A minimum computer system that will help you access all the tools in the courses is a Pentium 166 or better
+128 Megabytes of RAM or better
+Windows 2000 Server (or higher if possible)
+
+
+Software 
+Use software as per your requirement
+Windows OS/JAVA/Android SDK/Notepad/SQL/Dart/Flutter
+
+
