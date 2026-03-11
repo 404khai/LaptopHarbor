@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import '../theme/app_theme.dart';
+import '../providers/product_provider.dart';
+import '../providers/cart_provider.dart';
+import '../models/product.dart';
 
 class LaptopsSection extends StatefulWidget {
   const LaptopsSection({super.key});
@@ -13,36 +17,16 @@ class _LaptopsSectionState extends State<LaptopsSection> {
   final List<String> _tabs = ['All', 'Gaming', 'Ultrabooks', 'Workstation'];
   int _selectedTabIndex = 0;
 
-  final List<Map<String, dynamic>> _laptops = [
-    {
-      'brand': 'MacBook Pro M3',
-      'rating': 4.9,
-      'price': '\$1,599.00',
-      'image':
-          'https://lh3.googleusercontent.com/aida-public/AB6AXuDlTmJfoewKdiDVkNFs1GlPFV4WfErPhGDK670DxPDzF40qOB-30uI81qvZrjGuy_K4OB2auSiAb2oynY4FsWJCwoFaUCNAIzKV_h0SIMS52bpByd0wTgFgvmidsH00vBoBjOaQ2p50hN9iH1xdm5fKa36A66d_Dqkj4v-dF5Rg33kKSMTNAp4_l3bo5EfikPSXfivfnmuxgLt0UEDs3f_vCfs3IlY9YGWs6-mS6QMMtQIWEM2ttGsTXDl3ZCmehBpakyk-2HpusB4g',
-    },
-    {
-      'brand': 'Dell XPS 15',
-      'rating': 4.7,
-      'price': '\$1,399.00',
-      'image':
-          'https://lh3.googleusercontent.com/aida-public/AB6AXuDWicXjiNoU7pZdNZ9WpO8VZLZPnteX_zTRedS0l4UuN3kuu-S-VE4_yvK5aLDkosSvyfePA5rgq8mnYvENwz2_bHxt2xkcVLxgVLJy1_Vv3jvYi4wn2y83GN2TWXxpWNHuHzMlaznQi0lqleByVFtzU6hJF7UzOJa31pwN7XBYkAP38bvZYC2JR-lqZ8XFfXOdUypS4WvvHbf_Gif48Tgg1gIPvg_qom7N2qrB0Z7-F-cFmuClIx2JLU0S1XIWGZE7TqBQOBpKkPNe',
-    },
-    {
-      'brand': 'Razer Blade 16',
-      'rating': 4.8,
-      'price': '\$2,999.99',
-      'image':
-          'https://lh3.googleusercontent.com/aida-public/AB6AXuDJr2YPCqzrOuhSY_hV3h6VPy4-IROCQZ1c-047sYO1lRhhYAG1gDNQsggXWopfcNrzs-tyBSx8UGx69xRUmP4xBWHguSRV9WcpRL_KEHlRYfHiIVI-T8g2meI7NMqV_fkPbIga_f50mMmcFEp9WcXmxghNWSzsJZQ549cCQ7ffSpYrP--i7BXWgfwoScsKbfyk-NyDU-l-ADITM20V06XZCpn1IH7paGkqJLsHfdRzDp7Fzjotc9YQYcmHYYJVxGAuP8IhMcejbNL0',
-    },
-    {
-      'brand': 'HP Spectre x360',
-      'rating': 4.6,
-      'price': '\$1,249.50',
-      'image':
-          'https://lh3.googleusercontent.com/aida-public/AB6AXuAKw6cGEIv4opeRFfXRPGQlCieh_I82XWQFFRU3-EaRwXTOM9-Jq9yipWBAlK8qmGnpvZMc5Lsrs8Hgup-0z_NrCuP34_s7sNV5c4opaypN3rhPuGLn6LXdPyxqdJ4P_Ud2is82r7gOm5cbxUs7D0EMdbMMtor_8zjknxrtPNa1Q6H8PfkWoH14xRKnAh9L28WE-0bhIbEO5CMMGFOkVr-i2iqTVU_QoUYbNPXFcIr9QJkPfjr4hT-lDHYSVeS6Nw9KGfXQqvvWKI9L',
-    },
-  ];
+  @override
+  void initState() {
+    super.initState();
+    // Fetch initial data
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // Use seedTestProducts for now since we don't have a real API key
+      context.read<ProductProvider>().seedTestProducts();
+      // context.read<ProductProvider>().fetchProducts('laptop');
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -96,6 +80,7 @@ class _LaptopsSectionState extends State<LaptopsSection> {
                 onTap: () {
                   setState(() {
                     _selectedTabIndex = index;
+                    // Filter logic could be added here
                   });
                 },
                 child: Container(
@@ -131,19 +116,35 @@ class _LaptopsSectionState extends State<LaptopsSection> {
         // Grid
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: GridView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: 16,
-              mainAxisSpacing: 16,
-              childAspectRatio: 0.70, // Slightly taller to fit all content
-            ),
-            itemCount: _laptops.length,
-            itemBuilder: (context, index) {
-              final laptop = _laptops[index];
-              return _buildLaptopCard(laptop);
+          child: Consumer<ProductProvider>(
+            builder: (context, provider, child) {
+              if (provider.isLoading) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              
+              if (provider.error != null) {
+                return Center(child: Text(provider.error!));
+              }
+
+              if (provider.products.isEmpty) {
+                return const Center(child: Text('No laptops found'));
+              }
+
+              return GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 16,
+                  mainAxisSpacing: 16,
+                  childAspectRatio: 0.70,
+                ),
+                itemCount: provider.products.length,
+                itemBuilder: (context, index) {
+                  final laptop = provider.products[index];
+                  return _buildLaptopCard(laptop);
+                },
+              );
             },
           ),
         ),
@@ -152,7 +153,7 @@ class _LaptopsSectionState extends State<LaptopsSection> {
     );
   }
 
-  Widget _buildLaptopCard(Map<String, dynamic> laptop) {
+  Widget _buildLaptopCard(Product laptop) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -180,7 +181,7 @@ class _LaptopsSectionState extends State<LaptopsSection> {
                     width: double.infinity,
                     color: AppColors.slate50,
                     child: Image.network(
-                      laptop['image'],
+                      laptop.imageUrl,
                       fit: BoxFit.cover,
                       errorBuilder: (context, error, stackTrace) =>
                           const Icon(Icons.image, color: Colors.grey),
@@ -213,10 +214,20 @@ class _LaptopsSectionState extends State<LaptopsSection> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  laptop['brand'],
+                  laptop.brand,
                   style: GoogleFonts.inter(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
+                    color: AppColors.slate900,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                Text(
+                  laptop.model,
+                  style: GoogleFonts.inter(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
                     color: AppColors.slate900,
                   ),
                   maxLines: 1,
@@ -228,7 +239,7 @@ class _LaptopsSectionState extends State<LaptopsSection> {
                     const Icon(Icons.star, size: 14, color: AppColors.slate900),
                     const SizedBox(width: 4),
                     Text(
-                      '${laptop['rating']}',
+                      '4.5', // Placeholder rating
                       style: GoogleFonts.inter(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
@@ -242,24 +253,35 @@ class _LaptopsSectionState extends State<LaptopsSection> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      laptop['price'],
+                      '\$${laptop.price.toStringAsFixed(2)}',
                       style: GoogleFonts.inter(
                         fontSize: 14,
                         fontWeight: FontWeight.w900,
                         color: AppColors.primary,
                       ),
                     ),
-                    Container(
-                      width: 32,
-                      height: 32,
-                      decoration: const BoxDecoration(
-                        color: AppColors.slate900,
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Icon(
-                        Icons.add_shopping_cart,
-                        size: 16,
-                        color: Colors.white,
+                    GestureDetector(
+                      onTap: () {
+                        context.read<CartProvider>().addToCart(laptop, 1);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('${laptop.brand} ${laptop.model} added to cart'),
+                            duration: const Duration(seconds: 1),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        width: 32,
+                        height: 32,
+                        decoration: const BoxDecoration(
+                          color: AppColors.slate900,
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(
+                          Icons.add_shopping_cart,
+                          size: 16,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ],

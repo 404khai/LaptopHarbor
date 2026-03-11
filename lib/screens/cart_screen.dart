@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import '../theme/app_theme.dart';
 import '../widgets/custom_back_button.dart';
+import '../providers/cart_provider.dart';
 import 'shipping_screen.dart';
 
 class CartScreen extends StatefulWidget {
@@ -12,60 +14,14 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  // Mock cart data
-  final List<Map<String, dynamic>> _cartItems = [
-    {
-      'id': '1',
-      'name': 'MacBook Pro M3',
-      'price': 1999.00,
-      'description': 'Space Gray, 16GB, 512GB SSD',
-      'image':
-          'https://lh3.googleusercontent.com/aida-public/AB6AXuCxrMe_vWKSvqucjYxVGwiTHcBO0SSuUpzWwo5mbctRUj0ZC2QMBdaySWKPHH7NkiF6pPf1mV6tLXOQOSnLVmEgR6RQji2jy5_OrLCPGqJIHFaMNQykFKmBdX8f3nAwAzLEyTreGrfTo_RqZSC37zkzGCnt66vAj7wB6_Ycdh2uvy-qIlD3MyCaghJQhwgxSzz4i5wX6loUgmk-07fhh-az753gozcCeNN0z2QkjAvRmLSRJhc9GbHJ6CS3HFhuoEeIT8ARour2KlbW',
-      'quantity': 1,
-    },
-    {
-      'id': '2',
-      'name': 'Harbor Pro 34"',
-      'price': 499.00,
-      'description': 'UltraWide, 144Hz, HDR',
-      'image':
-          'https://lh3.googleusercontent.com/aida-public/AB6AXuB8OV9ZTy5fkJtdErvHMCW3T0wa0xcht0tMh2zvLxAniN0f2Gd733U0q3nPUBxuH_K2X41yUB9KQiXVv0Sc-FXOPV36Cv3jVlvcanta2imM8_5SpbvPPgqLg-nkiSwdohMoNcVzIZHXi7ZiJSkiXY4k-0AxEgFAqPUgSScxv9ELxXfct1121z8rb7upDdTerA3ZUnJY6qlwshLWucFeWf0kkTPBAZu5ErZ3k3IE8n1iivbGpFjieXf_oxCegx_OXj46Jd9PcwXUzNg2',
-      'quantity': 2,
-    },
-  ];
-
-  double get _subtotal {
-    return _cartItems.fold(
-      0,
-      (sum, item) => sum + (item['price'] * item['quantity']),
-    );
-  }
-
-  void _incrementQuantity(int index) {
-    setState(() {
-      _cartItems[index]['quantity']++;
-    });
-  }
-
-  void _decrementQuantity(int index) {
-    setState(() {
-      if (_cartItems[index]['quantity'] > 1) {
-        _cartItems[index]['quantity']--;
-      }
-    });
-  }
-
-  void _removeItem(int index) {
-    setState(() {
-      _cartItems.removeAt(index);
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
+    final cartProvider = context.watch<CartProvider>();
+    final cartItems = cartProvider.cartItems;
+    final subtotal = cartProvider.totalAmount;
+
     return Scaffold(
-      backgroundColor: AppColors
-          .background, // Should be slate-50/grey[50] for active state background usually, but following theme
+      backgroundColor: AppColors.background,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -81,7 +37,9 @@ class _CartScreenState extends State<CartScreen> {
         ),
       ),
       body: SafeArea(
-        child: _cartItems.isEmpty ? _buildEmptyState() : _buildActiveCart(),
+        child: cartItems.isEmpty 
+            ? _buildEmptyState() 
+            : _buildActiveCart(cartItems, subtotal),
       ),
     );
   }
@@ -157,33 +115,12 @@ class _CartScreenState extends State<CartScreen> {
               ),
             ),
           ),
-          const SizedBox(height: 48),
-          Text(
-            'RECOMMENDED CATEGORIES',
-            style: GoogleFonts.inter(
-              fontSize: 12,
-              fontWeight: FontWeight.bold,
-              color: Colors.grey[400],
-              letterSpacing: 0.5,
-            ),
-          ),
-          const SizedBox(height: 16),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              _buildCategoryChip('Gaming'),
-              const SizedBox(width: 8),
-              _buildCategoryChip('Ultrabooks'),
-              const SizedBox(width: 8),
-              _buildCategoryChip('Workstations'),
-            ],
-          ),
         ],
       ),
     );
   }
 
-  Widget _buildActiveCart() {
+  Widget _buildActiveCart(List<Map<String, dynamic>> cartItems, double subtotal) {
     return Column(
       children: [
         Expanded(
@@ -191,8 +128,11 @@ class _CartScreenState extends State<CartScreen> {
             padding: const EdgeInsets.all(16.0),
             child: Column(
               children: [
-                ...List.generate(_cartItems.length, (index) {
-                  final item = _cartItems[index];
+                ...List.generate(cartItems.length, (index) {
+                  final item = cartItems[index];
+                  final productId = item['id']; // Document ID (which is product ID)
+                  final quantity = item['quantity'] as int;
+
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 16.0),
                     child: Container(
@@ -223,7 +163,7 @@ class _CartScreenState extends State<CartScreen> {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(8),
                               child: Image.network(
-                                item['image'],
+                                item['image'] ?? '',
                                 fit: BoxFit.contain,
                                 errorBuilder: (context, error, stackTrace) =>
                                     const Icon(
@@ -246,7 +186,7 @@ class _CartScreenState extends State<CartScreen> {
                                   children: [
                                     Expanded(
                                       child: Text(
-                                        item['name'],
+                                        item['name'] ?? 'Product',
                                         style: GoogleFonts.inter(
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold,
@@ -255,7 +195,7 @@ class _CartScreenState extends State<CartScreen> {
                                       ),
                                     ),
                                     Text(
-                                      '\$${item['price'].toStringAsFixed(2)}',
+                                      '\$${(item['price'] ?? 0).toStringAsFixed(2)}',
                                       style: GoogleFonts.inter(
                                         fontSize: 14,
                                         fontWeight: FontWeight.bold,
@@ -266,11 +206,13 @@ class _CartScreenState extends State<CartScreen> {
                                 ),
                                 const SizedBox(height: 4),
                                 Text(
-                                  item['description'],
+                                  item['description'] ?? '',
                                   style: GoogleFonts.inter(
                                     fontSize: 12,
                                     color: AppColors.subtext,
                                   ),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
                                 ),
                                 const SizedBox(height: 12),
                                 Row(
@@ -290,15 +232,18 @@ class _CartScreenState extends State<CartScreen> {
                                         children: [
                                           _buildQuantityButton(
                                             icon: Icons.remove,
-                                            onTap: () =>
-                                                _decrementQuantity(index),
+                                            onTap: () {
+                                              if (quantity > 1) {
+                                                context.read<CartProvider>().updateQuantity(productId, -1);
+                                              }
+                                            },
                                           ),
                                           Padding(
                                             padding: const EdgeInsets.symmetric(
                                               horizontal: 12,
                                             ),
                                             child: Text(
-                                              '${item['quantity']}',
+                                              '$quantity',
                                               style: GoogleFonts.inter(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w600,
@@ -308,15 +253,18 @@ class _CartScreenState extends State<CartScreen> {
                                           ),
                                           _buildQuantityButton(
                                             icon: Icons.add,
-                                            onTap: () =>
-                                                _incrementQuantity(index),
+                                            onTap: () {
+                                              context.read<CartProvider>().updateQuantity(productId, 1);
+                                            },
                                           ),
                                         ],
                                       ),
                                     ),
                                     // Delete Button
                                     IconButton(
-                                      onPressed: () => _removeItem(index),
+                                      onPressed: () {
+                                        context.read<CartProvider>().removeFromCart(productId);
+                                      },
                                       icon: const Icon(
                                         Icons.delete_outline,
                                         size: 20,
@@ -377,7 +325,7 @@ class _CartScreenState extends State<CartScreen> {
                     ),
                   ),
                   Text(
-                    '\$${_subtotal.toStringAsFixed(2)}',
+                    '\$${subtotal.toStringAsFixed(2)}',
                     style: GoogleFonts.inter(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
@@ -420,7 +368,7 @@ class _CartScreenState extends State<CartScreen> {
                     ),
                   ),
                   Text(
-                    '\$${_subtotal.toStringAsFixed(2)}',
+                    '\$${subtotal.toStringAsFixed(2)}',
                     style: GoogleFonts.inter(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -470,24 +418,6 @@ class _CartScreenState extends State<CartScreen> {
           ),
         ),
       ],
-    );
-  }
-
-  Widget _buildCategoryChip(String label) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-      decoration: BoxDecoration(
-        color: Colors.grey[100],
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Text(
-        label,
-        style: GoogleFonts.inter(
-          fontSize: 12,
-          fontWeight: FontWeight.w600,
-          color: AppColors.text,
-        ),
-      ),
     );
   }
 
