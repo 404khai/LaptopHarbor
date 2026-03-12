@@ -20,11 +20,8 @@ class _LaptopsSectionState extends State<LaptopsSection> {
   @override
   void initState() {
     super.initState();
-    // Fetch initial data
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      // Use seedTestProducts for now since we don't have a real API key
-      context.read<ProductProvider>().seedTestProducts();
-      // context.read<ProductProvider>().fetchProducts('laptop');
+      context.read<ProductProvider>().fetchProducts('laptop');
     });
   }
 
@@ -33,7 +30,6 @@ class _LaptopsSectionState extends State<LaptopsSection> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Header
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
           child: Row(
@@ -69,7 +65,6 @@ class _LaptopsSectionState extends State<LaptopsSection> {
           ),
         ),
 
-        // Tabs
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -80,7 +75,6 @@ class _LaptopsSectionState extends State<LaptopsSection> {
                 onTap: () {
                   setState(() {
                     _selectedTabIndex = index;
-                    // Filter logic could be added here
                   });
                 },
                 child: Container(
@@ -113,7 +107,6 @@ class _LaptopsSectionState extends State<LaptopsSection> {
         ),
         const SizedBox(height: 16),
 
-        // Grid
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Consumer<ProductProvider>(
@@ -121,7 +114,7 @@ class _LaptopsSectionState extends State<LaptopsSection> {
               if (provider.isLoading) {
                 return const Center(child: CircularProgressIndicator());
               }
-              
+
               if (provider.error != null) {
                 return Center(child: Text(provider.error!));
               }
@@ -169,7 +162,6 @@ class _LaptopsSectionState extends State<LaptopsSection> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Image
           Expanded(
             child: Stack(
               children: [
@@ -207,7 +199,6 @@ class _LaptopsSectionState extends State<LaptopsSection> {
               ],
             ),
           ),
-          // Details
           Padding(
             padding: const EdgeInsets.all(12.0),
             child: Column(
@@ -239,7 +230,7 @@ class _LaptopsSectionState extends State<LaptopsSection> {
                     const Icon(Icons.star, size: 14, color: AppColors.slate900),
                     const SizedBox(width: 4),
                     Text(
-                      '4.5', // Placeholder rating
+                      '4.5',
                       style: GoogleFonts.inter(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
@@ -265,7 +256,9 @@ class _LaptopsSectionState extends State<LaptopsSection> {
                         context.read<CartProvider>().addToCart(laptop, 1);
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                            content: Text('${laptop.brand} ${laptop.model} added to cart'),
+                            content: Text(
+                              '${laptop.brand} ${laptop.model} added to cart',
+                            ),
                             duration: const Duration(seconds: 1),
                           ),
                         );

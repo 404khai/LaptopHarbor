@@ -202,7 +202,7 @@ class _EditPasswordScreenState extends State<EditPasswordScreen> {
                     backgroundColor: AppColors.primary,
                     foregroundColor: AppColors.slate900,
                     elevation: 0,
-                    shadowColor: AppColors.primary.withOpacity(0.2),
+                    shadowColor: AppColors.primary.withValues(alpha: 0.2),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
@@ -223,10 +223,10 @@ class _EditPasswordScreenState extends State<EditPasswordScreen> {
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: AppColors.primary.withOpacity(0.1),
+                  color: AppColors.primary.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
-                    color: AppColors.primary.withOpacity(0.2),
+                    color: AppColors.primary.withValues(alpha: 0.2),
                   ),
                 ),
                 child: Row(

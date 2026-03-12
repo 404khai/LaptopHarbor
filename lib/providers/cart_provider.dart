@@ -77,10 +77,10 @@ class CartProvider with ChangeNotifier {
   }
 
   double get totalAmount {
-    return _cartItems.fold(0.0, (sum, item) {
+    return _cartItems.fold(0.0, (total, item) {
       final price = (item['price'] ?? 0).toDouble();
       final quantity = (item['quantity'] ?? 0) as int;
-      return sum + (price * quantity);
+      return total + (price * quantity);
     });
   }
 }

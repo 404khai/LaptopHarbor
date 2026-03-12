@@ -1,20 +1,27 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../models/product.dart';
 
 class TechSpecsService {
-  final String apiKey = 'YOUR_TECHSPECS_API_KEY'; // Replace with your actual API key
-  final String baseUrl = 'https://api.techspecs.io/v4';
+  final String baseUrl = 'https://api.techspecs.io/v5';
+  final String _apiKey;
+
+  TechSpecsService({String? apiKey})
+    : _apiKey = apiKey ?? dotenv.env['TECHSPECS_API_KEY'] ?? '';
 
   Future<List<Product>> searchLaptops(String query) async {
-    // This is a placeholder implementation.
-    // Check the TechSpecs documentation for the correct endpoint and parameters.
-    final response = await http.get(
-      Uri.parse('$baseUrl/search?query=$query&category=laptops'),
+    if (_apiKey.isEmpty) {
+      throw StateError('Missing TECHSPECS_API_KEY');
+    }
+
+    final response = await http.post(
+      Uri.parse('$baseUrl/products/search?query=$query'),
       headers: {
-        'Authorization': 'Bearer $apiKey',
+        'Authorization': 'Bearer $_apiKey',
         'Content-Type': 'application/json',
       },
+      body: jsonEncode({'category': 'laptops'}),
     );
 
     if (response.statusCode == 200) {
@@ -28,19 +35,32 @@ class TechSpecsService {
   }
 
   Future<Product> getProductDetails(String productId) async {
-    final response = await http.get(
-      Uri.parse('$baseUrl/product/$productId'),
-      headers: {
-        'Authorization': 'Bearer $apiKey',
-        'Content-Type': 'application/json',
-      },
-    );
-
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      return Product.fromJson(data);
-    } else {
-      throw Exception('Failed to load product details');
+    if (_apiKey.isEmpty) {
+      throw StateError('Missing TECHSPECS_API_KEY');
     }
+
+    final headers = {
+      'Authorization': 'Bearer $_apiKey',
+      'Content-Type': 'application/json',
+    };
+
+    final endpoints = [
+      Uri.parse('$baseUrl/products/$productId'),
+      Uri.parse('$baseUrl/product/$productId'),
+    ];
+
+    http.Response? lastResponse;
+    for (final endpoint in endpoints) {
+      final response = await http.get(endpoint, headers: headers);
+      lastResponse = response;
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        return Product.fromJson(data);
+      }
+    }
+
+    throw Exception(
+      'Failed to load product details (status: ${lastResponse?.statusCode ?? 'unknown'})',
+    );
   }
 }
