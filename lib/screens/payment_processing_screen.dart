@@ -57,7 +57,7 @@ class _PaymentProcessingScreenState extends State<PaymentProcessingScreen>
                 width: 200,
                 height: 200,
                 decoration: BoxDecoration(
-                  color: AppColors.primary.withOpacity(0.05),
+                  color: AppColors.primary.withValues(alpha: 0.05),
                   shape: BoxShape.circle,
                 ),
               ),
@@ -69,7 +69,7 @@ class _PaymentProcessingScreenState extends State<PaymentProcessingScreen>
                 width: 150,
                 height: 150,
                 decoration: BoxDecoration(
-                  color: AppColors.primary.withOpacity(0.05),
+                  color: AppColors.primary.withValues(alpha: 0.05),
                   shape: BoxShape.circle,
                 ),
               ),
@@ -149,7 +149,7 @@ class _PaymentProcessingScreenState extends State<PaymentProcessingScreen>
                               width: 48,
                               height: 48,
                               decoration: BoxDecoration(
-                                color: AppColors.primary.withOpacity(0.2),
+                                color: AppColors.primary.withValues(alpha: 0.2),
                                 shape: BoxShape.circle,
                               ),
                               child: const Icon(

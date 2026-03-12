@@ -103,7 +103,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen>
       _OrderData(
         id: '#LH-892342',
         status: 'IN TRANSIT',
-        statusColor: AppColors.primary.withOpacity(0.2),
+        statusColor: AppColors.primary.withValues(alpha: 0.2),
         statusTextColor: AppColors.slate900,
         image:
             'https://lh3.googleusercontent.com/aida-public/AB6AXuDotNpGa1LstRfj4smJ3zVMIkIDZQTMPZOXgdGySc1sweFP_LByMbSUk0MyYTfeQuUoFSKk7lZiy9bQabzKxjXwkX-9WC3hE6exqboNIYUXLVgDg2Sf2swYBRNGPBVsj_oGIa_IrZaPx56FU3Gv4Ahlq5GWXVK_xol1zNhHO8bB2gZ20W20vXXE6aVPwgyt7rooTBOcT-22esOP5A2xMJORf7IBtiLsTFpydRv8CKHcnb6JrZvHhQeQ7MhU8Ii7jw6uNHMutyfdtR09',
@@ -178,7 +178,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen>
         border: Border.all(color: Colors.grey[100]!),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -315,7 +315,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen>
                     );
                   },
                   style: TextButton.styleFrom(
-                    backgroundColor: AppColors.primary.withOpacity(0.2),
+                    backgroundColor: AppColors.primary.withValues(alpha: 0.2),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
