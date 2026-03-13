@@ -8,10 +8,10 @@ class CartProvider with ChangeNotifier {
   final FirebaseService _firebaseService = FirebaseService();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  
+
   List<Map<String, dynamic>> _cartItems = [];
   List<Map<String, dynamic>> get cartItems => _cartItems;
-  
+
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
@@ -27,24 +27,27 @@ class CartProvider with ChangeNotifier {
   }
 
   void _fetchCart() {
-    _firebaseService.getCart().listen((snapshot) {
-      _cartItems = snapshot.docs.map((doc) {
-        final data = doc.data() as Map<String, dynamic>;
-        return {
-          'id': doc.id,
-          ...data,
-        };
-      }).toList();
-      notifyListeners();
-    });
+    _firebaseService.getCart().listen(
+      (snapshot) {
+        _cartItems = snapshot.docs.map((doc) {
+          final data = doc.data() as Map<String, dynamic>;
+          return {'id': doc.id, ...data};
+        }).toList();
+        notifyListeners();
+      },
+      onError: (_) {
+        _cartItems = [];
+        notifyListeners();
+      },
+    );
   }
 
   Future<void> addToCart(Product product, int quantity) async {
     _isLoading = true;
     notifyListeners();
-    
+
     await _firebaseService.addToCart(product, quantity);
-    
+
     _isLoading = false;
     notifyListeners();
   }
@@ -59,9 +62,7 @@ class CartProvider with ChangeNotifier {
         .collection('cart')
         .doc(productId);
 
-    await cartRef.update({
-      'quantity': FieldValue.increment(change),
-    });
+    await cartRef.update({'quantity': FieldValue.increment(change)});
   }
 
   Future<void> removeFromCart(String productId) async {

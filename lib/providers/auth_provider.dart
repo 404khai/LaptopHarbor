@@ -13,6 +13,9 @@ class AuthProvider with ChangeNotifier {
   Map<String, dynamic>? _userProfile;
   Map<String, dynamic>? get userProfile => _userProfile;
 
+  String? _userProfileError;
+  String? get userProfileError => _userProfileError;
+
   StreamSubscription<DocumentSnapshot<Map<String, dynamic>>>?
   _userProfileSubscription;
 
@@ -24,16 +27,33 @@ class AuthProvider with ChangeNotifier {
       _user = user;
       _userProfileSubscription?.cancel();
       _userProfile = null;
+      _userProfileError = null;
 
       if (user != null) {
         _userProfileSubscription = _firestore
             .collection('users')
             .doc(user.uid)
             .snapshots()
-            .listen((doc) {
-              _userProfile = doc.data();
-              notifyListeners();
-            });
+            .listen(
+              (doc) {
+                _userProfile = doc.data();
+                _userProfileError = null;
+                notifyListeners();
+              },
+              onError: (Object error, StackTrace stackTrace) {
+                if (error is FirebaseException &&
+                    error.code == 'permission-denied') {
+                  _userProfileError =
+                      'Missing or insufficient Firestore permissions for user profile.';
+                } else {
+                  _userProfileError = 'Failed to load user profile.';
+                }
+                _userProfile = null;
+                _userProfileSubscription?.cancel();
+                _userProfileSubscription = null;
+                notifyListeners();
+              },
+            );
       }
       notifyListeners();
     });
@@ -82,14 +102,24 @@ class AuthProvider with ChangeNotifier {
           await user.updateDisplayName(displayName);
         }
 
-        await _firestore.collection('users').doc(user.uid).set({
-          'firstName': firstName,
-          'lastName': lastName,
-          'displayName': displayName,
-          'email': email,
-          'createdAt': FieldValue.serverTimestamp(),
-          'role': 'user',
-        });
+        try {
+          await _firestore.collection('users').doc(user.uid).set({
+            'firstName': firstName,
+            'lastName': lastName,
+            'displayName': displayName,
+            'email': email,
+            'createdAt': FieldValue.serverTimestamp(),
+            'role': 'user',
+          });
+          _userProfileError = null;
+        } on FirebaseException catch (e) {
+          if (e.code == 'permission-denied') {
+            _userProfileError =
+                'Account created, but Firestore permissions prevented saving the profile.';
+          } else {
+            _userProfileError = 'Account created, but profile save failed.';
+          }
+        }
       }
 
       _isLoading = false;
@@ -128,6 +158,64 @@ class AuthProvider with ChangeNotifier {
   }
 
   Future<void> signOut() async {
+    _userProfileSubscription?.cancel();
+    _userProfileSubscription = null;
+    _userProfile = null;
+    _userProfileError = null;
     await _auth.signOut();
+    notifyListeners();
+  }
+
+  Future<String?> updateProfile({
+    required String displayName,
+    String? phone,
+    String? bio,
+  }) async {
+    final currentUser = _auth.currentUser;
+    if (currentUser == null) return 'Not signed in';
+
+    try {
+      _isLoading = true;
+      notifyListeners();
+
+      final normalizedDisplayName = displayName.trim();
+      if (normalizedDisplayName.isNotEmpty) {
+        await currentUser.updateDisplayName(normalizedDisplayName);
+      }
+
+      final parts = normalizedDisplayName
+          .split(RegExp(r'\s+'))
+          .where((p) => p.trim().isNotEmpty)
+          .toList();
+      final firstName = parts.isNotEmpty ? parts.first : null;
+      final lastName = parts.length > 1 ? parts.sublist(1).join(' ') : null;
+
+      await _firestore.collection('users').doc(currentUser.uid).set({
+        if (firstName != null) 'firstName': firstName,
+        if (lastName != null) 'lastName': lastName,
+        if (normalizedDisplayName.isNotEmpty)
+          'displayName': normalizedDisplayName,
+        if (currentUser.email != null) 'email': currentUser.email,
+        if (phone != null) 'phone': phone.trim(),
+        if (bio != null) 'bio': bio.trim(),
+        'updatedAt': FieldValue.serverTimestamp(),
+      }, SetOptions(merge: true));
+
+      _userProfileError = null;
+      _isLoading = false;
+      notifyListeners();
+      return null;
+    } on FirebaseException catch (e) {
+      _isLoading = false;
+      notifyListeners();
+      if (e.code == 'permission-denied') {
+        return 'Missing or insufficient Firestore permissions to save profile.';
+      }
+      return e.message ?? 'Failed to save profile';
+    } catch (_) {
+      _isLoading = false;
+      notifyListeners();
+      return 'Failed to save profile';
+    }
   }
 }
