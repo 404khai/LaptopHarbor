@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:laptop_harbor/screens/saved_addresses_screen.dart';
+import 'package:provider/provider.dart';
 import '../theme/app_theme.dart';
+import '../providers/auth_provider.dart';
 import '../widgets/custom_bottom_nav_bar.dart';
 import '../widgets/custom_back_button.dart';
 import 'payment_methods_screen.dart';
@@ -11,12 +13,24 @@ import 'search_screen.dart';
 import 'my_orders_screen.dart';
 import 'edit_profile_screen.dart';
 import 'settings_screen.dart';
+import 'login_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final authProvider = context.watch<AuthProvider>();
+    final user = authProvider.user;
+    final profile = authProvider.userProfile;
+
+    final profileDisplayName = (profile?['displayName'] as String?)?.trim();
+    final displayName =
+        (profileDisplayName != null && profileDisplayName.isNotEmpty)
+        ? profileDisplayName
+        : (user?.displayName ?? 'Guest');
+    final email = (profile?['email'] as String?) ?? user?.email ?? '';
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -65,24 +79,41 @@ class ProfileScreen extends StatelessWidget {
                                 color: AppColors.primary,
                                 width: 2,
                               ),
-                              image: const DecorationImage(
-                                image: AssetImage('images/user.jpeg'),
-                                fit: BoxFit.cover,
-                              ),
+                              color: Colors.grey[100],
                             ),
+                            child: user == null
+                                ? const Icon(
+                                    Icons.person,
+                                    size: 48,
+                                    color: Colors.grey,
+                                  )
+                                : const Icon(
+                                    Icons.person,
+                                    size: 48,
+                                    color: AppColors.slate900,
+                                  ),
                           ),
                           Positioned(
                             bottom: 0,
                             right: 0,
                             child: GestureDetector(
                               onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        const EditProfileScreen(),
-                                  ),
-                                );
+                                if (user == null) {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const LoginScreen(),
+                                    ),
+                                  );
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const EditProfileScreen(),
+                                    ),
+                                  );
+                                }
                               },
                               child: Container(
                                 padding: const EdgeInsets.all(4),
@@ -107,7 +138,7 @@ class ProfileScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     Text(
-                      'John Doe',
+                      displayName,
                       style: GoogleFonts.inter(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
@@ -116,7 +147,7 @@ class ProfileScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      'Member since Oct 2023',
+                      email.isNotEmpty ? email : 'Not signed in',
                       style: GoogleFonts.inter(
                         fontSize: 14,
                         color: Colors.grey[500],
@@ -222,7 +253,26 @@ class ProfileScreen extends StatelessWidget {
                       width: double.infinity,
                       height: 56,
                       child: OutlinedButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          if (user == null) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const LoginScreen(),
+                              ),
+                            );
+                            return;
+                          }
+                          await context.read<AuthProvider>().signOut();
+                          if (!context.mounted) return;
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const LoginScreen(),
+                            ),
+                            (route) => false,
+                          );
+                        },
                         style: OutlinedButton.styleFrom(
                           side: const BorderSide(
                             color: Colors.grey,
@@ -235,14 +285,16 @@ class ProfileScreen extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Icon(
-                              Icons.logout,
-                              color: Colors.red,
+                            Icon(
+                              user == null ? Icons.login : Icons.logout,
+                              color: user == null
+                                  ? AppColors.slate900
+                                  : Colors.red,
                               size: 20,
                             ),
                             const SizedBox(width: 8),
                             Text(
-                              'Log Out',
+                              user == null ? 'Log In' : 'Log Out',
                               style: GoogleFonts.inter(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,

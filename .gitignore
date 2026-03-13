@@ -4,6 +4,7 @@
 *.pyc
 *.swp
 .env
+.env.*
 .DS_Store
 .atom/
 .build/
@@ -42,6 +43,22 @@ app.*.map.json
 google-services.json
 .google-services.json
 ./google-services.json
+**/GoogleService-Info.plist
+**/firebase_app_id_file.json
+**/firebase_options.dart
+**/local.properties
+**/key.properties
+**/*.jks
+**/*.keystore
+**/*.p12
+**/*.pfx
+**/*.pem
+**/*.key
+**/*.crt
+**/*.cer
+**/*.der
+**/*.asc
+**/*.pgp
 
 # Android Studio will place build artifacts here
 /android/app/debug
