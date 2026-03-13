@@ -78,6 +78,27 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
+  Future<String?> sendPasswordResetEmail(String email) async {
+    try {
+      _isLoading = true;
+      notifyListeners();
+
+      await _auth.sendPasswordResetEmail(email: email);
+
+      _isLoading = false;
+      notifyListeners();
+      return null;
+    } on FirebaseAuthException catch (e) {
+      _isLoading = false;
+      notifyListeners();
+      return e.message;
+    } catch (_) {
+      _isLoading = false;
+      notifyListeners();
+      return 'An error occurred';
+    }
+  }
+
   Future<void> signOut() async {
     await _auth.signOut();
   }
