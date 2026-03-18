@@ -3,7 +3,7 @@ import json
 import random
 import re
 
-brands = ["Dell", "HP", "Lenovo", "Asus", "Acer", "Apple", "Logitech", "Razer", "Corsair", "HyperX", "MSI"]
+brands = ["Dell", "HP", "Redmagic", "Lenovo", "Asus", "Acer", "Apple", "Logitech", "Razer", "Corsair", "HyperX", "MSI"]
 
 laptop_models = [
     {
@@ -87,13 +87,13 @@ laptop_models = [
         ],
     },
     {
-        "model": "MacBook Pro 16",
-        "brand": "Apple",
+        "model": "Titan 16 Pro",
+        "brand": "Redmagic",
         "images": [
-            "https://images.unsplash.com/photo-1517336714731-489689fd1ca4?auto=format&fit=crop&w=800&q=80",
-            "https://images.unsplash.com/photo-1517336714731-489689fd1ca4?auto=format&fit=crop&w=800&q=80",
-            "https://images.unsplash.com/photo-1517336714731-489689fd1ca4?auto=format&fit=crop&w=800&q=80",
-            "https://images.unsplash.com/photo-1517336714731-489689fd1ca4?auto=format&fit=crop&w=800&q=80",
+            "https://techxreviews.com/wp-content/uploads/2025/11/RedMagic-Titan-16-Pro-2026.mp4_snapshot_08.32.jpg",
+            "https://techxreviews.com/wp-content/uploads/2025/11/RedMagic-Titan-16-Pro-2026.mp4_snapshot_08.32.jpg",
+            "https://techxreviews.com/wp-content/uploads/2025/11/RedMagic-Titan-16-Pro-2026.mp4_snapshot_08.32.jpg",
+            "https://techxreviews.com/wp-content/uploads/2025/11/RedMagic-Titan-16-Pro-2026.mp4_snapshot_08.32.jpg",
         ],
     },
     {

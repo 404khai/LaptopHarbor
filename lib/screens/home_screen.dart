@@ -273,7 +273,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   'images/lenovo.png',
                                   width: 32,
                                   height: 32,
-                                  color: Colors.black.withValues(alpha: 0.7),
+                                  
                                 ),
                               ),
                             ),
@@ -289,7 +289,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   'images/apple.png',
                                   width: 40,
                                   height: 40,
-                                  color: Colors.black.withValues(alpha: 0.7),
+                                  
                                 ),
                               ),
                             ),
@@ -305,7 +305,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   'images/dell.png',
                                   width: 32,
                                   height: 32,
-                                  color: Colors.black.withValues(alpha: 0.7),
+                                  
                                 ),
                               ),
                             ),
@@ -321,7 +321,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   'images/razer.png',
                                   width: 48,
                                   height: 48,
-                                  color: Colors.black.withValues(alpha: 0.7),
+                                  
                                 ),
                               ),
                             ),
