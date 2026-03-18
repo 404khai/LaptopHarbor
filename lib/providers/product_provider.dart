@@ -29,7 +29,7 @@ class ProductProvider with ChangeNotifier {
 
         _products = [];
         _error =
-            'Failed to fetch products from TechSpecs. Please check API Key.';
+            'Failed to fetch products from TechSpecs. Please check API credentials.';
       }
     } catch (e) {
       _error = e.toString();

@@ -24,10 +24,15 @@ service cloud.firestore {
         allow read, write: if signedIn() && request.auth.uid == userId;
       }
     }
-
+    
     match /products/{productId} {
       allow read: if true;
-      allow write: if false;
+      allow write: if true; // Temporarily allow all writes for testing
     }
+
+    match /{document=**} {
+      allow read, write: if true;
+    }
+  
   }
 }

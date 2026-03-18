@@ -152,6 +152,25 @@ class _AccessoriesSectionState extends State<AccessoriesSection> {
   Widget _buildProductCard(Map<String, dynamic> product) {
     return GestureDetector(
       onTap: () {
+        final images = <String>[];
+        final rawImageUrls = product['imageUrls'] ?? product['images'];
+        if (rawImageUrls is List) {
+          for (final item in rawImageUrls) {
+            if (item is String && item.trim().isNotEmpty) {
+              images.add(item.trim());
+            }
+          }
+        }
+        final fallbackImage = (product['image'] ?? product['imageUrl'] ?? '')
+            .toString()
+            .trim();
+        if (images.isEmpty && fallbackImage.isNotEmpty) {
+          images.add(fallbackImage);
+        }
+        while (images.length < 4 && images.isNotEmpty) {
+          images.add(images.first);
+        }
+
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -160,6 +179,7 @@ class _AccessoriesSectionState extends State<AccessoriesSection> {
                 'title': product['brand'],
                 'price': product['price'],
                 'image': product['image'],
+                'imageUrls': images.take(4).toList(),
                 'stock': product['stock'] ?? 'IN STOCK',
               },
             ),
