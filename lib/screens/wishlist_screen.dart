@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import '../theme/app_theme.dart';
+import '../providers/wishlist_provider.dart';
 import '../widgets/custom_bottom_nav_bar.dart';
 import '../widgets/custom_back_button.dart';
 import 'profile_screen.dart';
@@ -13,40 +15,11 @@ class WishlistScreen extends StatefulWidget {
 }
 
 class _WishlistScreenState extends State<WishlistScreen> {
-  // Mock data for wishlist items
-  final List<Map<String, dynamic>> _wishlistItems = [
-    {
-      'id': '1',
-      'title': 'MacBook Pro 14" - M3 Chip',
-      'specs': 'Space Gray | 512GB SSD',
-      'price': '\$1,999.00',
-      'image':
-          'https://lh3.googleusercontent.com/aida-public/AB6AXuBt2jj16meEr_EJJ2c-urSC0jTL1FY-fF6ZF-viOHe3K-g2fCGUYgSKC9ym1_g7teczS3t0kLyuAJxiqtiKW-aJJk8C_6jOK-0oksv-rsK3m-EnvCweePMONffur_yjYaXlQb21Tpu9A-ruyYnlcY12VV4jcdCKz2ZhHTzC06PBQyhDwA0Bu3Ib-4y67MAhuA85QDPxs8ghqUBWT4yHAypfh0Kalvs9Yo9jxNxHG6uF3MeHD3_xvoHa6c_3ienWdz22OxFy4VwN-kn9',
-      'onSale': false,
-    },
-    {
-      'id': '2',
-      'title': 'Dell XPS 13 Plus',
-      'specs': 'Platinum | Intel Core i7',
-      'price': '\$1,399.00',
-      'image':
-          'https://lh3.googleusercontent.com/aida-public/AB6AXuDnTSp0Gqh9XU6xxmQ9OrzeHZ89OYezLbK4fRHMbTHTpSuc0l8xvXtE3YQNuuPIyqhFOmz1hyUowRz2F4OvFmeewNExBKSptQlpW_O01mc8ptRYUI3e7zBOc6fkWo0Z2U8mM_jbtosuBYkb12cxgTYHSWfgpAV2svEFUs7d-iLRvbHJ9F_TXjP1ebWwGcv0S7pSplLbx-4PoPRU0wrqJ2_dgMNjjKNtyKNIPYmf81Qf-MmOMGr5uwudOKZrkFEq2bmnseSGRMUgRfWD',
-      'onSale': false,
-    },
-    {
-      'id': '3',
-      'title': 'Razer Blade 15',
-      'specs': 'Black | RTX 4070',
-      'price': '\$2,249.00',
-      'originalPrice': '\$2,499.00',
-      'image':
-          'https://lh3.googleusercontent.com/aida-public/AB6AXuAveIYKySf9INXZ1FzPrzED5nRqeyR9Y1NPf5RKdGsBLOzHObF6dXikSC3b8xSNSh_YMRdHEioVRRTb3Mv2MJe5gBwT-tqpZh8BZrEovylRWdMAat7VFY2D5hqXcLymMuLa4BkppMhS6TuQqrf0lr8SfkY8oxQcfbNiwWIarayJDfVzYQjcvCWQN3tHUU36L3rPog6ylXq0TzsN4dQWeP1GfwBQA-MNZuBYnw9nY9QYUYfpmOs6sBnQuw8f03SdcmFmZqY86HFgMl0-',
-      'onSale': true,
-    },
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final wishlist = context.watch<WishlistProvider>();
+    final wishlistItems = wishlist.items;
+
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
@@ -68,7 +41,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
             icon: const Icon(Icons.search, color: AppColors.slate900),
           ),
         ],
-        bottom: _wishlistItems.isEmpty
+        bottom: wishlistItems.isEmpty
             ? null
             : PreferredSize(
                 preferredSize: const Size.fromHeight(48),
@@ -77,7 +50,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
                   alignment: Alignment.centerLeft,
                   child: Row(
                     children: [
-                      _buildTab('All Items (${_wishlistItems.length})', true),
+                      _buildTab('All Items (${wishlistItems.length})', true),
                       const SizedBox(width: 24),
                       _buildTab('Available', false),
                       const SizedBox(width: 24),
@@ -91,13 +64,13 @@ class _WishlistScreenState extends State<WishlistScreen> {
         child: Column(
           children: [
             Expanded(
-              child: _wishlistItems.isEmpty
+              child: wishlistItems.isEmpty
                   ? _buildEmptyState()
                   : ListView.builder(
                       padding: const EdgeInsets.all(16),
-                      itemCount: _wishlistItems.length,
+                      itemCount: wishlistItems.length,
                       itemBuilder: (context, index) {
-                        return _buildWishlistItem(_wishlistItems[index]);
+                        return _buildWishlistItem(wishlistItems[index]);
                       },
                     ),
             ),
@@ -212,6 +185,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
   }
 
   Widget _buildWishlistItem(Map<String, dynamic> item) {
+    final wishlist = context.read<WishlistProvider>();
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(16),
@@ -364,13 +338,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
                 ),
                 child: IconButton(
                   onPressed: () {
-                    // Find the index of the item to remove
-                    final index = _wishlistItems.indexOf(item);
-                    if (index != -1) {
-                      setState(() {
-                        _wishlistItems.removeAt(index);
-                      });
-                    }
+                    wishlist.removeById((item['id'] ?? '').toString());
                   },
                   icon: Icon(Icons.delete_outline, color: Colors.grey[400]),
                 ),

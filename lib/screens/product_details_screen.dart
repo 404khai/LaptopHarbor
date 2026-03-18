@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import '../theme/app_theme.dart';
+import '../providers/wishlist_provider.dart';
 import '../widgets/custom_back_button.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
@@ -17,6 +19,22 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   final PageController _pageController = PageController();
 
   late List<String> _images;
+
+  String _wishlistId() {
+    final raw = (widget.product['id'] ?? '').toString().trim();
+    if (raw.isNotEmpty) return raw;
+
+    final brand = (widget.product['brand'] ?? '').toString().trim();
+    final model = (widget.product['model'] ?? '').toString().trim();
+    final title = (widget.product['title'] ?? '').toString().trim();
+    final base = title.isNotEmpty ? title : '$brand $model'.trim();
+
+    return base
+        .toLowerCase()
+        .replaceAll(RegExp(r'[^a-z0-9]+'), '_')
+        .replaceAll(RegExp(r'_+'), '_')
+        .replaceAll(RegExp(r'^_+|_+$'), '');
+  }
 
   @override
   void initState() {
@@ -238,6 +256,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   }
 
   Widget _buildHeader() {
+    final wishlist = context.watch<WishlistProvider>();
+    final productId = _wishlistId();
+    final isWishlisted = productId.isNotEmpty && wishlist.containsId(productId);
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
@@ -262,9 +284,13 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           Row(
             children: [
               IconButton(
-                icon: const Icon(Icons.favorite_border),
-                onPressed: () {},
-                color: AppColors.slate900,
+                icon: Icon(
+                  isWishlisted ? Icons.favorite : Icons.favorite_border,
+                ),
+                onPressed: () {
+                  wishlist.toggleFromProduct(widget.product);
+                },
+                color: isWishlisted ? Colors.red : AppColors.slate900,
               ),
               IconButton(
                 icon: const Icon(Icons.share),
@@ -378,6 +404,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   }
 
   Widget _buildActionButtons() {
+    final wishlist = context.watch<WishlistProvider>();
+    final productId = _wishlistId();
+    final isWishlisted = productId.isNotEmpty && wishlist.containsId(productId);
+
     return Column(
       children: [
         SizedBox(
@@ -414,7 +444,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           width: double.infinity,
           height: 48,
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              wishlist.toggleFromProduct(widget.product);
+            },
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.slate900,
               foregroundColor: Colors.white,
@@ -423,12 +455,25 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 borderRadius: BorderRadius.circular(12),
               ),
             ),
-            child: Text(
-              'Buy Now',
-              style: GoogleFonts.inter(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  isWishlisted
+                      ? Icons.favorite
+                      : Icons.favorite_border_outlined,
+                  size: 20,
+                  color: isWishlisted ? Colors.red : Colors.white,
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  isWishlisted ? 'Remove from Wishlist' : 'Add to Wishlist',
+                  style: GoogleFonts.inter(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
             ),
           ),
         ),
