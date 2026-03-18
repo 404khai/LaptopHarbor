@@ -37,8 +37,8 @@ class _CartScreenState extends State<CartScreen> {
         ),
       ),
       body: SafeArea(
-        child: cartItems.isEmpty 
-            ? _buildEmptyState() 
+        child: cartItems.isEmpty
+            ? _buildEmptyState()
             : _buildActiveCart(cartItems, subtotal),
       ),
     );
@@ -120,7 +120,10 @@ class _CartScreenState extends State<CartScreen> {
     );
   }
 
-  Widget _buildActiveCart(List<Map<String, dynamic>> cartItems, double subtotal) {
+  Widget _buildActiveCart(
+    List<Map<String, dynamic>> cartItems,
+    double subtotal,
+  ) {
     return Column(
       children: [
         Expanded(
@@ -130,7 +133,8 @@ class _CartScreenState extends State<CartScreen> {
               children: [
                 ...List.generate(cartItems.length, (index) {
                   final item = cartItems[index];
-                  final productId = item['id']; // Document ID (which is product ID)
+                  final productId =
+                      item['id']; // Document ID (which is product ID)
                   final quantity = item['quantity'] as int;
 
                   return Padding(
@@ -179,40 +183,27 @@ class _CartScreenState extends State<CartScreen> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Expanded(
-                                      child: Text(
-                                        item['name'] ?? 'Product',
-                                        style: GoogleFonts.inter(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                          color: AppColors.text,
-                                        ),
+                                    Text(
+                                      item['name'] ?? 'Product',
+                                      style: GoogleFonts.inter(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.normal,
+                                        color: AppColors.text,
                                       ),
                                     ),
+                                    const SizedBox(height: 4),
                                     Text(
                                       '\$${(item['price'] ?? 0).toStringAsFixed(2)}',
                                       style: GoogleFonts.inter(
-                                        fontSize: 14,
+                                        fontSize: 16,
                                         fontWeight: FontWeight.bold,
                                         color: AppColors.text,
                                       ),
                                     ),
                                   ],
-                                ),
-                                const SizedBox(height: 4),
-                                Text(
-                                  item['description'] ?? '',
-                                  style: GoogleFonts.inter(
-                                    fontSize: 12,
-                                    color: AppColors.subtext,
-                                  ),
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
                                 ),
                                 const SizedBox(height: 12),
                                 Row(
@@ -233,9 +224,18 @@ class _CartScreenState extends State<CartScreen> {
                                           _buildQuantityButton(
                                             icon: Icons.remove,
                                             onTap: () {
-                                              if (quantity > 1) {
-                                                context.read<CartProvider>().updateQuantity(productId, -1);
+                                              if (quantity <= 1) {
+                                                context
+                                                    .read<CartProvider>()
+                                                    .removeFromCart(productId);
+                                                return;
                                               }
+                                              context
+                                                  .read<CartProvider>()
+                                                  .updateQuantity(
+                                                    productId,
+                                                    -1,
+                                                  );
                                             },
                                           ),
                                           Padding(
@@ -254,7 +254,9 @@ class _CartScreenState extends State<CartScreen> {
                                           _buildQuantityButton(
                                             icon: Icons.add,
                                             onTap: () {
-                                              context.read<CartProvider>().updateQuantity(productId, 1);
+                                              context
+                                                  .read<CartProvider>()
+                                                  .updateQuantity(productId, 1);
                                             },
                                           ),
                                         ],
@@ -263,7 +265,9 @@ class _CartScreenState extends State<CartScreen> {
                                     // Delete Button
                                     IconButton(
                                       onPressed: () {
-                                        context.read<CartProvider>().removeFromCart(productId);
+                                        context
+                                            .read<CartProvider>()
+                                            .removeFromCart(productId);
                                       },
                                       icon: const Icon(
                                         Icons.delete_outline,

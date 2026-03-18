@@ -522,33 +522,53 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             ),
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                IconButton(
-                  onPressed: () {
-                    if (cartQuantity <= 1) {
-                      cart.removeFromCart(cartId);
-                    } else {
-                      cart.updateQuantity(cartId, -1);
-                    }
-                  },
-                  icon: const Icon(Icons.remove),
-                  color: AppColors.slate900,
+                Container(
+                  width: 36,
+                  height: 36,
+                  decoration: BoxDecoration(
+                    color: AppColors.qtyBg,
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  child: IconButton(
+                    onPressed: () {
+                      if (cartQuantity <= 1) {
+                        cart.removeFromCart(cartId);
+                      } else {
+                        cart.updateQuantity(cartId, -1);
+                      }
+                    },
+                    icon: const Icon(Icons.remove),
+                    color: AppColors.slate900,
+                    padding: EdgeInsets.zero,
+                    constraints: const BoxConstraints(),
+                  ),
                 ),
                 Text(
                   '$cartQuantity',
                   style: GoogleFonts.inter(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.slate900,
+                    color: AppColors.background,
                   ),
                 ),
-                IconButton(
-                  onPressed: () {
-                    cart.updateQuantity(cartId, 1);
-                  },
-                  icon: const Icon(Icons.add),
-                  color: AppColors.slate900,
+                Container(
+                  width: 36,
+                  height: 36,
+                  decoration: BoxDecoration(
+                    color: AppColors.qtyBg,
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  child: IconButton(
+                    onPressed: () {
+                      cart.updateQuantity(cartId, 1);
+                    },
+                    icon: const Icon(Icons.add),
+                    color: AppColors.slate900,
+                    padding: EdgeInsets.zero,
+                    constraints: const BoxConstraints(),
+                  ),
                 ),
               ],
             ),

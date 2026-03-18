@@ -7,6 +7,7 @@ class AppColors {
   static const Color text = Colors.black;
   static const Color subtext = Colors.grey;
   static const Color error = Colors.red;
+  static const Color qtyBg = Color(0xFFFFC3A9); // Slate-100
   static const Color success = Colors.green;
   static const Color inputBorder = Color(0xFFE2E8F0); // Slate-200
   static const Color inputBorderFocused = primary;

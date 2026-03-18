@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import '../theme/app_theme.dart';
+import '../providers/cart_provider.dart';
 
 class CustomBottomNavBar extends StatelessWidget {
   final int currentIndex;
@@ -14,6 +16,7 @@ class CustomBottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cartCount = context.watch<CartProvider>().totalQuantity;
     return Container(
       decoration: BoxDecoration(
         color: AppColors.background,
@@ -36,7 +39,12 @@ class CustomBottomNavBar extends StatelessWidget {
             children: [
               _buildNavItem(0, Icons.home_rounded, 'Home'),
               _buildNavItem(1, Icons.search_rounded, 'Search'),
-              _buildNavItem(2, Icons.shopping_cart_rounded, 'Cart', badgeCount: 2),
+              _buildNavItem(
+                2,
+                Icons.shopping_cart_rounded,
+                'Cart',
+                badgeCount: cartCount > 0 ? cartCount : null,
+              ),
               _buildNavItem(3, Icons.favorite_rounded, 'Wishlist'),
               _buildNavItem(4, Icons.person_rounded, 'Profile'),
             ],
