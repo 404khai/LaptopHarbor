@@ -337,6 +337,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       const FirestoreProductSection(
                         title: 'Laptops',
                         category: 'Laptop',
+                        randomize: true,
                       ),
                       const SizedBox(height: 32),
                     ],
@@ -344,6 +345,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       const FirestoreProductSection(
                         title: 'Mice',
                         category: 'Mouse',
+                        randomize: true,
                       ),
                       const SizedBox(height: 32),
                     ],
@@ -351,6 +353,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       const FirestoreProductSection(
                         title: 'Keyboards',
                         category: 'Keyboard',
+                        randomize: true,
                       ),
                       const SizedBox(height: 32),
                     ],
@@ -358,6 +361,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       const FirestoreProductSection(
                         title: 'Laptop Bags',
                         category: 'Laptop Bag',
+                        randomize: true,
                       ),
                       const SizedBox(height: 32),
                     ],
@@ -365,6 +369,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       const FirestoreProductSection(
                         title: 'Chargers',
                         category: 'Charger',
+                        randomize: true,
                       ),
                       const SizedBox(height: 32),
                     ],
