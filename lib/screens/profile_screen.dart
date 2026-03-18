@@ -299,6 +299,12 @@ class ProfileScreen extends StatelessWidget {
                       onTap: () {},
                     ),
                     const SizedBox(height: 32),
+                    _buildMenuItem(
+                      icon: Icons.help,
+                      title: 'Help & Support',
+                      onTap: () {},
+                    ),
+                    const SizedBox(height: 32),
 
                     // Log Out Button
                     SizedBox(
