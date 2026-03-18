@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../theme/app_theme.dart';
-import '../models/product.dart';
 import '../services/techspecs_service.dart';
 import '../widgets/custom_bottom_nav_bar.dart';
-import '../widgets/components_section.dart';
 import '../widgets/firestore_product_section.dart';
 import 'cart_screen.dart';
 import 'search_screen.dart';
@@ -20,12 +18,17 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
-  bool _isHomeLoading = false;
   String? _homeError;
-  List<Product> _deals = [];
   List<Map<String, String>> _brandLogos = [];
-  List<String> _categories = [];
   int _selectedCategoryIndex = 0;
+  static const List<String> _homeCategoryChips = [
+    'All',
+    'Laptop',
+    'Mouse',
+    'Keyboard',
+    'Charger',
+    'Bag',
+  ];
 
   @override
   void initState() {
@@ -61,72 +64,23 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> _loadHomeData() async {
     setState(() {
-      _isHomeLoading = true;
       _homeError = null;
     });
 
     try {
       final service = TechSpecsService();
-      final categories = await service.getCategories(size: 10);
       final brandLogos = await service.getBrandLogos();
-      final deals = await service.searchLaptops('laptop');
-      final enrichedDeals = <Product>[];
-      for (final product in deals.take(10)) {
-        var imageUrl = product.imageUrl;
-        if (imageUrl.isEmpty &&
-            product.id.isNotEmpty &&
-            enrichedDeals.length < 3) {
-          try {
-            final images = await service.getProductImages(product.id);
-            if (images.isNotEmpty) imageUrl = images.first;
-          } catch (_) {}
-        }
 
-        if (imageUrl == product.imageUrl) {
-          enrichedDeals.add(product);
-        } else {
-          enrichedDeals.add(
-            Product(
-              id: product.id,
-              brand: product.brand,
-              model: product.model,
-              imageUrl: imageUrl,
-              price: product.price,
-              originalPrice: product.originalPrice,
-              description: product.description,
-              specifications: product.specifications,
-              category: product.category,
-            ),
-          );
-        }
-      }
-
-      if (mounted) {
-        setState(() {
-          _categories = categories.isNotEmpty ? categories : ['Laptops'];
-          _brandLogos = brandLogos;
-          _deals = enrichedDeals;
-        });
-      }
+      if (!mounted) return;
+      setState(() {
+        _brandLogos = brandLogos;
+      });
     } catch (e) {
-      if (mounted) {
-        setState(() {
-          _homeError = e.toString();
-        });
-      }
-    } finally {
-      if (mounted) {
-        setState(() {
-          _isHomeLoading = false;
-        });
-      }
+      if (!mounted) return;
+      setState(() {
+        _homeError = e.toString();
+      });
     }
-  }
-
-  String _formatPrice(double value) {
-    if (value <= 0) return '\$--';
-    if (value >= 1000) return '\$${value.toStringAsFixed(0)}';
-    return '\$${value.toStringAsFixed(2)}';
   }
 
   @override
@@ -196,31 +150,26 @@ class _HomeScreenState extends State<HomeScreen> {
                       scrollDirection: Axis.horizontal,
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: Row(
-                        children: List.generate(
-                          (_categories.isNotEmpty ? _categories : ['All'])
-                              .take(8)
-                              .length,
-                          (index) {
-                            final label = (_categories.isNotEmpty
-                                ? _categories
-                                : ['All'])[index];
-                            final isSelected = _selectedCategoryIndex == index;
-                            return Padding(
-                              padding: const EdgeInsets.only(right: 12),
-                              child: GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    _selectedCategoryIndex = index;
-                                  });
-                                },
-                                child: _buildCategoryChip(
-                                  label,
-                                  isSelected: isSelected,
-                                ),
+                        children: List.generate(_homeCategoryChips.length, (
+                          index,
+                        ) {
+                          final label = _homeCategoryChips[index];
+                          final isSelected = _selectedCategoryIndex == index;
+                          return Padding(
+                            padding: const EdgeInsets.only(right: 12),
+                            child: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  _selectedCategoryIndex = index;
+                                });
+                              },
+                              child: _buildCategoryChip(
+                                label,
+                                isSelected: isSelected,
                               ),
-                            );
-                          },
-                        ),
+                            ),
+                          );
+                        }),
                       ),
                     ),
                     const SizedBox(height: 24),
@@ -273,7 +222,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                   'images/lenovo.png',
                                   width: 32,
                                   height: 32,
-                                  
                                 ),
                               ),
                             ),
@@ -289,7 +237,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                   'images/apple.png',
                                   width: 40,
                                   height: 40,
-                                  
                                 ),
                               ),
                             ),
@@ -305,7 +252,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                   'images/dell.png',
                                   width: 32,
                                   height: 32,
-                                  
                                 ),
                               ),
                             ),
@@ -321,7 +267,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                   'images/razer.png',
                                   width: 48,
                                   height: 48,
-                                  
                                 ),
                               ),
                             ),
@@ -408,36 +353,41 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     const SizedBox(height: 32),
 
-                    // Laptops Section
-                    const FirestoreProductSection(
-                      title: 'Laptops',
-                      category: 'Laptop',
-                    ),
-                    const SizedBox(height: 32),
-
-                    const FirestoreProductSection(
-                      title: 'Mice',
-                      category: 'Mouse',
-                    ),
-                    const SizedBox(height: 32),
-
-                    const FirestoreProductSection(
-                      title: 'Keyboards',
-                      category: 'Keyboard',
-                    ),
-                    const SizedBox(height: 32),
-
-                    const FirestoreProductSection(
-                      title: 'Laptop Bags',
-                      category: 'Laptop Bag',
-                    ),
-                    const SizedBox(height: 32),
-
-                    const FirestoreProductSection(
-                      title: 'Chargers',
-                      category: 'Charger',
-                    ),
-                    const SizedBox(height: 32),
+                    if (_shouldShowSection('Laptop')) ...[
+                      const FirestoreProductSection(
+                        title: 'Laptops',
+                        category: 'Laptop',
+                      ),
+                      const SizedBox(height: 32),
+                    ],
+                    if (_shouldShowSection('Mouse')) ...[
+                      const FirestoreProductSection(
+                        title: 'Mice',
+                        category: 'Mouse',
+                      ),
+                      const SizedBox(height: 32),
+                    ],
+                    if (_shouldShowSection('Keyboard')) ...[
+                      const FirestoreProductSection(
+                        title: 'Keyboards',
+                        category: 'Keyboard',
+                      ),
+                      const SizedBox(height: 32),
+                    ],
+                    if (_shouldShowSection('Laptop Bag')) ...[
+                      const FirestoreProductSection(
+                        title: 'Laptop Bags',
+                        category: 'Laptop Bag',
+                      ),
+                      const SizedBox(height: 32),
+                    ],
+                    if (_shouldShowSection('Charger')) ...[
+                      const FirestoreProductSection(
+                        title: 'Chargers',
+                        category: 'Charger',
+                      ),
+                      const SizedBox(height: 32),
+                    ],
                   ],
                 ),
               ),
@@ -470,129 +420,16 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildProductCard({
-    required String brand,
-    required String model,
-    required String price,
-    required String originalPrice,
-    required String discount,
-    required String imageUrl,
-  }) {
-    return Container(
-      width: 200,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.grey[100]!),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Stack(
-            children: [
-              Container(
-                height: 140,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.grey[50],
-                  borderRadius: const BorderRadius.vertical(
-                    top: Radius.circular(16),
-                  ),
-                ),
-                padding: const EdgeInsets.all(16),
-                child: Image.network(
-                  imageUrl,
-                  fit: BoxFit.contain,
-                  errorBuilder: (context, error, stackTrace) => const Icon(
-                    Icons.broken_image,
-                    size: 48,
-                    color: Colors.grey,
-                  ),
-                ),
-              ),
-              Positioned(
-                top: 12,
-                left: 12,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 4,
-                  ),
-                  decoration: BoxDecoration(
-                    color: AppColors.primary,
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  child: Text(
-                    discount,
-                    style: GoogleFonts.inter(
-                      fontSize: 10,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  brand,
-                  style: GoogleFonts.inter(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.grey[400],
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  model,
-                  style: GoogleFonts.inter(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.text,
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SizedBox(height: 8),
-                Row(
-                  children: [
-                    Text(
-                      price,
-                      style: GoogleFonts.inter(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.primary,
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Text(
-                      originalPrice,
-                      style: GoogleFonts.inter(
-                        fontSize: 14,
-                        color: Colors.grey[400],
-                        decoration: TextDecoration.lineThrough,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
+  String? _selectedFirestoreCategory() {
+    final label = _homeCategoryChips[_selectedCategoryIndex];
+    if (label == 'All') return null;
+    if (label == 'Bag') return 'Laptop Bag';
+    return label;
+  }
+
+  bool _shouldShowSection(String category) {
+    final selected = _selectedFirestoreCategory();
+    return selected == null || selected == category;
   }
 
   Widget _buildBrandLogo(String imageUrl, {double size = 32}) {

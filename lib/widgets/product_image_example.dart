@@ -6,11 +6,11 @@ class ProductImageExample extends StatelessWidget {
   final double height;
 
   const ProductImageExample({
-    Key? key,
+    super.key,
     required this.imageUrl,
     this.width = 200,
     this.height = 200,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

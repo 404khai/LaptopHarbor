@@ -7,7 +7,9 @@ import '../theme/app_theme.dart';
 import '../widgets/custom_back_button.dart';
 
 class SearchScreen extends StatefulWidget {
-  const SearchScreen({super.key});
+  final String? initialQuery;
+
+  const SearchScreen({super.key, this.initialQuery});
 
   @override
   State<SearchScreen> createState() => _SearchScreenState();
@@ -25,6 +27,15 @@ class _SearchScreenState extends State<SearchScreen> {
   void initState() {
     super.initState();
     _searchController.addListener(_onSearchChanged);
+    final initial = widget.initialQuery?.trim() ?? '';
+    if (initial.isNotEmpty) {
+      _searchController.text = initial;
+      _searchController.selection = TextSelection.collapsed(
+        offset: initial.length,
+      );
+      _showResults = true;
+      _addRecentSearch(initial);
+    }
     _loadSuggestions();
   }
 
@@ -86,21 +97,45 @@ class _SearchScreenState extends State<SearchScreen> {
         list.add(<String, dynamic>{...data, 'id': d.id});
       }
 
-      if (!mounted) return;
-      setState(() {
-        _suggestions = list;
-      });
+      if (mounted) {
+        setState(() {
+          _suggestions = list;
+        });
+      }
     } catch (_) {
-      if (!mounted) return;
-      setState(() {
-        _suggestions = [];
-      });
+      if (mounted) {
+        setState(() {
+          _suggestions = [];
+        });
+      }
     } finally {
-      if (!mounted) return;
-      setState(() {
-        _isLoadingSuggestions = false;
-      });
+      if (mounted) {
+        setState(() {
+          _isLoadingSuggestions = false;
+        });
+      }
     }
+  }
+
+  String? _categoryFilterFromQuery(String query) {
+    final q = query.trim().toLowerCase();
+    if (q.isEmpty) return null;
+
+    final normalized = q.endsWith('s') ? q.substring(0, q.length - 1) : q;
+
+    if (normalized.contains('laptop bag') ||
+        normalized == 'bag' ||
+        normalized == 'bags') {
+      return 'Laptop Bag';
+    }
+    if (normalized == 'laptop' || normalized == 'laptops') return 'Laptop';
+    if (normalized == 'mouse' || normalized == 'mice') return 'Mouse';
+    if (normalized == 'keyboard' || normalized == 'keyboards') {
+      return 'Keyboard';
+    }
+    if (normalized == 'charger' || normalized == 'chargers') return 'Charger';
+
+    return null;
   }
 
   bool _matchesQuery(Map<String, dynamic> product, String query) {
@@ -321,8 +356,13 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   Widget _buildSearchResults() {
-    final query = FirebaseFirestore.instance.collection('products');
     final searchText = _searchController.text;
+    final categoryFilter = _categoryFilterFromQuery(searchText);
+    final query = categoryFilter != null
+        ? FirebaseFirestore.instance
+              .collection('products')
+              .where('category', isEqualTo: categoryFilter)
+        : FirebaseFirestore.instance.collection('products');
 
     return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
       stream: query.snapshots(),
@@ -337,7 +377,10 @@ class _SearchScreenState extends State<SearchScreen> {
         final docs = snapshot.data?.docs ?? const [];
         final items = docs
             .map((d) => <String, dynamic>{...d.data(), 'id': d.id})
-            .where((p) => _matchesQuery(p, searchText))
+            .where(
+              (p) =>
+                  categoryFilter != null ? true : _matchesQuery(p, searchText),
+            )
             .map((p) {
               final imageUrls = <String>[];
               final rawImageUrls = p['imageUrls'] ?? p['images'];
