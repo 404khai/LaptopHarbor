@@ -3,6 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../theme/app_theme.dart';
 import '../providers/wishlist_provider.dart';
+import '../providers/cart_provider.dart';
+import '../models/product.dart';
 import '../widgets/custom_back_button.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
@@ -20,6 +22,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
   late List<String> _images;
 
+  String _cartId() => _wishlistId();
+
   String _wishlistId() {
     final raw = (widget.product['id'] ?? '').toString().trim();
     if (raw.isNotEmpty) return raw;
@@ -34,6 +38,63 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         .replaceAll(RegExp(r'[^a-z0-9]+'), '_')
         .replaceAll(RegExp(r'_+'), '_')
         .replaceAll(RegExp(r'^_+|_+$'), '');
+  }
+
+  Product _toCartProduct() {
+    final id = _cartId();
+
+    String brand = (widget.product['brand'] ?? '').toString().trim();
+    String model = (widget.product['model'] ?? '').toString().trim();
+    final title = (widget.product['title'] ?? '').toString().trim();
+    if ((brand.isEmpty || model.isEmpty) && title.isNotEmpty) {
+      final parts = title.split(' ').where((p) => p.trim().isNotEmpty).toList();
+      if (parts.isNotEmpty) {
+        brand = brand.isEmpty ? parts.first : brand;
+        model = model.isEmpty ? parts.skip(1).join(' ') : model;
+      }
+    }
+
+    final rawImageUrls =
+        widget.product['imageUrls'] ?? widget.product['images'];
+    final imageUrl = (() {
+      final image =
+          (widget.product['imageUrl'] ?? widget.product['image'] ?? '')
+              .toString()
+              .trim();
+      if (image.isNotEmpty) return image;
+      if (rawImageUrls is List && rawImageUrls.isNotEmpty) {
+        final first = rawImageUrls.first;
+        if (first is String && first.trim().isNotEmpty) return first.trim();
+      }
+      return '';
+    })();
+
+    final priceValue = widget.product['price'];
+    final price = (() {
+      if (priceValue is num) return priceValue.toDouble();
+      final s = priceValue?.toString() ?? '';
+      final cleaned = s.replaceAll(RegExp(r'[^0-9.]'), '');
+      return double.tryParse(cleaned) ?? 0.0;
+    })();
+
+    final description = (widget.product['description'] ?? '').toString();
+    final specs = widget.product['specifications'] is Map
+        ? Map<String, dynamic>.from(widget.product['specifications'] as Map)
+        : <String, dynamic>{};
+    final category = (widget.product['category'] ?? '').toString();
+
+    return Product(
+      id: id,
+      brand: brand,
+      model: model,
+      imageUrl: imageUrl,
+      imageUrls: _images,
+      price: price,
+      originalPrice: null,
+      description: description,
+      specifications: specs,
+      category: category,
+    );
   }
 
   @override
@@ -407,38 +468,91 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     final wishlist = context.watch<WishlistProvider>();
     final productId = _wishlistId();
     final isWishlisted = productId.isNotEmpty && wishlist.containsId(productId);
+    final cart = context.watch<CartProvider>();
+    final cartId = _cartId();
+    final cartItem = cart.cartItems.cast<Map<String, dynamic>?>().firstWhere(
+      (e) => e != null && (e['id'] ?? '').toString() == cartId,
+      orElse: () => null,
+    );
+    final cartQuantity = (cartItem?['quantity'] is num)
+        ? (cartItem?['quantity'] as num).toInt()
+        : 0;
 
     return Column(
       children: [
-        SizedBox(
-          width: double.infinity,
-          height: 48,
-          child: ElevatedButton(
-            onPressed: () {},
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.primary,
-              foregroundColor: AppColors.slate900,
-              elevation: 0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+        if (cartQuantity <= 0)
+          SizedBox(
+            width: double.infinity,
+            height: 48,
+            child: ElevatedButton(
+              onPressed: () {
+                cart.addToCart(_toCartProduct(), 1);
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.primary,
+                foregroundColor: AppColors.slate900,
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Icons.shopping_cart, size: 20),
+                  const SizedBox(width: 8),
+                  Text(
+                    'Add to Cart',
+                    style: GoogleFonts.inter(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
               ),
             ),
+          )
+        else
+          Container(
+            width: double.infinity,
+            height: 48,
+            decoration: BoxDecoration(
+              color: AppColors.primary,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 8),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(Icons.shopping_cart, size: 20),
-                const SizedBox(width: 8),
+                IconButton(
+                  onPressed: () {
+                    if (cartQuantity <= 1) {
+                      cart.removeFromCart(cartId);
+                    } else {
+                      cart.updateQuantity(cartId, -1);
+                    }
+                  },
+                  icon: const Icon(Icons.remove),
+                  color: AppColors.slate900,
+                ),
                 Text(
-                  'Add to Cart',
+                  '$cartQuantity',
                   style: GoogleFonts.inter(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
+                    color: AppColors.slate900,
                   ),
+                ),
+                IconButton(
+                  onPressed: () {
+                    cart.updateQuantity(cartId, 1);
+                  },
+                  icon: const Icon(Icons.add),
+                  color: AppColors.slate900,
                 ),
               ],
             ),
           ),
-        ),
         const SizedBox(height: 12),
         SizedBox(
           width: double.infinity,
