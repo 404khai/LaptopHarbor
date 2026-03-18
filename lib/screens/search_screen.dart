@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:math';
+import 'dart:async';
 import 'product_details_screen.dart';
 import '../theme/app_theme.dart';
 import '../widgets/custom_back_button.dart';
@@ -22,6 +24,13 @@ class _SearchScreenState extends State<SearchScreen> {
   final List<String> _recentSearches = [];
   bool _isLoadingSuggestions = false;
   List<Map<String, dynamic>> _suggestions = [];
+  StreamSubscription<User?>? _authSub;
+  StreamSubscription<QuerySnapshot<Map<String, dynamic>>>? _recentSub;
+  String? _uid;
+
+  String? _brandFilter;
+  RangeValues? _priceRange;
+  bool _inStockOnly = false;
 
   @override
   void initState() {
@@ -35,7 +44,14 @@ class _SearchScreenState extends State<SearchScreen> {
       );
       _showResults = true;
       _addRecentSearch(initial);
+      _persistRecentSearch(initial);
     }
+    _uid = FirebaseAuth.instance.currentUser?.uid;
+    _attachRecentListener();
+    _authSub = FirebaseAuth.instance.authStateChanges().listen((user) {
+      _uid = user?.uid;
+      _attachRecentListener();
+    });
     _loadSuggestions();
   }
 
@@ -64,6 +80,7 @@ class _SearchScreenState extends State<SearchScreen> {
       _addRecentSearch(t);
       _showResults = true;
     });
+    _persistRecentSearch(t);
   }
 
   void _applySearchTerm(String term) {
@@ -117,6 +134,93 @@ class _SearchScreenState extends State<SearchScreen> {
     }
   }
 
+  String _recentDocId(String term) {
+    final t = term.trim().toLowerCase();
+    return t
+        .replaceAll(RegExp(r'[^a-z0-9]+'), '_')
+        .replaceAll(RegExp(r'_+'), '_')
+        .replaceAll(RegExp(r'^_+|_+$'), '');
+  }
+
+  void _attachRecentListener() {
+    _recentSub?.cancel();
+    _recentSub = null;
+
+    final uid = _uid;
+    if (uid == null) return;
+
+    _recentSub = FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('recentSearches')
+        .orderBy('updatedAt', descending: true)
+        .limit(3)
+        .snapshots()
+        .listen((snapshot) {
+          final terms = snapshot.docs
+              .map((d) => (d.data()['term'] ?? '').toString().trim())
+              .where((t) => t.isNotEmpty)
+              .toList();
+          if (!mounted) return;
+          setState(() {
+            _recentSearches
+              ..clear()
+              ..addAll(terms);
+          });
+        });
+  }
+
+  Future<void> _persistRecentSearch(String term) async {
+    final uid = _uid;
+    if (uid == null) return;
+
+    final t = term.trim();
+    if (t.isEmpty) return;
+
+    final docId = _recentDocId(t);
+    if (docId.isEmpty) return;
+
+    final col = FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('recentSearches');
+
+    await col.doc(docId).set(<String, dynamic>{
+      'term': t,
+      'updatedAt': FieldValue.serverTimestamp(),
+    }, SetOptions(merge: true));
+
+    final snap = await col.orderBy('updatedAt', descending: true).get();
+    if (snap.docs.length <= 3) return;
+
+    final batch = FirebaseFirestore.instance.batch();
+    for (final d in snap.docs.skip(3)) {
+      batch.delete(d.reference);
+    }
+    await batch.commit();
+  }
+
+  Future<void> _clearAllRecentSearches() async {
+    final uid = _uid;
+    setState(() {
+      _recentSearches.clear();
+    });
+    if (uid == null) return;
+
+    final snap = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('recentSearches')
+        .get();
+    if (snap.docs.isEmpty) return;
+
+    final batch = FirebaseFirestore.instance.batch();
+    for (final d in snap.docs) {
+      batch.delete(d.reference);
+    }
+    await batch.commit();
+  }
+
   String? _categoryFilterFromQuery(String query) {
     final q = query.trim().toLowerCase();
     if (q.isEmpty) return null;
@@ -156,6 +260,8 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   void dispose() {
     _searchController.dispose();
+    _recentSub?.cancel();
+    _authSub?.cancel();
     super.dispose();
   }
 
@@ -285,11 +391,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 ),
               ),
               TextButton(
-                onPressed: () {
-                  setState(() {
-                    _recentSearches.clear();
-                  });
-                },
+                onPressed: _clearAllRecentSearches,
                 style: TextButton.styleFrom(
                   padding: EdgeInsets.zero,
                   minimumSize: Size.zero,
@@ -375,12 +477,47 @@ class _SearchScreenState extends State<SearchScreen> {
         }
 
         final docs = snapshot.data?.docs ?? const [];
+        final brandOptions = <String>{
+          for (final d in docs) ((d.data()['brand'] ?? '').toString().trim()),
+        }..removeWhere((e) => e.isEmpty);
+
+        final prices = docs
+            .map((d) => d.data()['price'])
+            .whereType<num>()
+            .map((n) => n.toDouble())
+            .toList();
+        final minPrice = prices.isEmpty ? 0.0 : prices.reduce(min);
+        final maxPrice = prices.isEmpty ? 5000.0 : prices.reduce(max);
+        _priceRange ??= RangeValues(minPrice, maxPrice);
+
         final items = docs
             .map((d) => <String, dynamic>{...d.data(), 'id': d.id})
             .where(
               (p) =>
                   categoryFilter != null ? true : _matchesQuery(p, searchText),
             )
+            .where((p) {
+              if (_brandFilter == null || _brandFilter!.trim().isEmpty) {
+                return true;
+              }
+              return (p['brand'] ?? '').toString() == _brandFilter;
+            })
+            .where((p) {
+              final range = _priceRange;
+              if (range == null) return true;
+              final raw = p['price'];
+              final price = raw is num
+                  ? raw.toDouble()
+                  : double.tryParse('$raw') ?? 0.0;
+              return price >= range.start && price <= range.end;
+            })
+            .where((p) {
+              if (!_inStockOnly) return true;
+              final inStock =
+                  p['inStock'] == true ||
+                  ((p['stock'] is num) && (p['stock'] as num).toInt() > 0);
+              return inStock;
+            })
             .map((p) {
               final imageUrls = <String>[];
               final rawImageUrls = p['imageUrls'] ?? p['images'];
@@ -443,7 +580,14 @@ class _SearchScreenState extends State<SearchScreen> {
                     ),
                   ),
                   TextButton.icon(
-                    onPressed: () {},
+                    onPressed: () {
+                      _showFilterSheet(
+                        context,
+                        brands: brandOptions.toList()..sort(),
+                        minPrice: minPrice,
+                        maxPrice: maxPrice,
+                      );
+                    },
                     icon: const Icon(Icons.tune, size: 16, color: Colors.grey),
                     label: Text(
                       'Filter',
@@ -472,6 +616,176 @@ class _SearchScreenState extends State<SearchScreen> {
               ),
             ),
           ],
+        );
+      },
+    );
+  }
+
+  Future<void> _showFilterSheet(
+    BuildContext context, {
+    required List<String> brands,
+    required double minPrice,
+    required double maxPrice,
+  }) async {
+    final initialBrand = _brandFilter;
+    final initialRange = _priceRange ?? RangeValues(minPrice, maxPrice);
+    final initialInStockOnly = _inStockOnly;
+
+    String? brand = initialBrand;
+    RangeValues range = RangeValues(
+      initialRange.start.clamp(minPrice, maxPrice),
+      initialRange.end.clamp(minPrice, maxPrice),
+    );
+    bool inStockOnly = initialInStockOnly;
+
+    await showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) {
+        final height = MediaQuery.of(context).size.height * 0.5;
+        return StatefulBuilder(
+          builder: (context, setModalState) {
+            return Container(
+              height: height,
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(30),
+                  topRight: Radius.circular(30),
+                ),
+              ),
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                    child: Container(
+                      width: 48,
+                      height: 5,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[300],
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    'Filter',
+                    style: GoogleFonts.inter(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.text,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  DropdownButtonFormField<String?>(
+                    value: brand,
+                    decoration: InputDecoration(
+                      labelText: 'Brand',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    items: [
+                      const DropdownMenuItem<String?>(
+                        value: null,
+                        child: Text('Any'),
+                      ),
+                      ...brands.map(
+                        (b) =>
+                            DropdownMenuItem<String?>(value: b, child: Text(b)),
+                      ),
+                    ],
+                    onChanged: (value) {
+                      setModalState(() {
+                        brand = value;
+                      });
+                    },
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    'Price',
+                    style: GoogleFonts.inter(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.text,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('\$${range.start.toStringAsFixed(0)}'),
+                      Text('\$${range.end.toStringAsFixed(0)}'),
+                    ],
+                  ),
+                  RangeSlider(
+                    min: minPrice,
+                    max: maxPrice,
+                    values: range,
+                    onChanged: (values) {
+                      setModalState(() {
+                        range = values;
+                      });
+                    },
+                  ),
+                  const SizedBox(height: 8),
+                  DropdownButtonFormField<String>(
+                    value: inStockOnly ? 'In stock' : 'Any',
+                    decoration: InputDecoration(
+                      labelText: 'Availability',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    items: const [
+                      DropdownMenuItem(value: 'Any', child: Text('Any')),
+                      DropdownMenuItem(
+                        value: 'In stock',
+                        child: Text('In stock'),
+                      ),
+                    ],
+                    onChanged: (value) {
+                      setModalState(() {
+                        inStockOnly = value == 'In stock';
+                      });
+                    },
+                  ),
+                  const Spacer(),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 48,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.primary,
+                        foregroundColor: AppColors.slate900,
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _brandFilter = brand;
+                          _priceRange = range;
+                          _inStockOnly = inStockOnly;
+                        });
+                        Navigator.pop(context);
+                      },
+                      child: Text(
+                        'Apply Filters',
+                        style: GoogleFonts.inter(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
         );
       },
     );
