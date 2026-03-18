@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../theme/app_theme.dart';
 import '../widgets/custom_back_button.dart';
 import '../providers/cart_provider.dart';
 import 'shipping_screen.dart';
+import 'product_details_screen.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -14,6 +16,49 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
+  Future<void> _openProductDetails(
+    BuildContext context,
+    Map<String, dynamic> item,
+  ) async {
+    final productId = (item['id'] ?? '').toString().trim();
+    if (productId.isEmpty) return;
+
+    Map<String, dynamic> product = {
+      'id': productId,
+      'title': (item['name'] ?? '').toString(),
+      'imageUrl': (item['image'] ?? '').toString(),
+      'imageUrls': [
+        (item['image'] ?? '').toString(),
+        (item['image'] ?? '').toString(),
+        (item['image'] ?? '').toString(),
+        (item['image'] ?? '').toString(),
+      ],
+      'price': (item['price'] is num)
+          ? (item['price'] as num).toDouble()
+          : double.tryParse('${item['price']}') ?? 0.0,
+      'description': (item['description'] ?? '').toString(),
+    };
+
+    try {
+      final doc = await FirebaseFirestore.instance
+          .collection('products')
+          .doc(productId)
+          .get();
+      final data = doc.data();
+      if (doc.exists && data != null) {
+        product = <String, dynamic>{...data, 'id': doc.id};
+      }
+    } catch (_) {}
+
+    if (!context.mounted) return;
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ProductDetailsScreen(product: product),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final cartProvider = context.watch<CartProvider>();
@@ -139,150 +184,162 @@ class _CartScreenState extends State<CartScreen> {
 
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 16.0),
-                    child: Container(
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: Colors.grey[100]!),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withValues(alpha: 0.05),
-                            blurRadius: 4,
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          // Product Image
-                          Container(
-                            width: 80,
-                            height: 80,
-                            decoration: BoxDecoration(
-                              color: Colors.grey[50],
-                              borderRadius: BorderRadius.circular(8),
+                    child: GestureDetector(
+                      onTap: () => _openProductDetails(context, item),
+                      child: Container(
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(color: Colors.grey[100]!),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withValues(alpha: 0.05),
+                              blurRadius: 4,
+                              offset: const Offset(0, 2),
                             ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(8),
-                              child: Image.network(
-                                item['image'] ?? '',
-                                fit: BoxFit.contain,
-                                errorBuilder: (context, error, stackTrace) =>
-                                    const Icon(
-                                      Icons.broken_image,
-                                      color: Colors.grey,
-                                    ),
+                          ],
+                        ),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // Product Image
+                            Container(
+                              width: 80,
+                              height: 80,
+                              decoration: BoxDecoration(
+                                color: Colors.grey[50],
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(8),
+                                child: Image.network(
+                                  item['image'] ?? '',
+                                  fit: BoxFit.contain,
+                                  errorBuilder: (context, error, stackTrace) =>
+                                      const Icon(
+                                        Icons.broken_image,
+                                        color: Colors.grey,
+                                      ),
+                                ),
                               ),
                             ),
-                          ),
-                          const SizedBox(width: 16),
-                          // Details
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      item['name'] ?? 'Product',
-                                      style: GoogleFonts.inter(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.normal,
-                                        color: AppColors.text,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 4),
-                                    Text(
-                                      '\$${(item['price'] ?? 0).toStringAsFixed(2)}',
-                                      style: GoogleFonts.inter(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                        color: AppColors.text,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 12),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    // Quantity Controls
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        color: AppColors.primary.withValues(
-                                          alpha: 0.1,
+                            const SizedBox(width: 16),
+                            // Details
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        item['name'] ?? 'Product',
+                                        style: GoogleFonts.inter(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.normal,
+                                          color: AppColors.text,
                                         ),
-                                        borderRadius: BorderRadius.circular(8),
                                       ),
-                                      padding: const EdgeInsets.all(4),
-                                      child: Row(
-                                        children: [
-                                          _buildQuantityButton(
-                                            icon: Icons.remove,
-                                            onTap: () {
-                                              if (quantity <= 1) {
+                                      const SizedBox(height: 4),
+                                      Text(
+                                        '\$${(item['price'] ?? 0).toStringAsFixed(2)}',
+                                        style: GoogleFonts.inter(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: AppColors.text,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 12),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      // Quantity Controls
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          color: AppColors.primary.withValues(
+                                            alpha: 0.1,
+                                          ),
+                                          borderRadius: BorderRadius.circular(
+                                            8,
+                                          ),
+                                        ),
+                                        padding: const EdgeInsets.all(4),
+                                        child: Row(
+                                          children: [
+                                            _buildQuantityButton(
+                                              icon: Icons.remove,
+                                              onTap: () {
+                                                if (quantity <= 1) {
+                                                  context
+                                                      .read<CartProvider>()
+                                                      .removeFromCart(
+                                                        productId,
+                                                      );
+                                                  return;
+                                                }
                                                 context
                                                     .read<CartProvider>()
-                                                    .removeFromCart(productId);
-                                                return;
-                                              }
-                                              context
-                                                  .read<CartProvider>()
-                                                  .updateQuantity(
-                                                    productId,
-                                                    -1,
-                                                  );
-                                            },
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                              horizontal: 12,
+                                                    .updateQuantity(
+                                                      productId,
+                                                      -1,
+                                                    );
+                                              },
                                             ),
-                                            child: Text(
-                                              '$quantity',
-                                              style: GoogleFonts.inter(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w600,
-                                                color: AppColors.text,
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                    horizontal: 12,
+                                                  ),
+                                              child: Text(
+                                                '$quantity',
+                                                style: GoogleFonts.inter(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: AppColors.text,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                          _buildQuantityButton(
-                                            icon: Icons.add,
-                                            onTap: () {
-                                              context
-                                                  .read<CartProvider>()
-                                                  .updateQuantity(productId, 1);
-                                            },
-                                          ),
-                                        ],
+                                            _buildQuantityButton(
+                                              icon: Icons.add,
+                                              onTap: () {
+                                                context
+                                                    .read<CartProvider>()
+                                                    .updateQuantity(
+                                                      productId,
+                                                      1,
+                                                    );
+                                              },
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                    // Delete Button
-                                    IconButton(
-                                      onPressed: () {
-                                        context
-                                            .read<CartProvider>()
-                                            .removeFromCart(productId);
-                                      },
-                                      icon: const Icon(
-                                        Icons.delete_outline,
-                                        size: 20,
+                                      // Delete Button
+                                      IconButton(
+                                        onPressed: () {
+                                          context
+                                              .read<CartProvider>()
+                                              .removeFromCart(productId);
+                                        },
+                                        icon: const Icon(
+                                          Icons.delete_outline,
+                                          size: 20,
+                                        ),
+                                        color: Colors.grey[400],
+                                        padding: EdgeInsets.zero,
+                                        constraints: const BoxConstraints(),
                                       ),
-                                      color: Colors.grey[400],
-                                      padding: EdgeInsets.zero,
-                                      constraints: const BoxConstraints(),
-                                    ),
-                                  ],
-                                ),
-                              ],
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   );

@@ -9,6 +9,8 @@ import '../providers/cart_provider.dart';
 import '../models/product.dart';
 import '../widgets/custom_back_button.dart';
 
+enum _ReviewSortMode { all, recent, oldest }
+
 class ProductDetailsScreen extends StatefulWidget {
   final Map<String, dynamic> product;
 
@@ -26,6 +28,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   final TextEditingController _reviewController = TextEditingController();
   int _reviewRating = 5;
   bool _isSubmittingReview = false;
+  int? _reviewFilterRating;
+  _ReviewSortMode _reviewSortMode = _ReviewSortMode.all;
 
   String _cartId() => _wishlistId();
 
@@ -129,8 +133,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             'name': name,
             'rating': _reviewRating,
             'review': reviewText,
-            'likes': 0,
-            'dislikes': 0,
             'createdAt': FieldValue.serverTimestamp(),
           });
 
@@ -383,47 +385,32 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                 _buildRatingSummary(),
                                 const SizedBox(height: 24),
 
-                                // Tabs
-                                _buildReviewTabs(),
+                                _buildReviewFilters(),
                                 const SizedBox(height: 16),
 
-                                // Reviews List
-                                _buildReviewItem(
-                                  'Alex Johnson',
-                                  'Oct 24, 2023',
-                                  'The build quality on this laptop is insane. Best purchase for my dev workflow. The keyboard travel is perfect for long coding sessions and the screen color accuracy is professional grade.',
-                                  5,
-                                  124,
-                                  2,
-                                ),
-                                const SizedBox(height: 12),
-                                _buildReviewItem(
-                                  'Sarah Chen',
-                                  'Oct 15, 2023',
-                                  'Stunning display and the battery life actually lasts all day. Highly recommend! The OLED panel makes creative work a joy. Shipping was also faster than expected.',
-                                  5,
-                                  89,
-                                  0,
-                                ),
-                                const SizedBox(height: 12),
-                                _buildReviewItem(
-                                  'Michael Ross',
-                                  'Oct 08, 2023',
-                                  'Great performance, though it runs a bit hot under heavy loads. Overall, a solid machine for the price point.',
-                                  4,
-                                  42,
-                                  1,
-                                ),
-                                const SizedBox(height: 12),
                                 StreamBuilder<
                                   QuerySnapshot<Map<String, dynamic>>
                                 >(
-                                  stream: FirebaseFirestore.instance
-                                      .collection('products')
-                                      .doc(_productDocId())
-                                      .collection('reviews')
-                                      .orderBy('createdAt', descending: true)
-                                      .snapshots(),
+                                  stream: (() {
+                                    final base = FirebaseFirestore.instance
+                                        .collection('products')
+                                        .doc(_productDocId())
+                                        .collection('reviews');
+                                    final filtered = _reviewFilterRating == null
+                                        ? base
+                                        : base.where(
+                                            'rating',
+                                            isEqualTo: _reviewFilterRating,
+                                          );
+                                    return filtered
+                                        .orderBy(
+                                          'createdAt',
+                                          descending:
+                                              _reviewSortMode !=
+                                              _ReviewSortMode.oldest,
+                                        )
+                                        .snapshots();
+                                  })(),
                                   builder: (context, snapshot) {
                                     if (snapshot.connectionState ==
                                         ConnectionState.waiting) {
@@ -434,38 +421,77 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                     }
                                     final docs =
                                         snapshot.data?.docs ?? const [];
-                                    if (docs.isEmpty) {
-                                      return const SizedBox.shrink();
+                                    final entries = <Map<String, dynamic>>[
+                                      for (final d in docs)
+                                        <String, dynamic>{
+                                          'name':
+                                              (d.data()['name'] ?? 'Anonymous')
+                                                  .toString(),
+                                          'createdAt': (() {
+                                            final ts = d.data()['createdAt'];
+                                            if (ts is Timestamp) {
+                                              return ts.toDate();
+                                            }
+                                            return DateTime.fromMillisecondsSinceEpoch(
+                                              0,
+                                            );
+                                          })(),
+                                          'review': (d.data()['review'] ?? '')
+                                              .toString(),
+                                          'rating': (d.data()['rating'] is num)
+                                              ? (d.data()['rating'] as num)
+                                                    .toInt()
+                                              : 0,
+                                        },
+                                      ..._staticReviewEntries(),
+                                    ];
+
+                                    final filteredEntries =
+                                        _reviewFilterRating == null
+                                        ? entries
+                                        : entries
+                                              .where(
+                                                (e) =>
+                                                    e['rating'] ==
+                                                    _reviewFilterRating,
+                                              )
+                                              .toList();
+
+                                    filteredEntries.sort((a, b) {
+                                      final da = a['createdAt'] as DateTime;
+                                      final db = b['createdAt'] as DateTime;
+                                      if (_reviewSortMode ==
+                                          _ReviewSortMode.oldest) {
+                                        return da.compareTo(db);
+                                      }
+                                      return db.compareTo(da);
+                                    });
+
+                                    if (filteredEntries.isEmpty) {
+                                      return Center(
+                                        child: Text(
+                                          'Result Not Found',
+                                          style: GoogleFonts.inter(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.grey[400],
+                                          ),
+                                        ),
+                                      );
                                     }
+
                                     return Column(
                                       children: [
-                                        for (final d in docs) ...[
+                                        for (final e in filteredEntries) ...[
                                           _buildReviewItem(
-                                            (d.data()['name'] ?? 'Anonymous')
+                                            (e['name'] ?? 'Anonymous')
                                                 .toString(),
                                             _formatReviewDate(
-                                              (() {
-                                                final ts = d
-                                                    .data()['createdAt'];
-                                                if (ts is Timestamp) {
-                                                  return ts.toDate();
-                                                }
-                                                return DateTime.now();
-                                              })(),
+                                              e['createdAt'] as DateTime,
                                             ),
-                                            (d.data()['review'] ?? '')
-                                                .toString(),
-                                            (d.data()['rating'] is num)
-                                                ? (d.data()['rating'] as num)
-                                                      .toInt()
-                                                : 0,
-                                            (d.data()['likes'] is num)
-                                                ? (d.data()['likes'] as num)
-                                                      .toInt()
-                                                : 0,
-                                            (d.data()['dislikes'] is num)
-                                                ? (d.data()['dislikes'] as num)
-                                                      .toInt()
+                                            (e['review'] ?? '').toString(),
+                                            (e['rating'] is num)
+                                                ? (e['rating'] as num).toInt()
                                                 : 0,
                                           ),
                                           const SizedBox(height: 12),
@@ -955,59 +981,176 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     );
   }
 
-  Widget _buildReviewTabs() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Row(
-          children: [
-            _buildTabItem('All', true),
-            const SizedBox(width: 24),
-            _buildTabItem('With Photos', false),
-            const SizedBox(width: 24),
-            _buildTabItem('Most Recent', false),
+  Widget _buildReviewFilters() {
+    return SizedBox(
+      height: 40,
+      child: ListView(
+        scrollDirection: Axis.horizontal,
+        children: [
+          _buildSortFilterChip(
+            'All',
+            isActive: _reviewSortMode == _ReviewSortMode.all,
+            onTap: () {
+              setState(() {
+                _reviewSortMode = _ReviewSortMode.all;
+                _reviewFilterRating = null;
+              });
+            },
+          ),
+          const SizedBox(width: 12),
+          _buildSortFilterChip(
+            'Recent',
+            isActive: _reviewSortMode == _ReviewSortMode.recent,
+            onTap: () {
+              setState(() {
+                _reviewSortMode = _ReviewSortMode.recent;
+              });
+            },
+          ),
+          const SizedBox(width: 12),
+          _buildSortFilterChip(
+            'Oldest',
+            isActive: _reviewSortMode == _ReviewSortMode.oldest,
+            onTap: () {
+              setState(() {
+                _reviewSortMode = _ReviewSortMode.oldest;
+              });
+            },
+          ),
+          const SizedBox(width: 12),
+          for (final rating in [5, 4, 3, 2, 1]) ...[
+            _buildRatingFilterChip(rating),
+            const SizedBox(width: 12),
           ],
-        ),
-        IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.filter_list, size: 20, color: Colors.grey),
-          padding: EdgeInsets.zero,
-          constraints: const BoxConstraints(),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
-  Widget _buildTabItem(String label, bool isActive) {
-    return Container(
-      padding: const EdgeInsets.only(bottom: 8),
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            color: isActive ? AppColors.slate900 : Colors.transparent,
-            width: 2,
+  Widget _buildSortFilterChip(
+    String label, {
+    required bool isActive,
+    required VoidCallback onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+        decoration: BoxDecoration(
+          color: isActive ? AppColors.slate900 : AppColors.slate50,
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: AppColors.slate100),
+        ),
+        child: Text(
+          label,
+          style: GoogleFonts.inter(
+            fontSize: 12,
+            fontWeight: FontWeight.bold,
+            color: isActive ? Colors.white : AppColors.slate900,
           ),
         ),
       ),
-      child: Text(
-        label,
-        style: GoogleFonts.inter(
-          fontSize: 14,
-          fontWeight: isActive ? FontWeight.bold : FontWeight.w500,
-          color: isActive ? AppColors.slate900 : Colors.grey[400],
+    );
+  }
+
+  Widget _buildRatingFilterChip(int rating) {
+    final isActive = _reviewFilterRating == rating;
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          _reviewFilterRating = isActive ? null : rating;
+        });
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+        decoration: BoxDecoration(
+          color: isActive ? AppColors.slate900 : AppColors.slate50,
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: AppColors.slate100),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              '$rating',
+              style: GoogleFonts.inter(
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+                color: isActive ? Colors.white : AppColors.slate900,
+              ),
+            ),
+            const SizedBox(width: 6),
+            Icon(
+              Icons.star,
+              size: 16,
+              color: isActive ? Colors.white : Colors.black,
+            ),
+          ],
         ),
       ),
     );
   }
 
-  Widget _buildReviewItem(
-    String name,
-    String date,
-    String review,
-    int rating,
-    int likes,
-    int dislikes,
-  ) {
+  DateTime _parseReviewDate(String value) {
+    final months = <String, int>{
+      'Jan': 1,
+      'Feb': 2,
+      'Mar': 3,
+      'Apr': 4,
+      'May': 5,
+      'Jun': 6,
+      'Jul': 7,
+      'Aug': 8,
+      'Sep': 9,
+      'Oct': 10,
+      'Nov': 11,
+      'Dec': 12,
+    };
+    final parts = value.split(RegExp(r'\s+'));
+    if (parts.length < 3) return DateTime.fromMillisecondsSinceEpoch(0);
+    final month = months[parts[0]] ?? 1;
+    final day = int.tryParse(parts[1].replaceAll(',', '')) ?? 1;
+    final year = int.tryParse(parts[2]) ?? 1970;
+    return DateTime(year, month, day);
+  }
+
+  List<Map<String, dynamic>> _staticReviewEntries() {
+    final reviews = [
+      {
+        'name': 'Alex Johnson',
+        'date': 'Oct 24, 2023',
+        'review':
+            'The build quality on this laptop is insane. Best purchase for my dev workflow. The keyboard travel is perfect for long coding sessions and the screen color accuracy is professional grade.',
+        'rating': 5,
+      },
+      {
+        'name': 'Sarah Chen',
+        'date': 'Oct 15, 2023',
+        'review':
+            'Stunning display and the battery life actually lasts all day. Highly recommend! The OLED panel makes creative work a joy. Shipping was also faster than expected.',
+        'rating': 5,
+      },
+      {
+        'name': 'Michael Ross',
+        'date': 'Oct 08, 2023',
+        'review':
+            'Great performance, though it runs a bit hot under heavy loads. Overall, a solid machine for the price point.',
+        'rating': 4,
+      },
+    ];
+
+    return [
+      for (final r in reviews)
+        <String, dynamic>{
+          'name': r['name'],
+          'createdAt': _parseReviewDate(r['date'] as String),
+          'review': r['review'],
+          'rating': r['rating'],
+        },
+    ];
+  }
+
+  Widget _buildReviewItem(String name, String date, String review, int rating) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -1092,38 +1235,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               height: 1.5,
               fontWeight: FontWeight.w500,
             ),
-          ),
-          const SizedBox(height: 16),
-          Row(
-            children: [
-              Icon(Icons.thumb_up_outlined, size: 18, color: Colors.grey[500]),
-              const SizedBox(width: 6),
-              Text(
-                '$likes',
-                style: GoogleFonts.inter(
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey[500],
-                ),
-              ),
-              const SizedBox(width: 16),
-              Icon(
-                Icons.thumb_down_outlined,
-                size: 18,
-                color: Colors.grey[500],
-              ),
-              if (dislikes > 0) ...[
-                const SizedBox(width: 6),
-                Text(
-                  '$dislikes',
-                  style: GoogleFonts.inter(
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.grey[500],
-                  ),
-                ),
-              ],
-            ],
           ),
         ],
       ),
