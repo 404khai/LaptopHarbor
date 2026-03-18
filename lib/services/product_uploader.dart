@@ -1,11 +1,12 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ProductUploader {
   static Future<void> uploadProductsToFirestore() async {
     try {
-      print('Starting product upload...');
+      debugPrint('Starting product upload...');
 
       final String jsonString = await rootBundle.loadString('assets/data/products.json');
       final Map<String, dynamic> jsonData = json.decode(jsonString);
@@ -15,7 +16,7 @@ class ProductUploader {
       }
       final List<dynamic> products = productsRaw;
 
-      print('Loaded ${products.length} products from JSON.');
+      debugPrint('Loaded ${products.length} products from JSON.');
 
       final FirebaseFirestore firestore = FirebaseFirestore.instance;
       final CollectionReference productsCollection = firestore.collection('products');
@@ -33,17 +34,19 @@ class ProductUploader {
           final String docId = (product['id'] ?? '').toString();
           if (docId.isEmpty) continue;
           final DocumentReference docRef = productsCollection.doc(docId);
-          batch.set(docRef, Map<String, dynamic>.from(product as Map));
+          batch.set(docRef, Map<String, dynamic>.from(product));
         }
 
         await batch.commit();
         totalUploaded += chunk.length;
-        print('Progress: $totalUploaded / ${products.length} products uploaded.');
+        debugPrint(
+          'Progress: $totalUploaded / ${products.length} products uploaded.',
+        );
       }
 
-      print('Upload complete! Successfully uploaded $totalUploaded products.');
+      debugPrint('Upload complete! Successfully uploaded $totalUploaded products.');
     } catch (e) {
-      print('Error uploading products: $e');
+      debugPrint('Error uploading products: $e');
       rethrow;
     }
   }

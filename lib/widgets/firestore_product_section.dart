@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../screens/product_details_screen.dart';
+import '../screens/search_screen.dart';
 import '../theme/app_theme.dart';
 
 class FirestoreProductSection extends StatelessWidget {
@@ -39,23 +40,33 @@ class FirestoreProductSection extends StatelessWidget {
                   color: AppColors.slate900,
                 ),
               ),
-              Row(
-                children: [
-                  Text(
-                    'See more',
-                    style: GoogleFonts.inter(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.primary,
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SearchScreen(initialQuery: title),
                     ),
-                  ),
-                  const SizedBox(width: 4),
-                  const Icon(
-                    Icons.chevron_right_rounded,
-                    color: AppColors.primary,
-                    size: 20,
-                  ),
-                ],
+                  );
+                },
+                child: Row(
+                  children: [
+                    Text(
+                      'See more',
+                      style: GoogleFonts.inter(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.primary,
+                      ),
+                    ),
+                    const SizedBox(width: 4),
+                    const Icon(
+                      Icons.chevron_right_rounded,
+                      color: AppColors.primary,
+                      size: 20,
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
