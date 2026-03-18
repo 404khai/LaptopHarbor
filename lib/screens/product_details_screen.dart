@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../theme/app_theme.dart';
@@ -21,6 +23,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   final PageController _pageController = PageController();
 
   late List<String> _images;
+  final TextEditingController _reviewController = TextEditingController();
+  int _reviewRating = 5;
+  bool _isSubmittingReview = false;
 
   String _cartId() => _wishlistId();
 
@@ -38,6 +43,118 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         .replaceAll(RegExp(r'[^a-z0-9]+'), '_')
         .replaceAll(RegExp(r'_+'), '_')
         .replaceAll(RegExp(r'^_+|_+$'), '');
+  }
+
+  String _productDocId() {
+    final raw = (widget.product['id'] ?? '').toString().trim();
+    if (raw.isNotEmpty) return raw;
+    return _wishlistId();
+  }
+
+  String _formatReviewDate(DateTime dt) {
+    const months = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ];
+    final m = months[(dt.month - 1).clamp(0, 11)];
+    return '$m ${dt.day}, ${dt.year}';
+  }
+
+  Future<String> _resolveReviewerName(User user) async {
+    final displayName = (user.displayName ?? '').trim();
+    if (displayName.isNotEmpty) return displayName;
+
+    final doc = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid)
+        .get();
+    final data = doc.data();
+    if (data == null) return 'Anonymous';
+
+    final first = (data['firstName'] ?? data['firstname'] ?? '')
+        .toString()
+        .trim();
+    final last = (data['lastName'] ?? data['lastname'] ?? '').toString().trim();
+    final full = '$first $last'.trim();
+    if (full.isNotEmpty) return full;
+
+    final name = (data['name'] ?? '').toString().trim();
+    if (name.isNotEmpty) return name;
+
+    return 'Anonymous';
+  }
+
+  Future<void> _submitReview() async {
+    if (_isSubmittingReview) return;
+
+    final reviewText = _reviewController.text.trim();
+    if (reviewText.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please write a review first.')),
+      );
+      return;
+    }
+
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please sign in to submit a review.')),
+      );
+      return;
+    }
+
+    setState(() {
+      _isSubmittingReview = true;
+    });
+
+    try {
+      final name = await _resolveReviewerName(user);
+      final productId = _productDocId();
+      await FirebaseFirestore.instance
+          .collection('products')
+          .doc(productId)
+          .collection('reviews')
+          .add(<String, dynamic>{
+            'userId': user.uid,
+            'name': name,
+            'rating': _reviewRating,
+            'review': reviewText,
+            'likes': 0,
+            'dislikes': 0,
+            'createdAt': FieldValue.serverTimestamp(),
+          });
+
+      if (!mounted) return;
+      setState(() {
+        _reviewController.clear();
+        _reviewRating = 5;
+      });
+      FocusScope.of(context).unfocus();
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Review submitted.')));
+    } catch (_) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Failed to submit review.')));
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isSubmittingReview = false;
+        });
+      }
+    }
   }
 
   Product _toCartProduct() {
@@ -141,6 +258,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
   @override
   void dispose() {
+    _reviewController.dispose();
     _pageController.dispose();
     super.dispose();
   }
@@ -295,6 +413,66 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                   4,
                                   42,
                                   1,
+                                ),
+                                const SizedBox(height: 12),
+                                StreamBuilder<
+                                  QuerySnapshot<Map<String, dynamic>>
+                                >(
+                                  stream: FirebaseFirestore.instance
+                                      .collection('products')
+                                      .doc(_productDocId())
+                                      .collection('reviews')
+                                      .orderBy('createdAt', descending: true)
+                                      .snapshots(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return const SizedBox.shrink();
+                                    }
+                                    if (snapshot.hasError) {
+                                      return const SizedBox.shrink();
+                                    }
+                                    final docs =
+                                        snapshot.data?.docs ?? const [];
+                                    if (docs.isEmpty) {
+                                      return const SizedBox.shrink();
+                                    }
+                                    return Column(
+                                      children: [
+                                        for (final d in docs) ...[
+                                          _buildReviewItem(
+                                            (d.data()['name'] ?? 'Anonymous')
+                                                .toString(),
+                                            _formatReviewDate(
+                                              (() {
+                                                final ts = d
+                                                    .data()['createdAt'];
+                                                if (ts is Timestamp) {
+                                                  return ts.toDate();
+                                                }
+                                                return DateTime.now();
+                                              })(),
+                                            ),
+                                            (d.data()['review'] ?? '')
+                                                .toString(),
+                                            (d.data()['rating'] is num)
+                                                ? (d.data()['rating'] as num)
+                                                      .toInt()
+                                                : 0,
+                                            (d.data()['likes'] is num)
+                                                ? (d.data()['likes'] as num)
+                                                      .toInt()
+                                                : 0,
+                                            (d.data()['dislikes'] is num)
+                                                ? (d.data()['dislikes'] as num)
+                                                      .toInt()
+                                                : 0,
+                                          ),
+                                          const SizedBox(height: 12),
+                                        ],
+                                      ],
+                                    );
+                                  },
                                 ),
                               ],
                             ),
@@ -1041,11 +1219,20 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               children: List.generate(
                 5,
                 (index) => IconButton(
-                  onPressed: () {}, // Make interactive if needed
-                  icon: const Icon(Icons.star_rounded, size: 32),
-                  color: index < 4
+                  onPressed: () {
+                    setState(() {
+                      _reviewRating = index + 1;
+                    });
+                  },
+                  icon: Icon(
+                    index < _reviewRating
+                        ? Icons.star_rounded
+                        : Icons.star_border_rounded,
+                    size: 32,
+                  ),
+                  color: index < _reviewRating
                       ? const Color(0xFFFFC107)
-                      : Colors.grey[300], // Yellow stars
+                      : Colors.grey[300],
                   padding: EdgeInsets.zero,
                   constraints: const BoxConstraints(),
                   style: IconButton.styleFrom(
@@ -1056,7 +1243,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             ),
             const SizedBox(width: 12),
             Text(
-              '4.0',
+              _reviewRating.toDouble().toStringAsFixed(1),
               style: GoogleFonts.inter(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -1083,6 +1270,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             borderRadius: BorderRadius.circular(12),
           ),
           child: TextField(
+            controller: _reviewController,
             maxLines: 6,
             decoration: InputDecoration(
               hintText: 'Share your thoughts about this laptop...',
@@ -1103,7 +1291,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           width: double.infinity,
           height: 56,
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: _isSubmittingReview ? null : _submitReview,
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.primary,
               foregroundColor: AppColors.slate900,
