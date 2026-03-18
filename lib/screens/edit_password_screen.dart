@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../theme/app_theme.dart';
 import '../widgets/custom_back_button.dart';
@@ -15,6 +16,8 @@ class _EditPasswordScreenState extends State<EditPasswordScreen> {
   late TextEditingController _newPasswordController;
   late TextEditingController _confirmPasswordController;
   bool _isNewPasswordVisible = false;
+  bool _isUpdating = false;
+  int _strengthScore = 0;
 
   @override
   void initState() {
@@ -22,14 +25,145 @@ class _EditPasswordScreenState extends State<EditPasswordScreen> {
     _currentPasswordController = TextEditingController();
     _newPasswordController = TextEditingController();
     _confirmPasswordController = TextEditingController();
+    _newPasswordController.addListener(_recomputeStrength);
   }
 
   @override
   void dispose() {
+    _newPasswordController.removeListener(_recomputeStrength);
     _currentPasswordController.dispose();
     _newPasswordController.dispose();
     _confirmPasswordController.dispose();
     super.dispose();
+  }
+
+  void _recomputeStrength() {
+    final value = _newPasswordController.text;
+    final hasMinLength = value.length >= 6;
+    final hasUppercase = RegExp(r'[A-Z]').hasMatch(value);
+    final hasNumber = RegExp(r'\d').hasMatch(value);
+    final hasSymbol = RegExp(r'[^A-Za-z0-9]').hasMatch(value);
+
+    final next =
+        (hasMinLength ? 1 : 0) +
+        (hasUppercase ? 1 : 0) +
+        (hasNumber ? 1 : 0) +
+        (hasSymbol ? 1 : 0);
+    if (next == _strengthScore) return;
+    setState(() {
+      _strengthScore = next;
+    });
+  }
+
+  Future<void> _updatePassword() async {
+    if (_isUpdating) return;
+    final currentPassword = _currentPasswordController.text;
+    final newPassword = _newPasswordController.text;
+    final confirmPassword = _confirmPasswordController.text;
+
+    if (currentPassword.trim().isEmpty ||
+        newPassword.trim().isEmpty ||
+        confirmPassword.trim().isEmpty) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Please fill all fields.')));
+      return;
+    }
+
+    if (newPassword != confirmPassword) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Passwords do not match.')));
+      return;
+    }
+
+    if (_strengthScore < 4) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'Password must be at least 6 characters and include an uppercase letter, a number, and a symbol.',
+          ),
+        ),
+      );
+      return;
+    }
+
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please sign in to change your password.'),
+        ),
+      );
+      return;
+    }
+
+    final email = user.email;
+    if (email == null || email.trim().isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('This account cannot change password.')),
+      );
+      return;
+    }
+
+    setState(() {
+      _isUpdating = true;
+    });
+
+    try {
+      final credential = EmailAuthProvider.credential(
+        email: email,
+        password: currentPassword,
+      );
+      await user.reauthenticateWithCredential(credential);
+      await user.updatePassword(newPassword);
+
+      if (!mounted) return;
+      _currentPasswordController.clear();
+      _newPasswordController.clear();
+      _confirmPasswordController.clear();
+      setState(() {
+        _strengthScore = 0;
+      });
+      FocusScope.of(context).unfocus();
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Password updated.')));
+      Navigator.pop(context);
+    } on FirebaseAuthException catch (e) {
+      if (!mounted) return;
+      final message = switch (e.code) {
+        'wrong-password' => 'Current password is incorrect.',
+        'invalid-credential' => 'Current password is incorrect.',
+        'requires-recent-login' =>
+          'Please sign in again and retry changing your password.',
+        _ => 'Failed to update password.',
+      };
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(message)));
+    } catch (_) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Failed to update password.')),
+      );
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isUpdating = false;
+        });
+      }
+    }
+  }
+
+  String _strengthLabel() {
+    if (_strengthScore >= 4) return 'STRONG';
+    if (_strengthScore >= 2) return 'MEDIUM';
+    return 'WEAK';
+  }
+
+  double _strengthProgress() {
+    return (_strengthScore / 4).clamp(0.0, 1.0);
   }
 
   @override
@@ -67,10 +201,12 @@ class _EditPasswordScreenState extends State<EditPasswordScreen> {
                       child: Image.asset(
                         'images/logo.jpg',
                         fit: BoxFit.contain,
-                        errorBuilder: (context, error, stackTrace) =>
-                            Container(
+                        errorBuilder: (context, error, stackTrace) => Container(
                           color: AppColors.primary,
-                          child: const Icon(Icons.computer, color: Colors.black),
+                          child: const Icon(
+                            Icons.computer,
+                            color: Colors.black,
+                          ),
                         ),
                       ),
                     ),
@@ -130,7 +266,7 @@ class _EditPasswordScreenState extends State<EditPasswordScreen> {
                         ),
                       ),
                       Text(
-                        'STRONG',
+                        _strengthLabel(),
                         style: GoogleFonts.inter(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
@@ -149,7 +285,7 @@ class _EditPasswordScreenState extends State<EditPasswordScreen> {
                     ),
                     child: FractionallySizedBox(
                       alignment: Alignment.centerLeft,
-                      widthFactor: 0.85,
+                      widthFactor: _strengthProgress(),
                       child: Container(
                         decoration: BoxDecoration(
                           color: AppColors.primary,
@@ -168,7 +304,11 @@ class _EditPasswordScreenState extends State<EditPasswordScreen> {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        'Strong password',
+                        _strengthLabel().toLowerCase() == 'strong'
+                            ? 'Strong password'
+                            : _strengthLabel().toLowerCase() == 'medium'
+                            ? 'Good password'
+                            : 'Weak password',
                         style: GoogleFonts.inter(
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
@@ -195,9 +335,7 @@ class _EditPasswordScreenState extends State<EditPasswordScreen> {
                 width: double.infinity,
                 height: 56,
                 child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
+                  onPressed: _isUpdating ? null : _updatePassword,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primary,
                     foregroundColor: AppColors.slate900,
@@ -208,7 +346,7 @@ class _EditPasswordScreenState extends State<EditPasswordScreen> {
                     ),
                   ),
                   child: Text(
-                    'UPDATE PASSWORD',
+                    _isUpdating ? 'UPDATING...' : 'UPDATE PASSWORD',
                     style: GoogleFonts.inter(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -240,7 +378,7 @@ class _EditPasswordScreenState extends State<EditPasswordScreen> {
                     const SizedBox(width: 16),
                     Expanded(
                       child: Text(
-                        'Make sure your password is at least 12 characters long and contains a mix of letters, numbers, and symbols for maximum security on LaptopHarbor.',
+                        'Make sure your password is at least 6 characters long and contains a mix of letters, numbers, and symbols for maximum security on LaptopHarbor.',
                         style: GoogleFonts.inter(
                           fontSize: 12,
                           color: Colors.grey[600],
@@ -322,18 +460,11 @@ class _EditPasswordScreenState extends State<EditPasswordScreen> {
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: const BorderSide(
-                color: AppColors.primary,
-                width: 2,
-              ),
+              borderSide: const BorderSide(color: AppColors.primary, width: 2),
             ),
             suffixIcon: GestureDetector(
               onTap: onIconTap,
-              child: Icon(
-                icon,
-                color: Colors.grey[400],
-                size: 24,
-              ),
+              child: Icon(icon, color: Colors.grey[400], size: 24),
             ),
           ),
         ),
