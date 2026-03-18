@@ -1,28 +1,49 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'dart:math';
 import '../screens/product_details_screen.dart';
 import '../screens/search_screen.dart';
+import '../providers/wishlist_provider.dart';
 import '../theme/app_theme.dart';
 
-class FirestoreProductSection extends StatelessWidget {
+class FirestoreProductSection extends StatefulWidget {
   final String title;
   final String category;
   final int limit;
+  final bool randomize;
+  final int randomizePoolSize;
 
   const FirestoreProductSection({
     super.key,
     required this.title,
     required this.category,
     this.limit = 6,
+    this.randomize = false,
+    this.randomizePoolSize = 25,
   });
+
+  @override
+  State<FirestoreProductSection> createState() =>
+      _FirestoreProductSectionState();
+}
+
+class _FirestoreProductSectionState extends State<FirestoreProductSection> {
+  late final int _randomSeed;
+
+  @override
+  void initState() {
+    super.initState();
+    _randomSeed = DateTime.now().microsecondsSinceEpoch;
+  }
 
   @override
   Widget build(BuildContext context) {
     final query = FirebaseFirestore.instance
         .collection('products')
-        .where('category', isEqualTo: category)
-        .limit(limit);
+        .where('category', isEqualTo: widget.category)
+        .limit(widget.randomize ? widget.randomizePoolSize : widget.limit);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,7 +54,7 @@ class FirestoreProductSection extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                title,
+                widget.title,
                 style: GoogleFonts.inter(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -45,7 +66,8 @@ class FirestoreProductSection extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => SearchScreen(initialQuery: title),
+                      builder: (context) =>
+                          SearchScreen(initialQuery: widget.title),
                     ),
                   );
                 },
@@ -83,10 +105,15 @@ class FirestoreProductSection extends StatelessWidget {
                 return Center(child: Text(snapshot.error.toString()));
               }
 
-              final docs = snapshot.data?.docs ?? const [];
+              final docs = snapshot.data?.docs.toList() ?? const [];
               if (docs.isEmpty) {
-                return Center(child: Text('No $title found'));
+                return Center(child: Text('No ${widget.title} found'));
               }
+
+              if (widget.randomize && docs.isNotEmpty) {
+                docs.shuffle(Random(_randomSeed));
+              }
+              final shownDocs = docs.take(widget.limit).toList();
 
               return GridView.builder(
                 shrinkWrap: true,
@@ -97,12 +124,12 @@ class FirestoreProductSection extends StatelessWidget {
                   mainAxisSpacing: 16,
                   childAspectRatio: 0.70,
                 ),
-                itemCount: docs.length,
+                itemCount: shownDocs.length,
                 itemBuilder: (context, index) {
-                  final data = docs[index].data();
+                  final data = shownDocs[index].data();
                   final product = <String, dynamic>{
                     ...data,
-                    'id': docs[index].id,
+                    'id': shownDocs[index].id,
                   };
                   return _ProductCard(product: product);
                 },
@@ -120,6 +147,22 @@ class _ProductCard extends StatelessWidget {
   final Map<String, dynamic> product;
 
   const _ProductCard({required this.product});
+
+  String _wishlistId() {
+    final raw = (product['id'] ?? '').toString().trim();
+    if (raw.isNotEmpty) return raw;
+
+    final brand = (product['brand'] ?? '').toString().trim();
+    final model = (product['model'] ?? '').toString().trim();
+    final title = (product['title'] ?? '').toString().trim();
+    final base = title.isNotEmpty ? title : '$brand $model'.trim();
+
+    return base
+        .toLowerCase()
+        .replaceAll(RegExp(r'[^a-z0-9]+'), '_')
+        .replaceAll(RegExp(r'_+'), '_')
+        .replaceAll(RegExp(r'^_+|_+$'), '');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -147,6 +190,9 @@ class _ProductCard extends StatelessWidget {
     final model = (product['model'] ?? '').toString();
 
     final priceRaw = product['price'];
+    final wishlist = context.watch<WishlistProvider>();
+    final isWishlisted = wishlist.containsId(_wishlistId());
+
     final price = priceRaw is num
         ? priceRaw.toDouble()
         : double.tryParse('$priceRaw') ?? 0.0;
@@ -217,10 +263,19 @@ class _ProductCard extends StatelessWidget {
                           ),
                         ],
                       ),
-                      child: const Icon(
-                        Icons.favorite_border_rounded,
-                        size: 16,
-                        color: AppColors.slate900,
+                      child: GestureDetector(
+                        onTap: () {
+                          context.read<WishlistProvider>().toggleFromProduct(
+                            product,
+                          );
+                        },
+                        child: Icon(
+                          isWishlisted
+                              ? Icons.favorite_rounded
+                              : Icons.favorite_border_rounded,
+                          size: 16,
+                          color: isWishlisted ? Colors.red : AppColors.slate900,
+                        ),
                       ),
                     ),
                   ),
