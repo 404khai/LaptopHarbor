@@ -84,4 +84,12 @@ class CartProvider with ChangeNotifier {
       return total + (price * quantity);
     });
   }
+
+  int get totalQuantity {
+    return _cartItems.fold(0, (total, item) {
+      final quantity = (item['quantity'] ?? 0);
+      if (quantity is num) return total + quantity.toInt();
+      return total;
+    });
+  }
 }
