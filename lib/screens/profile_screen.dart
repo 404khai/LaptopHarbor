@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart' hide AuthProvider;
 import 'package:google_fonts/google_fonts.dart';
 import 'package:laptop_harbor/screens/saved_addresses_screen.dart';
 import 'package:provider/provider.dart';
@@ -18,18 +19,56 @@ import 'login_screen.dart';
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
+  String _nameFromEmail(String email) {
+    final trimmed = email.trim();
+    final atIndex = trimmed.indexOf('@');
+    final localPart = (atIndex > 0) ? trimmed.substring(0, atIndex) : trimmed;
+    if (localPart.isEmpty) return 'User';
+    return localPart;
+  }
+
+  String _effectiveDisplayName({
+    required User? user,
+    required Map<String, dynamic>? profile,
+  }) {
+    if (user == null) return 'Guest';
+
+    final profileDisplayName = (profile?['displayName'] as String?)?.trim();
+    if (profileDisplayName != null && profileDisplayName.isNotEmpty) {
+      return profileDisplayName;
+    }
+
+    final authDisplayName = user.displayName?.trim();
+    if (authDisplayName != null && authDisplayName.isNotEmpty) {
+      return authDisplayName;
+    }
+
+    final firstName = (profile?['firstName'] as String?)?.trim();
+    final lastName = (profile?['lastName'] as String?)?.trim();
+    final combined = [firstName, lastName]
+        .whereType<String>()
+        .map((p) => p.trim())
+        .where((p) => p.isNotEmpty)
+        .join(' ')
+        .trim();
+    if (combined.isNotEmpty) return combined;
+
+    final email = (profile?['email'] as String?)?.trim() ?? user.email?.trim();
+    if (email != null && email.isNotEmpty) return _nameFromEmail(email);
+
+    return 'User';
+  }
+
   @override
   Widget build(BuildContext context) {
     final authProvider = context.watch<AuthProvider>();
     final user = authProvider.user;
     final profile = authProvider.userProfile;
 
-    final profileDisplayName = (profile?['displayName'] as String?)?.trim();
-    final displayName =
-        (profileDisplayName != null && profileDisplayName.isNotEmpty)
-        ? profileDisplayName
-        : (user?.displayName ?? 'Guest');
+    final displayName = _effectiveDisplayName(user: user, profile: profile);
     final email = (profile?['email'] as String?) ?? user?.email ?? '';
+    final photoUrl =
+        (profile?['photoUrl'] as String?)?.trim() ?? user?.photoURL?.trim();
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -81,16 +120,29 @@ class ProfileScreen extends StatelessWidget {
                               ),
                               color: Colors.grey[100],
                             ),
-                            child: user == null
-                                ? const Icon(
-                                    Icons.person,
-                                    size: 48,
-                                    color: Colors.grey,
+                            child: (photoUrl != null && photoUrl.isNotEmpty)
+                                ? ClipOval(
+                                    child: Image.network(
+                                      photoUrl,
+                                      fit: BoxFit.cover,
+                                      errorBuilder:
+                                          (context, error, stackTrace) {
+                                            return const Center(
+                                              child: Icon(
+                                                Icons.person,
+                                                size: 48,
+                                                color: AppColors.slate900,
+                                              ),
+                                            );
+                                          },
+                                    ),
                                   )
-                                : const Icon(
+                                : Icon(
                                     Icons.person,
                                     size: 48,
-                                    color: AppColors.slate900,
+                                    color: user == null
+                                        ? Colors.grey
+                                        : AppColors.slate900,
                                   ),
                           ),
                           Positioned(
