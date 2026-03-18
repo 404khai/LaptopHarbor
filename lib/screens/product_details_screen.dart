@@ -128,13 +128,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           .collection('products')
           .doc(productId)
           .collection('reviews')
-          .add(<String, dynamic>{
+          .doc(user.uid)
+          .set(<String, dynamic>{
             'userId': user.uid,
             'name': name,
             'rating': _reviewRating,
             'review': reviewText,
             'createdAt': FieldValue.serverTimestamp(),
-          });
+          }, SetOptions(merge: true));
 
       if (!mounted) return;
       setState(() {
@@ -396,13 +397,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                         .collection('products')
                                         .doc(_productDocId())
                                         .collection('reviews');
-                                    final filtered = _reviewFilterRating == null
-                                        ? base
-                                        : base.where(
-                                            'rating',
-                                            isEqualTo: _reviewFilterRating,
-                                          );
-                                    return filtered
+                                    return base
                                         .orderBy(
                                           'createdAt',
                                           descending:
@@ -1059,6 +1054,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       onTap: () {
         setState(() {
           _reviewFilterRating = isActive ? null : rating;
+          if (_reviewFilterRating != null &&
+              _reviewSortMode == _ReviewSortMode.all) {
+            _reviewSortMode = _ReviewSortMode.recent;
+          }
         });
       },
       child: Container(
