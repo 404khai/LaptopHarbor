@@ -18,7 +18,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
-  String? _homeError;
   List<Map<String, String>> _brandLogos = [];
   int _selectedCategoryIndex = 0;
   static const List<String> _homeCategoryChips = [
@@ -63,10 +62,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _loadHomeData() async {
-    setState(() {
-      _homeError = null;
-    });
-
     try {
       final service = TechSpecsService();
       final brandLogos = await service.getBrandLogos();
@@ -76,10 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
         _brandLogos = brandLogos;
       });
     } catch (e) {
-      if (!mounted) return;
-      setState(() {
-        _homeError = e.toString();
-      });
+      return;
     }
   }
 
@@ -133,18 +125,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    if (_homeError != null)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Text(
-                          _homeError!,
-                          style: GoogleFonts.inter(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.red,
-                          ),
-                        ),
-                      ),
                     // Categories
                     SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
