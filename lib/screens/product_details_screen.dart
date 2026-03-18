@@ -4,7 +4,7 @@ import '../theme/app_theme.dart';
 import '../widgets/custom_back_button.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
-  final Map<String, String> product;
+  final Map<String, dynamic> product;
 
   const ProductDetailsScreen({super.key, required this.product});
 
@@ -16,18 +16,48 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   int _currentImageIndex = 0;
   final PageController _pageController = PageController();
 
-  // Mock data for the carousel
   late List<String> _images;
 
   @override
   void initState() {
     super.initState();
-    // Use the passed image as the first one, then some placeholders
-    _images = [
-      widget.product['image'] ?? '',
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuDsthGanYxq2AJ8ayWnpK1mmjIYilOh5OW0IqilkQJa23NmfXMItt9Pj0hlIi-fh05vNo4gZoqhpcutqGpqrI5hLjf73j8zLaSOhXidugCnLg2HhRHkwin70YJkIdTPzittCNln5B4U96FLAwW1d2StkDxvXF6maBat_U67zLQukQwLNBFcpDmxnX7N5IqROOZtW9pBI1ajJ_XnInFlbJvJc0BPwHJG2nTbfbi-GYbtyYp1iGcBd1dRZTRWMJf6H_8BkbwTb2Lcx_i-',
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuCL5ADRq3ucuZIBKrCdVF1rMqEpWskswcAH1yAwoJlO5YcG4WoeNMVWu-_xaPSjvhg0M-5pXqXrPZibvBtM_a5d8D51iRVrKdo5_BACG5G36FEAszryh51VAJPLSKAptcwEIXY2nXaHEE_NZ6nPAmXyEm68lqm3g8b_lfbEe4bGSiDFXm9HUBpeR4NBy1rb4ktZxxE3oYCj7INcjMxg5OkORrstcB6TwCIokhsAqqFc_ZZSnamOuoMv4W_UpkXldtBQPo4lzTDCnlyi',
-    ];
+    final dynamic rawUrls =
+        widget.product['imageUrls'] ?? widget.product['images'];
+    final urls = <String>[];
+
+    if (rawUrls is List) {
+      for (final item in rawUrls) {
+        if (item is String && item.trim().isNotEmpty) {
+          urls.add(item.trim());
+        } else if (item != null) {
+          final asString = item.toString().trim();
+          if (asString.isNotEmpty && asString != 'null') {
+            urls.add(asString);
+          }
+        }
+      }
+    }
+
+    final fallbackImage =
+        (widget.product['image'] ??
+                widget.product['imageUrl'] ??
+                widget.product['image_url'] ??
+                '')
+            .toString()
+            .trim();
+    if (urls.isEmpty && fallbackImage.isNotEmpty) {
+      urls.add(fallbackImage);
+    }
+
+    final deduped = <String>[];
+    for (final url in urls) {
+      if (!deduped.contains(url)) deduped.add(url);
+    }
+
+    while (deduped.length < 4 && deduped.isNotEmpty) {
+      deduped.add(deduped.first);
+    }
+    _images = deduped.take(4).toList();
   }
 
   @override
@@ -62,8 +92,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         children: [
                           // Title & Price
                           Text(
-                            widget.product['title'] ??
-                                'Quantum Pro X15 - Ultra Performance Laptop',
+                            (widget.product['title'] ??
+                                    'Quantum Pro X15 - Ultra Performance Laptop')
+                                .toString(),
                             style: GoogleFonts.inter(
                               fontSize: 22,
                               fontWeight: FontWeight.bold,
@@ -73,7 +104,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            widget.product['price'] ?? '\$2,499.00',
+                            (widget.product['price'] ?? '\$2,499.00')
+                                .toString(),
                             style: GoogleFonts.inter(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
@@ -775,7 +807,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8),
                   child: Image.network(
-                    widget.product['image'] ?? '',
+                    _images.isNotEmpty ? _images.first : '',
                     fit: BoxFit.cover,
                     errorBuilder: (context, error, stackTrace) =>
                         const Icon(Icons.image, color: Colors.grey),
@@ -798,7 +830,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      widget.product['title'] ?? '',
+                      (widget.product['title'] ?? '').toString(),
                       style: GoogleFonts.inter(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,

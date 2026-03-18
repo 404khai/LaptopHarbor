@@ -1,0 +1,1089 @@
+{
+  "products": [
+    {
+      "id": "laptop_apple_macbook_neo",
+      "brand": "Apple",
+      "model": "Macbook Neo",
+      "imageUrl": "https://www.apple.com/v/macbook-neo/a/images/overview/product-stories/new-to-mac/ntm_hero_endframe__4u6qzi7yehe6_large.jpg",
+      "imageUrls": [
+        "https://www.apple.com/v/macbook-neo/a/images/overview/product-stories/new-to-mac/ntm_hero_endframe__4u6qzi7yehe6_large.jpg",
+        "https://9to5mac.com/wp-content/uploads/sites/6/2026/03/macbook-neo-2.webp?w=1600",
+        "https://www.apple.com/newsroom/images/2026/03/say-hello-to-macbook-neo/article/Apple-MacBook-Neo-citrus-260304_big.jpg.large.jpg",
+        "https://media.wired.com/photos/69accd0ec61ab22ac1bc4d8a/master/w_1600%2Cc_limit/MacBook-neo-03(1).png"
+      ],
+      "price": 1262.0,
+      "originalPrice": 1609.0,
+      "description": "High quality laptop from Apple. Perfect for daily use and professional tasks.",
+      "category": "Laptop",
+      "rating": 4.8,
+      "reviewCount": 108,
+      "inStock": true,
+      "stock": 26,
+      "specifications": {
+        "cpu": "Ryzen 7",
+        "ram": "16GB",
+        "storage": "1TB SSD",
+        "gpu": "NVIDIA RTX 3050",
+        "display": "16 inch",
+        "battery": "8 hours",
+        "weight": "2.3 kg"
+      }
+    },
+    {
+      "id": "laptop_dell_xps_15",
+      "brand": "Dell",
+      "model": "XPS 15",
+      "imageUrl": "https://latalata.ng/image/cache/catalog/Product%20images/Kaybec/laptop/20--700x700.jpg",
+      "imageUrls": [
+        "https://latalata.ng/image/cache/catalog/Product%20images/Kaybec/laptop/20--700x700.jpg",
+        "https://latalata.ng/image/cache/catalog/Product%20images/Kaybec/laptop/20--700x700.jpg",
+        "https://latalata.ng/image/cache/catalog/Product%20images/Kaybec/laptop/20--700x700.jpg",
+        "https://latalata.ng/image/cache/catalog/Product%20images/Kaybec/laptop/20--700x700.jpg"
+      ],
+      "price": 1565.0,
+      "originalPrice": null,
+      "description": "High quality laptop from Dell. Perfect for daily use and professional tasks.",
+      "category": "Laptop",
+      "rating": 4.2,
+      "reviewCount": 29,
+      "inStock": true,
+      "stock": 19,
+      "specifications": {
+        "cpu": "Intel i5",
+        "ram": "32GB",
+        "storage": "1TB SSD",
+        "gpu": "NVIDIA RTX 3060",
+        "display": "16 inch",
+        "battery": "8 hours",
+        "weight": "1.9 kg"
+      }
+    },
+    {
+      "id": "laptop_hp_spectre_x360",
+      "brand": "HP",
+      "model": "Spectre x360",
+      "imageUrl": "https://media.wired.com/photos/59e94f9234ce5c0e0a752e11/master/w_1600%2Cc_limit/SphinxInline.jpg",
+      "imageUrls": [
+        "https://media.wired.com/photos/59e94f9234ce5c0e0a752e11/master/w_1600%2Cc_limit/SphinxInline.jpg",
+        "https://media.wired.com/photos/59e94f9234ce5c0e0a752e11/master/w_1600%2Cc_limit/SphinxInline.jpg",
+        "https://media.wired.com/photos/59e94f9234ce5c0e0a752e11/master/w_1600%2Cc_limit/SphinxInline.jpg",
+        "https://media.wired.com/photos/59e94f9234ce5c0e0a752e11/master/w_1600%2Cc_limit/SphinxInline.jpg"
+      ],
+      "price": 1200.0,
+      "originalPrice": null,
+      "description": "High quality laptop from HP. Perfect for daily use and professional tasks.",
+      "category": "Laptop",
+      "rating": 3.6,
+      "reviewCount": 256,
+      "inStock": true,
+      "stock": 12,
+      "specifications": {
+        "cpu": "Intel i5",
+        "ram": "32GB",
+        "storage": "256GB SSD",
+        "gpu": "AMD Radeon",
+        "display": "16 inch",
+        "battery": "11 hours",
+        "weight": "1.4 kg"
+      }
+    },
+    {
+      "id": "laptop_hp_omen_max_16",
+      "brand": "HP",
+      "model": "Omen Max 16",
+      "imageUrl": "https://pcplaceng.com/laxgts/2025/10/image-2025-10-13T104359.962.webp",
+      "imageUrls": [
+        "https://pcplaceng.com/laxgts/2025/10/image-2025-10-13T104359.962.webp",
+        "https://pcplaceng.com/laxgts/2025/10/image-2025-10-13T104359.962.webp",
+        "https://pcplaceng.com/laxgts/2025/10/image-2025-10-13T104359.962.webp",
+        "https://pcplaceng.com/laxgts/2025/10/image-2025-10-13T104359.962.webp"
+      ],
+      "price": 2051.0,
+      "originalPrice": null,
+      "description": "High quality laptop from HP. Perfect for daily use and professional tasks.",
+      "category": "Laptop",
+      "rating": 4.3,
+      "reviewCount": 363,
+      "inStock": true,
+      "stock": 42,
+      "specifications": {
+        "cpu": "M1",
+        "ram": "16GB",
+        "storage": "1TB SSD",
+        "gpu": "NVIDIA RTX 3050",
+        "display": "16 inch",
+        "battery": "10 hours",
+        "weight": "2.2 kg"
+      }
+    },
+    {
+      "id": "laptop_lenovo_thinkpad_x1_carbon",
+      "brand": "Lenovo",
+      "model": "ThinkPad X1 Carbon",
+      "imageUrl": "https://pacific.com.ng/wp-content/uploads/2022/09/Lenovo-thinkpad-x1-carbon.webp",
+      "imageUrls": [
+        "https://pacific.com.ng/wp-content/uploads/2022/09/Lenovo-thinkpad-x1-carbon.webp",
+        "https://pacific.com.ng/wp-content/uploads/2022/09/Lenovo-thinkpad-x1-carbon.webp",
+        "https://pacific.com.ng/wp-content/uploads/2022/09/Lenovo-thinkpad-x1-carbon.webp",
+        "https://pacific.com.ng/wp-content/uploads/2022/09/Lenovo-thinkpad-x1-carbon.webp"
+      ],
+      "price": 1693.0,
+      "originalPrice": null,
+      "description": "High quality laptop from Lenovo. Perfect for daily use and professional tasks.",
+      "category": "Laptop",
+      "rating": 3.9,
+      "reviewCount": 362,
+      "inStock": true,
+      "stock": 30,
+      "specifications": {
+        "cpu": "Intel i7",
+        "ram": "8GB",
+        "storage": "256GB SSD",
+        "gpu": "NVIDIA RTX 3060",
+        "display": "15.6 inch",
+        "battery": "10 hours",
+        "weight": "2.2 kg"
+      }
+    },
+    {
+      "id": "laptop_lenovo_yoga_9i",
+      "brand": "Lenovo",
+      "model": "Yoga 9i",
+      "imageUrl": "https://i5.walmartimages.com/asr/11a72c12-a798-4029-98a5-2bd8dd25837b.fae5315625c1a8f68a67a61eb40a73e5.jpeg?odnHeight=768&odnWidth=768&odnBg=FFFFFF",
+      "imageUrls": [
+        "https://i5.walmartimages.com/asr/11a72c12-a798-4029-98a5-2bd8dd25837b.fae5315625c1a8f68a67a61eb40a73e5.jpeg?odnHeight=768&odnWidth=768&odnBg=FFFFFF",
+        "https://i5.walmartimages.com/asr/11a72c12-a798-4029-98a5-2bd8dd25837b.fae5315625c1a8f68a67a61eb40a73e5.jpeg?odnHeight=768&odnWidth=768&odnBg=FFFFFF",
+        "https://i5.walmartimages.com/asr/11a72c12-a798-4029-98a5-2bd8dd25837b.fae5315625c1a8f68a67a61eb40a73e5.jpeg?odnHeight=768&odnWidth=768&odnBg=FFFFFF",
+        "https://i5.walmartimages.com/asr/11a72c12-a798-4029-98a5-2bd8dd25837b.fae5315625c1a8f68a67a61eb40a73e5.jpeg?odnHeight=768&odnWidth=768&odnBg=FFFFFF"
+      ],
+      "price": 2100.0,
+      "originalPrice": null,
+      "description": "High quality laptop from Lenovo. Perfect for daily use and professional tasks.",
+      "category": "Laptop",
+      "rating": 3.9,
+      "reviewCount": 342,
+      "inStock": true,
+      "stock": 92,
+      "specifications": {
+        "cpu": "Ryzen 7",
+        "ram": "16GB",
+        "storage": "1TB SSD",
+        "gpu": "NVIDIA RTX 3050",
+        "display": "15.6 inch",
+        "battery": "13 hours",
+        "weight": "2.5 kg"
+      }
+    },
+    {
+      "id": "laptop_apple_macbook_air_m2",
+      "brand": "Apple",
+      "model": "MacBook Air M2",
+      "imageUrl": "https://http2.mlstatic.com/D_NQ_NP_829649-MLA99482022282_112025-O.webp",
+      "imageUrls": [
+        "https://http2.mlstatic.com/D_NQ_NP_829649-MLA99482022282_112025-O.webp",
+        "https://http2.mlstatic.com/D_NQ_NP_829649-MLA99482022282_112025-O.webp",
+        "https://http2.mlstatic.com/D_NQ_NP_829649-MLA99482022282_112025-O.webp",
+        "https://http2.mlstatic.com/D_NQ_NP_829649-MLA99482022282_112025-O.webp"
+      ],
+      "price": 2354.0,
+      "originalPrice": null,
+      "description": "High quality laptop from Apple. Perfect for daily use and professional tasks.",
+      "category": "Laptop",
+      "rating": 3.5,
+      "reviewCount": 360,
+      "inStock": true,
+      "stock": 28,
+      "specifications": {
+        "cpu": "M1",
+        "ram": "8GB",
+        "storage": "256GB SSD",
+        "gpu": "NVIDIA RTX 3050",
+        "display": "13.3 inch",
+        "battery": "14 hours",
+        "weight": "1.5 kg"
+      }
+    },
+    {
+      "id": "laptop_apple_macbook_m4_pro",
+      "brand": "Apple",
+      "model": "MacBook M4 Pro",
+      "imageUrl": "https://i.ebayimg.com/images/g/0Z4AAeSwDKNppUln/s-l1600.webp",
+      "imageUrls": [
+        "https://i.ebayimg.com/images/g/0Z4AAeSwDKNppUln/s-l1600.webp",
+        "https://i.ebayimg.com/images/g/0Z4AAeSwDKNppUln/s-l1600.webp",
+        "https://i.ebayimg.com/images/g/0Z4AAeSwDKNppUln/s-l1600.webp",
+        "https://i.ebayimg.com/images/g/0Z4AAeSwDKNppUln/s-l1600.webp"
+      ],
+      "price": 1945.0,
+      "originalPrice": null,
+      "description": "High quality laptop from Apple. Perfect for daily use and professional tasks.",
+      "category": "Laptop",
+      "rating": 4.4,
+      "reviewCount": 322,
+      "inStock": true,
+      "stock": 62,
+      "specifications": {
+        "cpu": "M1",
+        "ram": "16GB",
+        "storage": "1TB SSD",
+        "gpu": "AMD Radeon",
+        "display": "16 inch",
+        "battery": "8 hours",
+        "weight": "1.5 kg"
+      }
+    },
+    {
+      "id": "laptop_apple_macbook_pro_16",
+      "brand": "Apple",
+      "model": "MacBook Pro 16",
+      "imageUrl": "https://images.unsplash.com/photo-1517336714731-489689fd1ca4?auto=format&fit=crop&w=800&q=80",
+      "imageUrls": [
+        "https://images.unsplash.com/photo-1517336714731-489689fd1ca4?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1517336714731-489689fd1ca4?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1517336714731-489689fd1ca4?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1517336714731-489689fd1ca4?auto=format&fit=crop&w=800&q=80"
+      ],
+      "price": 2256.0,
+      "originalPrice": null,
+      "description": "High quality laptop from Apple. Perfect for daily use and professional tasks.",
+      "category": "Laptop",
+      "rating": 3.8,
+      "reviewCount": 151,
+      "inStock": true,
+      "stock": 92,
+      "specifications": {
+        "cpu": "Ryzen 7",
+        "ram": "8GB",
+        "storage": "512GB SSD",
+        "gpu": "NVIDIA RTX 3050",
+        "display": "14 inch",
+        "battery": "13 hours",
+        "weight": "1.7 kg"
+      }
+    },
+    {
+      "id": "laptop_asus_zenbook_14",
+      "brand": "Asus",
+      "model": "ZenBook 14",
+      "imageUrl": "https://m.media-amazon.com/images/I/51YleVEDxlL.jpg",
+      "imageUrls": [
+        "https://m.media-amazon.com/images/I/51YleVEDxlL.jpg",
+        "https://m.media-amazon.com/images/I/51YleVEDxlL.jpg",
+        "https://m.media-amazon.com/images/I/51YleVEDxlL.jpg",
+        "https://m.media-amazon.com/images/I/51YleVEDxlL.jpg"
+      ],
+      "price": 2339.0,
+      "originalPrice": null,
+      "description": "High quality laptop from Asus. Perfect for daily use and professional tasks.",
+      "category": "Laptop",
+      "rating": 4.3,
+      "reviewCount": 478,
+      "inStock": true,
+      "stock": 35,
+      "specifications": {
+        "cpu": "M2",
+        "ram": "32GB",
+        "storage": "256GB SSD",
+        "gpu": "NVIDIA RTX 3060",
+        "display": "13.3 inch",
+        "battery": "9 hours",
+        "weight": "1.9 kg"
+      }
+    },
+    {
+      "id": "laptop_asus_rog_zephyrus_g14",
+      "brand": "Asus",
+      "model": "ROG Zephyrus G14",
+      "imageUrl": "https://www.myfixguide.com/wp-content/uploads/2024/02/ASUS-ROG-Zephyrus-G14-2024-4.png",
+      "imageUrls": [
+        "https://www.myfixguide.com/wp-content/uploads/2024/02/ASUS-ROG-Zephyrus-G14-2024-4.png",
+        "https://www.myfixguide.com/wp-content/uploads/2024/02/ASUS-ROG-Zephyrus-G14-2024-4.png",
+        "https://www.myfixguide.com/wp-content/uploads/2024/02/ASUS-ROG-Zephyrus-G14-2024-4.png",
+        "https://www.myfixguide.com/wp-content/uploads/2024/02/ASUS-ROG-Zephyrus-G14-2024-4.png"
+      ],
+      "price": 2265.0,
+      "originalPrice": null,
+      "description": "High quality laptop from Asus. Perfect for daily use and professional tasks.",
+      "category": "Laptop",
+      "rating": 3.7,
+      "reviewCount": 322,
+      "inStock": true,
+      "stock": 76,
+      "specifications": {
+        "cpu": "M1",
+        "ram": "8GB",
+        "storage": "1TB SSD",
+        "gpu": "NVIDIA RTX 3050",
+        "display": "15.6 inch",
+        "battery": "13 hours",
+        "weight": "1.8 kg"
+      }
+    },
+    {
+      "id": "laptop_razer_blade_16",
+      "brand": "Razer",
+      "model": "Blade 16",
+      "imageUrl": "https://cdn.mos.cms.futurecdn.net/DECuWxUeCCUtSqgWrHTkkH.jpg",
+      "imageUrls": [
+        "https://cdn.mos.cms.futurecdn.net/DECuWxUeCCUtSqgWrHTkkH.jpg",
+        "https://cdn.mos.cms.futurecdn.net/DECuWxUeCCUtSqgWrHTkkH.jpg",
+        "https://cdn.mos.cms.futurecdn.net/DECuWxUeCCUtSqgWrHTkkH.jpg",
+        "https://cdn.mos.cms.futurecdn.net/DECuWxUeCCUtSqgWrHTkkH.jpg"
+      ],
+      "price": 1313.0,
+      "originalPrice": null,
+      "description": "High quality laptop from Razer. Perfect for daily use and professional tasks.",
+      "category": "Laptop",
+      "rating": 3.8,
+      "reviewCount": 356,
+      "inStock": true,
+      "stock": 46,
+      "specifications": {
+        "cpu": "Intel i7",
+        "ram": "32GB",
+        "storage": "256GB SSD",
+        "gpu": "Intel Iris",
+        "display": "14 inch",
+        "battery": "15 hours",
+        "weight": "1.6 kg"
+      }
+    },
+    {
+      "id": "laptop_dell_alienware_m16_r2",
+      "brand": "Dell",
+      "model": "Alienware M16 R2",
+      "imageUrl": "https://cdn.mos.cms.futurecdn.net/ht4C4qRVGg5NnwQm3WLsrK.jpg",
+      "imageUrls": [
+        "https://cdn.mos.cms.futurecdn.net/ht4C4qRVGg5NnwQm3WLsrK.jpg",
+        "https://cdn.mos.cms.futurecdn.net/ht4C4qRVGg5NnwQm3WLsrK.jpg",
+        "https://cdn.mos.cms.futurecdn.net/ht4C4qRVGg5NnwQm3WLsrK.jpg",
+        "https://cdn.mos.cms.futurecdn.net/ht4C4qRVGg5NnwQm3WLsrK.jpg"
+      ],
+      "price": 987.0,
+      "originalPrice": null,
+      "description": "High quality laptop from Dell. Perfect for daily use and professional tasks.",
+      "category": "Laptop",
+      "rating": 3.5,
+      "reviewCount": 163,
+      "inStock": true,
+      "stock": 88,
+      "specifications": {
+        "cpu": "M1",
+        "ram": "32GB",
+        "storage": "256GB SSD",
+        "gpu": "NVIDIA RTX 3050",
+        "display": "16 inch",
+        "battery": "11 hours",
+        "weight": "1.9 kg"
+      }
+    },
+    {
+      "id": "laptop_acer_predator_helios_16",
+      "brand": "Acer",
+      "model": "Predator Helios 16",
+      "imageUrl": "https://microless.com/cdn/products/4679201588f65ddb18a82503b988e760-hi.jpg",
+      "imageUrls": [
+        "https://microless.com/cdn/products/4679201588f65ddb18a82503b988e760-hi.jpg",
+        "https://microless.com/cdn/products/4679201588f65ddb18a82503b988e760-hi.jpg",
+        "https://microless.com/cdn/products/4679201588f65ddb18a82503b988e760-hi.jpg",
+        "https://microless.com/cdn/products/4679201588f65ddb18a82503b988e760-hi.jpg"
+      ],
+      "price": 1557.0,
+      "originalPrice": null,
+      "description": "High quality laptop from Acer. Perfect for daily use and professional tasks.",
+      "category": "Laptop",
+      "rating": 4.8,
+      "reviewCount": 243,
+      "inStock": true,
+      "stock": 79,
+      "specifications": {
+        "cpu": "Ryzen 7",
+        "ram": "32GB",
+        "storage": "1TB SSD",
+        "gpu": "NVIDIA RTX 3050",
+        "display": "16 inch",
+        "battery": "8 hours",
+        "weight": "1.8 kg"
+      }
+    },
+    {
+      "id": "laptop_msi_stealth_15m",
+      "brand": "MSI",
+      "model": "Stealth 15M",
+      "imageUrl": "https://storage-asset.msi.com/global/picture/product/product_1647299935ac38d9de46efa12c710a7e56c5da2a60.webp",
+      "imageUrls": [
+        "https://storage-asset.msi.com/global/picture/product/product_1647299935ac38d9de46efa12c710a7e56c5da2a60.webp",
+        "https://storage-asset.msi.com/global/picture/product/product_1647299935ac38d9de46efa12c710a7e56c5da2a60.webp",
+        "https://storage-asset.msi.com/global/picture/product/product_1647299935ac38d9de46efa12c710a7e56c5da2a60.webp",
+        "https://storage-asset.msi.com/global/picture/product/product_1647299935ac38d9de46efa12c710a7e56c5da2a60.webp"
+      ],
+      "price": 2402.0,
+      "originalPrice": null,
+      "description": "High quality laptop from MSI. Perfect for daily use and professional tasks.",
+      "category": "Laptop",
+      "rating": 4.4,
+      "reviewCount": 433,
+      "inStock": true,
+      "stock": 88,
+      "specifications": {
+        "cpu": "Intel i7",
+        "ram": "8GB",
+        "storage": "1TB SSD",
+        "gpu": "NVIDIA RTX 3050",
+        "display": "16 inch",
+        "battery": "10 hours",
+        "weight": "1.8 kg"
+      }
+    },
+    {
+      "id": "mouse_logitech_mx_master_3s",
+      "brand": "Logitech",
+      "model": "MX Master 3S",
+      "imageUrl": "https://resource.logitech.com/c_fill,q_auto,f_auto,dpr_1.0/d_transparent.gif/content/dam/logitech/en/products/mice/mx-master-3s/migration-assets-for-delorean-2025/gallery/mx-master-3s-top-view-graphite.png",
+      "imageUrls": [
+        "https://resource.logitech.com/c_fill,q_auto,f_auto,dpr_1.0/d_transparent.gif/content/dam/logitech/en/products/mice/mx-master-3s/migration-assets-for-delorean-2025/gallery/mx-master-3s-top-view-graphite.png",
+        "https://resource.logitech.com/c_fill,q_auto,f_auto,dpr_1.0/d_transparent.gif/content/dam/logitech/en/products/mice/mx-master-3s/migration-assets-for-delorean-2025/gallery/mx-master-3s-top-view-graphite.png",
+        "https://resource.logitech.com/c_fill,q_auto,f_auto,dpr_1.0/d_transparent.gif/content/dam/logitech/en/products/mice/mx-master-3s/migration-assets-for-delorean-2025/gallery/mx-master-3s-top-view-graphite.png",
+        "https://resource.logitech.com/c_fill,q_auto,f_auto,dpr_1.0/d_transparent.gif/content/dam/logitech/en/products/mice/mx-master-3s/migration-assets-for-delorean-2025/gallery/mx-master-3s-top-view-graphite.png"
+      ],
+      "price": 136.0,
+      "originalPrice": 162.0,
+      "description": "High quality mouse from Logitech. Perfect for daily use and professional tasks.",
+      "category": "Mouse",
+      "rating": 4.1,
+      "reviewCount": 386,
+      "inStock": true,
+      "stock": 10,
+      "specifications": {
+        "connectivity": "Bluetooth",
+        "dpi": 3784,
+        "battery": "8 months",
+        "weight": "86 g"
+      }
+    },
+    {
+      "id": "mouse_logitech_g502_hero",
+      "brand": "Logitech",
+      "model": "G502 Hero",
+      "imageUrl": "https://ng.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/33/0548852/1.jpg?8470",
+      "imageUrls": [
+        "https://ng.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/33/0548852/1.jpg?8470",
+        "https://ng.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/33/0548852/1.jpg?8470",
+        "https://ng.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/33/0548852/1.jpg?8470",
+        "https://ng.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/33/0548852/1.jpg?8470"
+      ],
+      "price": 104.0,
+      "originalPrice": null,
+      "description": "High quality mouse from Logitech. Perfect for daily use and professional tasks.",
+      "category": "Mouse",
+      "rating": 3.8,
+      "reviewCount": 472,
+      "inStock": true,
+      "stock": 34,
+      "specifications": {
+        "connectivity": "Wired",
+        "dpi": 14829,
+        "battery": "10 months",
+        "weight": "102 g"
+      }
+    },
+    {
+      "id": "mouse_razer_deathadder_v3",
+      "brand": "Razer",
+      "model": "DeathAdder V3",
+      "imageUrl": "https://www.pbtech.com/pacific/imgprod/M/S/MSERAZ87084__1.jpg",
+      "imageUrls": [
+        "https://www.pbtech.com/pacific/imgprod/M/S/MSERAZ87084__1.jpg",
+        "https://www.pbtech.com/pacific/imgprod/M/S/MSERAZ87084__1.jpg",
+        "https://www.pbtech.com/pacific/imgprod/M/S/MSERAZ87084__1.jpg",
+        "https://www.pbtech.com/pacific/imgprod/M/S/MSERAZ87084__1.jpg"
+      ],
+      "price": 55.0,
+      "originalPrice": null,
+      "description": "High quality mouse from Razer. Perfect for daily use and professional tasks.",
+      "category": "Mouse",
+      "rating": 3.7,
+      "reviewCount": 492,
+      "inStock": true,
+      "stock": 91,
+      "specifications": {
+        "connectivity": "Wired",
+        "dpi": 8574,
+        "battery": "8 months",
+        "weight": "115 g"
+      }
+    },
+    {
+      "id": "mouse_razer_basilisk_v3",
+      "brand": "Razer",
+      "model": "Basilisk V3",
+      "imageUrl": "https://i.rtings.com/assets/products/HlSiCAs0/razer-basilisk-v3/design-medium.jpg?format=auto",
+      "imageUrls": [
+        "https://i.rtings.com/assets/products/HlSiCAs0/razer-basilisk-v3/design-medium.jpg?format=auto",
+        "https://i.rtings.com/assets/products/HlSiCAs0/razer-basilisk-v3/design-medium.jpg?format=auto",
+        "https://i.rtings.com/assets/products/HlSiCAs0/razer-basilisk-v3/design-medium.jpg?format=auto",
+        "https://i.rtings.com/assets/products/HlSiCAs0/razer-basilisk-v3/design-medium.jpg?format=auto"
+      ],
+      "price": 121.0,
+      "originalPrice": 139.0,
+      "description": "High quality mouse from Razer. Perfect for daily use and professional tasks.",
+      "category": "Mouse",
+      "rating": 4.3,
+      "reviewCount": 168,
+      "inStock": true,
+      "stock": 96,
+      "specifications": {
+        "connectivity": "Wireless USB",
+        "dpi": 12604,
+        "battery": "7 months",
+        "weight": "74 g"
+      }
+    },
+    {
+      "id": "mouse_corsair_dark_core_rgb",
+      "brand": "Corsair",
+      "model": "Dark Core RGB",
+      "imageUrl": "https://assets.corsair.com/image/upload/c_pad,q_auto,h_1024,w_1024,f_auto/products/Gaming-Mice/CH-9315311-NA/Gallery/DARK_CORE_RGB_SE_01.webp",
+      "imageUrls": [
+        "https://assets.corsair.com/image/upload/c_pad,q_auto,h_1024,w_1024,f_auto/products/Gaming-Mice/CH-9315311-NA/Gallery/DARK_CORE_RGB_SE_01.webp",
+        "https://assets.corsair.com/image/upload/c_pad,q_auto,h_1024,w_1024,f_auto/products/Gaming-Mice/CH-9315311-NA/Gallery/DARK_CORE_RGB_SE_01.webp",
+        "https://assets.corsair.com/image/upload/c_pad,q_auto,h_1024,w_1024,f_auto/products/Gaming-Mice/CH-9315311-NA/Gallery/DARK_CORE_RGB_SE_01.webp",
+        "https://assets.corsair.com/image/upload/c_pad,q_auto,h_1024,w_1024,f_auto/products/Gaming-Mice/CH-9315311-NA/Gallery/DARK_CORE_RGB_SE_01.webp"
+      ],
+      "price": 42.0,
+      "originalPrice": null,
+      "description": "High quality mouse from Corsair. Perfect for daily use and professional tasks.",
+      "category": "Mouse",
+      "rating": 4.2,
+      "reviewCount": 471,
+      "inStock": true,
+      "stock": 15,
+      "specifications": {
+        "connectivity": "Wired",
+        "dpi": 1176,
+        "battery": "9 months",
+        "weight": "72 g"
+      }
+    },
+    {
+      "id": "mouse_hyperx_pulsefire_haste",
+      "brand": "HyperX",
+      "model": "Pulsefire Haste",
+      "imageUrl": "https://row.hyperx.com/cdn/shop/files/hyperx_pulsefire_haste_wireless_black_1_top_down.jpg?v=1700189384",
+      "imageUrls": [
+        "https://row.hyperx.com/cdn/shop/files/hyperx_pulsefire_haste_wireless_black_1_top_down.jpg?v=1700189384",
+        "https://row.hyperx.com/cdn/shop/files/hyperx_pulsefire_haste_wireless_black_1_top_down.jpg?v=1700189384",
+        "https://row.hyperx.com/cdn/shop/files/hyperx_pulsefire_haste_wireless_black_1_top_down.jpg?v=1700189384",
+        "https://row.hyperx.com/cdn/shop/files/hyperx_pulsefire_haste_wireless_black_1_top_down.jpg?v=1700189384"
+      ],
+      "price": 122.0,
+      "originalPrice": null,
+      "description": "High quality mouse from HyperX. Perfect for daily use and professional tasks.",
+      "category": "Mouse",
+      "rating": 5.0,
+      "reviewCount": 239,
+      "inStock": true,
+      "stock": 40,
+      "specifications": {
+        "connectivity": "Bluetooth",
+        "dpi": 4931,
+        "battery": "6 months",
+        "weight": "106 g"
+      }
+    },
+    {
+      "id": "mouse_apple_magic_mouse_2",
+      "brand": "Apple",
+      "model": "Magic Mouse 2",
+      "imageUrl": "https://i.ebayimg.com/images/g/zLoAAOSwwclmbhXh/s-l1200.jpg",
+      "imageUrls": [
+        "https://i.ebayimg.com/images/g/zLoAAOSwwclmbhXh/s-l1200.jpg",
+        "https://i.ebayimg.com/images/g/zLoAAOSwwclmbhXh/s-l1200.jpg",
+        "https://i.ebayimg.com/images/g/zLoAAOSwwclmbhXh/s-l1200.jpg",
+        "https://i.ebayimg.com/images/g/zLoAAOSwwclmbhXh/s-l1200.jpg"
+      ],
+      "price": 59.0,
+      "originalPrice": null,
+      "description": "High quality mouse from Apple. Perfect for daily use and professional tasks.",
+      "category": "Mouse",
+      "rating": 3.9,
+      "reviewCount": 162,
+      "inStock": true,
+      "stock": 82,
+      "specifications": {
+        "connectivity": "Wireless USB",
+        "dpi": 7200,
+        "battery": "2 months",
+        "weight": "85 g"
+      }
+    },
+    {
+      "id": "mouse_razer_viper_ultimate",
+      "brand": "Razer",
+      "model": "Viper Ultimate",
+      "imageUrl": "https://m.media-amazon.com/images/I/61M2OwtouxL.jpg",
+      "imageUrls": [
+        "https://m.media-amazon.com/images/I/61M2OwtouxL.jpg",
+        "https://m.media-amazon.com/images/I/61M2OwtouxL.jpg",
+        "https://m.media-amazon.com/images/I/61M2OwtouxL.jpg",
+        "https://m.media-amazon.com/images/I/61M2OwtouxL.jpg"
+      ],
+      "price": 106.0,
+      "originalPrice": null,
+      "description": "High quality mouse from Razer. Perfect for daily use and professional tasks.",
+      "category": "Mouse",
+      "rating": 4.3,
+      "reviewCount": 184,
+      "inStock": true,
+      "stock": 85,
+      "specifications": {
+        "connectivity": "Wired",
+        "dpi": 2265,
+        "battery": "2 months",
+        "weight": "97 g"
+      }
+    },
+    {
+      "id": "keyboard_logitech_mx_keys",
+      "brand": "Logitech",
+      "model": "MX Keys",
+      "imageUrl": "https://media.stockinthechannel.com/pic/60qDoO-C3ka2PVvCRStM8A.c-r.jpg",
+      "imageUrls": [
+        "https://media.stockinthechannel.com/pic/60qDoO-C3ka2PVvCRStM8A.c-r.jpg",
+        "https://media.stockinthechannel.com/pic/60qDoO-C3ka2PVvCRStM8A.c-r.jpg",
+        "https://media.stockinthechannel.com/pic/60qDoO-C3ka2PVvCRStM8A.c-r.jpg",
+        "https://media.stockinthechannel.com/pic/60qDoO-C3ka2PVvCRStM8A.c-r.jpg"
+      ],
+      "price": 161.0,
+      "originalPrice": 191.0,
+      "description": "High quality keyboard from Logitech. Perfect for daily use and professional tasks.",
+      "category": "Keyboard",
+      "rating": 4.1,
+      "reviewCount": 336,
+      "inStock": true,
+      "stock": 22,
+      "specifications": {
+        "type": "Mechanical",
+        "switch": "Red",
+        "connectivity": "USB",
+        "backlight": "White"
+      }
+    },
+    {
+      "id": "keyboard_razer_blackwidow_v4",
+      "brand": "Razer",
+      "model": "BlackWidow V4",
+      "imageUrl": "https://m.media-amazon.com/images/I/815XJdl7fXL._AC_SL1500_.jpg",
+      "imageUrls": [
+        "https://m.media-amazon.com/images/I/815XJdl7fXL._AC_SL1500_.jpg",
+        "https://m.media-amazon.com/images/I/815XJdl7fXL._AC_SL1500_.jpg",
+        "https://m.media-amazon.com/images/I/815XJdl7fXL._AC_SL1500_.jpg",
+        "https://m.media-amazon.com/images/I/815XJdl7fXL._AC_SL1500_.jpg"
+      ],
+      "price": 200.0,
+      "originalPrice": null,
+      "description": "High quality keyboard from Razer. Perfect for daily use and professional tasks.",
+      "category": "Keyboard",
+      "rating": 4.1,
+      "reviewCount": 320,
+      "inStock": true,
+      "stock": 93,
+      "specifications": {
+        "type": "Mechanical",
+        "switch": "Blue",
+        "connectivity": "USB",
+        "backlight": "RGB"
+      }
+    },
+    {
+      "id": "keyboard_corsair_k95_rgb",
+      "brand": "Corsair",
+      "model": "K95 RGB",
+      "imageUrl": "https://www.devicedeal.com.au/assets/full/CH-9127412-NA.jpg?20210309045805",
+      "imageUrls": [
+        "https://www.devicedeal.com.au/assets/full/CH-9127412-NA.jpg?20210309045805",
+        "https://www.devicedeal.com.au/assets/full/CH-9127412-NA.jpg?20210309045805",
+        "https://www.devicedeal.com.au/assets/full/CH-9127412-NA.jpg?20210309045805",
+        "https://www.devicedeal.com.au/assets/full/CH-9127412-NA.jpg?20210309045805"
+      ],
+      "price": 171.0,
+      "originalPrice": null,
+      "description": "High quality keyboard from Corsair. Perfect for daily use and professional tasks.",
+      "category": "Keyboard",
+      "rating": 3.5,
+      "reviewCount": 424,
+      "inStock": true,
+      "stock": 35,
+      "specifications": {
+        "type": "Membrane",
+        "switch": "Red",
+        "connectivity": "USB",
+        "backlight": "White"
+      }
+    },
+    {
+      "id": "keyboard_hyperx_alloy_origins",
+      "brand": "HyperX",
+      "model": "Alloy Origins",
+      "imageUrl": "https://i5.walmartimages.com/seo/HyperX-4P5P3AA-Alloy-Origins-Core-Mechanical-Gaming-Keyboard_4df5779d-037f-4869-bc31-6bdf36aa8f0b.e1bdecb0a054a092f484de42ce2b4701.jpeg",
+      "imageUrls": [
+        "https://i5.walmartimages.com/seo/HyperX-4P5P3AA-Alloy-Origins-Core-Mechanical-Gaming-Keyboard_4df5779d-037f-4869-bc31-6bdf36aa8f0b.e1bdecb0a054a092f484de42ce2b4701.jpeg",
+        "https://i5.walmartimages.com/seo/HyperX-4P5P3AA-Alloy-Origins-Core-Mechanical-Gaming-Keyboard_4df5779d-037f-4869-bc31-6bdf36aa8f0b.e1bdecb0a054a092f484de42ce2b4701.jpeg",
+        "https://i5.walmartimages.com/seo/HyperX-4P5P3AA-Alloy-Origins-Core-Mechanical-Gaming-Keyboard_4df5779d-037f-4869-bc31-6bdf36aa8f0b.e1bdecb0a054a092f484de42ce2b4701.jpeg",
+        "https://i5.walmartimages.com/seo/HyperX-4P5P3AA-Alloy-Origins-Core-Mechanical-Gaming-Keyboard_4df5779d-037f-4869-bc31-6bdf36aa8f0b.e1bdecb0a054a092f484de42ce2b4701.jpeg"
+      ],
+      "price": 151.0,
+      "originalPrice": null,
+      "description": "High quality keyboard from HyperX. Perfect for daily use and professional tasks.",
+      "category": "Keyboard",
+      "rating": 5.0,
+      "reviewCount": 162,
+      "inStock": true,
+      "stock": 60,
+      "specifications": {
+        "type": "Mechanical",
+        "switch": "None",
+        "connectivity": "Wireless",
+        "backlight": "White"
+      }
+    },
+    {
+      "id": "keyboard_apple_magic_keyboard",
+      "brand": "Apple",
+      "model": "Magic Keyboard",
+      "imageUrl": "https://www.istore.com.ng/cdn/shop/products/mk293z_1200x.jpg?v=1642585074",
+      "imageUrls": [
+        "https://www.istore.com.ng/cdn/shop/products/mk293z_1200x.jpg?v=1642585074",
+        "https://www.istore.com.ng/cdn/shop/products/mk293z_1200x.jpg?v=1642585074",
+        "https://www.istore.com.ng/cdn/shop/products/mk293z_1200x.jpg?v=1642585074",
+        "https://www.istore.com.ng/cdn/shop/products/mk293z_1200x.jpg?v=1642585074"
+      ],
+      "price": 163.0,
+      "originalPrice": null,
+      "description": "High quality keyboard from Apple. Perfect for daily use and professional tasks.",
+      "category": "Keyboard",
+      "rating": 4.5,
+      "reviewCount": 185,
+      "inStock": true,
+      "stock": 6,
+      "specifications": {
+        "type": "Mechanical",
+        "switch": "Brown",
+        "connectivity": "Wireless",
+        "backlight": "None"
+      }
+    },
+    {
+      "id": "keyboard_razer_huntsman_mini",
+      "brand": "Razer",
+      "model": "Huntsman Mini",
+      "imageUrl": "https://i.pcmag.com/imagery/reviews/04WneWB1tIjQfk7lA9D6vu1-1.fit_lim.size_1050x.png",
+      "imageUrls": [
+        "https://i.pcmag.com/imagery/reviews/04WneWB1tIjQfk7lA9D6vu1-1.fit_lim.size_1050x.png",
+        "https://i.pcmag.com/imagery/reviews/04WneWB1tIjQfk7lA9D6vu1-1.fit_lim.size_1050x.png",
+        "https://i.pcmag.com/imagery/reviews/04WneWB1tIjQfk7lA9D6vu1-1.fit_lim.size_1050x.png",
+        "https://i.pcmag.com/imagery/reviews/04WneWB1tIjQfk7lA9D6vu1-1.fit_lim.size_1050x.png"
+      ],
+      "price": 100.0,
+      "originalPrice": null,
+      "description": "High quality keyboard from Razer. Perfect for daily use and professional tasks.",
+      "category": "Keyboard",
+      "rating": 3.9,
+      "reviewCount": 440,
+      "inStock": true,
+      "stock": 65,
+      "specifications": {
+        "type": "Mechanical",
+        "switch": "Brown",
+        "connectivity": "Wireless",
+        "backlight": "RGB"
+      }
+    },
+    {
+      "id": "laptop_bag_dell_premier_backpack",
+      "brand": "Dell",
+      "model": "Premier Backpack",
+      "imageUrl": "https://images-cdn.ubuy.co.in/65d04062b060511e3f2353aa-dell-pe-bp-15-20-15-in-premier-backpack.jpg",
+      "imageUrls": [
+        "https://images-cdn.ubuy.co.in/65d04062b060511e3f2353aa-dell-pe-bp-15-20-15-in-premier-backpack.jpg",
+        "https://images-cdn.ubuy.co.in/65d04062b060511e3f2353aa-dell-pe-bp-15-20-15-in-premier-backpack.jpg",
+        "https://images-cdn.ubuy.co.in/65d04062b060511e3f2353aa-dell-pe-bp-15-20-15-in-premier-backpack.jpg",
+        "https://images-cdn.ubuy.co.in/65d04062b060511e3f2353aa-dell-pe-bp-15-20-15-in-premier-backpack.jpg"
+      ],
+      "price": 57.0,
+      "originalPrice": null,
+      "description": "High quality laptop bag from Dell. Perfect for daily use and professional tasks.",
+      "category": "Laptop Bag",
+      "rating": 4.2,
+      "reviewCount": 201,
+      "inStock": true,
+      "stock": 79,
+      "specifications": {
+        "material": "Leather",
+        "capacity": "fits up to 15.6 inch laptop",
+        "waterResistant": false,
+        "weight": "0.6 kg"
+      }
+    },
+    {
+      "id": "laptop_bag_hp_executive_backpack",
+      "brand": "HP",
+      "model": "Executive Backpack",
+      "imageUrl": "https://hp.widen.net/content/jwmmoytuco/webp/jwmmoytuco.png?w=573&h=430&dpi=72&color=ffffff00",
+      "imageUrls": [
+        "https://hp.widen.net/content/jwmmoytuco/webp/jwmmoytuco.png?w=573&h=430&dpi=72&color=ffffff00",
+        "https://hp.widen.net/content/jwmmoytuco/webp/jwmmoytuco.png?w=573&h=430&dpi=72&color=ffffff00",
+        "https://hp.widen.net/content/jwmmoytuco/webp/jwmmoytuco.png?w=573&h=430&dpi=72&color=ffffff00",
+        "https://hp.widen.net/content/jwmmoytuco/webp/jwmmoytuco.png?w=573&h=430&dpi=72&color=ffffff00"
+      ],
+      "price": 34.0,
+      "originalPrice": 42.0,
+      "description": "High quality laptop bag from HP. Perfect for daily use and professional tasks.",
+      "category": "Laptop Bag",
+      "rating": 3.6,
+      "reviewCount": 392,
+      "inStock": true,
+      "stock": 83,
+      "specifications": {
+        "material": "Nylon",
+        "capacity": "fits up to 15.6 inch laptop",
+        "waterResistant": true,
+        "weight": "1.0 kg"
+      }
+    },
+    {
+      "id": "laptop_bag_lenovo_legion_backpack",
+      "brand": "Lenovo",
+      "model": "Legion Backpack",
+      "imageUrl": "https://i5.walmartimages.com/seo/Legion-15-6-Recon-Gaming-Backpack_6efa108a-a7bb-4f2f-a10d-1b2765e0cc75.5b217f5ac6b65f6cb958bb6269791095.jpeg",
+      "imageUrls": [
+        "https://i5.walmartimages.com/seo/Legion-15-6-Recon-Gaming-Backpack_6efa108a-a7bb-4f2f-a10d-1b2765e0cc75.5b217f5ac6b65f6cb958bb6269791095.jpeg",
+        "https://i5.walmartimages.com/seo/Legion-15-6-Recon-Gaming-Backpack_6efa108a-a7bb-4f2f-a10d-1b2765e0cc75.5b217f5ac6b65f6cb958bb6269791095.jpeg",
+        "https://i5.walmartimages.com/seo/Legion-15-6-Recon-Gaming-Backpack_6efa108a-a7bb-4f2f-a10d-1b2765e0cc75.5b217f5ac6b65f6cb958bb6269791095.jpeg",
+        "https://i5.walmartimages.com/seo/Legion-15-6-Recon-Gaming-Backpack_6efa108a-a7bb-4f2f-a10d-1b2765e0cc75.5b217f5ac6b65f6cb958bb6269791095.jpeg"
+      ],
+      "price": 30.0,
+      "originalPrice": null,
+      "description": "High quality laptop bag from Lenovo. Perfect for daily use and professional tasks.",
+      "category": "Laptop Bag",
+      "rating": 3.8,
+      "reviewCount": 331,
+      "inStock": true,
+      "stock": 14,
+      "specifications": {
+        "material": "Nylon",
+        "capacity": "fits up to 15.6 inch laptop",
+        "waterResistant": false,
+        "weight": "1.1 kg"
+      }
+    },
+    {
+      "id": "laptop_bag_razer_rogue_backpack",
+      "brand": "Razer",
+      "model": "Rogue Backpack",
+      "imageUrl": "https://m.media-amazon.com/images/I/41Hq0fqkfaL._SS1000_.jpg",
+      "imageUrls": [
+        "https://m.media-amazon.com/images/I/41Hq0fqkfaL._SS1000_.jpg",
+        "https://m.media-amazon.com/images/I/41Hq0fqkfaL._SS1000_.jpg",
+        "https://m.media-amazon.com/images/I/41Hq0fqkfaL._SS1000_.jpg",
+        "https://m.media-amazon.com/images/I/41Hq0fqkfaL._SS1000_.jpg"
+      ],
+      "price": 79.0,
+      "originalPrice": null,
+      "description": "High quality laptop bag from Razer. Perfect for daily use and professional tasks.",
+      "category": "Laptop Bag",
+      "rating": 4.7,
+      "reviewCount": 118,
+      "inStock": true,
+      "stock": 39,
+      "specifications": {
+        "material": "Nylon",
+        "capacity": "fits up to 15.6 inch laptop",
+        "waterResistant": false,
+        "weight": "0.5 kg"
+      }
+    },
+    {
+      "id": "laptop_bag_asus_rog_backpack",
+      "brand": "Asus",
+      "model": "ROG Backpack",
+      "imageUrl": "https://m.media-amazon.com/images/I/317hWqS4bWS._AC_SR218_.jpg",
+      "imageUrls": [
+        "https://m.media-amazon.com/images/I/317hWqS4bWS._AC_SR218_.jpg",
+        "https://m.media-amazon.com/images/I/317hWqS4bWS._AC_SR218_.jpg",
+        "https://m.media-amazon.com/images/I/317hWqS4bWS._AC_SR218_.jpg",
+        "https://m.media-amazon.com/images/I/317hWqS4bWS._AC_SR218_.jpg"
+      ],
+      "price": 96.0,
+      "originalPrice": null,
+      "description": "High quality laptop bag from Asus. Perfect for daily use and professional tasks.",
+      "category": "Laptop Bag",
+      "rating": 3.5,
+      "reviewCount": 100,
+      "inStock": true,
+      "stock": 84,
+      "specifications": {
+        "material": "Polyester",
+        "capacity": "fits up to 15.6 inch laptop",
+        "waterResistant": false,
+        "weight": "0.9 kg"
+      }
+    },
+    {
+      "id": "laptop_bag_acer_nitro_urban",
+      "brand": "Acer",
+      "model": "Nitro Urban",
+      "imageUrl": "https://media.4rgos.it/s/Argos/4468909_R_SET?$Main768$&w=620&h=620",
+      "imageUrls": [
+        "https://media.4rgos.it/s/Argos/4468909_R_SET?$Main768$&w=620&h=620",
+        "https://media.4rgos.it/s/Argos/4468909_R_SET?$Main768$&w=620&h=620",
+        "https://media.4rgos.it/s/Argos/4468909_R_SET?$Main768$&w=620&h=620",
+        "https://media.4rgos.it/s/Argos/4468909_R_SET?$Main768$&w=620&h=620"
+      ],
+      "price": 52.0,
+      "originalPrice": 60.0,
+      "description": "High quality laptop bag from Acer. Perfect for daily use and professional tasks.",
+      "category": "Laptop Bag",
+      "rating": 3.8,
+      "reviewCount": 425,
+      "inStock": true,
+      "stock": 71,
+      "specifications": {
+        "material": "Nylon",
+        "capacity": "fits up to 15.6 inch laptop",
+        "waterResistant": true,
+        "weight": "0.6 kg"
+      }
+    },
+    {
+      "id": "charger_dell_65w_usb_c",
+      "brand": "Dell",
+      "model": "65W USB-C",
+      "imageUrl": "https://static.wixstatic.com/media/6469df_b1a4109dcf524098926abfaa59ebb4c6~mv2.jpg/v1/fill/w_520,h_808,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/6469df_b1a4109dcf524098926abfaa59ebb4c6~mv2.jpg",
+      "imageUrls": [
+        "https://static.wixstatic.com/media/6469df_b1a4109dcf524098926abfaa59ebb4c6~mv2.jpg/v1/fill/w_520,h_808,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/6469df_b1a4109dcf524098926abfaa59ebb4c6~mv2.jpg",
+        "https://static.wixstatic.com/media/6469df_b1a4109dcf524098926abfaa59ebb4c6~mv2.jpg/v1/fill/w_520,h_808,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/6469df_b1a4109dcf524098926abfaa59ebb4c6~mv2.jpg",
+        "https://static.wixstatic.com/media/6469df_b1a4109dcf524098926abfaa59ebb4c6~mv2.jpg/v1/fill/w_520,h_808,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/6469df_b1a4109dcf524098926abfaa59ebb4c6~mv2.jpg",
+        "https://static.wixstatic.com/media/6469df_b1a4109dcf524098926abfaa59ebb4c6~mv2.jpg/v1/fill/w_520,h_808,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/6469df_b1a4109dcf524098926abfaa59ebb4c6~mv2.jpg"
+      ],
+      "price": 21.0,
+      "originalPrice": null,
+      "description": "High quality charger from Dell. Perfect for daily use and professional tasks.",
+      "category": "Charger",
+      "rating": 4.6,
+      "reviewCount": 313,
+      "inStock": true,
+      "stock": 79,
+      "specifications": {
+        "power": "45W",
+        "connector": "Barrel",
+        "voltage": "19.5 V",
+        "compatibility": "Dell"
+      }
+    },
+    {
+      "id": "charger_hp_90w_adapter",
+      "brand": "HP",
+      "model": "90W Adapter",
+      "imageUrl": "https://ssl-product-images.www8-hp.com/digmedialib/prodimg/lowres/c04601770.png",
+      "imageUrls": [
+        "https://ssl-product-images.www8-hp.com/digmedialib/prodimg/lowres/c04601770.png",
+        "https://ssl-product-images.www8-hp.com/digmedialib/prodimg/lowres/c04601770.png",
+        "https://ssl-product-images.www8-hp.com/digmedialib/prodimg/lowres/c04601770.png",
+        "https://ssl-product-images.www8-hp.com/digmedialib/prodimg/lowres/c04601770.png"
+      ],
+      "price": 51.0,
+      "originalPrice": null,
+      "description": "High quality charger from HP. Perfect for daily use and professional tasks.",
+      "category": "Charger",
+      "rating": 4.9,
+      "reviewCount": 484,
+      "inStock": true,
+      "stock": 20,
+      "specifications": {
+        "power": "65W",
+        "connector": "Barrel",
+        "voltage": "19.5 V",
+        "compatibility": "HP"
+      }
+    },
+    {
+      "id": "charger_lenovo_45w_travel",
+      "brand": "Lenovo",
+      "model": "45W Travel",
+      "imageUrl": "https://m.media-amazon.com/images/I/41BYOFVCKLL._AC_UF894,1000_QL80_.jpg",
+      "imageUrls": [
+        "https://m.media-amazon.com/images/I/41BYOFVCKLL._AC_UF894,1000_QL80_.jpg",
+        "https://m.media-amazon.com/images/I/41BYOFVCKLL._AC_UF894,1000_QL80_.jpg",
+        "https://m.media-amazon.com/images/I/41BYOFVCKLL._AC_UF894,1000_QL80_.jpg",
+        "https://m.media-amazon.com/images/I/41BYOFVCKLL._AC_UF894,1000_QL80_.jpg"
+      ],
+      "price": 25.0,
+      "originalPrice": 30.0,
+      "description": "High quality charger from Lenovo. Perfect for daily use and professional tasks.",
+      "category": "Charger",
+      "rating": 4.5,
+      "reviewCount": 409,
+      "inStock": true,
+      "stock": 80,
+      "specifications": {
+        "power": "45W",
+        "connector": "USB-C",
+        "voltage": "19.5 V",
+        "compatibility": "Lenovo"
+      }
+    },
+    {
+      "id": "charger_apple_96w_usb_c",
+      "brand": "Apple",
+      "model": "96W USB-C",
+      "imageUrl": "https://i.ebayimg.com/images/g/plsAAeSwtX9oqTVt/s-l1600.webp",
+      "imageUrls": [
+        "https://i.ebayimg.com/images/g/plsAAeSwtX9oqTVt/s-l1600.webp",
+        "https://i.ebayimg.com/images/g/plsAAeSwtX9oqTVt/s-l1600.webp",
+        "https://i.ebayimg.com/images/g/plsAAeSwtX9oqTVt/s-l1600.webp",
+        "https://i.ebayimg.com/images/g/plsAAeSwtX9oqTVt/s-l1600.webp"
+      ],
+      "price": 23.0,
+      "originalPrice": null,
+      "description": "High quality charger from Apple. Perfect for daily use and professional tasks.",
+      "category": "Charger",
+      "rating": 3.8,
+      "reviewCount": 174,
+      "inStock": true,
+      "stock": 23,
+      "specifications": {
+        "power": "90W",
+        "connector": "USB-C",
+        "voltage": "19.5 V",
+        "compatibility": "Apple"
+      }
+    },
+    {
+      "id": "charger_anker_65w_gan",
+      "brand": "Anker",
+      "model": "65W GaN",
+      "imageUrl": "https://i.ebayimg.com/images/g/zVUAAeSwnBxphF6i/s-l1600.webp",
+      "imageUrls": [
+        "https://i.ebayimg.com/images/g/zVUAAeSwnBxphF6i/s-l1600.webp",
+        "https://i.ebayimg.com/images/g/zVUAAeSwnBxphF6i/s-l1600.webp",
+        "https://i.ebayimg.com/images/g/zVUAAeSwnBxphF6i/s-l1600.webp",
+        "https://i.ebayimg.com/images/g/zVUAAeSwnBxphF6i/s-l1600.webp"
+      ],
+      "price": 48.0,
+      "originalPrice": 55.0,
+      "description": "High quality charger from Anker. Perfect for daily use and professional tasks.",
+      "category": "Charger",
+      "rating": 4.8,
+      "reviewCount": 400,
+      "inStock": true,
+      "stock": 28,
+      "specifications": {
+        "power": "45W",
+        "connector": "Barrel",
+        "voltage": "19.5 V",
+        "compatibility": "Anker"
+      }
+    }
+  ]
+}

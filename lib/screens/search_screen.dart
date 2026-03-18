@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'product_details_screen.dart';
 import '../theme/app_theme.dart';
@@ -16,37 +17,6 @@ class _SearchScreenState extends State<SearchScreen> {
 
   bool _showResults = false;
 
-  final List<Map<String, String>> _searchResults = [
-    {
-      'title': 'MacBook Pro 14" - M3 Chip, 16GB RAM',
-      'price': '\$1,599.00',
-      'image':
-          'https://lh3.googleusercontent.com/aida-public/AB6AXuArdrGaKB57JlBBh-T7YrRv83vrZztTEC5j_0ZZs1phTZLZDOggqB_sU45ZjAElXzKsBJL6V34RfxUrAtUUEf_6HcQ-m93levlWIEQTPX4IsNi1HWZuJkJxiFETqnG6_X2cqsxojuqWjNGhNsG-fTJPalBFziLD-zjW3UcZi6Y21Sq3CpkMKpoHh5dVcIRDmtRw4srUv_gBy0qwDGM7QqHvgU-EdF8_o0omm-bRfkBZESOl4PLeu5FHWMlo68PUoOVcOul7qsMBTQJL',
-      'stock': 'IN STOCK',
-    },
-    {
-      'title': 'MacBook Pro 16" - M3 Max, 32GB RAM',
-      'price': '\$3,499.00',
-      'image':
-          'https://lh3.googleusercontent.com/aida-public/AB6AXuAgytkEPvr3PgjqmpGNeovUvSSG_3RgcDfUFWCOjr8embflHQSmldvlH6rwadhyLvPVDZF4LjCxXxF71t6lZgjASL1nVsJdUi5ry-MCBHGorHyrwwMqkXpLY9CeHHqXfb2iAAJtJgmT-l8BGa1tY9sZQ-rpmakwdBvnrkMvu7JSc6UwSR203f-RYKSlqrVu-geKsvdyMA-IHzd7LS9UXOMWcQdI4ATwDa7cRMsiqlFAdA59sZQdhf57yAsXf2qw5zgwz20cXMaucgaa',
-      'stock': 'IN STOCK',
-    },
-    {
-      'title': 'MacBook Pro 14" Refurbished - M2 Pro',
-      'price': '\$1,299.00',
-      'image':
-          'https://lh3.googleusercontent.com/aida-public/AB6AXuAvDyKDTlB6hy9dihSmjGj6L-13TwF7p7sgFCLG0MjmUFzRDTPph3lFiOcBqTTvB6aMYrYXyS1iBxeNMpqgjml7pYsq2UGtQhuTIMQjET9XMYDqhHo6Mdq_2YRLUnF30fKCXkNIjHrHKX7S5K1Hw_ppQGaKUdWXrW-CLJpRStr_Tjcz4qQr7JwXxJsMercw-sEhYWsuhDxbV1y_bc7yH13e1wihNkHz-bUXxDbM8dN8vazEk8rUxBwFPVC_sDjuf6xd9i9awkW6IWOJ',
-      'stock': 'IN STOCK',
-    },
-    {
-      'title': 'MacBook Pro 14" - M3 Pro, 1TB SSD',
-      'price': '\$1,999.00',
-      'image':
-          'https://lh3.googleusercontent.com/aida-public/AB6AXuBBo_1ZbEvZ-HNOTu4uhTrsAui-2RAiZe2_fM52eQP2eChIb0N7ZDc8kK3BiWhdTP_RRJY4PBnbC6vl9WGe8FD3j3kjGLk1p-89oNdxrQj-z3re5osWhLszzt8jrqJTlhWh0jA2KrJ2yVwty0UWLVe3tRfK-KQdz85TTIgk5EWgB9oTKuHKcZqsRVMYNbS2iwXZRMAcR4RaqD6Tk76RXJgkTu4JO4eNF-QC6ZKLXlUafvs2uwUQfC6Oe4QC9H70rd2o2k30F4yoTG0q',
-      'stock': 'IN STOCK',
-    },
-  ];
-
   @override
   void initState() {
     super.initState();
@@ -57,6 +27,21 @@ class _SearchScreenState extends State<SearchScreen> {
     setState(() {
       _showResults = _searchController.text.isNotEmpty;
     });
+  }
+
+  bool _matchesQuery(Map<String, dynamic> product, String query) {
+    final q = query.trim().toLowerCase();
+    if (q.isEmpty) return true;
+
+    final brand = (product['brand'] ?? '').toString().toLowerCase();
+    final model = (product['model'] ?? '').toString().toLowerCase();
+    final category = (product['category'] ?? '').toString().toLowerCase();
+    final title = (product['title'] ?? '').toString().toLowerCase();
+
+    return brand.contains(q) ||
+        model.contains(q) ||
+        category.contains(q) ||
+        title.contains(q);
   }
 
   @override
@@ -255,62 +240,144 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   Widget _buildSearchResults() {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                '12 results',
-                style: GoogleFonts.inter(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.text,
-                ),
-              ),
-              TextButton.icon(
-                onPressed: () {},
-                icon: const Icon(Icons.tune, size: 16, color: Colors.grey),
-                label: Text(
-                  'Filter',
-                  style: GoogleFonts.inter(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.grey,
+    final query = FirebaseFirestore.instance.collection('products');
+    final searchText = _searchController.text;
+
+    return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+      stream: query.snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        if (snapshot.hasError) {
+          return Center(child: Text(snapshot.error.toString()));
+        }
+
+        final docs = snapshot.data?.docs ?? const [];
+        final items = docs
+            .map((d) => <String, dynamic>{...d.data(), 'id': d.id})
+            .where((p) => _matchesQuery(p, searchText))
+            .map((p) {
+          final imageUrls = <String>[];
+          final rawImageUrls = p['imageUrls'] ?? p['images'];
+          if (rawImageUrls is List) {
+            for (final item in rawImageUrls) {
+              if (item is String && item.trim().isNotEmpty) {
+                imageUrls.add(item.trim());
+              }
+            }
+          }
+
+          final fallbackImage = (p['imageUrl'] ?? p['image'] ?? '')
+              .toString()
+              .trim();
+          if (imageUrls.isEmpty && fallbackImage.isNotEmpty) {
+            imageUrls.add(fallbackImage);
+          }
+          while (imageUrls.length < 4 && imageUrls.isNotEmpty) {
+            imageUrls.add(imageUrls.first);
+          }
+
+          final brand = (p['brand'] ?? '').toString();
+          final model = (p['model'] ?? '').toString();
+          final priceRaw = p['price'];
+          final price = priceRaw is num
+              ? priceRaw.toDouble()
+              : double.tryParse('$priceRaw') ?? 0.0;
+
+          final inStock = p['inStock'] == true ||
+              ((p['stock'] is num) && (p['stock'] as num).toInt() > 0);
+
+          return <String, dynamic>{
+            ...p,
+            'title': '$brand $model'.trim(),
+            'price': '\$${price.toStringAsFixed(2)}',
+            'image': imageUrls.isNotEmpty ? imageUrls.first : '',
+            'imageUrls': imageUrls.take(4).toList(),
+            'stock': inStock ? 'IN STOCK' : 'OUT OF STOCK',
+          };
+        }).toList();
+
+        return Column(
+          children: [
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    '${items.length} results',
+                    style: GoogleFonts.inter(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.text,
+                    ),
                   ),
-                ),
-                style: TextButton.styleFrom(
-                  padding: EdgeInsets.zero,
-                  minimumSize: Size.zero,
-                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                ),
+                  TextButton.icon(
+                    onPressed: () {},
+                    icon: const Icon(Icons.tune, size: 16, color: Colors.grey),
+                    label: Text(
+                      'Filter',
+                      style: GoogleFonts.inter(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    style: TextButton.styleFrom(
+                      padding: EdgeInsets.zero,
+                      minimumSize: Size.zero,
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
-        Expanded(
-          child: ListView.builder(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            itemCount: _searchResults.length,
-            itemBuilder: (context, index) {
-              final item = _searchResults[index];
-              return _buildResultCard(item);
-            },
-          ),
-        ),
-      ],
+            ),
+            Expanded(
+              child: ListView.builder(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                itemCount: items.length,
+                itemBuilder: (context, index) {
+                  return _buildResultCard(items[index]);
+                },
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 
-  Widget _buildResultCard(Map<String, String> item) {
+  Widget _buildResultCard(Map<String, dynamic> item) {
     return GestureDetector(
       onTap: () {
+        final images = <String>[];
+        final rawImageUrls = item['imageUrls'] ?? item['images'];
+        if (rawImageUrls is List) {
+          for (final value in rawImageUrls) {
+            if (value is String && value.trim().isNotEmpty) {
+              images.add(value.trim());
+            }
+          }
+        }
+        final image = (item['image'] ?? item['imageUrl'] ?? '').toString().trim();
+        if (images.isEmpty && image.isNotEmpty) {
+          images.add(image);
+        }
+        while (images.length < 4 && images.isNotEmpty) {
+          images.add(images.first);
+        }
+
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ProductDetailsScreen(product: item),
+            builder: (context) => ProductDetailsScreen(
+              product: {
+                ...item,
+                'imageUrls': images.take(4).toList(),
+              },
+            ),
           ),
         );
       },
@@ -342,7 +409,7 @@ class _SearchScreenState extends State<SearchScreen> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(8),
                 child: Image.network(
-                  item['image']!,
+                  (item['image'] ?? item['imageUrl'] ?? '').toString(),
                   fit: BoxFit.cover,
                   errorBuilder: (context, error, stackTrace) =>
                       const Icon(Icons.image, color: Colors.grey),
@@ -355,7 +422,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    item['stock']!,
+                    (item['stock'] ?? '').toString(),
                     style: GoogleFonts.inter(
                       fontSize: 10,
                       fontWeight: FontWeight.bold,
@@ -365,7 +432,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    item['title']!,
+                    (item['title'] ?? '').toString(),
                     style: GoogleFonts.inter(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
@@ -375,7 +442,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    item['price']!,
+                    (item['price'] ?? '').toString(),
                     style: GoogleFonts.inter(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,

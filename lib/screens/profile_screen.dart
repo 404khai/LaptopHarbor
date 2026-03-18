@@ -33,16 +33,6 @@ class ProfileScreen extends StatelessWidget {
   }) {
     if (user == null) return 'Guest';
 
-    final profileDisplayName = (profile?['displayName'] as String?)?.trim();
-    if (profileDisplayName != null && profileDisplayName.isNotEmpty) {
-      return profileDisplayName;
-    }
-
-    final authDisplayName = user.displayName?.trim();
-    if (authDisplayName != null && authDisplayName.isNotEmpty) {
-      return authDisplayName;
-    }
-
     final firstName = (profile?['firstName'] as String?)?.trim();
     final lastName = (profile?['lastName'] as String?)?.trim();
     final combined = [firstName, lastName]
@@ -52,6 +42,16 @@ class ProfileScreen extends StatelessWidget {
         .join(' ')
         .trim();
     if (combined.isNotEmpty) return combined;
+
+    final profileDisplayName = (profile?['displayName'] as String?)?.trim();
+    if (profileDisplayName != null && profileDisplayName.isNotEmpty) {
+      return profileDisplayName;
+    }
+
+    final authDisplayName = user.displayName?.trim();
+    if (authDisplayName != null && authDisplayName.isNotEmpty) {
+      return authDisplayName;
+    }
 
     final email = (profile?['email'] as String?)?.trim() ?? user.email?.trim();
     if (email != null && email.isNotEmpty) return _nameFromEmail(email);
