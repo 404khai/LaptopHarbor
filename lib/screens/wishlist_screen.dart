@@ -17,6 +17,39 @@ class WishlistScreen extends StatefulWidget {
 }
 
 class _WishlistScreenState extends State<WishlistScreen> {
+  int _selectedFilterIndex = 0;
+  static const List<String> _filters = [
+    'All Items',
+    'Laptop',
+    'Mice',
+    'Keyboard',
+    'Charger',
+    'Laptop Bag',
+  ];
+
+  String _normalizeCategory(String value) {
+    final v = value.trim().toLowerCase();
+    if (v == 'mice') return 'mouse';
+    return v;
+  }
+
+  String? _selectedCategory() {
+    final label = _filters[_selectedFilterIndex];
+    if (label == 'All Items') return null;
+    if (label == 'Mice') return 'Mouse';
+    return label;
+  }
+
+  Future<void> _startWishlistSearch(List<Map<String, dynamic>> items) async {
+    await showSearch<Map<String, dynamic>?>(
+      context: context,
+      delegate: _WishlistSearchDelegate(
+        items: items,
+        onSelect: (item) => _openProductDetails(context, item),
+      ),
+    );
+  }
+
   Future<void> _openProductDetails(
     BuildContext context,
     Map<String, dynamic> item,
@@ -65,6 +98,16 @@ class _WishlistScreenState extends State<WishlistScreen> {
   Widget build(BuildContext context) {
     final wishlist = context.watch<WishlistProvider>();
     final wishlistItems = wishlist.items;
+    final selectedCategory = _selectedCategory();
+    final visibleItems = selectedCategory == null
+        ? wishlistItems
+        : wishlistItems
+              .where(
+                (e) =>
+                    _normalizeCategory((e['category'] ?? '').toString()) ==
+                    _normalizeCategory(selectedCategory),
+              )
+              .toList();
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -74,7 +117,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
         centerTitle: true,
         leading: const Center(child: CustomBackButton()),
         title: Text(
-          'Wishlist',
+          'Wishlist (${wishlistItems.length})',
           style: GoogleFonts.inter(
             fontSize: 20,
             fontWeight: FontWeight.bold,
@@ -83,7 +126,9 @@ class _WishlistScreenState extends State<WishlistScreen> {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              _startWishlistSearch(wishlistItems);
+            },
             icon: const Icon(Icons.search, color: AppColors.slate900),
           ),
         ],
@@ -94,14 +139,28 @@ class _WishlistScreenState extends State<WishlistScreen> {
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   alignment: Alignment.centerLeft,
-                  child: Row(
-                    children: [
-                      _buildTab('All Items (${wishlistItems.length})', true),
-                      const SizedBox(width: 24),
-                      _buildTab('Available', false),
-                      const SizedBox(width: 24),
-                      _buildTab('On Sale', false),
-                    ],
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: List.generate(_filters.length, (index) {
+                        final label = _filters[index];
+                        final isSelected = _selectedFilterIndex == index;
+                        return Padding(
+                          padding: const EdgeInsets.only(right: 12),
+                          child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                _selectedFilterIndex = index;
+                              });
+                            },
+                            child: _buildCategoryChip(
+                              label,
+                              isSelected: isSelected,
+                            ),
+                          ),
+                        );
+                      }),
+                    ),
                   ),
                 ),
               ),
@@ -114,9 +173,9 @@ class _WishlistScreenState extends State<WishlistScreen> {
                   ? _buildEmptyState()
                   : ListView.builder(
                       padding: const EdgeInsets.all(16),
-                      itemCount: wishlistItems.length,
+                      itemCount: visibleItems.length,
                       itemBuilder: (context, index) {
-                        return _buildWishlistItem(wishlistItems[index]);
+                        return _buildWishlistItem(visibleItems[index]);
                       },
                     ),
             ),
@@ -208,25 +267,21 @@ class _WishlistScreenState extends State<WishlistScreen> {
     );
   }
 
-  Widget _buildTab(String title, bool isSelected) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text(
-          title,
-          style: GoogleFonts.inter(
-            fontSize: 14,
-            fontWeight: FontWeight.w600,
-            color: isSelected ? AppColors.slate900 : Colors.grey[500],
-          ),
+  Widget _buildCategoryChip(String label, {bool isSelected = false}) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+      decoration: BoxDecoration(
+        color: isSelected ? AppColors.slate900 : Colors.grey[100],
+        borderRadius: BorderRadius.circular(30),
+      ),
+      child: Text(
+        label,
+        style: GoogleFonts.inter(
+          fontSize: 14,
+          fontWeight: isSelected ? FontWeight.bold : FontWeight.w600,
+          color: isSelected ? Colors.white : AppColors.slate900,
         ),
-        const SizedBox(height: 8),
-        Container(
-          height: 2,
-          width: isSelected ? 40 : 0, // Simplified indicator width
-          color: isSelected ? AppColors.primary : Colors.transparent,
-        ),
-      ],
+      ),
     );
   }
 
@@ -396,6 +451,88 @@ class _WishlistScreenState extends State<WishlistScreen> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class _WishlistSearchDelegate extends SearchDelegate<Map<String, dynamic>?> {
+  final List<Map<String, dynamic>> items;
+  final void Function(Map<String, dynamic> item) onSelect;
+
+  _WishlistSearchDelegate({required this.items, required this.onSelect});
+
+  @override
+  List<Widget>? buildActions(BuildContext context) {
+    return [
+      if (query.isNotEmpty)
+        IconButton(
+          onPressed: () {
+            query = '';
+          },
+          icon: const Icon(Icons.clear),
+        ),
+    ];
+  }
+
+  @override
+  Widget? buildLeading(BuildContext context) {
+    return IconButton(
+      onPressed: () => close(context, null),
+      icon: const Icon(Icons.arrow_back),
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) => _buildList(context);
+
+  @override
+  Widget buildSuggestions(BuildContext context) => _buildList(context);
+
+  Widget _buildList(BuildContext context) {
+    final q = query.trim().toLowerCase();
+    final filtered = q.isEmpty
+        ? items
+        : items.where((e) {
+            final title = (e['title'] ?? '').toString().toLowerCase();
+            return title.contains(q);
+          }).toList();
+
+    if (filtered.isEmpty) {
+      return Center(
+        child: Text(
+          'Result Not Found',
+          style: GoogleFonts.inter(
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+            color: Colors.grey[400],
+          ),
+        ),
+      );
+    }
+
+    return ListView.builder(
+      itemCount: filtered.length,
+      itemBuilder: (context, index) {
+        final item = filtered[index];
+        return ListTile(
+          leading: CircleAvatar(
+            backgroundColor: Colors.grey[200],
+            backgroundImage: NetworkImage((item['image'] ?? '').toString()),
+          ),
+          title: Text(
+            (item['title'] ?? '').toString(),
+            style: GoogleFonts.inter(
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+              color: AppColors.slate900,
+            ),
+          ),
+          onTap: () {
+            close(context, item);
+            onSelect(item);
+          },
+        );
+      },
     );
   }
 }

@@ -15,6 +15,7 @@ import 'my_orders_screen.dart';
 import 'edit_profile_screen.dart';
 import 'settings_screen.dart';
 import 'login_screen.dart';
+import 'support_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -302,7 +303,14 @@ class ProfileScreen extends StatelessWidget {
                     _buildMenuItem(
                       icon: Icons.help,
                       title: 'Help & Support',
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const SupportScreen(),
+                          ),
+                        );
+                      },
                     ),
                     const SizedBox(height: 32),
 

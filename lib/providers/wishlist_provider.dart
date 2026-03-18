@@ -8,6 +8,7 @@ class WishlistProvider extends ChangeNotifier {
   StreamSubscription<User?>? _authSub;
   StreamSubscription<QuerySnapshot<Map<String, dynamic>>>? _wishlistSub;
   String? _uid;
+  final Set<String> _categoryBackfillInFlight = {};
 
   WishlistProvider() {
     _authSub = FirebaseAuth.instance.authStateChanges().listen((user) {
@@ -87,19 +88,60 @@ class WishlistProvider extends ChangeNotifier {
         .orderBy('createdAt', descending: true)
         .snapshots()
         .listen((snapshot) {
-      _items
-        ..clear()
-        ..addAll(
-          snapshot.docs.map((d) {
-            final data = d.data();
-            return <String, dynamic>{
-              ...data,
-              'id': (data['id'] ?? d.id).toString(),
-            };
-          }),
-        );
-      notifyListeners();
-    });
+          _items
+            ..clear()
+            ..addAll(
+              snapshot.docs.map((d) {
+                final data = d.data();
+                return <String, dynamic>{
+                  ...data,
+                  'id': (data['id'] ?? d.id).toString(),
+                };
+              }),
+            );
+          notifyListeners();
+          _backfillMissingCategories(uid, snapshot.docs);
+        });
+  }
+
+  Future<void> _backfillMissingCategories(
+    String uid,
+    List<QueryDocumentSnapshot<Map<String, dynamic>>> docs,
+  ) async {
+    for (final d in docs) {
+      final data = d.data();
+      final category = (data['category'] ?? '').toString().trim();
+      if (category.isNotEmpty) continue;
+
+      final productId = (data['productId'] ?? d.id).toString().trim();
+      if (productId.isEmpty) continue;
+      if (_categoryBackfillInFlight.contains(productId)) continue;
+      _categoryBackfillInFlight.add(productId);
+
+      try {
+        final productDoc = await FirebaseFirestore.instance
+            .collection('products')
+            .doc(productId)
+            .get();
+        final productData = productDoc.data();
+        final fetchedCategory = (productData?['category'] ?? '')
+            .toString()
+            .trim();
+        if (fetchedCategory.isEmpty) continue;
+
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(uid)
+            .collection('wishlist')
+            .doc(d.id)
+            .set(<String, dynamic>{
+              'category': fetchedCategory,
+            }, SetOptions(merge: true));
+      } catch (_) {
+      } finally {
+        _categoryBackfillInFlight.remove(productId);
+      }
+    }
   }
 
   Map<String, dynamic> _toWishlistItem(Map<String, dynamic> product) {
@@ -132,10 +174,13 @@ class WishlistProvider extends ChangeNotifier {
     final onSale =
         originalPriceString != null && originalPriceString != priceString;
 
+    final category = (product['category'] ?? '').toString().trim();
+
     return <String, dynamic>{
       'id': id,
       'title': title,
       'specs': specs,
+      'category': category,
       'price': priceString,
       'image': image,
       'onSale': onSale,
