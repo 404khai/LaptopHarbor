@@ -125,6 +125,31 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       final name = await _resolveReviewerName(user);
       final photoUrl = await _resolveReviewerPhotoUrl(user);
       final productId = _productDocId();
+      final brand = (widget.product['brand'] ?? '').toString().trim();
+      final model = (widget.product['model'] ?? '').toString().trim();
+      final combinedName = [
+        brand,
+        model,
+      ].where((e) => e.isNotEmpty).join(' ').trim();
+      final productName = combinedName.isNotEmpty
+          ? combinedName
+          : (widget.product['title'] ?? 'Product').toString().trim();
+      final rawImageUrls =
+          widget.product['imageUrls'] ?? widget.product['images'];
+      final imageUrls = <String>[
+        if (rawImageUrls is List)
+          for (final u in rawImageUrls)
+            if (u is String && u.trim().isNotEmpty) u.trim(),
+      ];
+      final productImage =
+          (imageUrls.isNotEmpty
+                  ? imageUrls.first
+                  : (widget.product['imageUrl'] ??
+                            widget.product['image'] ??
+                            '')
+                        .toString())
+              .trim();
+
       await FirebaseFirestore.instance
           .collection('products')
           .doc(productId)
@@ -137,6 +162,21 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             'rating': _reviewRating,
             'review': reviewText,
             'createdAt': FieldValue.serverTimestamp(),
+          }, SetOptions(merge: true));
+
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .collection('reviews')
+          .doc(productId)
+          .set(<String, dynamic>{
+            'productId': productId,
+            'productName': productName,
+            'productImage': productImage,
+            'rating': _reviewRating,
+            'review': reviewText,
+            'createdAt': FieldValue.serverTimestamp(),
+            'updatedAt': FieldValue.serverTimestamp(),
           }, SetOptions(merge: true));
 
       if (!mounted) return;

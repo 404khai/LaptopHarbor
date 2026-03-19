@@ -96,6 +96,15 @@ class _WishlistScreenState extends State<WishlistScreen> {
   Widget build(BuildContext context) {
     final wishlist = context.watch<WishlistProvider>();
     final wishlistItems = wishlist.items;
+    int countForFilter(String label) {
+      if (label == 'All Items') return wishlistItems.length;
+      final normalized = _normalizeCategory(label == 'Mice' ? 'Mouse' : label);
+      return wishlistItems.where((e) {
+        final category = (e['category'] ?? '').toString();
+        return _normalizeCategory(category) == normalized;
+      }).length;
+    }
+
     final selectedCategory = _selectedCategory();
     final visibleItems = selectedCategory == null
         ? wishlistItems
@@ -159,6 +168,8 @@ class _WishlistScreenState extends State<WishlistScreen> {
                           children: List.generate(_filters.length, (index) {
                             final label = _filters[index];
                             final isSelected = _selectedFilterIndex == index;
+                            final chipLabel =
+                                '$label (${countForFilter(label)})';
                             return Padding(
                               padding: const EdgeInsets.only(right: 12),
                               child: GestureDetector(
@@ -168,7 +179,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
                                   });
                                 },
                                 child: _buildCategoryChip(
-                                  label,
+                                  chipLabel,
                                   isSelected: isSelected,
                                 ),
                               ),

@@ -96,7 +96,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       TextFormField(
                         controller: _emailController,
                         decoration: InputDecoration(
-                          hintText: 'example@laptopharbor.com',
+                          hintText: 'johndoe@gmail.com',
                           hintStyle: GoogleFonts.inter(color: Colors.grey[400]),
                           contentPadding: const EdgeInsets.symmetric(
                             horizontal: 16,
@@ -147,7 +147,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         ),
                       ),
                       child: Text(
-                        'Send Reset Link',
+                        'Send Reset Code',
                         style: GoogleFonts.inter(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
