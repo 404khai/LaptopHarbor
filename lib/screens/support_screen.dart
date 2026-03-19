@@ -40,16 +40,10 @@ class _SupportScreenState extends State<SupportScreen> {
     });
 
     try {
-      final ticketId = await SupportService.submitSupportTicket(
+      await SupportService.submitSupportTicket(
         title: 'Contact Us',
         subject: subject,
         message: message,
-      );
-      await SupportService.openEmailApp(
-        title: 'Contact Us',
-        subject: subject,
-        message: message,
-        ticketId: ticketId,
       );
     } catch (_) {
       if (!mounted) return;

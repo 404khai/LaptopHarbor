@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:laptop_harbor/screens/support_screen.dart';
 import '../theme/app_theme.dart';
 import '../widgets/custom_back_button.dart';
 import 'edit_profile_screen.dart';
@@ -87,18 +88,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       });
                     },
                   ),
-                  _buildDivider(),
+                 
                   _buildSwitchTile(
-                    icon: Icons.dark_mode_outlined,
-                    title: 'Dark Mode',
-                    value: _darkModeEnabled,
+                    icon: Icons.mail_outline,
+                    title: 'Email Notifications',
+                    value: _notificationsEnabled,
                     onChanged: (value) {
                       setState(() {
-                        _darkModeEnabled = value;
+                        _notificationsEnabled = value;
                       });
                     },
                   ),
-                  
                 ],
               ),
               const SizedBox(height: 32),
@@ -124,8 +124,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   _buildDivider(),
                   _buildSettingsTile(
                     icon: Icons.help_outline,
-                    title: 'Help Center',
-                    onTap: () {},
+                    title: 'Help & Support',
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const SupportScreen(),
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),

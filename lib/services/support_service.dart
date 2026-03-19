@@ -1,13 +1,46 @@
+import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:http/http.dart' as http;
 
 class SupportService {
-  static String _supportToEmail() {
-    final fromEnv = dotenv.env['SUPPORT_TO_EMAIL']?.trim();
+  static String _supportFunctionUrl() {
+    final fromEnv = dotenv.env['SUPPORT_FUNCTION_URL']?.trim();
     if (fromEnv != null && fromEnv.isNotEmpty) return fromEnv;
     return '';
+  }
+
+  static Future<void> sendSupportEmail({
+    required String title,
+    required String subject,
+    required String message,
+    required String ticketId,
+  }) async {
+    final url = _supportFunctionUrl();
+    if (url.isEmpty) throw Exception('Missing SUPPORT_FUNCTION_URL');
+
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) throw Exception('Not signed in');
+    final token = await user.getIdToken();
+
+    final uri = Uri.parse(url);
+    final response = await http.post(
+      uri,
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode(<String, dynamic>{
+        'title': title,
+        'subject': subject,
+        'message': '$message\n\nTicket: $ticketId',
+      }),
+    );
+
+    if (response.statusCode < 200 || response.statusCode >= 300) {
+      throw Exception('Support email failed');
+    }
   }
 
   static Future<String> submitSupportTicket({
@@ -60,40 +93,13 @@ class SupportService {
       'updatedAt': FieldValue.serverTimestamp(),
     });
 
-    return docRef.id;
-  }
-
-  static Future<void> openEmailApp({
-    required String title,
-    required String subject,
-    required String message,
-    String? ticketId,
-  }) async {
-    final toEmail = _supportToEmail();
-    if (toEmail.isEmpty) throw Exception('Missing SUPPORT_TO_EMAIL');
-
-    final user = FirebaseAuth.instance.currentUser;
-    final email = user?.email?.trim();
-    final name = (user?.displayName ?? '').trim();
-
-    final bodyParts = <String>[
-      if (name.isNotEmpty) 'Name: $name',
-      if (email != null && email.isNotEmpty) 'Email: $email',
-      if (ticketId != null && ticketId.isNotEmpty) 'Ticket: $ticketId',
-      '',
-      message,
-    ];
-
-    final uri = Uri(
-      scheme: 'mailto',
-      path: toEmail,
-      queryParameters: <String, String>{
-        'subject': '[$title] $subject',
-        'body': bodyParts.join('\n'),
-      },
+    await sendSupportEmail(
+      title: title.trim(),
+      subject: subject.trim(),
+      message: message.trim(),
+      ticketId: docRef.id,
     );
 
-    final ok = await launchUrl(uri, mode: LaunchMode.externalApplication);
-    if (!ok) throw Exception('Failed to open email app');
+    return docRef.id;
   }
 }

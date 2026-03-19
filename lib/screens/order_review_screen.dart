@@ -99,6 +99,7 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
     required List<Map<String, dynamic>> cartItems,
   }) async {
     final now = DateTime.now();
+    final user = FirebaseAuth.instance.currentUser;
     final addressId = await _resolveAddressId(uid);
     final address = addressId == null
         ? null
@@ -122,6 +123,8 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
     }).toList();
 
     final orderData = <String, dynamic>{
+      'userId': uid,
+      'userEmail': user?.email,
       'orderNumber': orderNumber,
       'paystackReference': paystackReference,
       'currency': currency,
@@ -153,8 +156,8 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
   Widget build(BuildContext context) {
     final cart = context.watch<CartProvider>();
     final subtotal = cart.totalAmount;
-    const shippingCost = 0.0;
-    const tax = 0.0;
+    const shippingCost = 5000.0;
+    const tax = 2000.0;
     final total = subtotal + shippingCost + tax;
 
     return Scaffold(
