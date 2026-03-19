@@ -15,6 +15,43 @@ class PackageTrackingScreen extends StatelessWidget {
 
   const PackageTrackingScreen({super.key, required this.orderId});
 
+  String _formatTime(DateTime dt) {
+    final hour = dt.hour % 12 == 0 ? 12 : dt.hour % 12;
+    final min = dt.minute.toString().padLeft(2, '0');
+    final ampm = dt.hour >= 12 ? 'PM' : 'AM';
+    return '$hour:$min $ampm';
+  }
+
+  String _formatDate(DateTime dt) {
+    const months = <int, String>{
+      1: 'Jan',
+      2: 'Feb',
+      3: 'Mar',
+      4: 'Apr',
+      5: 'May',
+      6: 'Jun',
+      7: 'Jul',
+      8: 'Aug',
+      9: 'Sep',
+      10: 'Oct',
+      11: 'Nov',
+      12: 'Dec',
+    };
+    final m = months[dt.month] ?? 'Jan';
+    return '$m ${dt.day}, ${dt.year}';
+  }
+
+  String _formatAddress(Map<String, dynamic> data) {
+    final label = (data['label'] ?? 'Address').toString().trim();
+    final city = (data['city'] ?? '').toString().trim();
+    final state = (data['state'] ?? '').toString().trim();
+    final country = (data['country'] ?? '').toString().trim();
+    final zip = (data['zipCode'] ?? '').toString().trim();
+    final line2 = [city, state].where((p) => p.isNotEmpty).join(', ');
+    final line3 = [country, zip].where((p) => p.isNotEmpty).join(' ');
+    return [label, line2, line3].where((p) => p.isNotEmpty).join('\n');
+  }
+
   String _statusFromCreatedAt(DateTime createdAt) {
     final today = DateTime.now();
     final day0 = DateTime(createdAt.year, createdAt.month, createdAt.day);
@@ -94,6 +131,17 @@ class PackageTrackingScreen extends StatelessWidget {
         final createdAt = (createdAtTs is Timestamp)
             ? createdAtTs.toDate()
             : DateTime.now();
+        final arrivalStart = createdAt;
+        final arrivalEnd = createdAt.add(const Duration(hours: 2));
+        final arrivalRange =
+            '${_formatTime(arrivalStart)} - ${_formatTime(arrivalEnd)}';
+        final arrivalDate = _formatDate(createdAt.add(const Duration(days: 3)));
+        final shippingAddress = (data?['shippingAddress'] is Map)
+            ? Map<String, dynamic>.from(data?['shippingAddress'] as Map)
+            : <String, dynamic>{};
+        final shippingAddressText = shippingAddress.isEmpty
+            ? 'No shipping address.'
+            : _formatAddress(shippingAddress);
         final status = _statusFromCreatedAt(createdAt);
         if (data != null && (data['status'] ?? '') != status) {
           FirebaseFirestore.instance
@@ -294,11 +342,20 @@ class PackageTrackingScreen extends StatelessWidget {
                                     ),
                                     const SizedBox(height: 4),
                                     Text(
-                                      '2:30 PM - 3:00 PM',
+                                      arrivalRange,
                                       style: GoogleFonts.inter(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
                                         color: AppColors.slate900,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 6),
+                                    Text(
+                                      arrivalDate,
+                                      style: GoogleFonts.inter(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.grey[600],
                                       ),
                                     ),
                                   ],
@@ -391,7 +448,7 @@ class PackageTrackingScreen extends StatelessWidget {
                                         ),
                                       ),
                                       Text(
-                                        '245 Market St, Suite 1500\nSan Francisco, CA 94105',
+                                        shippingAddressText,
                                         style: GoogleFonts.inter(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w500,
