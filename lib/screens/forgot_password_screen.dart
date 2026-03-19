@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_intl_phone_field/flutter_intl_phone_field.dart';
 
 import '../theme/app_theme.dart';
 import '../widgets/custom_back_button.dart';
@@ -13,12 +15,71 @@ class ForgotPasswordScreen extends StatefulWidget {
 }
 
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
-  final _emailController = TextEditingController();
+  final _phoneController = TextEditingController();
+  bool _isSending = false;
+  String _phoneInitialCountryCode = 'US';
+  String _phoneInitialNumber = '';
 
   @override
   void dispose() {
-    _emailController.dispose();
+    _phoneController.dispose();
     super.dispose();
+  }
+
+  Future<void> _sendCode() async {
+    if (_isSending) return;
+    final phoneNumber = _phoneController.text.trim();
+    if (phoneNumber.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please enter your phone number.')),
+      );
+      return;
+    }
+
+    setState(() {
+      _isSending = true;
+    });
+
+    final messenger = ScaffoldMessenger.of(context);
+    final navigator = Navigator.of(context);
+
+    try {
+      await FirebaseAuth.instance.verifyPhoneNumber(
+        phoneNumber: phoneNumber,
+        verificationCompleted: (credential) async {
+          try {
+            await FirebaseAuth.instance.signInWithCredential(credential);
+          } catch (_) {}
+        },
+        verificationFailed: (e) {
+          messenger.showSnackBar(
+            SnackBar(content: Text(e.message ?? 'Failed to send code.')),
+          );
+        },
+        codeSent: (verificationId, resendToken) {
+          navigator.push(
+            MaterialPageRoute(
+              builder: (context) => OtpVerificationScreen(
+                phoneNumber: phoneNumber,
+                verificationId: verificationId,
+                resendToken: resendToken,
+              ),
+            ),
+          );
+        },
+        codeAutoRetrievalTimeout: (_) {},
+      );
+    } catch (_) {
+      messenger.showSnackBar(
+        const SnackBar(content: Text('Failed to start phone verification.')),
+      );
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isSending = false;
+        });
+      }
+    }
   }
 
   @override
@@ -70,7 +131,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   ),
                   const SizedBox(height: 12),
                   Text(
-                    'Enter your registered email to receive a password reset link.',
+                    'Enter your phone number to receive a reset code.',
                     style: GoogleFonts.inter(
                       fontSize: 16,
                       color: AppColors.subtext,
@@ -85,7 +146,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Email address',
+                        'Phone number',
                         style: GoogleFonts.inter(
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
@@ -93,10 +154,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         ),
                       ),
                       const SizedBox(height: 8),
-                      TextFormField(
-                        controller: _emailController,
+                      IntlPhoneField(
                         decoration: InputDecoration(
-                          hintText: 'johndoe@gmail.com',
+                          hintText: 'Enter phone number',
                           hintStyle: GoogleFonts.inter(color: Colors.grey[400]),
                           contentPadding: const EdgeInsets.symmetric(
                             horizontal: 16,
@@ -120,8 +180,13 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                             ),
                           ),
                         ),
-                        keyboardType: TextInputType.emailAddress,
-                        style: GoogleFonts.inter(color: AppColors.text),
+                        initialCountryCode: _phoneInitialCountryCode,
+                        initialValue: _phoneInitialNumber,
+                        onChanged: (phone) {
+                          _phoneController.text = phone.completeNumber;
+                          _phoneInitialCountryCode = phone.countryISOCode;
+                          _phoneInitialNumber = phone.number;
+                        },
                       ),
                     ],
                   ),
@@ -131,13 +196,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   SizedBox(
                     height: 56,
                     child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => const OtpVerificationScreen(),
-                          ),
-                        );
-                      },
+                      onPressed: _isSending ? null : _sendCode,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.primary,
                         foregroundColor: Colors.black,
@@ -147,7 +206,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         ),
                       ),
                       child: Text(
-                        'Send Reset Code',
+                        _isSending ? 'Sending...' : 'Send Reset Code',
                         style: GoogleFonts.inter(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
