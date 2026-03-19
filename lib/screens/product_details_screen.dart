@@ -123,6 +123,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
     try {
       final name = await _resolveReviewerName(user);
+      final photoUrl = await _resolveReviewerPhotoUrl(user);
       final productId = _productDocId();
       await FirebaseFirestore.instance
           .collection('products')
@@ -132,6 +133,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           .set(<String, dynamic>{
             'userId': user.uid,
             'name': name,
+            'photoUrl': photoUrl,
             'rating': _reviewRating,
             'review': reviewText,
             'createdAt': FieldValue.serverTimestamp(),
@@ -158,6 +160,23 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         });
       }
     }
+  }
+
+  Future<String> _resolveReviewerPhotoUrl(User user) async {
+    final authPhoto = (user.photoURL ?? '').trim();
+    if (authPhoto.isNotEmpty) return authPhoto;
+
+    try {
+      final doc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .get();
+      final data = doc.data();
+      final fromProfile = (data?['photoUrl'] ?? '').toString().trim();
+      if (fromProfile.isNotEmpty) return fromProfile;
+    } catch (_) {}
+
+    return '';
   }
 
   Product _toCartProduct() {
@@ -419,6 +438,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                     final entries = <Map<String, dynamic>>[
                                       for (final d in docs)
                                         <String, dynamic>{
+                                          'photoUrl':
+                                              (d.data()['photoUrl'] ?? '')
+                                                  .toString()
+                                                  .trim(),
                                           'name':
                                               (d.data()['name'] ?? 'Anonymous')
                                                   .toString(),
@@ -481,6 +504,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                           _buildReviewItem(
                                             (e['name'] ?? 'Anonymous')
                                                 .toString(),
+                                            (e['photoUrl'] ?? '')
+                                                .toString()
+                                                .trim(),
                                             _formatReviewDate(
                                               e['createdAt'] as DateTime,
                                             ),
@@ -1142,6 +1168,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       for (final r in reviews)
         <String, dynamic>{
           'name': r['name'],
+          'photoUrl': '',
           'createdAt': _parseReviewDate(r['date'] as String),
           'review': r['review'],
           'rating': r['rating'],
@@ -1149,7 +1176,18 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     ];
   }
 
-  Widget _buildReviewItem(String name, String date, String review, int rating) {
+  Widget _buildReviewItem(
+    String name,
+    String photoUrl,
+    String date,
+    String review,
+    int rating,
+  ) {
+    final normalizedName = name.trim().isEmpty ? 'Anonymous' : name.trim();
+    final firstLetter = normalizedName.isNotEmpty
+        ? normalizedName[0].toUpperCase()
+        : '?';
+    final normalizedPhotoUrl = photoUrl.trim();
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -1179,23 +1217,41 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       color: AppColors.slate100,
                       shape: BoxShape.circle,
                     ),
-                    child: Center(
-                      child: Text(
-                        name[0],
-                        style: GoogleFonts.inter(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.slate900,
-                        ),
-                      ),
-                    ),
+                    child: normalizedPhotoUrl.isNotEmpty
+                        ? ClipOval(
+                            child: Image.network(
+                              normalizedPhotoUrl,
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) =>
+                                  Center(
+                                    child: Text(
+                                      firstLetter,
+                                      style: GoogleFonts.inter(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        color: AppColors.slate900,
+                                      ),
+                                    ),
+                                  ),
+                            ),
+                          )
+                        : Center(
+                            child: Text(
+                              firstLetter,
+                              style: GoogleFonts.inter(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.slate900,
+                              ),
+                            ),
+                          ),
                   ),
                   const SizedBox(width: 12),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        name,
+                        normalizedName,
                         style: GoogleFonts.inter(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,

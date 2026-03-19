@@ -1,35 +1,56 @@
 require('dotenv').config();
-const functions = require('firebase-functions/v2/https');
+const { onRequest } = require('firebase-functions/v2/https');
+const { defineSecret } = require('firebase-functions/params');
 const admin = require('firebase-admin');
 const nodemailer = require('nodemailer');
 
 admin.initializeApp();
 
-const smtpUser = process.env.SUPPORT_SMTP_USER;
-const smtpPass = process.env.SUPPORT_SMTP_APP_PASSWORD;
-const toEmail = process.env.SUPPORT_TO_EMAIL;
-const fromName = process.env.SUPPORT_FROM_NAME || 'LaptopHarbor Support';
+const SUPPORT_SMTP_USER = defineSecret('SUPPORT_SMTP_USER');
+const SUPPORT_SMTP_APP_PASSWORD = defineSecret('SUPPORT_SMTP_APP_PASSWORD');
+const SUPPORT_TO_EMAIL = defineSecret('SUPPORT_TO_EMAIL');
+const SUPPORT_FROM_NAME = defineSecret('SUPPORT_FROM_NAME');
 
-const transporter =
-  smtpUser && smtpPass
-    ? nodemailer.createTransport({
-        host: 'smtp.gmail.com',
-        port: 465,
-        secure: true,
-        auth: { user: smtpUser, pass: smtpPass },
-      })
-    : null;
-
-exports.sendSupportEmail = functions.onRequest(async (req, res) => {
+exports.sendSupportEmail = onRequest(
+  {
+    secrets: [
+      SUPPORT_SMTP_USER,
+      SUPPORT_SMTP_APP_PASSWORD,
+      SUPPORT_TO_EMAIL,
+      SUPPORT_FROM_NAME,
+    ],
+  },
+  async (req, res) => {
   if (req.method !== 'POST') {
     res.status(405).json({ error: 'method_not_allowed' });
     return;
   }
 
-  if (!transporter || !toEmail || !smtpUser) {
+  const smtpUser =
+    (SUPPORT_SMTP_USER.value && SUPPORT_SMTP_USER.value()) ||
+    process.env.SUPPORT_SMTP_USER;
+  const smtpPass =
+    (SUPPORT_SMTP_APP_PASSWORD.value && SUPPORT_SMTP_APP_PASSWORD.value()) ||
+    process.env.SUPPORT_SMTP_APP_PASSWORD;
+  const toEmail =
+    (SUPPORT_TO_EMAIL.value && SUPPORT_TO_EMAIL.value()) ||
+    process.env.SUPPORT_TO_EMAIL;
+  const fromName =
+    (SUPPORT_FROM_NAME.value && SUPPORT_FROM_NAME.value()) ||
+    process.env.SUPPORT_FROM_NAME ||
+    'LaptopHarbor Support';
+
+  if (!smtpUser || !smtpPass || !toEmail) {
     res.status(500).json({ error: 'missing_smtp_config' });
     return;
   }
+
+  const transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    auth: { user: smtpUser, pass: smtpPass },
+  });
 
   const authHeader = req.headers.authorization || '';
   const token = authHeader.startsWith('Bearer ')
@@ -92,7 +113,8 @@ exports.sendSupportEmail = functions.onRequest(async (req, res) => {
   } catch (e) {
     res.status(500).json({ error: 'send_failed' });
   }
-});
+  },
+);
 
 function escapeHtml(input) {
   return String(input)
@@ -102,4 +124,3 @@ function escapeHtml(input) {
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#039;');
 }
-

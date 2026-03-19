@@ -170,6 +170,9 @@ class AuthProvider with ChangeNotifier {
     required String displayName,
     String? phone,
     String? bio,
+    String? photoUrl,
+    String? phoneIso,
+    String? phoneNational,
   }) async {
     final currentUser = _auth.currentUser;
     if (currentUser == null) return 'Not signed in';
@@ -181,6 +184,10 @@ class AuthProvider with ChangeNotifier {
       final normalizedDisplayName = displayName.trim();
       if (normalizedDisplayName.isNotEmpty) {
         await currentUser.updateDisplayName(normalizedDisplayName);
+      }
+      final normalizedPhotoUrl = photoUrl?.trim();
+      if (normalizedPhotoUrl != null && normalizedPhotoUrl.isNotEmpty) {
+        await currentUser.updatePhotoURL(normalizedPhotoUrl);
       }
 
       final parts = normalizedDisplayName
@@ -198,6 +205,12 @@ class AuthProvider with ChangeNotifier {
         if (currentUser.email != null) 'email': currentUser.email,
         if (phone != null) 'phone': phone.trim(),
         if (bio != null) 'bio': bio.trim(),
+        if (normalizedPhotoUrl != null && normalizedPhotoUrl.isNotEmpty)
+          'photoUrl': normalizedPhotoUrl,
+        if (phoneIso != null && phoneIso.trim().isNotEmpty)
+          'phoneIso': phoneIso.trim(),
+        if (phoneNational != null && phoneNational.trim().isNotEmpty)
+          'phoneNational': phoneNational.trim(),
         'updatedAt': FieldValue.serverTimestamp(),
       }, SetOptions(merge: true));
 

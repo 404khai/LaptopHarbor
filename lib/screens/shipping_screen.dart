@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../widgets/custom_back_button.dart';
 import '../theme/app_theme.dart';
@@ -13,10 +15,34 @@ class ShippingScreen extends StatefulWidget {
 }
 
 class _ShippingScreenState extends State<ShippingScreen> {
-  bool _setAsDefault = false;
+  String? _uid;
+  String? _selectedAddressId;
+
+  @override
+  void initState() {
+    super.initState();
+    _uid = FirebaseAuth.instance.currentUser?.uid;
+    FirebaseAuth.instance.authStateChanges().listen((user) {
+      if (!mounted) return;
+      setState(() {
+        _uid = user?.uid;
+      });
+    });
+  }
+
+  String _formatAddress(Map<String, dynamic> data) {
+    final city = (data['city'] ?? '').toString();
+    final state = (data['state'] ?? '').toString();
+    final country = (data['country'] ?? '').toString();
+    final zip = (data['zipCode'] ?? '').toString();
+    final line1 = [city, state].where((p) => p.trim().isNotEmpty).join(', ');
+    final line2 = [country, zip].where((p) => p.trim().isNotEmpty).join(' ');
+    return [line1, line2].where((p) => p.trim().isNotEmpty).join('\n');
+  }
 
   @override
   Widget build(BuildContext context) {
+    final uid = _uid;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -115,203 +141,269 @@ class _ShippingScreenState extends State<ShippingScreen> {
                   ),
                   const SizedBox(height: 16),
 
-                  // Default Address Card
-                  Container(
-                    padding: const EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: AppColors.primary, width: 2),
-                      boxShadow: [
-                        BoxShadow(
-                          color: AppColors.primary.withValues(alpha: 0.1),
-                          blurRadius: 10,
-                          offset: const Offset(0, 4),
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 8,
-                                    vertical: 2,
+                  if (uid == null)
+                    Text(
+                      'Please sign in to select a shipping address.',
+                      style: GoogleFonts.inter(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.grey[500],
+                      ),
+                    )
+                  else
+                    StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                      stream: FirebaseFirestore.instance
+                          .collection('users')
+                          .doc(uid)
+                          .collection('addresses')
+                          .orderBy('createdAt', descending: true)
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        final docs = snapshot.data?.docs ?? const [];
+                        if (docs.isEmpty) {
+                          return SizedBox(
+                            width: double.infinity,
+                            height: 56,
+                            child: OutlinedButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const SavedAddressesScreen(),
                                   ),
-                                  decoration: BoxDecoration(
-                                    color: AppColors.primary,
-                                    borderRadius: BorderRadius.circular(4),
-                                  ),
-                                  child: Text(
-                                    'DEFAULT',
-                                    style: GoogleFonts.inter(
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.bold,
-                                      color: AppColors.slate900,
-                                    ),
-                                  ),
+                                );
+                              },
+                              style: OutlinedButton.styleFrom(
+                                foregroundColor: Colors.grey[600],
+                                side: BorderSide(
+                                  color: Colors.grey[300]!,
+                                  width: 1.5,
                                 ),
-                                const SizedBox(width: 8),
-                                Text(
-                                  'Home (John Doe)',
-                                  style: GoogleFonts.inter(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    color: AppColors.slate900,
-                                  ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(16),
                                 ),
-                              ],
+                              ),
+                              child: Text(
+                                'ADD SHIPPING ADDRESS',
+                                style: GoogleFonts.inter(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w900,
+                                  letterSpacing: 1.0,
+                                ),
+                              ),
                             ),
-                            const Icon(
-                              Icons.check_circle_rounded,
+                          );
+                        }
+
+                        final defaultDoc =
+                            docs
+                                .cast<
+                                  QueryDocumentSnapshot<Map<String, dynamic>>?
+                                >()
+                                .firstWhere(
+                                  (d) =>
+                                      d != null &&
+                                      (d.data()['isDefault'] ?? false) == true,
+                                  orElse: () => null,
+                                ) ??
+                            docs.first;
+
+                        final selectedDoc = (_selectedAddressId != null)
+                            ? docs
+                                      .cast<
+                                        QueryDocumentSnapshot<
+                                          Map<String, dynamic>
+                                        >?
+                                      >()
+                                      .firstWhere(
+                                        (d) =>
+                                            d != null &&
+                                            d.id == _selectedAddressId,
+                                        orElse: () => null,
+                                      ) ??
+                                  defaultDoc
+                            : defaultDoc;
+
+                        final data = selectedDoc.data();
+                        final label = (data['label'] ?? 'Address')
+                            .toString()
+                            .trim();
+                        final addressText = _formatAddress(data);
+                        final currentId = selectedDoc.id;
+
+                        return Container(
+                          padding: const EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(
                               color: AppColors.primary,
-                              size: 24,
+                              width: 2,
                             ),
-                          ],
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          '123 Tech Lane, Silicon Valley\nSan Francisco, CA 94025\nUnited States',
-                          style: GoogleFonts.inter(
-                            fontSize: 14,
-                            color: Colors.grey[600],
-                            height: 1.5,
+                            boxShadow: [
+                              BoxShadow(
+                                color: AppColors.primary.withValues(alpha: 0.1),
+                                blurRadius: 10,
+                                offset: const Offset(0, 4),
+                              ),
+                            ],
                           ),
-                        ),
-                        const SizedBox(height: 16),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: OutlinedButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const SavedAddressesScreen(),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Container(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 8,
+                                          vertical: 2,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color: AppColors.primary,
+                                          borderRadius: BorderRadius.circular(
+                                            4,
+                                          ),
+                                        ),
+                                        child: Text(
+                                          (selectedDoc.id == defaultDoc.id)
+                                              ? 'DEFAULT'
+                                              : 'SELECTED',
+                                          style: GoogleFonts.inter(
+                                            fontSize: 10,
+                                            fontWeight: FontWeight.bold,
+                                            color: AppColors.slate900,
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(width: 8),
+                                      Text(
+                                        label,
+                                        style: GoogleFonts.inter(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: AppColors.slate900,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const Icon(
+                                    Icons.check_circle_rounded,
+                                    color: AppColors.primary,
+                                    size: 24,
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                addressText,
+                                style: GoogleFonts.inter(
+                                  fontSize: 14,
+                                  color: Colors.grey[600],
+                                  height: 1.5,
+                                ),
+                              ),
+                              const SizedBox(height: 16),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: OutlinedButton(
+                                      onPressed: () async {
+                                        final selected =
+                                            await Navigator.push<
+                                              Map<String, dynamic>?
+                                            >(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    SavedAddressesScreen(
+                                                      selectionMode: true,
+                                                      selectedAddressId:
+                                                          currentId,
+                                                    ),
+                                              ),
+                                            );
+                                        if (!context.mounted) return;
+                                        final id = selected?['id']?.toString();
+                                        if (id == null || id.isEmpty) return;
+                                        setState(() {
+                                          _selectedAddressId = id;
+                                        });
+                                      },
+                                      style: OutlinedButton.styleFrom(
+                                        foregroundColor: AppColors.slate900,
+                                        side: const BorderSide(
+                                          color: AppColors.slate900,
+                                          width: 1.5,
+                                        ),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            12,
+                                          ),
+                                        ),
+                                        padding: const EdgeInsets.symmetric(
+                                          vertical: 12,
+                                        ),
+                                      ),
+                                      child: Text(
+                                        'EDIT',
+                                        style: GoogleFonts.inter(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14,
+                                        ),
+                                      ),
                                     ),
-                                  );
-                                },
-                                style: OutlinedButton.styleFrom(
-                                  foregroundColor: AppColors.slate900,
-                                  side: const BorderSide(
-                                    color: AppColors.slate900,
-                                    width: 1.5,
                                   ),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12),
+                                  const SizedBox(width: 12),
+                                  Expanded(
+                                    child: OutlinedButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const SavedAddressesScreen(),
+                                          ),
+                                        );
+                                      },
+                                      style: OutlinedButton.styleFrom(
+                                        foregroundColor: Colors.grey[700],
+                                        side: BorderSide(
+                                          color: Colors.grey[300]!,
+                                          width: 1.5,
+                                        ),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            12,
+                                          ),
+                                        ),
+                                        padding: const EdgeInsets.symmetric(
+                                          vertical: 12,
+                                        ),
+                                      ),
+                                      child: Text(
+                                        'MANAGE',
+                                        style: GoogleFonts.inter(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                    ),
                                   ),
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 12,
-                                  ),
-                                ),
-                                child: Text(
-                                  'EDIT',
-                                  style: GoogleFonts.inter(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14,
-                                  ),
-                                ),
+                                ],
                               ),
-                            ),
-                            const SizedBox(width: 12),
-                            Expanded(
-                              child: OutlinedButton(
-                                onPressed: () {},
-                                style: OutlinedButton.styleFrom(
-                                  foregroundColor: Colors.grey[400],
-                                  side: BorderSide(
-                                    color: Colors.grey[300]!,
-                                    width: 1.5,
-                                  ),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 12,
-                                  ),
-                                ),
-                                child: Text(
-                                  'REMOVE',
-                                  style: GoogleFonts.inter(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
+                            ],
+                          ),
+                        );
+                      },
                     ),
-                  ),
                   const SizedBox(height: 16),
 
-                  
                   const SizedBox(height: 32),
-
-                  // Add New Address Form
-                  Text(
-                    'ADD NEW ADDRESS',
-                    style: GoogleFonts.inter(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.slate900,
-                      letterSpacing: 1.0,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  _buildInputField('FULL NAME', 'e.g. Alex Rivers'),
-                  const SizedBox(height: 16),
-                  _buildInputField('STREET ADDRESS', '123 Main St'),
-                  const SizedBox(height: 16),
-                  Row(
-                    children: [
-                      Expanded(child: _buildInputField('CITY', 'City')),
-                      const SizedBox(width: 16),
-                      Expanded(child: _buildInputField('ZIP CODE', 'Zip')),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: 24,
-                        height: 24,
-                        child: Checkbox(
-                          value: _setAsDefault,
-                          onChanged: (value) {
-                            setState(() {
-                              _setAsDefault = value ?? false;
-                            });
-                          },
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                          side: const BorderSide(
-                            color: AppColors.slate900,
-                            width: 2,
-                          ),
-                          activeColor: AppColors.primary,
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Text(
-                        'Set as default address',
-                        style: GoogleFonts.inter(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.slate900,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 40),
                 ],
               ),
             ),
@@ -419,51 +511,6 @@ class _ShippingScreenState extends State<ShippingScreen> {
       width: 8,
       height: 8,
       decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-    );
-  }
-
-  Widget _buildInputField(String label, String placeholder) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: GoogleFonts.inter(
-            fontSize: 12,
-            fontWeight: FontWeight.bold,
-            color: Colors.grey[500],
-          ),
-        ),
-        const SizedBox(height: 8),
-        TextField(
-          decoration: InputDecoration(
-            hintText: placeholder,
-            hintStyle: GoogleFonts.inter(color: Colors.grey[400]),
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 16,
-            ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide.none,
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide.none,
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: const BorderSide(color: AppColors.primary, width: 2),
-            ),
-            filled: true,
-            fillColor: Colors.grey[100],
-          ),
-          style: GoogleFonts.inter(
-            fontWeight: FontWeight.w500,
-            color: AppColors.slate900,
-          ),
-        ),
-      ],
     );
   }
 }
