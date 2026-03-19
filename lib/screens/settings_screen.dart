@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:laptop_harbor/screens/support_screen.dart';
+import 'package:permission_handler/permission_handler.dart';
 import '../theme/app_theme.dart';
 import '../widgets/custom_back_button.dart';
 import 'edit_profile_screen.dart';
@@ -14,8 +18,136 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  bool _notificationsEnabled = true;
-  bool _darkModeEnabled = false;
+  bool _appNotificationsEnabled = true;
+  bool _emailNotificationsEnabled = true;
+  bool _isLoadingPrefs = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadPrefs();
+  }
+
+  Future<void> _loadPrefs() async {
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+    if (uid == null) {
+      setState(() {
+        _isLoadingPrefs = false;
+      });
+      return;
+    }
+
+    try {
+      final doc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(uid)
+          .get();
+      final data = doc.data() ?? const <String, dynamic>{};
+      setState(() {
+        _appNotificationsEnabled =
+            (data['appNotificationsEnabled'] ?? true) == true;
+        _emailNotificationsEnabled =
+            (data['emailNotificationsEnabled'] ?? true) == true;
+        _isLoadingPrefs = false;
+      });
+    } catch (_) {
+      setState(() {
+        _isLoadingPrefs = false;
+      });
+    }
+  }
+
+  Future<void> _savePrefs({bool? appEnabled, bool? emailEnabled}) async {
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+    if (uid == null) return;
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .set(<String, dynamic>{
+          if (appEnabled != null) 'appNotificationsEnabled': appEnabled,
+          if (emailEnabled != null) 'emailNotificationsEnabled': emailEnabled,
+          'updatedAt': FieldValue.serverTimestamp(),
+        }, SetOptions(merge: true));
+  }
+
+  Future<void> _upsertToken(String uid, String token) async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('fcmTokens')
+        .doc(token)
+        .set(<String, dynamic>{
+          'token': token,
+          'platform': 'android',
+          'updatedAt': FieldValue.serverTimestamp(),
+          'createdAt': FieldValue.serverTimestamp(),
+        }, SetOptions(merge: true));
+  }
+
+  Future<void> _removeToken(String uid, String token) async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('fcmTokens')
+        .doc(token)
+        .delete();
+  }
+
+  Future<void> _toggleAppNotifications(bool enabled) async {
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+    if (uid == null) {
+      setState(() {
+        _appNotificationsEnabled = enabled;
+      });
+      return;
+    }
+
+    if (enabled) {
+      final status = await Permission.notification.request();
+      if (!status.isGranted) {
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Notification permission denied.')),
+        );
+        setState(() {
+          _appNotificationsEnabled = false;
+        });
+        await _savePrefs(appEnabled: false);
+        return;
+      }
+
+      setState(() {
+        _appNotificationsEnabled = true;
+      });
+      await _savePrefs(appEnabled: true);
+
+      final token = await FirebaseMessaging.instance.getToken();
+      if (token != null && token.trim().isNotEmpty) {
+        await _upsertToken(uid, token.trim());
+      }
+      return;
+    }
+
+    setState(() {
+      _appNotificationsEnabled = false;
+    });
+    await _savePrefs(appEnabled: false);
+
+    final token = await FirebaseMessaging.instance.getToken();
+    if (token != null && token.trim().isNotEmpty) {
+      await _removeToken(uid, token.trim());
+    }
+    await FirebaseMessaging.instance.deleteToken();
+  }
+
+  Future<void> _toggleEmailNotifications(bool enabled) async {
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+    setState(() {
+      _emailNotificationsEnabled = enabled;
+    });
+    if (uid == null) return;
+    await _savePrefs(emailEnabled: enabled);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,30 +213,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   _buildSwitchTile(
                     icon: Icons.notifications_none,
                     title: 'App Notifications',
-                    value: _notificationsEnabled,
-                    onChanged: (value) {
-                      setState(() {
-                        _notificationsEnabled = value;
-                      });
-                    },
+                    value: _appNotificationsEnabled,
+                    onChanged: _isLoadingPrefs ? null : _toggleAppNotifications,
                   ),
-                 
                   _buildSwitchTile(
                     icon: Icons.mail_outline,
                     title: 'Email Notifications',
-                    value: _notificationsEnabled,
-                    onChanged: (value) {
-                      setState(() {
-                        _notificationsEnabled = value;
-                      });
-                    },
+                    value: _emailNotificationsEnabled,
+                    onChanged: _isLoadingPrefs
+                        ? null
+                        : _toggleEmailNotifications,
                   ),
                 ],
               ),
               const SizedBox(height: 32),
 
               // Security Section
-             
 
               // Legal & Support Section
               _buildSectionTitle('Legal & Support'),
@@ -272,7 +396,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     required IconData icon,
     required String title,
     required bool value,
-    required ValueChanged<bool> onChanged,
+    ValueChanged<bool>? onChanged,
   }) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),

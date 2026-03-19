@@ -294,8 +294,7 @@ exports.dailyOrderStatusUpdate = onSchedule(
       (SUPPORT_FROM_NAME.value && SUPPORT_FROM_NAME.value()) ||
       process.env.SUPPORT_FROM_NAME ||
       'LaptopHarbor';
-
-    if (!smtpUser || !smtpPass) return;
+    const hasSmtp = Boolean(smtpUser && smtpPass);
 
     const transporter = nodemailer.createTransport({
       host: 'smtp.gmail.com',
@@ -313,6 +312,8 @@ exports.dailyOrderStatusUpdate = onSchedule(
       .collectionGroup('orders')
       .where('createdAt', '>=', since)
       .get();
+
+    const prefsCache = new Map();
 
     for (const doc of snapshot.docs) {
       const order = doc.data() || {};
@@ -343,39 +344,109 @@ exports.dailyOrderStatusUpdate = onSchedule(
       const lastNotified = normalizeStatus(order.lastStatusNotified);
       if (lastNotified === derived) continue;
 
-      const email = await resolveUserEmail(uid, order);
-      const { subject, text, html } = buildOrderEmail({
-        orderId: doc.id,
-        status: derived,
-        order,
-      });
-
-      if (email) {
+      let prefs = prefsCache.get(uid);
+      if (!prefs) {
         try {
-          await transporter.sendMail({
-            from: `${fromName} <${smtpUser}>`,
-            to: email,
-            subject,
-            text,
-            html,
-          });
-        } catch (_) {}
+          const userDoc = await admin.firestore().collection('users').doc(uid).get();
+          const data = userDoc.exists ? userDoc.data() : null;
+          prefs = {
+            app: data ? data.appNotificationsEnabled !== false : true,
+            email: data ? data.emailNotificationsEnabled !== false : true,
+          };
+        } catch (_) {
+          prefs = { app: true, email: true };
+        }
+        prefsCache.set(uid, prefs);
       }
 
-      await admin
-        .firestore()
-        .collection('users')
-        .doc(uid)
-        .collection('notifications')
-        .add({
-          type: 'order_status',
-          orderId: doc.id,
-          status: derived,
-          title: 'Order update',
-          body: `Your order ${doc.id} is now ${statusLabel(derived)}.`,
-          read: false,
-          createdAt: admin.firestore.FieldValue.serverTimestamp(),
-        });
+      const shouldEmail = prefs.email === true;
+      const shouldApp = prefs.app === true;
+
+      if (shouldEmail && hasSmtp) {
+        const email = await resolveUserEmail(uid, order);
+        if (email) {
+          const { subject, text, html } = buildOrderEmail({
+            orderId: doc.id,
+            status: derived,
+            order,
+          });
+          try {
+            await transporter.sendMail({
+              from: `${fromName} <${smtpUser}>`,
+              to: email,
+              subject,
+              text,
+              html,
+            });
+          } catch (_) {}
+        }
+      }
+
+      if (shouldApp) {
+        const title = 'Order update';
+        const body = `Your order ${doc.id} is now ${statusLabel(derived)}.`;
+
+        await admin
+          .firestore()
+          .collection('users')
+          .doc(uid)
+          .collection('notifications')
+          .add({
+            type: 'order_status',
+            orderId: doc.id,
+            status: derived,
+            title,
+            body,
+            read: false,
+            createdAt: admin.firestore.FieldValue.serverTimestamp(),
+          });
+
+        try {
+          const tokensSnap = await admin
+            .firestore()
+            .collection('users')
+            .doc(uid)
+            .collection('fcmTokens')
+            .get();
+          const tokens = tokensSnap.docs
+            .map((d) => d.id)
+            .filter((t) => t && typeof t === 'string');
+
+          if (tokens.length > 0) {
+            const resp = await admin.messaging().sendMulticast({
+              tokens,
+              notification: { title, body },
+              data: {
+                type: 'order_status',
+                orderId: doc.id,
+                status: derived,
+              },
+            });
+
+            const toDelete = [];
+            resp.responses.forEach((r, i) => {
+              if (r.success) return;
+              const code =
+                r.error && r.error.code ? String(r.error.code) : '';
+              if (
+                code === 'messaging/registration-token-not-registered' ||
+                code === 'messaging/invalid-registration-token'
+              ) {
+                toDelete.push(tokens[i]);
+              }
+            });
+            for (const token of toDelete) {
+              await admin
+                .firestore()
+                .collection('users')
+                .doc(uid)
+                .collection('fcmTokens')
+                .doc(token)
+                .delete();
+            }
+          }
+        } catch (_) {}
+      }
 
       await doc.ref.set(
         {
