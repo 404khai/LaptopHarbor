@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import '../theme/app_theme.dart';
 import '../widgets/custom_back_button.dart';
 import '../providers/cart_provider.dart';
-import 'payment_methods_screen.dart';
+import 'order_confirmation_screen.dart';
 import 'package:flutter_paystack_plus/flutter_paystack_plus.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -24,6 +24,7 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
   bool _isShippingExpanded = true;
   bool _isPaymentExpanded = false;
   bool _isItemsExpanded = true;
+  bool _isPlacingOrder = false;
 
   String _formatMoney(double amount) {
     return '₦${amount.toStringAsFixed(2)}';
@@ -39,6 +40,113 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
     final line2 = [city, state].where((p) => p.isNotEmpty).join(', ');
     final line3 = [country, zip].where((p) => p.isNotEmpty).join(' ');
     return [label, line2, line3].where((p) => p.isNotEmpty).join('\n');
+  }
+
+  Future<String?> _resolveAddressId(String uid) async {
+    final selected = widget.selectedAddressId?.trim();
+    if (selected != null && selected.isNotEmpty) return selected;
+
+    final snapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('addresses')
+        .orderBy('createdAt', descending: true)
+        .get();
+    if (snapshot.docs.isEmpty) return null;
+
+    final defaults = snapshot.docs.where(
+      (d) => (d.data()['isDefault'] ?? false) == true,
+    );
+    if (defaults.isNotEmpty) return defaults.first.id;
+    return snapshot.docs.first.id;
+  }
+
+  Future<Map<String, dynamic>?> _loadAddress({
+    required String uid,
+    required String addressId,
+  }) async {
+    final doc = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('addresses')
+        .doc(addressId)
+        .get();
+    final data = doc.data();
+    if (!doc.exists || data == null) return null;
+    return <String, dynamic>{...data, 'id': doc.id};
+  }
+
+  String _derivedStatus(DateTime createdAt) {
+    final today = DateTime.now();
+    final day0 = DateTime(createdAt.year, createdAt.month, createdAt.day);
+    final dayNow = DateTime(today.year, today.month, today.day);
+    final diffDays = dayNow.difference(day0).inDays;
+    if (diffDays <= 0) return 'processing';
+    if (diffDays == 1) return 'shipped';
+    if (diffDays == 2) return 'in_transit';
+    return 'delivered';
+  }
+
+  Future<String> _createOrder({
+    required String uid,
+    required String orderNumber,
+    required String paystackReference,
+    required String currency,
+    required double subtotal,
+    required double shippingCost,
+    required double tax,
+    required double total,
+    required List<Map<String, dynamic>> cartItems,
+  }) async {
+    final now = DateTime.now();
+    final addressId = await _resolveAddressId(uid);
+    final address = addressId == null
+        ? null
+        : await _loadAddress(uid: uid, addressId: addressId);
+
+    final items = cartItems.map((item) {
+      final quantity = (item['quantity'] is num)
+          ? (item['quantity'] as num).toInt()
+          : 1;
+      final price = (item['price'] is num)
+          ? (item['price'] as num).toDouble()
+          : 0.0;
+      return <String, dynamic>{
+        'productId': (item['productId'] ?? item['id'] ?? '').toString(),
+        'name': (item['name'] ?? 'Item').toString(),
+        'image': (item['image'] ?? '').toString(),
+        'quantity': quantity,
+        'unitPrice': price,
+        'lineTotal': price * quantity,
+      };
+    }).toList();
+
+    final orderData = <String, dynamic>{
+      'orderNumber': orderNumber,
+      'paystackReference': paystackReference,
+      'currency': currency,
+      'subtotal': subtotal,
+      'shippingCost': shippingCost,
+      'tax': tax,
+      'total': total,
+      'items': items,
+      'shippingAddressId': addressId,
+      'shippingAddress': address,
+      'status': _derivedStatus(now),
+      'estimatedDeliveryStart': Timestamp.fromDate(now),
+      'estimatedDeliveryEnd': Timestamp.fromDate(
+        now.add(const Duration(days: 3)),
+      ),
+      'createdAt': FieldValue.serverTimestamp(),
+      'updatedAt': FieldValue.serverTimestamp(),
+    };
+
+    final docRef = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('orders')
+        .add(orderData);
+    return docRef.id;
   }
 
   @override
@@ -378,6 +486,22 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
                 child: ElevatedButton(
                   onPressed: () async {
                     final messenger = ScaffoldMessenger.of(context);
+                    if (_isPlacingOrder) return;
+                    if (!_isTermsAccepted) {
+                      messenger.showSnackBar(
+                        const SnackBar(
+                          content: Text('Please accept terms and conditions.'),
+                        ),
+                      );
+                      return;
+                    }
+                    if (cart.cartItems.isEmpty) {
+                      messenger.showSnackBar(
+                        const SnackBar(content: Text('Your cart is empty.')),
+                      );
+                      return;
+                    }
+
                     final email =
                         FirebaseAuth.instance.currentUser?.email ??
                         'customer@example.com';
@@ -393,7 +517,7 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
                         (dotenv.env['PAYSTACK_CALLBACK_URL'] ?? '').trim();
 
                     if (secretKey.isEmpty || callbackUrl.isEmpty) {
-                      ScaffoldMessenger.of(context).showSnackBar(
+                      messenger.showSnackBar(
                         const SnackBar(
                           content: Text(
                             'Missing Paystack credentials. Please set PAYSTACK_SECRET_KEY and PAYSTACK_CALLBACK_URL.',
@@ -404,6 +528,22 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
                     }
 
                     try {
+                      final cartItemsSnapshot = List<Map<String, dynamic>>.from(
+                        cart.cartItems,
+                      );
+                      final uid = FirebaseAuth.instance.currentUser?.uid;
+                      if (uid == null) {
+                        messenger.showSnackBar(
+                          const SnackBar(
+                            content: Text('Please sign in first.'),
+                          ),
+                        );
+                        return;
+                      }
+                      setState(() {
+                        _isPlacingOrder = true;
+                      });
+
                       await FlutterPaystackPlus.openPaystackPopup(
                         context: context,
                         customerEmail: email,
@@ -413,19 +553,50 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
                         callBackUrl: callbackUrl,
                         currency: 'NGN',
                         onSuccess: () {
-                          if (!mounted) return;
-                          messenger.showSnackBar(
-                            const SnackBar(
-                              content: Text('Payment successful!'),
-                            ),
-                          );
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  const PaymentMethodsScreen(),
-                            ),
-                          );
+                          final cartProvider = context.read<CartProvider>();
+                          final navigator = Navigator.of(context);
+                          Future<void>.microtask(() async {
+                            if (!mounted) return;
+                            try {
+                              final orderId = await _createOrder(
+                                uid: uid,
+                                orderNumber: reference,
+                                paystackReference: reference,
+                                currency: 'NGN',
+                                subtotal: subtotal,
+                                shippingCost: shippingCost,
+                                tax: tax,
+                                total: total,
+                                cartItems: cartItemsSnapshot,
+                              );
+                              await cartProvider.clearCart();
+                              if (!mounted) return;
+                              messenger.showSnackBar(
+                                const SnackBar(
+                                  content: Text('Payment successful!'),
+                                ),
+                              );
+                              navigator.pushReplacement(
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      OrderConfirmationScreen(orderId: orderId),
+                                ),
+                              );
+                            } catch (_) {
+                              if (!mounted) return;
+                              messenger.showSnackBar(
+                                const SnackBar(
+                                  content: Text('Failed to place order.'),
+                                ),
+                              );
+                            } finally {
+                              if (mounted) {
+                                setState(() {
+                                  _isPlacingOrder = false;
+                                });
+                              }
+                            }
+                          });
                         },
                         onClosed: () {
                           if (!mounted) return;
@@ -434,10 +605,16 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
                               content: Text('Payment cancelled or failed.'),
                             ),
                           );
+                          setState(() {
+                            _isPlacingOrder = false;
+                          });
                         },
                       );
                     } catch (_) {
                       if (!mounted) return;
+                      setState(() {
+                        _isPlacingOrder = false;
+                      });
                       messenger.showSnackBar(
                         const SnackBar(
                           content: Text('Failed to start Paystack checkout.'),
@@ -457,7 +634,7 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Make Payment',
+                        _isPlacingOrder ? 'Processing...' : 'Make Payment',
                         style: GoogleFonts.inter(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
