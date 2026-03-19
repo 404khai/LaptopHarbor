@@ -92,4 +92,19 @@ class CartProvider with ChangeNotifier {
       return total;
     });
   }
+
+  Future<void> clearCart() async {
+    final user = _auth.currentUser;
+    if (user == null) return;
+
+    final ref = _firestore.collection('users').doc(user.uid).collection('cart');
+    final snapshot = await ref.get();
+    final batch = _firestore.batch();
+    for (final doc in snapshot.docs) {
+      batch.delete(doc.reference);
+    }
+    await batch.commit();
+    _cartItems = [];
+    notifyListeners();
+  }
 }

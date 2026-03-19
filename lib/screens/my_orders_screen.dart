@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../theme/app_theme.dart';
 import '../widgets/custom_back_button.dart';
@@ -14,6 +16,47 @@ class MyOrdersScreen extends StatefulWidget {
 class _MyOrdersScreenState extends State<MyOrdersScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+
+  String _statusFromCreatedAt(DateTime createdAt) {
+    final today = DateTime.now();
+    final day0 = DateTime(createdAt.year, createdAt.month, createdAt.day);
+    final dayNow = DateTime(today.year, today.month, today.day);
+    final diffDays = dayNow.difference(day0).inDays;
+    if (diffDays <= 0) return 'IN TRANSIT';
+    if (diffDays == 1) return 'SHIPPED';
+    if (diffDays == 2) return 'IN TRANSIT';
+    return 'DELIVERED';
+  }
+
+  String _formatDate(DateTime dt) {
+    const months = <int, String>{
+      1: 'Jan',
+      2: 'Feb',
+      3: 'Mar',
+      4: 'Apr',
+      5: 'May',
+      6: 'Jun',
+      7: 'Jul',
+      8: 'Aug',
+      9: 'Sep',
+      10: 'Oct',
+      11: 'Nov',
+      12: 'Dec',
+    };
+    final m = months[dt.month] ?? 'Jan';
+    return '$m ${dt.day}, ${dt.year}';
+  }
+
+  Color _statusColor(String status) {
+    if (status == 'DELIVERED') return AppColors.primary;
+    if (status == 'CANCELLED') return Colors.grey[100]!;
+    return AppColors.primary.withValues(alpha: 0.2);
+  }
+
+  Color _statusTextColor(String status) {
+    if (status == 'CANCELLED') return Colors.grey[500]!;
+    return AppColors.slate900;
+  }
 
   @override
   void initState() {
@@ -87,85 +130,113 @@ class _MyOrdersScreenState extends State<MyOrdersScreen>
   }
 
   Widget _buildOrdersList({required String filter}) {
-    final allOrders = [
-      _OrderData(
-        id: '#LH-892341',
-        status: 'DELIVERED',
-        statusColor: AppColors.primary,
-        statusTextColor: AppColors.slate900,
-        image:
-            'https://lh3.googleusercontent.com/aida-public/AB6AXuAoK5vBH-MRfZZSeWkhDBqhTHc9G36U9C0cGDtwFpJW4-5A0NHaFUi2GxW0IGnTcgASKwvsgRivqAjg6-hzPcu19gma1se-UhwJsmgW3b55OjVLDAmtPA6Z0Ah3EkbjRW1GLQKxZQKC1e_648O1FEZihJwEhrXD66O6L5yO7h2Bp6Qr2Ll-U045eS1Psx3b4FFcq4cXDP9UR1SC4kaN4tzeRkrtR3LDKgOF2Qt-SCMgKtibDbsQY3AiyGlTrXyzN2HxTStKIfLMnyvH',
-        title: 'High-Performance Laptop',
-        quantity: '1x',
-        date: 'Oct 22, 2024',
-        price: '\$1,299.00',
-      ),
-      _OrderData(
-        id: '#LH-892342',
-        status: 'IN TRANSIT',
-        statusColor: AppColors.primary.withValues(alpha: 0.2),
-        statusTextColor: AppColors.slate900,
-        image:
-            'https://lh3.googleusercontent.com/aida-public/AB6AXuDotNpGa1LstRfj4smJ3zVMIkIDZQTMPZOXgdGySc1sweFP_LByMbSUk0MyYTfeQuUoFSKk7lZiy9bQabzKxjXwkX-9WC3hE6exqboNIYUXLVgDg2Sf2swYBRNGPBVsj_oGIa_IrZaPx56FU3Gv4Ahlq5GWXVK_xol1zNhHO8bB2gZ20W20vXXE6aVPwgyt7rooTBOcT-22esOP5A2xMJORf7IBtiLsTFpydRv8CKHcnb6JrZvHhQeQ7MhU8Ii7jw6uNHMutyfdtR09',
-        title: 'Wireless Gaming Mouse',
-        quantity: '1x',
-        date: 'Oct 21, 2024',
-        price: '\$89.00',
-      ),
-      _OrderData(
-        id: '#LH-892339',
-        status: 'CANCELLED',
-        statusColor: Colors.grey[100]!,
-        statusTextColor: Colors.grey[500]!,
-        image:
-            'https://lh3.googleusercontent.com/aida-public/AB6AXuAiTXQKrHZ1nOyRQU0CTJpt9uIgOcRa7IivQIDFGjPPiDF6CiyVYBKeCh29bp9ZjHxZWUUm4jSji9WOiMTXjS-4ob1s125hw_-uitcKWhGQnaIKIVUqn-wJyLkb8okFi9D8ycYZcMlm9sCh09eVLzskpsYP99H-Mns7lUvl1f4z74Gec_nntuFJcekHXAAR8Sj0TlLlQDKWSvIsYA2nJD4HElRwGR6ohTXdAZBP3iMM2GUpS9Szxhh63vn6w4wucq77L98sdCWU-swQ',
-        title: 'Pro Tablet Gen 5',
-        quantity: '1x',
-        date: 'Oct 18, 2024',
-        price: '\$799.00',
-        isGrayscale: true,
-      ),
-    ];
-
-    List<_OrderData> filteredOrders;
-    if (filter == 'All') {
-      filteredOrders = allOrders;
-    } else if (filter == 'Active') {
-      filteredOrders = allOrders
-          .where((o) => o.status == 'IN TRANSIT')
-          .toList();
-    } else if (filter == 'Completed') {
-      filteredOrders = allOrders.where((o) => o.status == 'DELIVERED').toList();
-    } else {
-      filteredOrders = allOrders.where((o) => o.status == 'CANCELLED').toList();
-    }
-
-    if (filteredOrders.isEmpty) {
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+    if (uid == null) {
       return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.assignment_outlined, size: 64, color: Colors.grey[300]),
-            const SizedBox(height: 16),
-            Text(
-              'No orders found',
-              style: GoogleFonts.inter(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: Colors.grey[500],
-              ),
-            ),
-          ],
+        child: Text(
+          'Please sign in to view orders.',
+          style: GoogleFonts.inter(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+            color: AppColors.slate900,
+          ),
         ),
       );
     }
 
-    return ListView.separated(
-      padding: const EdgeInsets.all(16),
-      itemCount: filteredOrders.length,
-      separatorBuilder: (_, __) => const SizedBox(height: 16),
-      itemBuilder: (context, index) =>
-          _buildOrderCard(context, filteredOrders[index]),
+    return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+      stream: FirebaseFirestore.instance
+          .collection('users')
+          .doc(uid)
+          .collection('orders')
+          .orderBy('createdAt', descending: true)
+          .snapshots(),
+      builder: (context, snapshot) {
+        final docs = snapshot.data?.docs ?? const [];
+        final orders = docs.map((d) {
+          final data = d.data();
+          final createdAtTs = data['createdAt'];
+          final createdAt = (createdAtTs is Timestamp)
+              ? createdAtTs.toDate()
+              : DateTime.now();
+          final derivedStatus = _statusFromCreatedAt(createdAt);
+          final status = (data['status'] ?? derivedStatus)
+              .toString()
+              .toUpperCase();
+          final itemsRaw = data['items'];
+          final items = (itemsRaw is List) ? itemsRaw : const [];
+          final firstItem = items.isNotEmpty && items.first is Map
+              ? (items.first as Map)
+              : null;
+          final title = (firstItem?['name'] ?? 'Order').toString();
+          final image = (firstItem?['image'] ?? '').toString();
+          final quantity = items.fold<int>(0, (totalQty, e) {
+            if (e is Map && e['quantity'] is num) {
+              return totalQty + (e['quantity'] as num).toInt();
+            }
+            return totalQty;
+          });
+          final total = (data['total'] is num) ? data['total'] as num : 0;
+          final orderNumber = (data['orderNumber'] ?? '').toString().trim();
+          return _OrderData(
+            docId: d.id,
+            id: orderNumber.isEmpty ? 'Order' : orderNumber,
+            status: status,
+            statusColor: _statusColor(status),
+            statusTextColor: _statusTextColor(status),
+            image: image,
+            title: title,
+            quantity: '${quantity}x',
+            date: _formatDate(createdAt),
+            price: '₦${total.toDouble().toStringAsFixed(2)}',
+            isGrayscale: status == 'CANCELLED',
+          );
+        }).toList();
+
+        final filtered = filter == 'All'
+            ? orders
+            : filter == 'Active'
+            ? orders
+                  .where(
+                    (o) => o.status != 'DELIVERED' && o.status != 'CANCELLED',
+                  )
+                  .toList()
+            : filter == 'Completed'
+            ? orders.where((o) => o.status == 'DELIVERED').toList()
+            : orders.where((o) => o.status == 'CANCELLED').toList();
+
+        if (filtered.isEmpty) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.assignment_outlined,
+                  size: 64,
+                  color: Colors.grey[300],
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  'No orders found',
+                  style: GoogleFonts.inter(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.grey[500],
+                  ),
+                ),
+              ],
+            ),
+          );
+        }
+
+        return ListView.separated(
+          padding: const EdgeInsets.all(16),
+          itemCount: filtered.length,
+          separatorBuilder: (_, __) => const SizedBox(height: 16),
+          itemBuilder: (context, index) =>
+              _buildOrderCard(context, filtered[index]),
+        );
+      },
     );
   }
 
@@ -310,7 +381,8 @@ class _MyOrdersScreenState extends State<MyOrdersScreen>
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const OrderDetailsScreen(),
+                        builder: (context) =>
+                            OrderDetailsScreen(orderId: order.docId),
                       ),
                     );
                   },
@@ -343,6 +415,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen>
 }
 
 class _OrderData {
+  final String docId;
   final String id;
   final String status;
   final Color statusColor;
@@ -355,6 +428,7 @@ class _OrderData {
   final bool isGrayscale;
 
   _OrderData({
+    required this.docId,
     required this.id,
     required this.status,
     required this.statusColor,
