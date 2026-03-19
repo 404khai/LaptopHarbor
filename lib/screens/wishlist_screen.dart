@@ -18,6 +18,8 @@ class WishlistScreen extends StatefulWidget {
 
 class _WishlistScreenState extends State<WishlistScreen> {
   int _selectedFilterIndex = 0;
+  bool _isSearchOpen = false;
+  final TextEditingController _searchController = TextEditingController();
   static const List<String> _filters = [
     'All Items',
     'Laptop',
@@ -40,14 +42,10 @@ class _WishlistScreenState extends State<WishlistScreen> {
     return label;
   }
 
-  Future<void> _startWishlistSearch(List<Map<String, dynamic>> items) async {
-    await showSearch<Map<String, dynamic>?>(
-      context: context,
-      delegate: _WishlistSearchDelegate(
-        items: items,
-        onSelect: (item) => _openProductDetails(context, item),
-      ),
-    );
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
   }
 
   Future<void> _openProductDetails(
@@ -108,6 +106,13 @@ class _WishlistScreenState extends State<WishlistScreen> {
                     _normalizeCategory(selectedCategory),
               )
               .toList();
+    final q = _searchController.text.trim().toLowerCase();
+    final filteredItems = q.isEmpty
+        ? visibleItems
+        : visibleItems.where((e) {
+            final title = (e['title'] ?? '').toString().toLowerCase();
+            return title.contains(q);
+          }).toList();
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -127,7 +132,13 @@ class _WishlistScreenState extends State<WishlistScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              _startWishlistSearch(wishlistItems);
+              setState(() {
+                _isSearchOpen = !_isSearchOpen;
+                if (!_isSearchOpen) {
+                  _searchController.clear();
+                  FocusScope.of(context).unfocus();
+                }
+              });
             },
             icon: const Icon(Icons.search, color: AppColors.slate900),
           ),
@@ -135,32 +146,92 @@ class _WishlistScreenState extends State<WishlistScreen> {
         bottom: wishlistItems.isEmpty
             ? null
             : PreferredSize(
-                preferredSize: const Size.fromHeight(48),
+                preferredSize: Size.fromHeight(_isSearchOpen ? 112 : 48),
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   alignment: Alignment.centerLeft,
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: List.generate(_filters.length, (index) {
-                        final label = _filters[index];
-                        final isSelected = _selectedFilterIndex == index;
-                        return Padding(
-                          padding: const EdgeInsets.only(right: 12),
-                          child: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                _selectedFilterIndex = index;
-                              });
-                            },
-                            child: _buildCategoryChip(
-                              label,
-                              isSelected: isSelected,
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 12),
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: List.generate(_filters.length, (index) {
+                            final label = _filters[index];
+                            final isSelected = _selectedFilterIndex == index;
+                            return Padding(
+                              padding: const EdgeInsets.only(right: 12),
+                              child: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _selectedFilterIndex = index;
+                                  });
+                                },
+                                child: _buildCategoryChip(
+                                  label,
+                                  isSelected: isSelected,
+                                ),
+                              ),
+                            );
+                          }),
+                        ),
+                      ),
+                      if (_isSearchOpen) ...[
+                        const SizedBox(height: 12),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: TextField(
+                            controller: _searchController,
+                            onChanged: (_) => setState(() {}),
+                            decoration: InputDecoration(
+                              hintText: 'Search wishlist...',
+                              hintStyle: GoogleFonts.inter(
+                                color: Colors.grey[400],
+                              ),
+                              prefixIcon: const Icon(
+                                Icons.search,
+                                color: Colors.grey,
+                              ),
+                              suffixIcon: _searchController.text.isEmpty
+                                  ? null
+                                  : IconButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          _searchController.clear();
+                                        });
+                                      },
+                                      icon: const Icon(
+                                        Icons.clear,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                              filled: true,
+                              fillColor: Colors.grey[100],
+                              contentPadding: const EdgeInsets.all(16),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                borderSide: BorderSide.none,
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                borderSide: BorderSide.none,
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                borderSide: const BorderSide(
+                                  color: AppColors.primary,
+                                  width: 2,
+                                ),
+                              ),
                             ),
                           ),
-                        );
-                      }),
-                    ),
+                        ),
+                        const SizedBox(height: 12),
+                      ],
+                    ],
                   ),
                 ),
               ),
@@ -173,9 +244,9 @@ class _WishlistScreenState extends State<WishlistScreen> {
                   ? _buildEmptyState()
                   : ListView.builder(
                       padding: const EdgeInsets.all(16),
-                      itemCount: visibleItems.length,
+                      itemCount: filteredItems.length,
                       itemBuilder: (context, index) {
-                        return _buildWishlistItem(visibleItems[index]);
+                        return _buildWishlistItem(filteredItems[index]);
                       },
                     ),
             ),
@@ -451,88 +522,6 @@ class _WishlistScreenState extends State<WishlistScreen> {
           ],
         ),
       ),
-    );
-  }
-}
-
-class _WishlistSearchDelegate extends SearchDelegate<Map<String, dynamic>?> {
-  final List<Map<String, dynamic>> items;
-  final void Function(Map<String, dynamic> item) onSelect;
-
-  _WishlistSearchDelegate({required this.items, required this.onSelect});
-
-  @override
-  List<Widget>? buildActions(BuildContext context) {
-    return [
-      if (query.isNotEmpty)
-        IconButton(
-          onPressed: () {
-            query = '';
-          },
-          icon: const Icon(Icons.clear),
-        ),
-    ];
-  }
-
-  @override
-  Widget? buildLeading(BuildContext context) {
-    return IconButton(
-      onPressed: () => close(context, null),
-      icon: const Icon(Icons.arrow_back),
-    );
-  }
-
-  @override
-  Widget buildResults(BuildContext context) => _buildList(context);
-
-  @override
-  Widget buildSuggestions(BuildContext context) => _buildList(context);
-
-  Widget _buildList(BuildContext context) {
-    final q = query.trim().toLowerCase();
-    final filtered = q.isEmpty
-        ? items
-        : items.where((e) {
-            final title = (e['title'] ?? '').toString().toLowerCase();
-            return title.contains(q);
-          }).toList();
-
-    if (filtered.isEmpty) {
-      return Center(
-        child: Text(
-          'Result Not Found',
-          style: GoogleFonts.inter(
-            fontSize: 14,
-            fontWeight: FontWeight.w600,
-            color: Colors.grey[400],
-          ),
-        ),
-      );
-    }
-
-    return ListView.builder(
-      itemCount: filtered.length,
-      itemBuilder: (context, index) {
-        final item = filtered[index];
-        return ListTile(
-          leading: CircleAvatar(
-            backgroundColor: Colors.grey[200],
-            backgroundImage: NetworkImage((item['image'] ?? '').toString()),
-          ),
-          title: Text(
-            (item['title'] ?? '').toString(),
-            style: GoogleFonts.inter(
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
-              color: AppColors.slate900,
-            ),
-          ),
-          onTap: () {
-            close(context, item);
-            onSelect(item);
-          },
-        );
-      },
     );
   }
 }
