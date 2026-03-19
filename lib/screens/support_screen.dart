@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../theme/app_theme.dart';
 import '../widgets/custom_back_button.dart';
+import '../services/support_service.dart';
 
 class SupportScreen extends StatefulWidget {
   const SupportScreen({super.key});
@@ -38,7 +39,22 @@ class _SupportScreenState extends State<SupportScreen> {
       _isSubmitting = true;
     });
 
-    await Future<void>.delayed(const Duration(milliseconds: 400));
+    try {
+      await SupportService.submitSupportMessage(
+        title: 'Contact Us',
+        subject: subject,
+        message: message,
+      );
+    } catch (_) {
+      if (!mounted) return;
+      setState(() {
+        _isSubmitting = false;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Failed to submit message.')),
+      );
+      return;
+    }
 
     if (!mounted) return;
     setState(() {
@@ -47,9 +63,9 @@ class _SupportScreenState extends State<SupportScreen> {
       _messageController.clear();
     });
     FocusScope.of(context).unfocus();
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Message submitted.')),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(const SnackBar(content: Text('Message submitted.')));
   }
 
   @override
@@ -185,4 +201,3 @@ class _SupportScreenState extends State<SupportScreen> {
     );
   }
 }
-
