@@ -1,12 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../theme/app_theme.dart';
 
 import '../widgets/custom_back_button.dart';
+import 'home_screen.dart';
 
 class OtpVerificationScreen extends StatefulWidget {
-  const OtpVerificationScreen({super.key});
+  final String phoneNumber;
+  final String verificationId;
+  final int? resendToken;
+
+  const OtpVerificationScreen({
+    super.key,
+    required this.phoneNumber,
+    required this.verificationId,
+    this.resendToken,
+  });
 
   @override
   State<OtpVerificationScreen> createState() => _OtpVerificationScreenState();
@@ -18,6 +29,17 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
     6,
     (index) => TextEditingController(),
   );
+  bool _isVerifying = false;
+  bool _isResending = false;
+  String _verificationId = '';
+  int? _resendToken;
+
+  @override
+  void initState() {
+    super.initState();
+    _verificationId = widget.verificationId;
+    _resendToken = widget.resendToken;
+  }
 
   @override
   void dispose() {
@@ -28,6 +50,89 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
       focusNode.dispose();
     }
     super.dispose();
+  }
+
+  String _otpValue() {
+    return _controllers.map((c) => c.text.trim()).join();
+  }
+
+  Future<void> _verify() async {
+    if (_isVerifying) return;
+    final code = _otpValue();
+    if (code.length != 6) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Enter the 6-digit code.')));
+      return;
+    }
+
+    setState(() {
+      _isVerifying = true;
+    });
+
+    try {
+      final credential = PhoneAuthProvider.credential(
+        verificationId: _verificationId,
+        smsCode: code,
+      );
+      await FirebaseAuth.instance.signInWithCredential(credential);
+      if (!mounted) return;
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => const HomeScreen()),
+        (route) => false,
+      );
+    } catch (_) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Invalid code. Please try again.')),
+      );
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isVerifying = false;
+        });
+      }
+    }
+  }
+
+  Future<void> _resend() async {
+    if (_isResending) return;
+    setState(() {
+      _isResending = true;
+    });
+
+    final messenger = ScaffoldMessenger.of(context);
+
+    try {
+      await FirebaseAuth.instance.verifyPhoneNumber(
+        phoneNumber: widget.phoneNumber,
+        forceResendingToken: _resendToken,
+        verificationCompleted: (_) {},
+        verificationFailed: (e) {
+          messenger.showSnackBar(
+            SnackBar(content: Text(e.message ?? 'Failed to resend code.')),
+          );
+        },
+        codeSent: (verificationId, resendToken) {
+          setState(() {
+            _verificationId = verificationId;
+            _resendToken = resendToken;
+          });
+          messenger.showSnackBar(const SnackBar(content: Text('Code resent.')));
+        },
+        codeAutoRetrievalTimeout: (_) {},
+      );
+    } catch (_) {
+      messenger.showSnackBar(
+        const SnackBar(content: Text('Failed to resend code.')),
+      );
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isResending = false;
+        });
+      }
+    }
   }
 
   void _onOtpChanged(String value, int index) {
@@ -48,7 +153,6 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
         elevation: 0,
         centerTitle: true,
         leading: const Center(child: CustomBackButton()),
-      
       ),
       body: SafeArea(
         child: Column(
@@ -64,7 +168,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                     children: [
                       const SizedBox(height: 64),
                       Text(
-                        'Verify Your Email',
+                        'Verify Your Phone',
                         style: GoogleFonts.inter(
                           fontSize: 32,
                           fontWeight: FontWeight.bold,
@@ -75,7 +179,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                       ),
                       const SizedBox(height: 12),
                       Text(
-                        'Enter the 6-digit code sent to your email address.',
+                        'Enter the 6-digit code sent to your phone number.',
                         style: GoogleFonts.inter(
                           fontSize: 16,
                           color: AppColors.subtext,
@@ -135,9 +239,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                       SizedBox(
                         height: 56,
                         child: ElevatedButton(
-                          onPressed: () {
-                            // TODO: Implement verification logic
-                          },
+                          onPressed: _isVerifying ? null : _verify,
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppColors.primary,
                             foregroundColor: Colors.black,
@@ -147,7 +249,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                             ),
                           ),
                           child: Text(
-                            'Verify',
+                            _isVerifying ? 'Verifying...' : 'Verify',
                             style: GoogleFonts.inter(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
@@ -169,11 +271,9 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                             ),
                           ),
                           GestureDetector(
-                            onTap: () {
-                              // TODO: Implement resend logic
-                            },
+                            onTap: _isResending ? null : _resend,
                             child: Text(
-                              'Resend Code',
+                              _isResending ? 'Resending...' : 'Resend Code',
                               style: GoogleFonts.inter(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
