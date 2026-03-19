@@ -13,16 +13,45 @@ class MyOrdersScreen extends StatefulWidget {
   State<MyOrdersScreen> createState() => _MyOrdersScreenState();
 }
 
-class _MyOrdersScreenState extends State<MyOrdersScreen>
-    with SingleTickerProviderStateMixin {
-  late TabController _tabController;
+class _MyOrdersScreenState extends State<MyOrdersScreen> {
+  int _selectedFilterIndex = 0;
+  static const List<String> _filters = [
+    'All',
+    'Active',
+    'Completed',
+    'Cancelled',
+  ];
 
-  String _statusFromCreatedAt(DateTime createdAt) {
+  String _normalizeStatus({
+    required dynamic rawStatus,
+    required DateTime createdAt,
+  }) {
+    final fallback = _derivedStatus(createdAt: createdAt);
+    if (rawStatus is! String) return fallback;
+    final normalized = rawStatus
+        .trim()
+        .toLowerCase()
+        .replaceAll(' ', '_')
+        .replaceAll('-', '_');
+
+    if (normalized == 'cancelled' || normalized == 'canceled') {
+      return 'CANCELLED';
+    }
+    if (normalized == 'delivered') return 'DELIVERED';
+    if (normalized == 'shipped') return 'SHIPPED';
+    if (normalized == 'in_transit' || normalized == 'intransit') {
+      return 'IN TRANSIT';
+    }
+    if (normalized == 'processing') return 'PROCESSING';
+    return fallback;
+  }
+
+  String _derivedStatus({required DateTime createdAt}) {
     final today = DateTime.now();
     final day0 = DateTime(createdAt.year, createdAt.month, createdAt.day);
     final dayNow = DateTime(today.year, today.month, today.day);
     final diffDays = dayNow.difference(day0).inDays;
-    if (diffDays <= 0) return 'IN TRANSIT';
+    if (diffDays <= 0) return 'PROCESSING';
     if (diffDays == 1) return 'SHIPPED';
     if (diffDays == 2) return 'IN TRANSIT';
     return 'DELIVERED';
@@ -59,18 +88,6 @@ class _MyOrdersScreenState extends State<MyOrdersScreen>
   }
 
   @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(length: 4, vsync: this);
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
@@ -93,43 +110,30 @@ class _MyOrdersScreenState extends State<MyOrdersScreen>
             icon: const Icon(Icons.search, color: AppColors.slate900),
           ),
         ],
-        bottom: TabBar(
-          controller: _tabController,
-          isScrollable: true,
-          labelColor: AppColors.slate900,
-          unselectedLabelColor: Colors.grey[400],
-          labelStyle: GoogleFonts.inter(
-            fontSize: 14,
-            fontWeight: FontWeight.bold,
-          ),
-          unselectedLabelStyle: GoogleFonts.inter(
-            fontSize: 14,
-            fontWeight: FontWeight.bold,
-          ),
-          indicatorColor: AppColors.primary,
-          indicatorWeight: 3,
-          indicatorSize: TabBarIndicatorSize.label,
-          tabs: const [
-            Tab(text: 'All'),
-            Tab(text: 'Active'),
-            Tab(text: 'Completed'),
-            Tab(text: 'Cancelled'),
-          ],
-        ),
       ),
-      body: TabBarView(
-        controller: _tabController,
-        children: [
-          _buildOrdersList(filter: 'All'),
-          _buildOrdersList(filter: 'Active'),
-          _buildOrdersList(filter: 'Completed'),
-          _buildOrdersList(filter: 'Cancelled'),
-        ],
+      body: _buildOrdersList(),
+    );
+  }
+
+  Widget _buildCategoryChip(String label, {bool isSelected = false}) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      decoration: BoxDecoration(
+        color: isSelected ? const Color(0xFF0F172A) : Colors.grey[100],
+        borderRadius: BorderRadius.circular(30),
+      ),
+      child: Text(
+        label,
+        style: GoogleFonts.inter(
+          fontSize: 14,
+          fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+          color: isSelected ? Colors.white : AppColors.text,
+        ),
       ),
     );
   }
 
-  Widget _buildOrdersList({required String filter}) {
+  Widget _buildOrdersList() {
     final uid = FirebaseAuth.instance.currentUser?.uid;
     if (uid == null) {
       return Center(
@@ -159,10 +163,10 @@ class _MyOrdersScreenState extends State<MyOrdersScreen>
           final createdAt = (createdAtTs is Timestamp)
               ? createdAtTs.toDate()
               : DateTime.now();
-          final derivedStatus = _statusFromCreatedAt(createdAt);
-          final status = (data['status'] ?? derivedStatus)
-              .toString()
-              .toUpperCase();
+          final status = _normalizeStatus(
+            rawStatus: data['status'],
+            createdAt: createdAt,
+          );
           final itemsRaw = data['items'];
           final items = (itemsRaw is List) ? itemsRaw : const [];
           final firstItem = items.isNotEmpty && items.first is Map
@@ -193,48 +197,96 @@ class _MyOrdersScreenState extends State<MyOrdersScreen>
           );
         }).toList();
 
-        final filtered = filter == 'All'
+        final allCount = orders.length;
+        final activeCount = orders
+            .where((o) => o.status != 'DELIVERED' && o.status != 'CANCELLED')
+            .length;
+        final completedCount = orders
+            .where((o) => o.status == 'DELIVERED')
+            .length;
+        final cancelledCount = orders
+            .where((o) => o.status == 'CANCELLED')
+            .length;
+
+        final selected = _filters[_selectedFilterIndex];
+        final filtered = selected == 'All'
             ? orders
-            : filter == 'Active'
+            : selected == 'Active'
             ? orders
                   .where(
                     (o) => o.status != 'DELIVERED' && o.status != 'CANCELLED',
                   )
                   .toList()
-            : filter == 'Completed'
+            : selected == 'Completed'
             ? orders.where((o) => o.status == 'DELIVERED').toList()
             : orders.where((o) => o.status == 'CANCELLED').toList();
 
-        if (filtered.isEmpty) {
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.assignment_outlined,
-                  size: 64,
-                  color: Colors.grey[300],
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  'No orders found',
-                  style: GoogleFonts.inter(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.grey[500],
-                  ),
-                ),
-              ],
-            ),
-          );
-        }
+        final chips = <String>[
+          'All ($allCount)',
+          'Active ($activeCount)',
+          'Completed ($completedCount)',
+          'Cancelled ($cancelledCount)',
+        ];
 
-        return ListView.separated(
-          padding: const EdgeInsets.all(16),
-          itemCount: filtered.length,
-          separatorBuilder: (_, __) => const SizedBox(height: 16),
-          itemBuilder: (context, index) =>
-              _buildOrderCard(context, filtered[index]),
+        return Column(
+          children: [
+            const SizedBox(height: 12),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                children: List.generate(chips.length, (index) {
+                  final isSelected = _selectedFilterIndex == index;
+                  return Padding(
+                    padding: const EdgeInsets.only(right: 12),
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _selectedFilterIndex = index;
+                        });
+                      },
+                      child: _buildCategoryChip(
+                        chips[index],
+                        isSelected: isSelected,
+                      ),
+                    ),
+                  );
+                }),
+              ),
+            ),
+            const SizedBox(height: 12),
+            Expanded(
+              child: filtered.isEmpty
+                  ? Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.assignment_outlined,
+                            size: 64,
+                            color: Colors.grey[300],
+                          ),
+                          const SizedBox(height: 16),
+                          Text(
+                            'No orders found',
+                            style: GoogleFonts.inter(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.grey[500],
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  : ListView.separated(
+                      padding: const EdgeInsets.all(16),
+                      itemCount: filtered.length,
+                      separatorBuilder: (_, __) => const SizedBox(height: 16),
+                      itemBuilder: (context, index) =>
+                          _buildOrderCard(context, filtered[index]),
+                    ),
+            ),
+          ],
         );
       },
     );

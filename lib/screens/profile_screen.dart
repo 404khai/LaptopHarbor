@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' hide AuthProvider;
 import 'package:google_fonts/google_fonts.dart';
 import 'package:laptop_harbor/screens/saved_addresses_screen.dart';
@@ -15,9 +16,38 @@ import 'edit_profile_screen.dart';
 import 'settings_screen.dart';
 import 'login_screen.dart';
 import 'support_screen.dart';
+import 'user_reviews_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
+
+  String _statusKey({required dynamic rawStatus, required DateTime createdAt}) {
+    final normalized = (rawStatus ?? '')
+        .toString()
+        .trim()
+        .toLowerCase()
+        .replaceAll(' ', '_')
+        .replaceAll('-', '_');
+
+    if (normalized == 'cancelled' || normalized == 'canceled') {
+      return 'cancelled';
+    }
+    if (normalized == 'delivered') return 'delivered';
+    if (normalized == 'shipped') return 'shipped';
+    if (normalized == 'in_transit' || normalized == 'intransit') {
+      return 'in_transit';
+    }
+    if (normalized == 'processing') return 'processing';
+
+    final today = DateTime.now();
+    final day0 = DateTime(createdAt.year, createdAt.month, createdAt.day);
+    final dayNow = DateTime(today.year, today.month, today.day);
+    final diffDays = dayNow.difference(day0).inDays;
+    if (diffDays <= 0) return 'processing';
+    if (diffDays == 1) return 'shipped';
+    if (diffDays == 2) return 'in_transit';
+    return 'delivered';
+  }
 
   String _nameFromEmail(String email) {
     final trimmed = email.trim();
@@ -64,6 +94,7 @@ class ProfileScreen extends StatelessWidget {
     final authProvider = context.watch<AuthProvider>();
     final user = authProvider.user;
     final profile = authProvider.userProfile;
+    final uid = user?.uid;
 
     final displayName = _effectiveDisplayName(user: user, profile: profile);
     final email = (profile?['email'] as String?) ?? user?.email ?? '';
@@ -210,32 +241,132 @@ class ProfileScreen extends StatelessWidget {
                     // Stats Row
                     Row(
                       children: [
-                        _buildStatCard(
-                          icon: Icons.inventory_2,
-                          count: '12',
-                          label: 'Orders',
-                          onTap: () {},
+                        Expanded(
+                          child: uid == null
+                              ? _buildStatCard(
+                                  icon: Icons.inventory_2,
+                                  count: '0',
+                                  label: 'Active Orders',
+                                  onTap: () {},
+                                )
+                              : StreamBuilder<
+                                  QuerySnapshot<Map<String, dynamic>>
+                                >(
+                                  stream: FirebaseFirestore.instance
+                                      .collection('users')
+                                      .doc(uid)
+                                      .collection('orders')
+                                      .snapshots(),
+                                  builder: (context, snapshot) {
+                                    final docs =
+                                        snapshot.data?.docs ?? const [];
+                                    var active = 0;
+                                    for (final d in docs) {
+                                      final data = d.data();
+                                      final createdAtRaw = data['createdAt'];
+                                      final createdAt =
+                                          createdAtRaw is Timestamp
+                                          ? createdAtRaw.toDate()
+                                          : DateTime.now();
+                                      final key = _statusKey(
+                                        rawStatus: data['status'],
+                                        createdAt: createdAt,
+                                      );
+                                      if (key != 'delivered' &&
+                                          key != 'cancelled') {
+                                        active++;
+                                      }
+                                    }
+                                    return _buildStatCard(
+                                      icon: Icons.inventory_2,
+                                      count: '$active',
+                                      label: 'Active Orders',
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const MyOrdersScreen(),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  },
+                                ),
                         ),
                         const SizedBox(width: 16),
-                        _buildStatCard(
-                          icon: Icons.favorite,
-                          count: '5',
-                          label: 'Wishlist',
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const WishlistScreen(),
-                              ),
-                            );
-                          },
+                        Expanded(
+                          child: uid == null
+                              ? _buildStatCard(
+                                  icon: Icons.favorite,
+                                  count: '0',
+                                  label: 'Wishlist',
+                                  onTap: () {},
+                                )
+                              : StreamBuilder<
+                                  QuerySnapshot<Map<String, dynamic>>
+                                >(
+                                  stream: FirebaseFirestore.instance
+                                      .collection('users')
+                                      .doc(uid)
+                                      .collection('wishlist')
+                                      .snapshots(),
+                                  builder: (context, snapshot) {
+                                    final count =
+                                        snapshot.data?.docs.length ?? 0;
+                                    return _buildStatCard(
+                                      icon: Icons.favorite,
+                                      count: '$count',
+                                      label: 'Wishlist',
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const WishlistScreen(),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  },
+                                ),
                         ),
                         const SizedBox(width: 16),
-                        _buildStatCard(
-                          icon: Icons.rate_review,
-                          count: '3',
-                          label: 'Reviews',
-                          onTap: () {},
+                        Expanded(
+                          child: uid == null
+                              ? _buildStatCard(
+                                  icon: Icons.rate_review,
+                                  count: '0',
+                                  label: 'Reviews',
+                                  onTap: () {},
+                                )
+                              : StreamBuilder<
+                                  QuerySnapshot<Map<String, dynamic>>
+                                >(
+                                  stream: FirebaseFirestore.instance
+                                      .collection('users')
+                                      .doc(uid)
+                                      .collection('reviews')
+                                      .snapshots(),
+                                  builder: (context, snapshot) {
+                                    final count =
+                                        snapshot.data?.docs.length ?? 0;
+                                    return _buildStatCard(
+                                      icon: Icons.rate_review,
+                                      count: '$count',
+                                      label: 'Reviews',
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const UserReviewsScreen(),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  },
+                                ),
                         ),
                       ],
                     ),
@@ -388,41 +519,39 @@ class ProfileScreen extends StatelessWidget {
     required String label,
     required VoidCallback onTap,
   }) {
-    return Expanded(
-      child: GestureDetector(
-        onTap: onTap,
-        child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 20),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: Colors.grey[100]!),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.05),
-                blurRadius: 10,
-                offset: const Offset(0, 4),
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 20),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: Colors.grey[100]!),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.05),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Column(
+          children: [
+            Icon(icon, color: AppColors.slate900, size: 24),
+            const SizedBox(height: 8),
+            Text(
+              count,
+              style: GoogleFonts.inter(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: AppColors.slate900,
               ),
-            ],
-          ),
-          child: Column(
-            children: [
-              Icon(icon, color: AppColors.slate900, size: 24),
-              const SizedBox(height: 8),
-              Text(
-                count,
-                style: GoogleFonts.inter(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.slate900,
-                ),
-              ),
-              Text(
-                label,
-                style: GoogleFonts.inter(fontSize: 12, color: Colors.grey[500]),
-              ),
-            ],
-          ),
+            ),
+            Text(
+              label,
+              style: GoogleFonts.inter(fontSize: 12, color: Colors.grey[500]),
+            ),
+          ],
         ),
       ),
     );

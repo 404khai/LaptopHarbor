@@ -79,7 +79,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 children: [
                   _buildSwitchTile(
                     icon: Icons.notifications_none,
-                    title: 'Notifications',
+                    title: 'App Notifications',
                     value: _notificationsEnabled,
                     onChanged: (value) {
                       setState(() {
@@ -98,47 +98,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       });
                     },
                   ),
-                  _buildDivider(),
-                  _buildSettingsTile(
-                    icon: Icons.payments_outlined,
-                    title: 'Currency',
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          'USD',
-                          style: GoogleFonts.inter(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.grey[500],
-                          ),
-                        ),
-                        const SizedBox(width: 4),
-                        Icon(
-                          Icons.chevron_right,
-                          color: Colors.grey[400],
-                          size: 20,
-                        ),
-                      ],
-                    ),
-                    onTap: () {},
-                  ),
+                  
                 ],
               ),
               const SizedBox(height: 32),
 
               // Security Section
-              _buildSectionTitle('Security'),
-              _buildSettingsContainer(
-                children: [
-                  _buildSettingsTile(
-                    icon: Icons.verified_user_outlined,
-                    title: 'Two-Factor Authentication',
-                    onTap: () {},
-                  ),
-                ],
-              ),
-              const SizedBox(height: 32),
+             
 
               // Legal & Support Section
               _buildSectionTitle('Legal & Support'),
