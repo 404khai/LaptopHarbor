@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:laptop_harbor/screens/order_review_screen.dart';
 import '../widgets/custom_back_button.dart';
 import '../theme/app_theme.dart';
 import 'saved_addresses_screen.dart';
-import 'payment_screen.dart';
 
 class ShippingScreen extends StatefulWidget {
   const ShippingScreen({super.key});
@@ -448,7 +448,9 @@ class _ShippingScreenState extends State<ShippingScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const PaymentScreen(),
+                          builder: (context) => OrderReviewScreen(
+                            selectedAddressId: _selectedAddressId,
+                          ),
                         ),
                       );
                     },
@@ -464,7 +466,7 @@ class _ShippingScreenState extends State<ShippingScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'CONTINUE TO PAYMENT',
+                          'Review Order',
                           style: GoogleFonts.inter(
                             fontSize: 14,
                             fontWeight: FontWeight.w900,

@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import '../theme/app_theme.dart';
 import '../widgets/custom_back_button.dart';
+import '../providers/cart_provider.dart';
 import 'payment_methods_screen.dart';
+import 'package:flutter_paystack_plus/flutter_paystack_plus.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class OrderReviewScreen extends StatefulWidget {
-  const OrderReviewScreen({super.key});
+  final String? selectedAddressId;
+
+  const OrderReviewScreen({super.key, this.selectedAddressId});
 
   @override
   State<OrderReviewScreen> createState() => _OrderReviewScreenState();
@@ -17,8 +25,30 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
   bool _isPaymentExpanded = false;
   bool _isItemsExpanded = true;
 
+  String _formatMoney(double amount) {
+    return '₦${amount.toStringAsFixed(2)}';
+  }
+
+  String _formatAddress(Map<String, dynamic> data) {
+    final label = (data['label'] ?? 'Address').toString().trim();
+    final city = (data['city'] ?? '').toString().trim();
+    final state = (data['state'] ?? '').toString().trim();
+    final country = (data['country'] ?? '').toString().trim();
+    final zip = (data['zipCode'] ?? '').toString().trim();
+
+    final line2 = [city, state].where((p) => p.isNotEmpty).join(', ');
+    final line3 = [country, zip].where((p) => p.isNotEmpty).join(' ');
+    return [label, line2, line3].where((p) => p.isNotEmpty).join('\n');
+  }
+
   @override
   Widget build(BuildContext context) {
+    final cart = context.watch<CartProvider>();
+    final subtotal = cart.totalAmount;
+    const shippingCost = 0.0;
+    const tax = 0.0;
+    final total = subtotal + shippingCost + tax;
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -105,14 +135,69 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
                     _isShippingExpanded = !_isShippingExpanded;
                   });
                 },
-                child: Text(
-                  'John Doe\n123 Tech Lane, Silicon Valley\nTech City, CA 94025',
-                  style: GoogleFonts.inter(
-                    fontSize: 14,
-                    color: Colors.grey[600],
-                    height: 1.5,
-                  ),
-                ),
+                child: (() {
+                  final uid = FirebaseAuth.instance.currentUser?.uid;
+                  if (uid == null) {
+                    return Text(
+                      'Please sign in to view shipping address.',
+                      style: GoogleFonts.inter(
+                        fontSize: 14,
+                        color: Colors.grey[600],
+                        height: 1.5,
+                      ),
+                    );
+                  }
+
+                  return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                    stream: FirebaseFirestore.instance
+                        .collection('users')
+                        .doc(uid)
+                        .collection('addresses')
+                        .orderBy('createdAt', descending: true)
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      final docs = snapshot.data?.docs ?? const [];
+                      if (docs.isEmpty) {
+                        return Text(
+                          'No saved address selected.',
+                          style: GoogleFonts.inter(
+                            fontSize: 14,
+                            color: Colors.grey[600],
+                            height: 1.5,
+                          ),
+                        );
+                      }
+
+                      QueryDocumentSnapshot<Map<String, dynamic>> selected =
+                          docs.first;
+
+                      if (widget.selectedAddressId != null) {
+                        final match = docs.where(
+                          (d) => d.id == widget.selectedAddressId,
+                        );
+                        if (match.isNotEmpty) {
+                          selected = match.first;
+                        }
+                      } else {
+                        final defaults = docs.where(
+                          (d) => (d.data()['isDefault'] ?? false) == true,
+                        );
+                        if (defaults.isNotEmpty) {
+                          selected = defaults.first;
+                        }
+                      }
+
+                      return Text(
+                        _formatAddress(selected.data()),
+                        style: GoogleFonts.inter(
+                          fontSize: 14,
+                          color: Colors.grey[600],
+                          height: 1.5,
+                        ),
+                      );
+                    },
+                  );
+                })(),
               ),
               const SizedBox(height: 16),
 
@@ -147,30 +232,42 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
                     _isItemsExpanded = !_isItemsExpanded;
                   });
                 },
-                child: Column(
-                  children: [
-                    _buildOrderItem(
-                      title: 'MacBook Pro M3',
-                      subtitle: 'Space Gray, 16GB RAM',
-                      price: '\$2,499.00',
-                      imageUrl:
-                          'https://lh3.googleusercontent.com/aida-public/AB6AXuBt2jj16meEr_EJJ2c-urSC0jTL1FY-fF6ZF-viOHe3K-g2fCGUYgSKC9ym1_g7teczS3t0kLyuAJxiqtiKW-aJJk8C_6jOK-0oksv-rsK3m-EnvCweePMONffur_yjYaXlQb21Tpu9A-ruyYnlcY12VV4jcdCKz2ZhHTzC06PBQyhDwA0Bu3Ib-4y67MAhuA85QDPxs8ghqUBWT4yHAypfh0Kalvs9Yo9jxNxHG6uF3MeHD3_xvoHa6c_3ienWdz22OxFy4VwN-kn9',
-                    ),
-                    const SizedBox(height: 16),
-                    _buildOrderItem(
-                      title: 'Harbor Pro 34"',
-                      subtitle: 'Ultrawide Curved Display',
-                      price: '\$498.00',
-                      imageUrl:
-                          'https://lh3.googleusercontent.com/aida-public/AB6AXuBd9lRFD9JQGMmgCDgvYhYTlyFBEpwfIqGlV89dNtwV5u6CL2hcfI3w-0oOiJjXT4ca5CEAh47IMY5ytWwlL7cO9_AxF5F4okKw347cexbjTDaot7H2XplgP4gDPMQMoMh_510Ov9hVH9spNZuKebeLXQQ7wiP5enKFe2lffcIj6n_OwqtXScvQPdj5RiWCmvMI4u3t7nYw2dXJzdA8at5Yng2la5Mpjw4fk-gkzISajbhOizX0KhHmbnS9fVrPKejGYPmhgB1xwaAl',
-                    ),
-                  ],
-                ),
+                child: cart.cartItems.isEmpty
+                    ? Text(
+                        'Your cart is empty.',
+                        style: GoogleFonts.inter(
+                          fontSize: 14,
+                          color: Colors.grey[600],
+                          height: 1.5,
+                        ),
+                      )
+                    : Column(
+                        children: [
+                          for (final item in cart.cartItems) ...[
+                            _buildOrderItem(
+                              title: (item['name'] ?? 'Item').toString(),
+                              quantity: (item['quantity'] is num)
+                                  ? (item['quantity'] as num).toInt()
+                                  : 1,
+                              price: _formatMoney(
+                                ((item['price'] is num)
+                                        ? (item['price'] as num).toDouble()
+                                        : 0.0) *
+                                    ((item['quantity'] is num)
+                                        ? (item['quantity'] as num).toDouble()
+                                        : 1.0),
+                              ),
+                              imageUrl: (item['image'] ?? '').toString(),
+                            ),
+                            const SizedBox(height: 16),
+                          ],
+                        ],
+                      ),
               ),
               const SizedBox(height: 32),
 
               // Price Breakdown
-              _buildSummaryRow('Subtotal', '\$2,997.00'),
+              _buildSummaryRow('Subtotal', _formatMoney(subtotal)),
               const SizedBox(height: 12),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -183,7 +280,7 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
                     ),
                   ),
                   Text(
-                    'FREE',
+                    shippingCost == 0 ? 'FREE' : _formatMoney(shippingCost),
                     style: GoogleFonts.inter(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
@@ -193,7 +290,7 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
                 ],
               ),
               const SizedBox(height: 12),
-              _buildSummaryRow('Tax', '\$240.00'),
+              _buildSummaryRow('Tax', _formatMoney(tax)),
               const SizedBox(height: 16),
               const Divider(height: 1, color: Color(0xFFE2E8F0)), // Slate-200
               const SizedBox(height: 16),
@@ -209,7 +306,7 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
                     ),
                   ),
                   Text(
-                    '\$3,237.00',
+                    _formatMoney(total),
                     style: GoogleFonts.inter(
                       fontSize: 24,
                       fontWeight: FontWeight.w800,
@@ -279,13 +376,74 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
                 width: double.infinity,
                 height: 56,
                 child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const PaymentMethodsScreen(),
-                      ),
-                    );
+                  onPressed: () async {
+                    final messenger = ScaffoldMessenger.of(context);
+                    final email =
+                        FirebaseAuth.instance.currentUser?.email ??
+                        'customer@example.com';
+                    final reference =
+                        'LH-${DateTime.now().millisecondsSinceEpoch}';
+                    final computedKobo = (total * 100).round();
+                    final amountKobo = (computedKobo < 100 ? 100 : computedKobo)
+                        .toString();
+
+                    final secretKey = (dotenv.env['PAYSTACK_SECRET_KEY'] ?? '')
+                        .trim();
+                    final callbackUrl =
+                        (dotenv.env['PAYSTACK_CALLBACK_URL'] ?? '').trim();
+
+                    if (secretKey.isEmpty || callbackUrl.isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text(
+                            'Missing Paystack credentials. Please set PAYSTACK_SECRET_KEY and PAYSTACK_CALLBACK_URL.',
+                          ),
+                        ),
+                      );
+                      return;
+                    }
+
+                    try {
+                      await FlutterPaystackPlus.openPaystackPopup(
+                        context: context,
+                        customerEmail: email,
+                        amount: amountKobo,
+                        reference: reference,
+                        secretKey: secretKey,
+                        callBackUrl: callbackUrl,
+                        currency: 'NGN',
+                        onSuccess: () {
+                          if (!mounted) return;
+                          messenger.showSnackBar(
+                            const SnackBar(
+                              content: Text('Payment successful!'),
+                            ),
+                          );
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  const PaymentMethodsScreen(),
+                            ),
+                          );
+                        },
+                        onClosed: () {
+                          if (!mounted) return;
+                          messenger.showSnackBar(
+                            const SnackBar(
+                              content: Text('Payment cancelled or failed.'),
+                            ),
+                          );
+                        },
+                      );
+                    } catch (_) {
+                      if (!mounted) return;
+                      messenger.showSnackBar(
+                        const SnackBar(
+                          content: Text('Failed to start Paystack checkout.'),
+                        ),
+                      );
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primary,
@@ -299,7 +457,7 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Place Order',
+                        'Make Payment',
                         style: GoogleFonts.inter(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -394,7 +552,7 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
 
   Widget _buildOrderItem({
     required String title,
-    required String subtitle,
+    required int quantity,
     required String price,
     required String imageUrl,
   }) {
@@ -425,8 +583,9 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
                   color: AppColors.slate900,
                 ),
               ),
+              const SizedBox(height: 4),
               Text(
-                subtitle,
+                'Qty: $quantity',
                 style: GoogleFonts.inter(fontSize: 12, color: Colors.grey[500]),
               ),
               const SizedBox(height: 4),
