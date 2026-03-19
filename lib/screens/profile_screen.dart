@@ -7,7 +7,6 @@ import '../theme/app_theme.dart';
 import '../providers/auth_provider.dart';
 import '../widgets/custom_bottom_nav_bar.dart';
 import '../widgets/custom_back_button.dart';
-import 'payment_methods_screen.dart';
 import 'wishlist_screen.dart';
 import 'cart_screen.dart';
 import 'search_screen.dart';
@@ -275,31 +274,6 @@ class ProfileScreen extends StatelessWidget {
                       },
                     ),
                     const SizedBox(height: 16),
-                    _buildMenuItem(
-                      icon: Icons.credit_card,
-                      title: 'Payment Methods',
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const PaymentMethodsScreen(),
-                          ),
-                        );
-                      },
-                    ),
-                    const SizedBox(height: 16),
-                    _buildMenuItem(
-                      icon: Icons.security,
-                      title: 'Security',
-                      onTap: () {},
-                    ),
-                    const SizedBox(height: 16),
-                    _buildMenuItem(
-                      icon: Icons.notifications,
-                      title: 'Notifications',
-                      onTap: () {},
-                    ),
-                    const SizedBox(height: 32),
                     _buildMenuItem(
                       icon: Icons.help,
                       title: 'Help & Support',
