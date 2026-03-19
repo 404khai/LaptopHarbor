@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' hide AuthProvider;
 import 'package:google_fonts/google_fonts.dart';
+import 'package:laptop_harbor/screens/notifications_screen.dart';
 import 'package:laptop_harbor/screens/saved_addresses_screen.dart';
 import 'package:provider/provider.dart';
 import '../theme/app_theme.dart';
@@ -413,6 +414,19 @@ class ProfileScreen extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                             builder: (context) => const SupportScreen(),
+                          ),
+                        );
+                      },
+                    ),
+                    const SizedBox(height: 16),
+                    _buildMenuItem(
+                      icon: Icons.notifications,
+                      title: 'Notifications',
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const NotificationsScreen(),
                           ),
                         );
                       },

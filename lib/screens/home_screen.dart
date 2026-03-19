@@ -8,6 +8,7 @@ import 'cart_screen.dart';
 import 'search_screen.dart';
 import 'wishlist_screen.dart';
 import 'profile_screen.dart';
+import 'notifications_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -108,10 +109,19 @@ class _HomeScreenState extends State<HomeScreen> {
                       color: Colors.grey[100], // Secondary-bg
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(
-                      Icons.notifications_rounded,
-                      color: AppColors.text,
-                      size: 24,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const NotificationsScreen(),
+                          ),
+                        );
+                      },
+                      child: const Icon(
+                        Icons.notifications_rounded,
+                        color: AppColors.text,
+                        size: 24,
+                      ),
                     ),
                   ),
                 ],

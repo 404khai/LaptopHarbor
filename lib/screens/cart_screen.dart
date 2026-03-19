@@ -16,6 +16,10 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
+  String _formatMoney(double amount) {
+    return '₦${amount.toStringAsFixed(2)}';
+  }
+
   Future<void> _openProductDetails(
     BuildContext context,
     Map<String, dynamic> item,
@@ -169,6 +173,9 @@ class _CartScreenState extends State<CartScreen> {
     List<Map<String, dynamic>> cartItems,
     double subtotal,
   ) {
+    const shippingCost = 5000.0;
+    const tax = 2000.0;
+    final total = subtotal + shippingCost + tax;
     return Column(
       children: [
         Expanded(
@@ -386,7 +393,7 @@ class _CartScreenState extends State<CartScreen> {
                     ),
                   ),
                   Text(
-                    '\$${subtotal.toStringAsFixed(2)}',
+                    _formatMoney(subtotal),
                     style: GoogleFonts.inter(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
@@ -407,7 +414,28 @@ class _CartScreenState extends State<CartScreen> {
                     ),
                   ),
                   Text(
-                    'FREE',
+                    _formatMoney(shippingCost),
+                    style: GoogleFonts.inter(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.text,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Tax',
+                    style: GoogleFonts.inter(
+                      fontSize: 14,
+                      color: AppColors.subtext,
+                    ),
+                  ),
+                  Text(
+                    _formatMoney(tax),
                     style: GoogleFonts.inter(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
@@ -429,7 +457,7 @@ class _CartScreenState extends State<CartScreen> {
                     ),
                   ),
                   Text(
-                    '\$${subtotal.toStringAsFixed(2)}',
+                    _formatMoney(total),
                     style: GoogleFonts.inter(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
