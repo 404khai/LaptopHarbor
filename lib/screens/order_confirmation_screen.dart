@@ -6,6 +6,7 @@ import '../theme/app_theme.dart';
 import '../widgets/custom_back_button.dart';
 import 'order_details_screen.dart';
 import 'package_tracking_screen.dart';
+import '../utils/money.dart';
 
 class OrderConfirmationScreen extends StatelessWidget {
   final String? orderId;
@@ -425,7 +426,7 @@ class OrderConfirmationScreen extends StatelessWidget {
                                       ),
                                       const SizedBox(height: 4),
                                       Text(
-                                        '${firstQty}x - ₦${firstPrice.toStringAsFixed(2)}',
+                                        '${firstQty}x - ${Money.ngn(firstPrice)}',
                                         style: GoogleFonts.inter(
                                           fontSize: 14,
                                           color: Colors.grey[500],

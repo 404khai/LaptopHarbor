@@ -7,6 +7,7 @@ import 'dart:async';
 import 'product_details_screen.dart';
 import '../theme/app_theme.dart';
 import '../widgets/custom_back_button.dart';
+import '../utils/money.dart';
 
 class SearchScreen extends StatefulWidget {
   final String? initialQuery;
@@ -716,8 +717,8 @@ class _SearchScreenState extends State<SearchScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('₦${range.start.toStringAsFixed(0)}'),
-                      Text('₦${range.end.toStringAsFixed(0)}'),
+                      Text(Money.ngn(range.start)),
+                      Text(Money.ngn(range.end)),
                     ],
                   ),
                   RangeSlider(
@@ -883,7 +884,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    (item['price'] ?? '').toString(),
+                    Money.ngn(item['price']),
                     style: GoogleFonts.inter(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
@@ -1037,7 +1038,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   ),
                   const SizedBox(height: 2),
                   Text(
-                    '₦${price.toStringAsFixed(2)}',
+                    Money.ngn(price),
                     style: GoogleFonts.inter(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,

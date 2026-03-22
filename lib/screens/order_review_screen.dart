@@ -9,6 +9,7 @@ import 'order_confirmation_screen.dart';
 import 'package:flutter_paystack_plus/flutter_paystack_plus.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../utils/money.dart';
 
 class OrderReviewScreen extends StatefulWidget {
   final String? selectedAddressId;
@@ -27,7 +28,7 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
   bool _isPlacingOrder = false;
 
   String _formatMoney(double amount) {
-    return '₦${amount.toStringAsFixed(2)}';
+    return Money.ngn(amount);
   }
 
   String _formatAddress(Map<String, dynamic> data) {

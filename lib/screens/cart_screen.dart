@@ -7,6 +7,7 @@ import '../widgets/custom_back_button.dart';
 import '../providers/cart_provider.dart';
 import 'shipping_screen.dart';
 import 'product_details_screen.dart';
+import '../utils/money.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -17,7 +18,7 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
   String _formatMoney(double amount) {
-    return '₦${amount.toStringAsFixed(2)}';
+    return Money.ngn(amount);
   }
 
   Future<void> _openProductDetails(
@@ -253,11 +254,13 @@ class _CartScreenState extends State<CartScreen> {
                                       Text(
                                         _formatMoney(
                                           (item['price'] is num)
-                                              ? (item['price'] as num).toDouble()
+                                              ? (item['price'] as num)
+                                                    .toDouble()
                                               : double.tryParse(
-                                                    '${item['price']}'.replaceAll(',', ''),
-                                                  ) ??
-                                                  0.0,
+                                                      '${item['price']}'
+                                                          .replaceAll(',', ''),
+                                                    ) ??
+                                                    0.0,
                                         ),
                                         style: GoogleFonts.inter(
                                           fontSize: 16,

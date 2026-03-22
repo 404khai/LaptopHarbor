@@ -5,6 +5,7 @@ import '../theme/app_theme.dart';
 import '../providers/product_provider.dart';
 import '../providers/cart_provider.dart';
 import '../models/product.dart';
+import '../utils/money.dart';
 
 class LaptopsSection extends StatefulWidget {
   const LaptopsSection({super.key});
@@ -244,7 +245,7 @@ class _LaptopsSectionState extends State<LaptopsSection> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      '\$${laptop.price.toStringAsFixed(2)}',
+                      Money.ngn(laptop.price),
                       style: GoogleFonts.inter(
                         fontSize: 14,
                         fontWeight: FontWeight.w900,

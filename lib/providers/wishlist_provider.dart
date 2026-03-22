@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../utils/money.dart';
 
 class WishlistProvider extends ChangeNotifier {
   final List<Map<String, dynamic>> _items = [];
@@ -218,17 +219,7 @@ class WishlistProvider extends ChangeNotifier {
   }
 
   String _formatMoney(dynamic value) {
-    if (value == null) return '₦0.00';
-    if (value is String) {
-      final trimmed = value.trim();
-      if (trimmed.startsWith('₦')) return trimmed;
-      final cleaned = trimmed.replaceAll('₦', '').replaceAll('\$', '').replaceAll(',', '').trim();
-      final parsed = double.tryParse(cleaned);
-      if (parsed != null) return '₦${parsed.toStringAsFixed(2)}';
-      return '₦0.00';
-    }
-    if (value is num) return '₦${value.toDouble().toStringAsFixed(2)}';
-    return '₦0.00';
+    return Money.ngn(value);
   }
 
   @override

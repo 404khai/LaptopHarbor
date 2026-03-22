@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../theme/app_theme.dart';
 import '../widgets/custom_back_button.dart';
 import 'order_details_screen.dart';
+import '../utils/money.dart';
 
 class MyOrdersScreen extends StatefulWidget {
   const MyOrdersScreen({super.key});
@@ -192,7 +193,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
             title: title,
             quantity: '${quantity}x',
             date: _formatDate(createdAt),
-            price: '₦${total.toDouble().toStringAsFixed(2)}',
+            price: Money.ngn(total),
             isGrayscale: status == 'CANCELLED',
           );
         }).toList();
