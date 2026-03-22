@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../theme/app_theme.dart';
 import '../providers/wishlist_provider.dart';
+import '../providers/cart_provider.dart';
+import '../models/product.dart';
 import '../widgets/custom_bottom_nav_bar.dart';
 import '../widgets/custom_back_button.dart';
 import 'profile_screen.dart';
@@ -487,7 +490,62 @@ class _WishlistScreenState extends State<WishlistScreen> {
                   child: SizedBox(
                     height: 44,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () async {
+                        final messenger = ScaffoldMessenger.of(context);
+                        final cartProvider = context.read<CartProvider>();
+                        final uid = FirebaseAuth.instance.currentUser?.uid;
+                        if (uid == null) {
+                          messenger.showSnackBar(
+                            const SnackBar(
+                              content: Text('Please sign in to add to cart.'),
+                            ),
+                          );
+                          return;
+                        }
+
+                        final productId =
+                            (item['productId'] ?? item['id'] ?? '')
+                                .toString()
+                                .trim();
+                        if (productId.isEmpty) {
+                          messenger.showSnackBar(
+                            const SnackBar(content: Text('Invalid product.')),
+                          );
+                          return;
+                        }
+
+                        Map<String, dynamic> productData = <String, dynamic>{
+                          'id': productId,
+                          'brand': '',
+                          'model': (item['title'] ?? '').toString(),
+                          'imageUrl': (item['image'] ?? '').toString(),
+                          'imageUrls': [(item['image'] ?? '').toString()],
+                          'price': item['price'],
+                          'description': '',
+                          'specifications': const <String, dynamic>{},
+                          'category': (item['category'] ?? '').toString(),
+                        };
+
+                        try {
+                          final doc = await FirebaseFirestore.instance
+                              .collection('products')
+                              .doc(productId)
+                              .get();
+                          final data = doc.data();
+                          if (doc.exists && data != null) {
+                            productData = <String, dynamic>{
+                              ...data,
+                              'id': doc.id,
+                            };
+                          }
+                        } catch (_) {}
+
+                        final product = Product.fromJson(productData);
+                        await cartProvider.addToCart(product, 1);
+                        messenger.showSnackBar(
+                          const SnackBar(content: Text('Added to cart.')),
+                        );
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.primary,
                         foregroundColor: AppColors.slate900,

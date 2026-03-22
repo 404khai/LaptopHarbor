@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'dart:math';
 import 'dart:async';
 import 'product_details_screen.dart';
 import '../theme/app_theme.dart';
 import '../widgets/custom_back_button.dart';
 import '../utils/money.dart';
+import '../providers/cart_provider.dart';
+import '../models/product.dart';
+import 'cart_screen.dart';
 
 class SearchScreen extends StatefulWidget {
   final String? initialQuery;
@@ -268,6 +272,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final cartCount = context.watch<CartProvider>().totalQuantity;
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
@@ -294,27 +299,34 @@ class _SearchScreenState extends State<SearchScreen> {
                     Icons.shopping_cart_outlined,
                     color: Colors.black,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const CartScreen(),
+                      ),
+                    );
+                  },
                 ),
-                Positioned(
-                  right: 8,
-                  top: 8,
-                  child: Container(
-                    padding: const EdgeInsets.all(4),
-                    decoration: const BoxDecoration(
-                      color: AppColors.primary,
-                      shape: BoxShape.circle,
-                    ),
-                    child: Text(
-                      '2',
-                      style: GoogleFonts.inter(
-                        color: Colors.black,
-                        fontSize: 10,
-                        fontWeight: FontWeight.bold,
+                if (cartCount > 0)
+                  Positioned(
+                    right: 8,
+                    top: 8,
+                    child: Container(
+                      padding: const EdgeInsets.all(4),
+                      decoration: const BoxDecoration(
+                        color: AppColors.primary,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Text(
+                        '$cartCount',
+                        style: GoogleFonts.inter(
+                          color: Colors.black,
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
-                ),
               ],
             ),
           ),
@@ -896,7 +908,40 @@ class _SearchScreenState extends State<SearchScreen> {
                     width: double.infinity,
                     height: 36,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () async {
+                        final messenger = ScaffoldMessenger.of(context);
+                        final cartProvider = context.read<CartProvider>();
+                        final user = FirebaseAuth.instance.currentUser;
+                        if (user == null) {
+                          messenger.showSnackBar(
+                            const SnackBar(
+                              content: Text('Please sign in to add to cart.'),
+                            ),
+                          );
+                          return;
+                        }
+
+                        final inStock =
+                            item['inStock'] == true ||
+                            ((item['stock'] is num) &&
+                                (item['stock'] as num).toInt() > 0) ||
+                            (item['stock'] ?? '').toString().toUpperCase() ==
+                                'IN STOCK';
+                        if (!inStock) {
+                          messenger.showSnackBar(
+                            const SnackBar(
+                              content: Text('Item is out of stock.'),
+                            ),
+                          );
+                          return;
+                        }
+
+                        final product = Product.fromJson(item);
+                        await cartProvider.addToCart(product, 1);
+                        messenger.showSnackBar(
+                          const SnackBar(content: Text('Added to cart.')),
+                        );
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.primary,
                         foregroundColor: Colors.black,
