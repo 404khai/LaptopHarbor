@@ -11,20 +11,20 @@
         "https://www.apple.com/newsroom/images/2026/03/say-hello-to-macbook-neo/article/Apple-MacBook-Neo-citrus-260304_big.jpg.large.jpg",
         "https://media.wired.com/photos/69accd0ec61ab22ac1bc4d8a/master/w_1600%2Cc_limit/MacBook-neo-03(1).png"
       ],
-      "price": 1262.0,
-      "originalPrice": 1609.0,
-      "description": "High quality laptop from Apple. Perfect for daily use and professional tasks.",
+      "price": 1376336.0,
+      "originalPrice": null,
+      "description": "Reliable gear for work and play. Apple Macbook Neo with 1TB SSD, 15.6 inch display, M2. Great for students, creators, and professionals.",
       "category": "Laptop",
-      "rating": 4.8,
-      "reviewCount": 108,
+      "rating": 3.7,
+      "reviewCount": 271,
       "inStock": true,
-      "stock": 26,
+      "stock": 97,
       "specifications": {
-        "cpu": "Ryzen 7",
-        "ram": "16GB",
+        "cpu": "M2",
+        "ram": "8GB",
         "storage": "1TB SSD",
-        "gpu": "NVIDIA RTX 3050",
-        "display": "16 inch",
+        "gpu": "Intel Iris",
+        "display": "15.6 inch",
         "battery": "8 hours",
         "weight": "2.3 kg"
       }
@@ -36,25 +36,25 @@
       "imageUrl": "https://latalata.ng/image/cache/catalog/Product%20images/Kaybec/laptop/20--700x700.jpg",
       "imageUrls": [
         "https://latalata.ng/image/cache/catalog/Product%20images/Kaybec/laptop/20--700x700.jpg",
-        "https://latalata.ng/image/cache/catalog/Product%20images/Kaybec/laptop/20--700x700.jpg",
-        "https://latalata.ng/image/cache/catalog/Product%20images/Kaybec/laptop/20--700x700.jpg",
-        "https://latalata.ng/image/cache/catalog/Product%20images/Kaybec/laptop/20--700x700.jpg"
+        "https://www.techadvisor.com/wp-content/uploads/2022/06/dell-xps-15-review.jpg?quality=50&strip=all",
+        "https://ng.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/02/5531914/1.jpg?7277",
+        "https://i5.walmartimages.com/asr/a140bef6-1c76-4180-987d-8cfc6732cf11.b0e89d3e656d607d3d8580972d9ab68c.jpeg?odnHeight=768&odnWidth=768&odnBg=FFFFFF"
       ],
-      "price": 1565.0,
+      "price": 1519648.0,
       "originalPrice": null,
-      "description": "High quality laptop from Dell. Perfect for daily use and professional tasks.",
+      "description": "A premium pick for productivity. Dell XPS 15 with 1TB SSD, 15.6 inch display, 8GB RAM. Made to keep up with your workflow.",
       "category": "Laptop",
-      "rating": 4.2,
-      "reviewCount": 29,
+      "rating": 3.7,
+      "reviewCount": 362,
       "inStock": true,
-      "stock": 19,
+      "stock": 62,
       "specifications": {
-        "cpu": "Intel i5",
-        "ram": "32GB",
+        "cpu": "Ryzen 7",
+        "ram": "8GB",
         "storage": "1TB SSD",
         "gpu": "NVIDIA RTX 3060",
-        "display": "16 inch",
-        "battery": "8 hours",
+        "display": "15.6 inch",
+        "battery": "15 hours",
         "weight": "1.9 kg"
       }
     },
@@ -65,26 +65,26 @@
       "imageUrl": "https://media.wired.com/photos/59e94f9234ce5c0e0a752e11/master/w_1600%2Cc_limit/SphinxInline.jpg",
       "imageUrls": [
         "https://media.wired.com/photos/59e94f9234ce5c0e0a752e11/master/w_1600%2Cc_limit/SphinxInline.jpg",
-        "https://media.wired.com/photos/59e94f9234ce5c0e0a752e11/master/w_1600%2Cc_limit/SphinxInline.jpg",
-        "https://media.wired.com/photos/59e94f9234ce5c0e0a752e11/master/w_1600%2Cc_limit/SphinxInline.jpg",
-        "https://media.wired.com/photos/59e94f9234ce5c0e0a752e11/master/w_1600%2Cc_limit/SphinxInline.jpg"
+        "https://pacific.com.ng/wp-content/uploads/2025/08/hp-spectre-14-x360-ultra-7.jpg",
+        "https://ng.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/00/1808814/4.jpg?0931",
+        "https://dreamworksdirect.com/cdn/shop/files/6532928cv1d.avif?v=1755619109"
       ],
-      "price": 1200.0,
+      "price": 2699944.0,
       "originalPrice": null,
-      "description": "High quality laptop from HP. Perfect for daily use and professional tasks.",
+      "description": "Reliable gear for work and play. HP Spectre x360 with Ryzen 7, 256GB SSD, 13.3 inch display. Clean design with dependable performance.",
       "category": "Laptop",
-      "rating": 3.6,
-      "reviewCount": 256,
+      "rating": 4.2,
+      "reviewCount": 56,
       "inStock": true,
-      "stock": 12,
+      "stock": 81,
       "specifications": {
-        "cpu": "Intel i5",
-        "ram": "32GB",
+        "cpu": "Ryzen 7",
+        "ram": "8GB",
         "storage": "256GB SSD",
-        "gpu": "AMD Radeon",
-        "display": "16 inch",
+        "gpu": "NVIDIA RTX 3050",
+        "display": "13.3 inch",
         "battery": "11 hours",
-        "weight": "1.4 kg"
+        "weight": "1.8 kg"
       }
     },
     {
@@ -94,26 +94,26 @@
       "imageUrl": "https://pcplaceng.com/laxgts/2025/10/image-2025-10-13T104359.962.webp",
       "imageUrls": [
         "https://pcplaceng.com/laxgts/2025/10/image-2025-10-13T104359.962.webp",
-        "https://pcplaceng.com/laxgts/2025/10/image-2025-10-13T104359.962.webp",
-        "https://pcplaceng.com/laxgts/2025/10/image-2025-10-13T104359.962.webp",
-        "https://pcplaceng.com/laxgts/2025/10/image-2025-10-13T104359.962.webp"
+        "https://hp.widen.net/content/a4qca5j1ge/png/a4qca5j1ge.png?w=800&h=600&dpi=72&color=ffffff00",
+        "https://m.media-amazon.com/images/I/816JXR4tzWL.jpg",
+        "https://ng.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/51/3742914/3.jpg?7260"
       ],
-      "price": 2051.0,
-      "originalPrice": null,
-      "description": "High quality laptop from HP. Perfect for daily use and professional tasks.",
+      "price": 2234856.0,
+      "originalPrice": 2606656.0,
+      "description": "Reliable gear for work and play. HP Omen Max 16 with 512GB SSD, 16GB RAM, 16 inch display. Clean design with dependable performance.",
       "category": "Laptop",
-      "rating": 4.3,
-      "reviewCount": 363,
+      "rating": 4.9,
+      "reviewCount": 19,
       "inStock": true,
-      "stock": 42,
+      "stock": 13,
       "specifications": {
-        "cpu": "M1",
+        "cpu": "Intel i7",
         "ram": "16GB",
-        "storage": "1TB SSD",
-        "gpu": "NVIDIA RTX 3050",
+        "storage": "512GB SSD",
+        "gpu": "AMD Radeon",
         "display": "16 inch",
-        "battery": "10 hours",
-        "weight": "2.2 kg"
+        "battery": "14 hours",
+        "weight": "2.3 kg"
       }
     },
     {
@@ -123,26 +123,26 @@
       "imageUrl": "https://pacific.com.ng/wp-content/uploads/2022/09/Lenovo-thinkpad-x1-carbon.webp",
       "imageUrls": [
         "https://pacific.com.ng/wp-content/uploads/2022/09/Lenovo-thinkpad-x1-carbon.webp",
-        "https://pacific.com.ng/wp-content/uploads/2022/09/Lenovo-thinkpad-x1-carbon.webp",
-        "https://pacific.com.ng/wp-content/uploads/2022/09/Lenovo-thinkpad-x1-carbon.webp",
-        "https://pacific.com.ng/wp-content/uploads/2022/09/Lenovo-thinkpad-x1-carbon.webp"
+        "https://image-cdn.ubuy.com/lenovo-thinkpad-x1-carbon-gen-11-intel/400_400_100/694842b02e3289065a0f259d.jpg",
+        "https://image-cdn.ubuy.com/lenovo-thinkpad-x1-carbon-gen-11-intel/400_400_100/694842b02e3289065a0f258b.jpg",
+        "https://p3-ofp.static.pub//fes/cms/2024/07/05/umcrxcnsm2br1itju6gvundeb9s6tf364734.png"
       ],
-      "price": 1693.0,
+      "price": 3334032.0,
       "originalPrice": null,
-      "description": "High quality laptop from Lenovo. Perfect for daily use and professional tasks.",
+      "description": "Built for daily performance. Lenovo ThinkPad X1 Carbon with 16GB RAM, 13.3 inch display, 1TB SSD. A solid upgrade for your setup.",
       "category": "Laptop",
-      "rating": 3.9,
-      "reviewCount": 362,
+      "rating": 4.7,
+      "reviewCount": 307,
       "inStock": true,
-      "stock": 30,
+      "stock": 28,
       "specifications": {
-        "cpu": "Intel i7",
-        "ram": "8GB",
-        "storage": "256GB SSD",
-        "gpu": "NVIDIA RTX 3060",
-        "display": "15.6 inch",
-        "battery": "10 hours",
-        "weight": "2.2 kg"
+        "cpu": "Ryzen 7",
+        "ram": "16GB",
+        "storage": "1TB SSD",
+        "gpu": "AMD Radeon",
+        "display": "13.3 inch",
+        "battery": "14 hours",
+        "weight": "1.4 kg"
       }
     },
     {
@@ -152,26 +152,26 @@
       "imageUrl": "https://i5.walmartimages.com/asr/11a72c12-a798-4029-98a5-2bd8dd25837b.fae5315625c1a8f68a67a61eb40a73e5.jpeg?odnHeight=768&odnWidth=768&odnBg=FFFFFF",
       "imageUrls": [
         "https://i5.walmartimages.com/asr/11a72c12-a798-4029-98a5-2bd8dd25837b.fae5315625c1a8f68a67a61eb40a73e5.jpeg?odnHeight=768&odnWidth=768&odnBg=FFFFFF",
-        "https://i5.walmartimages.com/asr/11a72c12-a798-4029-98a5-2bd8dd25837b.fae5315625c1a8f68a67a61eb40a73e5.jpeg?odnHeight=768&odnWidth=768&odnBg=FFFFFF",
-        "https://i5.walmartimages.com/asr/11a72c12-a798-4029-98a5-2bd8dd25837b.fae5315625c1a8f68a67a61eb40a73e5.jpeg?odnHeight=768&odnWidth=768&odnBg=FFFFFF",
-        "https://i5.walmartimages.com/asr/11a72c12-a798-4029-98a5-2bd8dd25837b.fae5315625c1a8f68a67a61eb40a73e5.jpeg?odnHeight=768&odnWidth=768&odnBg=FFFFFF"
+        "https://cdn.mos.cms.futurecdn.net/iu5vVaCiUXvEchTicTL6hA.jpg",
+        "https://p1-ofp.static.pub/fes/cms/2022/12/07/l64k7j84ev4j8cs5nax600vwvxfu7p875096.png",
+        "https://www.techspot.com/images/products/2021/laptops/org/2021-07-09-product-2.jpg"
       ],
-      "price": 2100.0,
+      "price": 2237560.0,
       "originalPrice": null,
-      "description": "High quality laptop from Lenovo. Perfect for daily use and professional tasks.",
+      "description": "Smart, durable, and ready to go. Lenovo Yoga 9i with 256GB SSD, 8GB RAM, 14 inch display. Clean design with dependable performance.",
       "category": "Laptop",
-      "rating": 3.9,
-      "reviewCount": 342,
+      "rating": 3.6,
+      "reviewCount": 143,
       "inStock": true,
-      "stock": 92,
+      "stock": 89,
       "specifications": {
-        "cpu": "Ryzen 7",
-        "ram": "16GB",
-        "storage": "1TB SSD",
-        "gpu": "NVIDIA RTX 3050",
-        "display": "15.6 inch",
-        "battery": "13 hours",
-        "weight": "2.5 kg"
+        "cpu": "Intel i5",
+        "ram": "8GB",
+        "storage": "256GB SSD",
+        "gpu": "AMD Radeon",
+        "display": "14 inch",
+        "battery": "8 hours",
+        "weight": "2.3 kg"
       }
     },
     {
@@ -181,113 +181,113 @@
       "imageUrl": "https://http2.mlstatic.com/D_NQ_NP_829649-MLA99482022282_112025-O.webp",
       "imageUrls": [
         "https://http2.mlstatic.com/D_NQ_NP_829649-MLA99482022282_112025-O.webp",
-        "https://http2.mlstatic.com/D_NQ_NP_829649-MLA99482022282_112025-O.webp",
-        "https://http2.mlstatic.com/D_NQ_NP_829649-MLA99482022282_112025-O.webp",
-        "https://http2.mlstatic.com/D_NQ_NP_829649-MLA99482022282_112025-O.webp"
+        "https://i.ebayimg.com/images/g/mAkAAeSwL9lpBNTn/s-l1600.webp",
+        "https://www.apple.com/newsroom/images/product/mac/standard/Apple-WWDC22-MacBook-Air-lp-220606.jpg.og.jpg?202602252002",
+        "https://techcrunch.com/wp-content/uploads/2022/07/CMC_1580.jpg"
       ],
-      "price": 2354.0,
-      "originalPrice": null,
-      "description": "High quality laptop from Apple. Perfect for daily use and professional tasks.",
+      "price": 1116752.0,
+      "originalPrice": 1233024.0,
+      "description": "Reliable gear for work and play. Apple MacBook Air M2 with 8GB RAM, 14 inch display, Ryzen 5. A solid upgrade for your setup.",
       "category": "Laptop",
-      "rating": 3.5,
-      "reviewCount": 360,
+      "rating": 4.0,
+      "reviewCount": 436,
       "inStock": true,
-      "stock": 28,
+      "stock": 40,
       "specifications": {
-        "cpu": "M1",
+        "cpu": "Ryzen 5",
         "ram": "8GB",
-        "storage": "256GB SSD",
-        "gpu": "NVIDIA RTX 3050",
-        "display": "13.3 inch",
-        "battery": "14 hours",
-        "weight": "1.5 kg"
+        "storage": "1TB SSD",
+        "gpu": "NVIDIA RTX 3060",
+        "display": "14 inch",
+        "battery": "15 hours",
+        "weight": "1.4 kg"
       }
     },
     {
       "id": "laptop_apple_macbook_m4_pro",
       "brand": "Apple",
       "model": "MacBook M4 Pro",
-      "imageUrl": "https://i.ebayimg.com/images/g/0Z4AAeSwDKNppUln/s-l1600.webp",
+      "imageUrl": "https://i.ebayimg.com/images/g/1iwAAOSwmnBlVbq9/s-l1600.webp",
       "imageUrls": [
-        "https://i.ebayimg.com/images/g/0Z4AAeSwDKNppUln/s-l1600.webp",
-        "https://i.ebayimg.com/images/g/0Z4AAeSwDKNppUln/s-l1600.webp",
-        "https://i.ebayimg.com/images/g/0Z4AAeSwDKNppUln/s-l1600.webp",
-        "https://i.ebayimg.com/images/g/0Z4AAeSwDKNppUln/s-l1600.webp"
+        "https://i.ebayimg.com/images/g/1iwAAOSwmnBlVbq9/s-l1600.webp",
+        "https://i.ebayimg.com/images/g/SY0AAOSw37RlVbrA/s-l1600.webp",
+        "https://hips.hearstapps.com/hmg-prod/images/apple-m4-macbook-pro-lead-672b861685fd0.jpg?crop=0.6666666666666666xw:1xh;center,top&resize=1200:*",
+        "https://techcrunch.com/wp-content/uploads/2024/11/CMC_8144.jpg"
       ],
-      "price": 1945.0,
+      "price": 2659384.0,
       "originalPrice": null,
-      "description": "High quality laptop from Apple. Perfect for daily use and professional tasks.",
+      "description": "A premium pick for productivity. Apple MacBook M4 Pro with M2, 16GB RAM, 256GB SSD. A solid upgrade for your setup.",
       "category": "Laptop",
-      "rating": 4.4,
-      "reviewCount": 322,
+      "rating": 4.6,
+      "reviewCount": 319,
       "inStock": true,
-      "stock": 62,
+      "stock": 63,
       "specifications": {
-        "cpu": "M1",
+        "cpu": "M2",
         "ram": "16GB",
-        "storage": "1TB SSD",
-        "gpu": "AMD Radeon",
-        "display": "16 inch",
-        "battery": "8 hours",
-        "weight": "1.5 kg"
+        "storage": "256GB SSD",
+        "gpu": "NVIDIA RTX 3060",
+        "display": "13.3 inch",
+        "battery": "12 hours",
+        "weight": "1.9 kg"
       }
     },
     {
-      "id": "laptop_apple_macbook_pro_16",
-      "brand": "Apple",
-      "model": "MacBook Pro 16",
-      "imageUrl": "https://images.unsplash.com/photo-1517336714731-489689fd1ca4?auto=format&fit=crop&w=800&q=80",
+      "id": "laptop_redmagic_titan_16_pro",
+      "brand": "Redmagic",
+      "model": "Titan 16 Pro",
+      "imageUrl": "https://techxreviews.com/wp-content/uploads/2025/11/RedMagic-Titan-16-Pro-2026.mp4_snapshot_08.32.jpg",
       "imageUrls": [
-        "https://images.unsplash.com/photo-1517336714731-489689fd1ca4?auto=format&fit=crop&w=800&q=80",
-        "https://images.unsplash.com/photo-1517336714731-489689fd1ca4?auto=format&fit=crop&w=800&q=80",
-        "https://images.unsplash.com/photo-1517336714731-489689fd1ca4?auto=format&fit=crop&w=800&q=80",
-        "https://images.unsplash.com/photo-1517336714731-489689fd1ca4?auto=format&fit=crop&w=800&q=80"
+        "https://techxreviews.com/wp-content/uploads/2025/11/RedMagic-Titan-16-Pro-2026.mp4_snapshot_08.32.jpg",
+        "https://fdn.gsmarena.com/imgroot/news/24/10/red-magic-titan-16-pro-review/inline/-1200w5/gsmarena_011.jpg",
+        "https://fdn.gsmarena.com/imgroot/news/24/10/red-magic-titan-16-pro-review/inline/-1200w5/gsmarena_008.jpg",
+        "https://fdn.gsmarena.com/imgroot/news/24/10/red-magic-titan-16-pro-review/inline/-1200w5/gsmarena_010.jpg"
       ],
-      "price": 2256.0,
+      "price": 2633696.0,
       "originalPrice": null,
-      "description": "High quality laptop from Apple. Perfect for daily use and professional tasks.",
+      "description": "A premium pick for productivity. Redmagic Titan 16 Pro with 13.3 inch display, Intel i7, 32GB RAM. Great for students, creators, and professionals.",
       "category": "Laptop",
-      "rating": 3.8,
-      "reviewCount": 151,
+      "rating": 4.9,
+      "reviewCount": 345,
       "inStock": true,
-      "stock": 92,
+      "stock": 13,
       "specifications": {
-        "cpu": "Ryzen 7",
-        "ram": "8GB",
+        "cpu": "Intel i7",
+        "ram": "32GB",
         "storage": "512GB SSD",
-        "gpu": "NVIDIA RTX 3050",
-        "display": "14 inch",
-        "battery": "13 hours",
-        "weight": "1.7 kg"
+        "gpu": "AMD Radeon",
+        "display": "13.3 inch",
+        "battery": "14 hours",
+        "weight": "1.9 kg"
       }
     },
     {
       "id": "laptop_asus_zenbook_14",
       "brand": "Asus",
       "model": "ZenBook 14",
-      "imageUrl": "https://m.media-amazon.com/images/I/51YleVEDxlL.jpg",
+      "imageUrl": "https://www.myfixguide.com/wp-content/uploads/2023/12/ASUS-Zenbook-14-OLED-Body.jpg",
       "imageUrls": [
-        "https://m.media-amazon.com/images/I/51YleVEDxlL.jpg",
-        "https://m.media-amazon.com/images/I/51YleVEDxlL.jpg",
-        "https://m.media-amazon.com/images/I/51YleVEDxlL.jpg",
-        "https://m.media-amazon.com/images/I/51YleVEDxlL.jpg"
+        "https://www.myfixguide.com/wp-content/uploads/2023/12/ASUS-Zenbook-14-OLED-Body.jpg",
+        "https://i.ebayimg.com/images/g/DYoAAeSwV1lpjJ~M/s-l1600.webp",
+        "https://i.ebayimg.com/images/g/CE8AAeSwdzRpjJ~M/s-l1600.webp",
+        "https://i.ebayimg.com/images/g/NhQAAeSw371pjJ~M/s-l1600.webp"
       ],
-      "price": 2339.0,
-      "originalPrice": null,
-      "description": "High quality laptop from Asus. Perfect for daily use and professional tasks.",
+      "price": 2916264.0,
+      "originalPrice": 3359720.0,
+      "description": "Smart, durable, and ready to go. Asus ZenBook 14 with 15.6 inch display, 512GB SSD, Ryzen 7. A solid upgrade for your setup.",
       "category": "Laptop",
-      "rating": 4.3,
-      "reviewCount": 478,
+      "rating": 4.8,
+      "reviewCount": 380,
       "inStock": true,
-      "stock": 35,
+      "stock": 45,
       "specifications": {
-        "cpu": "M2",
-        "ram": "32GB",
-        "storage": "256GB SSD",
-        "gpu": "NVIDIA RTX 3060",
-        "display": "13.3 inch",
-        "battery": "9 hours",
-        "weight": "1.9 kg"
+        "cpu": "Ryzen 7",
+        "ram": "16GB",
+        "storage": "512GB SSD",
+        "gpu": "NVIDIA RTX 3050",
+        "display": "15.6 inch",
+        "battery": "10 hours",
+        "weight": "2.0 kg"
       }
     },
     {
@@ -297,142 +297,142 @@
       "imageUrl": "https://www.myfixguide.com/wp-content/uploads/2024/02/ASUS-ROG-Zephyrus-G14-2024-4.png",
       "imageUrls": [
         "https://www.myfixguide.com/wp-content/uploads/2024/02/ASUS-ROG-Zephyrus-G14-2024-4.png",
-        "https://www.myfixguide.com/wp-content/uploads/2024/02/ASUS-ROG-Zephyrus-G14-2024-4.png",
-        "https://www.myfixguide.com/wp-content/uploads/2024/02/ASUS-ROG-Zephyrus-G14-2024-4.png",
-        "https://www.myfixguide.com/wp-content/uploads/2024/02/ASUS-ROG-Zephyrus-G14-2024-4.png"
+        "https://i.ebayimg.com/images/g/4X4AAeSwzLlpoLv~/s-l1600.webp",
+        "https://i.ebayimg.com/images/g/84AAAeSwqXlpoLv~/s-l1600.webp",
+        "https://i.ebayimg.com/images/g/akUAAeSwF95poLv~/s-l1600.webp"
       ],
-      "price": 2265.0,
+      "price": 2076672.0,
       "originalPrice": null,
-      "description": "High quality laptop from Asus. Perfect for daily use and professional tasks.",
+      "description": "Built for daily performance. Asus ROG Zephyrus G14 with 14 inch display, 32GB RAM, Intel i7. Great for students, creators, and professionals.",
       "category": "Laptop",
-      "rating": 3.7,
-      "reviewCount": 322,
+      "rating": 4.0,
+      "reviewCount": 500,
       "inStock": true,
-      "stock": 76,
+      "stock": 57,
       "specifications": {
-        "cpu": "M1",
-        "ram": "8GB",
-        "storage": "1TB SSD",
-        "gpu": "NVIDIA RTX 3050",
-        "display": "15.6 inch",
-        "battery": "13 hours",
-        "weight": "1.8 kg"
+        "cpu": "Intel i7",
+        "ram": "32GB",
+        "storage": "256GB SSD",
+        "gpu": "AMD Radeon",
+        "display": "14 inch",
+        "battery": "9 hours",
+        "weight": "2.3 kg"
       }
     },
     {
       "id": "laptop_razer_blade_16",
       "brand": "Razer",
       "model": "Blade 16",
-      "imageUrl": "https://cdn.mos.cms.futurecdn.net/DECuWxUeCCUtSqgWrHTkkH.jpg",
+      "imageUrl": "https://m.media-amazon.com/images/I/81sNAS5lIyL.jpg",
       "imageUrls": [
-        "https://cdn.mos.cms.futurecdn.net/DECuWxUeCCUtSqgWrHTkkH.jpg",
-        "https://cdn.mos.cms.futurecdn.net/DECuWxUeCCUtSqgWrHTkkH.jpg",
-        "https://cdn.mos.cms.futurecdn.net/DECuWxUeCCUtSqgWrHTkkH.jpg",
-        "https://cdn.mos.cms.futurecdn.net/DECuWxUeCCUtSqgWrHTkkH.jpg"
+        "https://m.media-amazon.com/images/I/81sNAS5lIyL.jpg",
+        "https://thetechdealz.com/wp-content/uploads/2025/04/Razer1.jpg",
+        "https://img.overclockers.co.uk/images/LT-03E-RA/6236090f9866ab8936fbffdbbcfb71c7.jpg",
+        "https://b2c-contenthub.com/wp-content/uploads/2023/04/Razer-Blade-16-keyboard.jpg?quality=50&strip=all&w=1200"
       ],
-      "price": 1313.0,
+      "price": 2886520.0,
       "originalPrice": null,
-      "description": "High quality laptop from Razer. Perfect for daily use and professional tasks.",
+      "description": "Smart, durable, and ready to go. Razer Blade 16 with M1, 512GB SSD, 32GB RAM. Made to keep up with your workflow.",
       "category": "Laptop",
-      "rating": 3.8,
-      "reviewCount": 356,
+      "rating": 4.3,
+      "reviewCount": 427,
       "inStock": true,
-      "stock": 46,
+      "stock": 62,
       "specifications": {
-        "cpu": "Intel i7",
+        "cpu": "M1",
         "ram": "32GB",
-        "storage": "256GB SSD",
+        "storage": "512GB SSD",
         "gpu": "Intel Iris",
-        "display": "14 inch",
+        "display": "16 inch",
         "battery": "15 hours",
-        "weight": "1.6 kg"
+        "weight": "1.4 kg"
       }
     },
     {
       "id": "laptop_dell_alienware_m16_r2",
       "brand": "Dell",
       "model": "Alienware M16 R2",
-      "imageUrl": "https://cdn.mos.cms.futurecdn.net/ht4C4qRVGg5NnwQm3WLsrK.jpg",
+      "imageUrl": "https://ng.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/07/1762914/4.jpg?1039",
       "imageUrls": [
-        "https://cdn.mos.cms.futurecdn.net/ht4C4qRVGg5NnwQm3WLsrK.jpg",
-        "https://cdn.mos.cms.futurecdn.net/ht4C4qRVGg5NnwQm3WLsrK.jpg",
-        "https://cdn.mos.cms.futurecdn.net/ht4C4qRVGg5NnwQm3WLsrK.jpg",
+        "https://ng.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/07/1762914/4.jpg?1039",
+        "https://ng.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/07/1762914/2.jpg?1039",
+        "https://ng.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/07/1762914/3.jpg?1039",
         "https://cdn.mos.cms.futurecdn.net/ht4C4qRVGg5NnwQm3WLsrK.jpg"
       ],
-      "price": 987.0,
+      "price": 1499368.0,
       "originalPrice": null,
-      "description": "High quality laptop from Dell. Perfect for daily use and professional tasks.",
+      "description": "Smart, durable, and ready to go. Dell Alienware M16 R2 with 512GB SSD, Intel i5, 13.3 inch display. Clean design with dependable performance.",
       "category": "Laptop",
-      "rating": 3.5,
-      "reviewCount": 163,
+      "rating": 4.3,
+      "reviewCount": 82,
       "inStock": true,
-      "stock": 88,
+      "stock": 29,
       "specifications": {
-        "cpu": "M1",
-        "ram": "32GB",
-        "storage": "256GB SSD",
-        "gpu": "NVIDIA RTX 3050",
-        "display": "16 inch",
-        "battery": "11 hours",
-        "weight": "1.9 kg"
+        "cpu": "Intel i5",
+        "ram": "8GB",
+        "storage": "512GB SSD",
+        "gpu": "Intel Iris",
+        "display": "13.3 inch",
+        "battery": "10 hours",
+        "weight": "1.5 kg"
       }
     },
     {
       "id": "laptop_acer_predator_helios_16",
       "brand": "Acer",
       "model": "Predator Helios 16",
-      "imageUrl": "https://microless.com/cdn/products/4679201588f65ddb18a82503b988e760-hi.jpg",
+      "imageUrl": "https://cdn.assets.prezly.com/157fb284-7b4c-4bdb-bcaf-fbabc317b639/PREDATOR-HELIOS-NEO-16-PHN16-72-02.jpg",
       "imageUrls": [
-        "https://microless.com/cdn/products/4679201588f65ddb18a82503b988e760-hi.jpg",
-        "https://microless.com/cdn/products/4679201588f65ddb18a82503b988e760-hi.jpg",
-        "https://microless.com/cdn/products/4679201588f65ddb18a82503b988e760-hi.jpg",
+        "https://cdn.assets.prezly.com/157fb284-7b4c-4bdb-bcaf-fbabc317b639/PREDATOR-HELIOS-NEO-16-PHN16-72-02.jpg",
+        "https://ng.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/39/8041914/3.jpg?0804",
+        "https://ng.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/39/8041914/2.jpg?0804",
         "https://microless.com/cdn/products/4679201588f65ddb18a82503b988e760-hi.jpg"
       ],
-      "price": 1557.0,
-      "originalPrice": null,
-      "description": "High quality laptop from Acer. Perfect for daily use and professional tasks.",
+      "price": 3017664.0,
+      "originalPrice": 3663920.0,
+      "description": "Smart, durable, and ready to go. Acer Predator Helios 16 with 1TB SSD, 15.6 inch display, Ryzen 5. Clean design with dependable performance.",
       "category": "Laptop",
-      "rating": 4.8,
-      "reviewCount": 243,
+      "rating": 4.9,
+      "reviewCount": 294,
       "inStock": true,
-      "stock": 79,
+      "stock": 81,
       "specifications": {
-        "cpu": "Ryzen 7",
-        "ram": "32GB",
+        "cpu": "Ryzen 5",
+        "ram": "16GB",
         "storage": "1TB SSD",
         "gpu": "NVIDIA RTX 3050",
-        "display": "16 inch",
-        "battery": "8 hours",
-        "weight": "1.8 kg"
+        "display": "15.6 inch",
+        "battery": "14 hours",
+        "weight": "2.3 kg"
       }
     },
     {
       "id": "laptop_msi_stealth_15m",
       "brand": "MSI",
       "model": "Stealth 15M",
-      "imageUrl": "https://storage-asset.msi.com/global/picture/product/product_1647299935ac38d9de46efa12c710a7e56c5da2a60.webp",
+      "imageUrl": "https://m.media-amazon.com/images/I/71p3Ygm14wL._AC_SL1500_.jpg",
       "imageUrls": [
-        "https://storage-asset.msi.com/global/picture/product/product_1647299935ac38d9de46efa12c710a7e56c5da2a60.webp",
-        "https://storage-asset.msi.com/global/picture/product/product_1647299935ac38d9de46efa12c710a7e56c5da2a60.webp",
-        "https://storage-asset.msi.com/global/picture/product/product_1647299935ac38d9de46efa12c710a7e56c5da2a60.webp",
+        "https://m.media-amazon.com/images/I/71p3Ygm14wL._AC_SL1500_.jpg",
+        "https://storage-asset.msi.com/global/picture/product/product_1642749355beafee883c67bc01eefbb5e74751799b.webp",
+        "https://www.scan.co.uk/images/infopages/msi_laptop/30-series/Stealth_15M/topimage.png",
         "https://storage-asset.msi.com/global/picture/product/product_1647299935ac38d9de46efa12c710a7e56c5da2a60.webp"
       ],
-      "price": 2402.0,
+      "price": 1418248.0,
       "originalPrice": null,
-      "description": "High quality laptop from MSI. Perfect for daily use and professional tasks.",
+      "description": "Smart, durable, and ready to go. MSI Stealth 15M with M2, 32GB RAM, 256GB SSD. Great for students, creators, and professionals.",
       "category": "Laptop",
-      "rating": 4.4,
-      "reviewCount": 433,
+      "rating": 4.2,
+      "reviewCount": 447,
       "inStock": true,
-      "stock": 88,
+      "stock": 63,
       "specifications": {
-        "cpu": "Intel i7",
-        "ram": "8GB",
-        "storage": "1TB SSD",
-        "gpu": "NVIDIA RTX 3050",
-        "display": "16 inch",
-        "battery": "10 hours",
-        "weight": "1.8 kg"
+        "cpu": "M2",
+        "ram": "32GB",
+        "storage": "256GB SSD",
+        "gpu": "Intel Iris",
+        "display": "14 inch",
+        "battery": "14 hours",
+        "weight": "1.2 kg"
       }
     },
     {
@@ -442,49 +442,49 @@
       "imageUrl": "https://resource.logitech.com/c_fill,q_auto,f_auto,dpr_1.0/d_transparent.gif/content/dam/logitech/en/products/mice/mx-master-3s/migration-assets-for-delorean-2025/gallery/mx-master-3s-top-view-graphite.png",
       "imageUrls": [
         "https://resource.logitech.com/c_fill,q_auto,f_auto,dpr_1.0/d_transparent.gif/content/dam/logitech/en/products/mice/mx-master-3s/migration-assets-for-delorean-2025/gallery/mx-master-3s-top-view-graphite.png",
-        "https://resource.logitech.com/c_fill,q_auto,f_auto,dpr_1.0/d_transparent.gif/content/dam/logitech/en/products/mice/mx-master-3s/migration-assets-for-delorean-2025/gallery/mx-master-3s-top-view-graphite.png",
-        "https://resource.logitech.com/c_fill,q_auto,f_auto,dpr_1.0/d_transparent.gif/content/dam/logitech/en/products/mice/mx-master-3s/migration-assets-for-delorean-2025/gallery/mx-master-3s-top-view-graphite.png",
-        "https://resource.logitech.com/c_fill,q_auto,f_auto,dpr_1.0/d_transparent.gif/content/dam/logitech/en/products/mice/mx-master-3s/migration-assets-for-delorean-2025/gallery/mx-master-3s-top-view-graphite.png"
+        "https://i.ebayimg.com/images/g/TcAAAeSwrMdpRGKR/s-l1600.webp",
+        "https://www-konga-com-res.cloudinary.com/image/upload/f_auto,fl_lossy,dpr_auto,q_auto,w_1920/media/catalog/product/G/T/196037_1680388727.jpg",
+        "https://www-konga-com-res.cloudinary.com/image/upload/f_auto,fl_lossy,dpr_auto,q_auto,w_1920/media/catalog/product/T/J/196037_1680388689.jpg"
       ],
-      "price": 136.0,
-      "originalPrice": 162.0,
-      "description": "High quality mouse from Logitech. Perfect for daily use and professional tasks.",
+      "price": 155480.0,
+      "originalPrice": null,
+      "description": "Built for daily performance. Logitech MX Master 3S with battery up to 1 months, 11682 DPI, Bluetooth. Made to keep up with your workflow.",
       "category": "Mouse",
-      "rating": 4.1,
-      "reviewCount": 386,
+      "rating": 4.3,
+      "reviewCount": 407,
       "inStock": true,
-      "stock": 10,
+      "stock": 18,
       "specifications": {
         "connectivity": "Bluetooth",
-        "dpi": 3784,
-        "battery": "8 months",
-        "weight": "86 g"
+        "dpi": 11682,
+        "battery": "1 months",
+        "weight": "110 g"
       }
     },
     {
       "id": "mouse_logitech_g502_hero",
       "brand": "Logitech",
       "model": "G502 Hero",
-      "imageUrl": "https://ng.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/33/0548852/1.jpg?8470",
+      "imageUrl": "https://i.ebayimg.com/images/g/FS4AAOSwi6Fmf8y7/s-l1600.webp",
       "imageUrls": [
+        "https://i.ebayimg.com/images/g/FS4AAOSwi6Fmf8y7/s-l1600.webp",
         "https://ng.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/33/0548852/1.jpg?8470",
-        "https://ng.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/33/0548852/1.jpg?8470",
-        "https://ng.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/33/0548852/1.jpg?8470",
-        "https://ng.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/33/0548852/1.jpg?8470"
+        "https://i.ebayimg.com/images/g/Q8YAAOSwlLFmf8yD/s-l1600.webp",
+        "https://i.ebayimg.com/images/g/3poAAOSwuRpmf8yD/s-l1600.webp"
       ],
-      "price": 104.0,
-      "originalPrice": null,
-      "description": "High quality mouse from Logitech. Perfect for daily use and professional tasks.",
+      "price": 120328.0,
+      "originalPrice": 143312.0,
+      "description": "Smart, durable, and ready to go. Logitech G502 Hero with Wireless USB, 18743 DPI, battery up to 3 months. Clean design with dependable performance.",
       "category": "Mouse",
       "rating": 3.8,
-      "reviewCount": 472,
+      "reviewCount": 198,
       "inStock": true,
-      "stock": 34,
+      "stock": 58,
       "specifications": {
-        "connectivity": "Wired",
-        "dpi": 14829,
-        "battery": "10 months",
-        "weight": "102 g"
+        "connectivity": "Wireless USB",
+        "dpi": 18743,
+        "battery": "3 months",
+        "weight": "118 g"
       }
     },
     {
@@ -494,49 +494,49 @@
       "imageUrl": "https://www.pbtech.com/pacific/imgprod/M/S/MSERAZ87084__1.jpg",
       "imageUrls": [
         "https://www.pbtech.com/pacific/imgprod/M/S/MSERAZ87084__1.jpg",
-        "https://www.pbtech.com/pacific/imgprod/M/S/MSERAZ87084__1.jpg",
-        "https://www.pbtech.com/pacific/imgprod/M/S/MSERAZ87084__1.jpg",
-        "https://www.pbtech.com/pacific/imgprod/M/S/MSERAZ87084__1.jpg"
+        "https://cdn.mos.cms.futurecdn.net/EN57bgFd7ucLprNmfJDgQk.jpeg",
+        "https://cdn.mos.cms.futurecdn.net/KnUeL8LPp6fA2jJsVQLqgm.jpeg",
+        "https://tpucdn.com/review/razer-deathadder-v3-pro/images/title.jpg"
       ],
-      "price": 55.0,
+      "price": 128440.0,
       "originalPrice": null,
-      "description": "High quality mouse from Razer. Perfect for daily use and professional tasks.",
+      "description": "Reliable gear for work and play. Razer DeathAdder V3 with Bluetooth, battery up to 7 months, 9591 DPI. Great for students, creators, and professionals.",
       "category": "Mouse",
-      "rating": 3.7,
-      "reviewCount": 492,
+      "rating": 3.8,
+      "reviewCount": 361,
       "inStock": true,
-      "stock": 91,
+      "stock": 15,
       "specifications": {
-        "connectivity": "Wired",
-        "dpi": 8574,
-        "battery": "8 months",
-        "weight": "115 g"
+        "connectivity": "Bluetooth",
+        "dpi": 9591,
+        "battery": "7 months",
+        "weight": "106 g"
       }
     },
     {
       "id": "mouse_razer_basilisk_v3",
       "brand": "Razer",
       "model": "Basilisk V3",
-      "imageUrl": "https://i.rtings.com/assets/products/HlSiCAs0/razer-basilisk-v3/design-medium.jpg?format=auto",
+      "imageUrl": "https://i.ebayimg.com/images/g/Xz0AAOSwJwhiG3ka/s-l1600.webp",
       "imageUrls": [
+        "https://i.ebayimg.com/images/g/Xz0AAOSwJwhiG3ka/s-l1600.webp",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnUJMrz5tqeb17hqk2ApipQTtl3zfwIdQZWQ&s",
         "https://i.rtings.com/assets/products/HlSiCAs0/razer-basilisk-v3/design-medium.jpg?format=auto",
-        "https://i.rtings.com/assets/products/HlSiCAs0/razer-basilisk-v3/design-medium.jpg?format=auto",
-        "https://i.rtings.com/assets/products/HlSiCAs0/razer-basilisk-v3/design-medium.jpg?format=auto",
-        "https://i.rtings.com/assets/products/HlSiCAs0/razer-basilisk-v3/design-medium.jpg?format=auto"
+        "https://m.media-amazon.com/images/S/aplus-media-library-service-media/7b915a33-f30a-44f0-b6c4-8792615b429a.__CR0,0,600,450_PT0_SX600_V1___.jpg"
       ],
-      "price": 121.0,
-      "originalPrice": 139.0,
-      "description": "High quality mouse from Razer. Perfect for daily use and professional tasks.",
+      "price": 63544.0,
+      "originalPrice": null,
+      "description": "Smart, durable, and ready to go. Razer Basilisk V3 with Wired, 3985 DPI, battery up to 12 months. Great for students, creators, and professionals.",
       "category": "Mouse",
       "rating": 4.3,
-      "reviewCount": 168,
+      "reviewCount": 318,
       "inStock": true,
-      "stock": 96,
+      "stock": 94,
       "specifications": {
-        "connectivity": "Wireless USB",
-        "dpi": 12604,
-        "battery": "7 months",
-        "weight": "74 g"
+        "connectivity": "Wired",
+        "dpi": 3985,
+        "battery": "12 months",
+        "weight": "67 g"
       }
     },
     {
@@ -546,23 +546,23 @@
       "imageUrl": "https://assets.corsair.com/image/upload/c_pad,q_auto,h_1024,w_1024,f_auto/products/Gaming-Mice/CH-9315311-NA/Gallery/DARK_CORE_RGB_SE_01.webp",
       "imageUrls": [
         "https://assets.corsair.com/image/upload/c_pad,q_auto,h_1024,w_1024,f_auto/products/Gaming-Mice/CH-9315311-NA/Gallery/DARK_CORE_RGB_SE_01.webp",
-        "https://assets.corsair.com/image/upload/c_pad,q_auto,h_1024,w_1024,f_auto/products/Gaming-Mice/CH-9315311-NA/Gallery/DARK_CORE_RGB_SE_01.webp",
-        "https://assets.corsair.com/image/upload/c_pad,q_auto,h_1024,w_1024,f_auto/products/Gaming-Mice/CH-9315311-NA/Gallery/DARK_CORE_RGB_SE_01.webp",
-        "https://assets.corsair.com/image/upload/c_pad,q_auto,h_1024,w_1024,f_auto/products/Gaming-Mice/CH-9315311-NA/Gallery/DARK_CORE_RGB_SE_01.webp"
+        "https://m.media-amazon.com/images/I/61Q8UQrNpxL._AC_SL1500_.jpg",
+        "https://i.rtings.com/assets/products/r3YpGetx/corsair-dark-core-rgb-pro/design-medium.jpg?format=auto",
+        "https://assets.corsair.com/image/upload/f_auto,q_auto/content/ch-9315211-na-dark-core-rgb-04.png"
       ],
-      "price": 42.0,
+      "price": 185224.0,
       "originalPrice": null,
-      "description": "High quality mouse from Corsair. Perfect for daily use and professional tasks.",
+      "description": "Smart, durable, and ready to go. Corsair Dark Core RGB with battery up to 1 months, 15407 DPI, Wired. Ideal for home, office, and travel.",
       "category": "Mouse",
-      "rating": 4.2,
-      "reviewCount": 471,
+      "rating": 4.6,
+      "reviewCount": 43,
       "inStock": true,
-      "stock": 15,
+      "stock": 18,
       "specifications": {
         "connectivity": "Wired",
-        "dpi": 1176,
-        "battery": "9 months",
-        "weight": "72 g"
+        "dpi": 15407,
+        "battery": "1 months",
+        "weight": "73 g"
       }
     },
     {
@@ -572,49 +572,49 @@
       "imageUrl": "https://row.hyperx.com/cdn/shop/files/hyperx_pulsefire_haste_wireless_black_1_top_down.jpg?v=1700189384",
       "imageUrls": [
         "https://row.hyperx.com/cdn/shop/files/hyperx_pulsefire_haste_wireless_black_1_top_down.jpg?v=1700189384",
-        "https://row.hyperx.com/cdn/shop/files/hyperx_pulsefire_haste_wireless_black_1_top_down.jpg?v=1700189384",
-        "https://row.hyperx.com/cdn/shop/files/hyperx_pulsefire_haste_wireless_black_1_top_down.jpg?v=1700189384",
-        "https://row.hyperx.com/cdn/shop/files/hyperx_pulsefire_haste_wireless_black_1_top_down.jpg?v=1700189384"
+        "https://m.media-amazon.com/images/I/61fHMXV+ANL._AC_UF1000,1000_QL80_.jpg",
+        "https://m.media-amazon.com/images/I/61NxH1E1EDL._AC_SL1500_.jpg",
+        "https://m.media-amazon.com/images/I/61Z0QVvbFHL._AC_SL1500_.jpg"
       ],
-      "price": 122.0,
+      "price": 106808.0,
       "originalPrice": null,
-      "description": "High quality mouse from HyperX. Perfect for daily use and professional tasks.",
+      "description": "Built for daily performance. HyperX Pulsefire Haste with battery up to 9 months, 19750 DPI, Bluetooth. Clean design with dependable performance.",
       "category": "Mouse",
-      "rating": 5.0,
-      "reviewCount": 239,
+      "rating": 4.5,
+      "reviewCount": 133,
       "inStock": true,
-      "stock": 40,
+      "stock": 7,
       "specifications": {
         "connectivity": "Bluetooth",
-        "dpi": 4931,
-        "battery": "6 months",
-        "weight": "106 g"
+        "dpi": 19750,
+        "battery": "9 months",
+        "weight": "118 g"
       }
     },
     {
       "id": "mouse_apple_magic_mouse_2",
       "brand": "Apple",
       "model": "Magic Mouse 2",
-      "imageUrl": "https://i.ebayimg.com/images/g/zLoAAOSwwclmbhXh/s-l1200.jpg",
+      "imageUrl": "https://ng.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/17/915098/1.jpg?6166",
       "imageUrls": [
-        "https://i.ebayimg.com/images/g/zLoAAOSwwclmbhXh/s-l1200.jpg",
-        "https://i.ebayimg.com/images/g/zLoAAOSwwclmbhXh/s-l1200.jpg",
-        "https://i.ebayimg.com/images/g/zLoAAOSwwclmbhXh/s-l1200.jpg",
+        "https://ng.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/17/915098/1.jpg?6166",
+        "https://ng.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/17/915098/2.jpg?6166",
+        "https://i.ebayimg.com/images/g/B-0AAeSwMixpZ0WK/s-l1600.webp",
         "https://i.ebayimg.com/images/g/zLoAAOSwwclmbhXh/s-l1200.jpg"
       ],
-      "price": 59.0,
+      "price": 178464.0,
       "originalPrice": null,
-      "description": "High quality mouse from Apple. Perfect for daily use and professional tasks.",
+      "description": "Reliable gear for work and play. Apple Magic Mouse 2 with 9425 DPI, battery up to 4 months, Bluetooth. Ideal for home, office, and travel.",
       "category": "Mouse",
-      "rating": 3.9,
-      "reviewCount": 162,
+      "rating": 3.6,
+      "reviewCount": 93,
       "inStock": true,
-      "stock": 82,
+      "stock": 11,
       "specifications": {
-        "connectivity": "Wireless USB",
-        "dpi": 7200,
-        "battery": "2 months",
-        "weight": "85 g"
+        "connectivity": "Bluetooth",
+        "dpi": 9425,
+        "battery": "4 months",
+        "weight": "118 g"
       }
     },
     {
@@ -624,23 +624,23 @@
       "imageUrl": "https://m.media-amazon.com/images/I/61M2OwtouxL.jpg",
       "imageUrls": [
         "https://m.media-amazon.com/images/I/61M2OwtouxL.jpg",
-        "https://m.media-amazon.com/images/I/61M2OwtouxL.jpg",
-        "https://m.media-amazon.com/images/I/61M2OwtouxL.jpg",
-        "https://m.media-amazon.com/images/I/61M2OwtouxL.jpg"
+        "https://assets.razerzone.com/eeimages/support/products/1577/ee_photo.png",
+        "https://scdn.comfy.ua/89fc351a-22e7-41ee-8321-f8a9356ca351/https://cdn.comfy.ua/media/review/main/IMG_4808.jpeg/f_auto",
+        "https://preview.redd.it/razer-viper-ultimate-users-how-is-your-experience-with-the-v0-umz9ggtjo7vd1.png?width=1536&format=png&auto=webp&s=54e3593d6e5f6b3b3cff39108d09fa2e5a910d2f"
       ],
-      "price": 106.0,
+      "price": 141960.0,
       "originalPrice": null,
-      "description": "High quality mouse from Razer. Perfect for daily use and professional tasks.",
+      "description": "Designed for speed and comfort. Razer Viper Ultimate with battery up to 2 months, Wireless USB, 1819 DPI. Clean design with dependable performance.",
       "category": "Mouse",
-      "rating": 4.3,
-      "reviewCount": 184,
+      "rating": 4.6,
+      "reviewCount": 475,
       "inStock": true,
-      "stock": 85,
+      "stock": 32,
       "specifications": {
-        "connectivity": "Wired",
-        "dpi": 2265,
+        "connectivity": "Wireless USB",
+        "dpi": 1819,
         "battery": "2 months",
-        "weight": "97 g"
+        "weight": "62 g"
       }
     },
     {
@@ -650,23 +650,23 @@
       "imageUrl": "https://media.stockinthechannel.com/pic/60qDoO-C3ka2PVvCRStM8A.c-r.jpg",
       "imageUrls": [
         "https://media.stockinthechannel.com/pic/60qDoO-C3ka2PVvCRStM8A.c-r.jpg",
-        "https://media.stockinthechannel.com/pic/60qDoO-C3ka2PVvCRStM8A.c-r.jpg",
-        "https://media.stockinthechannel.com/pic/60qDoO-C3ka2PVvCRStM8A.c-r.jpg",
-        "https://media.stockinthechannel.com/pic/60qDoO-C3ka2PVvCRStM8A.c-r.jpg"
+        "https://i.ebayimg.com/images/g/aJYAAeSwVEtoeS0f/s-l1600.webp",
+        "https://i.ebayimg.com/images/g/yRUAAeSwWcpoeS0a/s-l1600.webp",
+        "https://ng.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/12/7522732/2.jpg?1788"
       ],
-      "price": 161.0,
-      "originalPrice": 191.0,
-      "description": "High quality keyboard from Logitech. Perfect for daily use and professional tasks.",
+      "price": 169000.0,
+      "originalPrice": 193336.0,
+      "description": "Reliable gear for work and play. Logitech MX Keys with None switches, Mechanical, RGB backlight. Made to keep up with your workflow.",
       "category": "Keyboard",
-      "rating": 4.1,
-      "reviewCount": 336,
+      "rating": 4.3,
+      "reviewCount": 445,
       "inStock": true,
-      "stock": 22,
+      "stock": 45,
       "specifications": {
         "type": "Mechanical",
-        "switch": "Red",
+        "switch": "None",
         "connectivity": "USB",
-        "backlight": "White"
+        "backlight": "RGB"
       }
     },
     {
@@ -676,49 +676,49 @@
       "imageUrl": "https://m.media-amazon.com/images/I/815XJdl7fXL._AC_SL1500_.jpg",
       "imageUrls": [
         "https://m.media-amazon.com/images/I/815XJdl7fXL._AC_SL1500_.jpg",
-        "https://m.media-amazon.com/images/I/815XJdl7fXL._AC_SL1500_.jpg",
-        "https://m.media-amazon.com/images/I/815XJdl7fXL._AC_SL1500_.jpg",
-        "https://m.media-amazon.com/images/I/815XJdl7fXL._AC_SL1500_.jpg"
+        "https://m.media-amazon.com/images/I/71OEqY51LeL._AC_SL1500_.jpg",
+        "https://m.media-amazon.com/images/I/71qntGdDckL._AC_SL1500_.jpg",
+        "https://m.media-amazon.com/images/I/81XQaC7vX+L._AC_SL1500_.jpg"
       ],
-      "price": 200.0,
-      "originalPrice": null,
-      "description": "High quality keyboard from Razer. Perfect for daily use and professional tasks.",
+      "price": 150072.0,
+      "originalPrice": 189280.0,
+      "description": "Smart, durable, and ready to go. Razer BlackWidow V4 with Red switches, Membrane, White backlight. A solid upgrade for your setup.",
       "category": "Keyboard",
-      "rating": 4.1,
-      "reviewCount": 320,
+      "rating": 3.8,
+      "reviewCount": 187,
       "inStock": true,
-      "stock": 93,
+      "stock": 17,
       "specifications": {
-        "type": "Mechanical",
-        "switch": "Blue",
+        "type": "Membrane",
+        "switch": "Red",
         "connectivity": "USB",
-        "backlight": "RGB"
+        "backlight": "White"
       }
     },
     {
       "id": "keyboard_corsair_k95_rgb",
       "brand": "Corsair",
       "model": "K95 RGB",
-      "imageUrl": "https://www.devicedeal.com.au/assets/full/CH-9127412-NA.jpg?20210309045805",
+      "imageUrl": "https://media.officedepot.com/images/f_auto,q_auto,e_sharpen,h_450/products/6911521/6911521_o51_cn_11070056/6911521",
       "imageUrls": [
+        "https://media.officedepot.com/images/f_auto,q_auto,e_sharpen,h_450/products/6911521/6911521_o51_cn_11070056/6911521",
         "https://www.devicedeal.com.au/assets/full/CH-9127412-NA.jpg?20210309045805",
-        "https://www.devicedeal.com.au/assets/full/CH-9127412-NA.jpg?20210309045805",
-        "https://www.devicedeal.com.au/assets/full/CH-9127412-NA.jpg?20210309045805",
-        "https://www.devicedeal.com.au/assets/full/CH-9127412-NA.jpg?20210309045805"
+        "https://assets.corsair.com/image/upload/c_pad,q_auto,h_1024,w_1024,f_auto/products/Gaming-Keyboards/CH-9127014-JP/Gallery/K95_RGB_PLAT_BLK_JP_01.webp",
+        "https://assets.corsair.com/image/upload/f_auto,q_auto/content/CH-9000220-NA-CGK95-RGB-NA-005.png"
       ],
-      "price": 171.0,
+      "price": 151424.0,
       "originalPrice": null,
-      "description": "High quality keyboard from Corsair. Perfect for daily use and professional tasks.",
+      "description": "Smart, durable, and ready to go. Corsair K95 RGB with Brown switches, Membrane, RGB backlight. Ideal for home, office, and travel.",
       "category": "Keyboard",
-      "rating": 3.5,
-      "reviewCount": 424,
+      "rating": 4.6,
+      "reviewCount": 351,
       "inStock": true,
-      "stock": 35,
+      "stock": 33,
       "specifications": {
         "type": "Membrane",
-        "switch": "Red",
-        "connectivity": "USB",
-        "backlight": "White"
+        "switch": "Brown",
+        "connectivity": "Wireless",
+        "backlight": "RGB"
       }
     },
     {
@@ -728,23 +728,23 @@
       "imageUrl": "https://i5.walmartimages.com/seo/HyperX-4P5P3AA-Alloy-Origins-Core-Mechanical-Gaming-Keyboard_4df5779d-037f-4869-bc31-6bdf36aa8f0b.e1bdecb0a054a092f484de42ce2b4701.jpeg",
       "imageUrls": [
         "https://i5.walmartimages.com/seo/HyperX-4P5P3AA-Alloy-Origins-Core-Mechanical-Gaming-Keyboard_4df5779d-037f-4869-bc31-6bdf36aa8f0b.e1bdecb0a054a092f484de42ce2b4701.jpeg",
-        "https://i5.walmartimages.com/seo/HyperX-4P5P3AA-Alloy-Origins-Core-Mechanical-Gaming-Keyboard_4df5779d-037f-4869-bc31-6bdf36aa8f0b.e1bdecb0a054a092f484de42ce2b4701.jpeg",
-        "https://i5.walmartimages.com/seo/HyperX-4P5P3AA-Alloy-Origins-Core-Mechanical-Gaming-Keyboard_4df5779d-037f-4869-bc31-6bdf36aa8f0b.e1bdecb0a054a092f484de42ce2b4701.jpeg",
-        "https://i5.walmartimages.com/seo/HyperX-4P5P3AA-Alloy-Origins-Core-Mechanical-Gaming-Keyboard_4df5779d-037f-4869-bc31-6bdf36aa8f0b.e1bdecb0a054a092f484de42ce2b4701.jpeg"
+        "https://m.media-amazon.com/images/I/61laVFbGRsL._AC_SL1000_.jpg",
+        "https://m.media-amazon.com/images/I/71mdUyMsUiL._AC_SL1000_.jpg",
+        "https://m.media-amazon.com/images/I/71pcPOZxu7L._AC_SL1000_.jpg"
       ],
-      "price": 151.0,
-      "originalPrice": null,
-      "description": "High quality keyboard from HyperX. Perfect for daily use and professional tasks.",
+      "price": 68952.0,
+      "originalPrice": 86528.0,
+      "description": "A premium pick for productivity. HyperX Alloy Origins with Blue switches, Mechanical, RGB backlight. A solid upgrade for your setup.",
       "category": "Keyboard",
-      "rating": 5.0,
-      "reviewCount": 162,
+      "rating": 4.1,
+      "reviewCount": 353,
       "inStock": true,
-      "stock": 60,
+      "stock": 33,
       "specifications": {
         "type": "Mechanical",
-        "switch": "None",
+        "switch": "Blue",
         "connectivity": "Wireless",
-        "backlight": "White"
+        "backlight": "RGB"
       }
     },
     {
@@ -754,127 +754,127 @@
       "imageUrl": "https://www.istore.com.ng/cdn/shop/products/mk293z_1200x.jpg?v=1642585074",
       "imageUrls": [
         "https://www.istore.com.ng/cdn/shop/products/mk293z_1200x.jpg?v=1642585074",
-        "https://www.istore.com.ng/cdn/shop/products/mk293z_1200x.jpg?v=1642585074",
-        "https://www.istore.com.ng/cdn/shop/products/mk293z_1200x.jpg?v=1642585074",
-        "https://www.istore.com.ng/cdn/shop/products/mk293z_1200x.jpg?v=1642585074"
+        "https://i.ebayimg.com/images/g/sA0AAOSwhwtnDyUq/s-l1600.webp",
+        "https://i.ebayimg.com/images/g/y6UAAOSwEqxnDyVr/s-l1600.webp",
+        "https://upload.wikimedia.org/wikipedia/commons/9/96/Apple-wireless-keyboard-aluminum-2007.jpg"
       ],
-      "price": 163.0,
+      "price": 150072.0,
       "originalPrice": null,
-      "description": "High quality keyboard from Apple. Perfect for daily use and professional tasks.",
+      "description": "Smart, durable, and ready to go. Apple Magic Keyboard with White backlight, Mechanical, Brown switches. Clean design with dependable performance.",
       "category": "Keyboard",
-      "rating": 4.5,
-      "reviewCount": 185,
+      "rating": 3.9,
+      "reviewCount": 332,
       "inStock": true,
-      "stock": 6,
+      "stock": 19,
       "specifications": {
         "type": "Mechanical",
         "switch": "Brown",
         "connectivity": "Wireless",
-        "backlight": "None"
+        "backlight": "White"
       }
     },
     {
       "id": "keyboard_razer_huntsman_mini",
       "brand": "Razer",
       "model": "Huntsman Mini",
-      "imageUrl": "https://i.pcmag.com/imagery/reviews/04WneWB1tIjQfk7lA9D6vu1-1.fit_lim.size_1050x.png",
+      "imageUrl": "https://m.media-amazon.com/images/I/618etkLUt9L._AC_SL1500_.jpg",
       "imageUrls": [
-        "https://i.pcmag.com/imagery/reviews/04WneWB1tIjQfk7lA9D6vu1-1.fit_lim.size_1050x.png",
-        "https://i.pcmag.com/imagery/reviews/04WneWB1tIjQfk7lA9D6vu1-1.fit_lim.size_1050x.png",
-        "https://i.pcmag.com/imagery/reviews/04WneWB1tIjQfk7lA9D6vu1-1.fit_lim.size_1050x.png",
-        "https://i.pcmag.com/imagery/reviews/04WneWB1tIjQfk7lA9D6vu1-1.fit_lim.size_1050x.png"
+        "https://m.media-amazon.com/images/I/618etkLUt9L._AC_SL1500_.jpg",
+        "https://m.media-amazon.com/images/I/81MB36DRU5L._AC_SL1500_.jpg",
+        "https://m.media-amazon.com/images/I/71z3zl-TbQL._AC_SL1500_.jpg",
+        "https://m.media-amazon.com/images/I/71EXApeyE2L._AC_SL1500_.jpg"
       ],
-      "price": 100.0,
+      "price": 213616.0,
       "originalPrice": null,
-      "description": "High quality keyboard from Razer. Perfect for daily use and professional tasks.",
+      "description": "Built for daily performance. Razer Huntsman Mini with White backlight, Membrane, Blue switches. Ideal for home, office, and travel.",
       "category": "Keyboard",
-      "rating": 3.9,
-      "reviewCount": 440,
+      "rating": 3.8,
+      "reviewCount": 90,
       "inStock": true,
-      "stock": 65,
+      "stock": 37,
       "specifications": {
-        "type": "Mechanical",
-        "switch": "Brown",
-        "connectivity": "Wireless",
-        "backlight": "RGB"
+        "type": "Membrane",
+        "switch": "Blue",
+        "connectivity": "USB",
+        "backlight": "White"
       }
     },
     {
       "id": "laptop_bag_dell_premier_backpack",
       "brand": "Dell",
       "model": "Premier Backpack",
-      "imageUrl": "https://images-cdn.ubuy.co.in/65d04062b060511e3f2353aa-dell-pe-bp-15-20-15-in-premier-backpack.jpg",
+      "imageUrl": "https://i.ebayimg.com/images/g/svoAAeSw4xtpaHY8/s-l960.webp",
       "imageUrls": [
+        "https://i.ebayimg.com/images/g/svoAAeSw4xtpaHY8/s-l960.webp",
         "https://images-cdn.ubuy.co.in/65d04062b060511e3f2353aa-dell-pe-bp-15-20-15-in-premier-backpack.jpg",
-        "https://images-cdn.ubuy.co.in/65d04062b060511e3f2353aa-dell-pe-bp-15-20-15-in-premier-backpack.jpg",
-        "https://images-cdn.ubuy.co.in/65d04062b060511e3f2353aa-dell-pe-bp-15-20-15-in-premier-backpack.jpg",
-        "https://images-cdn.ubuy.co.in/65d04062b060511e3f2353aa-dell-pe-bp-15-20-15-in-premier-backpack.jpg"
+        "https://www.tpstech.in/cdn/shop/products/00_cfe28e01-adc0-46f6-b715-7233952883e7.jpg?v=1612878871",
+        "https://i.ebayimg.com/images/g/iA8AAeSw7MRpaHY8/s-l1600.webp"
       ],
-      "price": 57.0,
-      "originalPrice": null,
-      "description": "High quality laptop bag from Dell. Perfect for daily use and professional tasks.",
+      "price": 70304.0,
+      "originalPrice": 83824.0,
+      "description": "Reliable gear for work and play. Dell Premier Backpack with Leather, fits up to 15.6 inch laptop, water-resistant. Ideal for home, office, and travel.",
       "category": "Laptop Bag",
-      "rating": 4.2,
-      "reviewCount": 201,
+      "rating": 3.7,
+      "reviewCount": 116,
       "inStock": true,
-      "stock": 79,
+      "stock": 67,
       "specifications": {
         "material": "Leather",
         "capacity": "fits up to 15.6 inch laptop",
-        "waterResistant": false,
-        "weight": "0.6 kg"
+        "waterResistant": true,
+        "weight": "0.7 kg"
       }
     },
     {
       "id": "laptop_bag_hp_executive_backpack",
       "brand": "HP",
       "model": "Executive Backpack",
-      "imageUrl": "https://hp.widen.net/content/jwmmoytuco/webp/jwmmoytuco.png?w=573&h=430&dpi=72&color=ffffff00",
+      "imageUrl": "https://i.ebayimg.com/images/g/~UgAAeSw0-ZonB1D/s-l500.webp",
       "imageUrls": [
+        "https://i.ebayimg.com/images/g/~UgAAeSw0-ZonB1D/s-l500.webp",
         "https://hp.widen.net/content/jwmmoytuco/webp/jwmmoytuco.png?w=573&h=430&dpi=72&color=ffffff00",
-        "https://hp.widen.net/content/jwmmoytuco/webp/jwmmoytuco.png?w=573&h=430&dpi=72&color=ffffff00",
-        "https://hp.widen.net/content/jwmmoytuco/webp/jwmmoytuco.png?w=573&h=430&dpi=72&color=ffffff00",
-        "https://hp.widen.net/content/jwmmoytuco/webp/jwmmoytuco.png?w=573&h=430&dpi=72&color=ffffff00"
+        "https://i.ebayimg.com/images/g/YqIAAeSwi1JonB1D/s-l1600.webp",
+        "https://i.ebayimg.com/images/g/VgIAAeSwfVlonB1C/s-l1600.webp"
       ],
-      "price": 34.0,
-      "originalPrice": 42.0,
-      "description": "High quality laptop bag from HP. Perfect for daily use and professional tasks.",
+      "price": 54080.0,
+      "originalPrice": null,
+      "description": "Reliable gear for work and play. HP Executive Backpack with fits up to 15.6 inch laptop, Polyester, everyday. A solid upgrade for your setup.",
       "category": "Laptop Bag",
-      "rating": 3.6,
-      "reviewCount": 392,
+      "rating": 4.7,
+      "reviewCount": 240,
       "inStock": true,
-      "stock": 83,
+      "stock": 61,
       "specifications": {
-        "material": "Nylon",
+        "material": "Polyester",
         "capacity": "fits up to 15.6 inch laptop",
-        "waterResistant": true,
-        "weight": "1.0 kg"
+        "waterResistant": false,
+        "weight": "1.1 kg"
       }
     },
     {
       "id": "laptop_bag_lenovo_legion_backpack",
       "brand": "Lenovo",
       "model": "Legion Backpack",
-      "imageUrl": "https://i5.walmartimages.com/seo/Legion-15-6-Recon-Gaming-Backpack_6efa108a-a7bb-4f2f-a10d-1b2765e0cc75.5b217f5ac6b65f6cb958bb6269791095.jpeg",
+      "imageUrl": "https://m.media-amazon.com/images/I/518Uaqz6oLL._AC_SL1000_.jpg",
       "imageUrls": [
-        "https://i5.walmartimages.com/seo/Legion-15-6-Recon-Gaming-Backpack_6efa108a-a7bb-4f2f-a10d-1b2765e0cc75.5b217f5ac6b65f6cb958bb6269791095.jpeg",
-        "https://i5.walmartimages.com/seo/Legion-15-6-Recon-Gaming-Backpack_6efa108a-a7bb-4f2f-a10d-1b2765e0cc75.5b217f5ac6b65f6cb958bb6269791095.jpeg",
-        "https://i5.walmartimages.com/seo/Legion-15-6-Recon-Gaming-Backpack_6efa108a-a7bb-4f2f-a10d-1b2765e0cc75.5b217f5ac6b65f6cb958bb6269791095.jpeg",
-        "https://i5.walmartimages.com/seo/Legion-15-6-Recon-Gaming-Backpack_6efa108a-a7bb-4f2f-a10d-1b2765e0cc75.5b217f5ac6b65f6cb958bb6269791095.jpeg"
+        "https://m.media-amazon.com/images/I/518Uaqz6oLL._AC_SL1000_.jpg",
+        "https://m.media-amazon.com/images/I/41Kpl01KaBL._AC_SL1000_.jpg",
+        "https://m.media-amazon.com/images/I/51WPErPFWRL._AC_SL1000_.jpg",
+        "https://m.media-amazon.com/images/I/51jHHyb3I5L._AC_SL1000_.jpg"
       ],
-      "price": 30.0,
-      "originalPrice": null,
-      "description": "High quality laptop bag from Lenovo. Perfect for daily use and professional tasks.",
+      "price": 109512.0,
+      "originalPrice": 136552.0,
+      "description": "Reliable gear for work and play. Lenovo Legion Backpack with fits up to 15.6 inch laptop, Nylon, water-resistant. Ideal for home, office, and travel.",
       "category": "Laptop Bag",
-      "rating": 3.8,
-      "reviewCount": 331,
+      "rating": 4.3,
+      "reviewCount": 207,
       "inStock": true,
-      "stock": 14,
+      "stock": 54,
       "specifications": {
         "material": "Nylon",
         "capacity": "fits up to 15.6 inch laptop",
-        "waterResistant": false,
-        "weight": "1.1 kg"
+        "waterResistant": true,
+        "weight": "0.8 kg"
       }
     },
     {
@@ -884,99 +884,99 @@
       "imageUrl": "https://m.media-amazon.com/images/I/41Hq0fqkfaL._SS1000_.jpg",
       "imageUrls": [
         "https://m.media-amazon.com/images/I/41Hq0fqkfaL._SS1000_.jpg",
-        "https://m.media-amazon.com/images/I/41Hq0fqkfaL._SS1000_.jpg",
-        "https://m.media-amazon.com/images/I/41Hq0fqkfaL._SS1000_.jpg",
-        "https://m.media-amazon.com/images/I/41Hq0fqkfaL._SS1000_.jpg"
+        "https://m.media-amazon.com/images/I/91MDLn-cRtL._AC_SL1500_.jpg",
+        "https://m.media-amazon.com/images/I/71KVO6fqn9L._AC_SL1500_.jpg",
+        "https://m.media-amazon.com/images/I/81Cdip7Eo1L._AC_SL1500_.jpg"
       ],
-      "price": 79.0,
+      "price": 48672.0,
       "originalPrice": null,
-      "description": "High quality laptop bag from Razer. Perfect for daily use and professional tasks.",
+      "description": "Reliable gear for work and play. Razer Rogue Backpack with fits up to 15.6 inch laptop, Nylon, water-resistant. A solid upgrade for your setup.",
       "category": "Laptop Bag",
-      "rating": 4.7,
-      "reviewCount": 118,
+      "rating": 3.7,
+      "reviewCount": 97,
       "inStock": true,
-      "stock": 39,
+      "stock": 27,
       "specifications": {
         "material": "Nylon",
         "capacity": "fits up to 15.6 inch laptop",
-        "waterResistant": false,
-        "weight": "0.5 kg"
+        "waterResistant": true,
+        "weight": "0.9 kg"
       }
     },
     {
       "id": "laptop_bag_asus_rog_backpack",
       "brand": "Asus",
       "model": "ROG Backpack",
-      "imageUrl": "https://m.media-amazon.com/images/I/317hWqS4bWS._AC_SR218_.jpg",
+      "imageUrl": "https://dlcdnwebimgs.asus.com/gain/6E7D902B-25CF-4617-8431-2409F2C04155",
       "imageUrls": [
-        "https://m.media-amazon.com/images/I/317hWqS4bWS._AC_SR218_.jpg",
-        "https://m.media-amazon.com/images/I/317hWqS4bWS._AC_SR218_.jpg",
-        "https://m.media-amazon.com/images/I/317hWqS4bWS._AC_SR218_.jpg",
-        "https://m.media-amazon.com/images/I/317hWqS4bWS._AC_SR218_.jpg"
+        "https://dlcdnwebimgs.asus.com/gain/6E7D902B-25CF-4617-8431-2409F2C04155",
+        "https://dlcdnwebimgs.asus.com/gain/A7ACF666-A786-4DF5-B893-CC3CC0F79CF4",
+        "https://dlcdnwebimgs.asus.com/gain/A7283899-9C20-42DC-956D-72C2A1A92331",
+        "https://dlcdnimgs.asus.com/websites/global/products/9boikwzr9rpiu6mf/img/1-aura.png"
       ],
-      "price": 96.0,
+      "price": 91936.0,
       "originalPrice": null,
-      "description": "High quality laptop bag from Asus. Perfect for daily use and professional tasks.",
+      "description": "Built for daily performance. Asus ROG Backpack with everyday, fits up to 15.6 inch laptop, Leather. Great for students, creators, and professionals.",
       "category": "Laptop Bag",
-      "rating": 3.5,
-      "reviewCount": 100,
+      "rating": 4.6,
+      "reviewCount": 224,
       "inStock": true,
-      "stock": 84,
+      "stock": 47,
       "specifications": {
-        "material": "Polyester",
+        "material": "Leather",
         "capacity": "fits up to 15.6 inch laptop",
         "waterResistant": false,
-        "weight": "0.9 kg"
+        "weight": "0.7 kg"
       }
     },
     {
       "id": "laptop_bag_acer_nitro_urban",
       "brand": "Acer",
       "model": "Nitro Urban",
-      "imageUrl": "https://media.4rgos.it/s/Argos/4468909_R_SET?$Main768$&w=620&h=620",
+      "imageUrl": "https://m.media-amazon.com/images/I/61laAbb9pnL._AC_UY1100_.jpg",
       "imageUrls": [
+        "https://m.media-amazon.com/images/I/61laAbb9pnL._AC_UY1100_.jpg",
         "https://media.4rgos.it/s/Argos/4468909_R_SET?$Main768$&w=620&h=620",
-        "https://media.4rgos.it/s/Argos/4468909_R_SET?$Main768$&w=620&h=620",
-        "https://media.4rgos.it/s/Argos/4468909_R_SET?$Main768$&w=620&h=620",
-        "https://media.4rgos.it/s/Argos/4468909_R_SET?$Main768$&w=620&h=620"
+        "https://cdn3.evostore.io/productimages/fusion/l/fus_889282b.webp",
+        "https://static-ecapac.acer.com/media/catalog/product/w/h/whatsapp_image_2023-10-23_at_11.46.13_zl.bagss.006.jpeg?optimize=high&bg-color=255,255,255&fit=bounds&height=&width=&canvas=:"
       ],
-      "price": 52.0,
-      "originalPrice": 60.0,
-      "description": "High quality laptop bag from Acer. Perfect for daily use and professional tasks.",
+      "price": 105456.0,
+      "originalPrice": 124384.0,
+      "description": "Built for daily performance. Acer Nitro Urban with water-resistant, Polyester, fits up to 15.6 inch laptop. Ideal for home, office, and travel.",
       "category": "Laptop Bag",
-      "rating": 3.8,
-      "reviewCount": 425,
+      "rating": 4.4,
+      "reviewCount": 238,
       "inStock": true,
-      "stock": 71,
+      "stock": 39,
       "specifications": {
-        "material": "Nylon",
+        "material": "Polyester",
         "capacity": "fits up to 15.6 inch laptop",
         "waterResistant": true,
-        "weight": "0.6 kg"
+        "weight": "1.1 kg"
       }
     },
     {
       "id": "charger_dell_65w_usb_c",
       "brand": "Dell",
       "model": "65W USB-C",
-      "imageUrl": "https://static.wixstatic.com/media/6469df_b1a4109dcf524098926abfaa59ebb4c6~mv2.jpg/v1/fill/w_520,h_808,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/6469df_b1a4109dcf524098926abfaa59ebb4c6~mv2.jpg",
+      "imageUrl": "https://i.ebayimg.com/images/g/M14AAeSw0ERpHhBL/s-l1600.webp",
       "imageUrls": [
+        "https://i.ebayimg.com/images/g/M14AAeSw0ERpHhBL/s-l1600.webp",
         "https://static.wixstatic.com/media/6469df_b1a4109dcf524098926abfaa59ebb4c6~mv2.jpg/v1/fill/w_520,h_808,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/6469df_b1a4109dcf524098926abfaa59ebb4c6~mv2.jpg",
-        "https://static.wixstatic.com/media/6469df_b1a4109dcf524098926abfaa59ebb4c6~mv2.jpg/v1/fill/w_520,h_808,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/6469df_b1a4109dcf524098926abfaa59ebb4c6~mv2.jpg",
-        "https://static.wixstatic.com/media/6469df_b1a4109dcf524098926abfaa59ebb4c6~mv2.jpg/v1/fill/w_520,h_808,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/6469df_b1a4109dcf524098926abfaa59ebb4c6~mv2.jpg",
-        "https://static.wixstatic.com/media/6469df_b1a4109dcf524098926abfaa59ebb4c6~mv2.jpg/v1/fill/w_520,h_808,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/6469df_b1a4109dcf524098926abfaa59ebb4c6~mv2.jpg"
+        "https://i.ebayimg.com/images/g/5BgAAOSw9N1kMdhs/s-l1600.webp",
+        "https://ng.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/07/2119814/1.jpg?2268"
       ],
-      "price": 21.0,
+      "price": 81120.0,
       "originalPrice": null,
-      "description": "High quality charger from Dell. Perfect for daily use and professional tasks.",
+      "description": "A premium pick for productivity. Dell 65W USB-C with USB-C, for Dell, 90W. Ideal for home, office, and travel.",
       "category": "Charger",
-      "rating": 4.6,
-      "reviewCount": 313,
+      "rating": 4.5,
+      "reviewCount": 133,
       "inStock": true,
-      "stock": 79,
+      "stock": 6,
       "specifications": {
-        "power": "45W",
-        "connector": "Barrel",
+        "power": "90W",
+        "connector": "USB-C",
         "voltage": "19.5 V",
         "compatibility": "Dell"
       }
@@ -985,24 +985,24 @@
       "id": "charger_hp_90w_adapter",
       "brand": "HP",
       "model": "90W Adapter",
-      "imageUrl": "https://ssl-product-images.www8-hp.com/digmedialib/prodimg/lowres/c04601770.png",
+      "imageUrl": "https://i.ebayimg.com/images/g/kcAAAOSwmKZndrcg/s-l1600.webp",
       "imageUrls": [
+        "https://i.ebayimg.com/images/g/kcAAAOSwmKZndrcg/s-l1600.webp",
         "https://ssl-product-images.www8-hp.com/digmedialib/prodimg/lowres/c04601770.png",
-        "https://ssl-product-images.www8-hp.com/digmedialib/prodimg/lowres/c04601770.png",
-        "https://ssl-product-images.www8-hp.com/digmedialib/prodimg/lowres/c04601770.png",
-        "https://ssl-product-images.www8-hp.com/digmedialib/prodimg/lowres/c04601770.png"
+        "https://i.ebayimg.com/images/g/kcAAAOSwmKZndrcg/s-l1600.webp",
+        "https://shopinverse.com/cdn/shop/files/hp-90w-19v-474a-big-mouth-laptop-charger-usa-plug-5620134.jpg?v=1764310753&width=1200"
       ],
-      "price": 51.0,
+      "price": 82472.0,
       "originalPrice": null,
-      "description": "High quality charger from HP. Perfect for daily use and professional tasks.",
+      "description": "Reliable gear for work and play. HP 90W Adapter with for HP, 90W, USB-C. Clean design with dependable performance.",
       "category": "Charger",
-      "rating": 4.9,
-      "reviewCount": 484,
+      "rating": 4.1,
+      "reviewCount": 88,
       "inStock": true,
-      "stock": 20,
+      "stock": 51,
       "specifications": {
-        "power": "65W",
-        "connector": "Barrel",
+        "power": "90W",
+        "connector": "USB-C",
         "voltage": "19.5 V",
         "compatibility": "HP"
       }
@@ -1011,24 +1011,24 @@
       "id": "charger_lenovo_45w_travel",
       "brand": "Lenovo",
       "model": "45W Travel",
-      "imageUrl": "https://m.media-amazon.com/images/I/41BYOFVCKLL._AC_UF894,1000_QL80_.jpg",
+      "imageUrl": "https://m.media-amazon.com/images/I/71AgY8q5c2L._AC_SX679_.jpg",
       "imageUrls": [
+        "https://m.media-amazon.com/images/I/71AgY8q5c2L._AC_SX679_.jpg",
         "https://m.media-amazon.com/images/I/41BYOFVCKLL._AC_UF894,1000_QL80_.jpg",
         "https://m.media-amazon.com/images/I/41BYOFVCKLL._AC_UF894,1000_QL80_.jpg",
-        "https://m.media-amazon.com/images/I/41BYOFVCKLL._AC_UF894,1000_QL80_.jpg",
-        "https://m.media-amazon.com/images/I/41BYOFVCKLL._AC_UF894,1000_QL80_.jpg"
+        "https://m.media-amazon.com/images/I/712DutBVASL._AC_SL1500_.jpg"
       ],
-      "price": 25.0,
-      "originalPrice": 30.0,
-      "description": "High quality charger from Lenovo. Perfect for daily use and professional tasks.",
+      "price": 39208.0,
+      "originalPrice": 50024.0,
+      "description": "Reliable gear for work and play. Lenovo 45W Travel with for Lenovo, 65W, Barrel. Great for students, creators, and professionals.",
       "category": "Charger",
-      "rating": 4.5,
-      "reviewCount": 409,
+      "rating": 3.6,
+      "reviewCount": 486,
       "inStock": true,
-      "stock": 80,
+      "stock": 88,
       "specifications": {
-        "power": "45W",
-        "connector": "USB-C",
+        "power": "65W",
+        "connector": "Barrel",
         "voltage": "19.5 V",
         "compatibility": "Lenovo"
       }
@@ -1040,20 +1040,20 @@
       "imageUrl": "https://i.ebayimg.com/images/g/plsAAeSwtX9oqTVt/s-l1600.webp",
       "imageUrls": [
         "https://i.ebayimg.com/images/g/plsAAeSwtX9oqTVt/s-l1600.webp",
-        "https://i.ebayimg.com/images/g/plsAAeSwtX9oqTVt/s-l1600.webp",
-        "https://i.ebayimg.com/images/g/plsAAeSwtX9oqTVt/s-l1600.webp",
-        "https://i.ebayimg.com/images/g/plsAAeSwtX9oqTVt/s-l1600.webp"
+        "https://i.ebayimg.com/images/g/tysAAOSwZRxlyb3I/s-l1600.webp",
+        "https://i.ebayimg.com/images/g/rWIAAOSwNSZlyb3J/s-l1600.webp",
+        "https://i.ebayimg.com/images/g/MUwAAOSwlGdoCFSp/s-l1600.webp"
       ],
-      "price": 23.0,
-      "originalPrice": null,
-      "description": "High quality charger from Apple. Perfect for daily use and professional tasks.",
+      "price": 95992.0,
+      "originalPrice": 109512.0,
+      "description": "A premium pick for productivity. Apple 96W USB-C with USB-C, 45W, for Apple. A solid upgrade for your setup.",
       "category": "Charger",
-      "rating": 3.8,
-      "reviewCount": 174,
+      "rating": 4.3,
+      "reviewCount": 189,
       "inStock": true,
-      "stock": 23,
+      "stock": 14,
       "specifications": {
-        "power": "90W",
+        "power": "45W",
         "connector": "USB-C",
         "voltage": "19.5 V",
         "compatibility": "Apple"
@@ -1066,21 +1066,21 @@
       "imageUrl": "https://i.ebayimg.com/images/g/zVUAAeSwnBxphF6i/s-l1600.webp",
       "imageUrls": [
         "https://i.ebayimg.com/images/g/zVUAAeSwnBxphF6i/s-l1600.webp",
-        "https://i.ebayimg.com/images/g/zVUAAeSwnBxphF6i/s-l1600.webp",
-        "https://i.ebayimg.com/images/g/zVUAAeSwnBxphF6i/s-l1600.webp",
-        "https://i.ebayimg.com/images/g/zVUAAeSwnBxphF6i/s-l1600.webp"
+        "https://i.ebayimg.com/images/g/NRgAAeSwX9hoyY9-/s-l1600.webp",
+        "https://i.ebayimg.com/images/g/mbkAAeSws~VoQWtL/s-l1600.webp",
+        "https://i.ebayimg.com/images/g/GJEAAeSwDPBo7U0x/s-l1600.webp"
       ],
-      "price": 48.0,
-      "originalPrice": 55.0,
-      "description": "High quality charger from Anker. Perfect for daily use and professional tasks.",
+      "price": 100048.0,
+      "originalPrice": 113568.0,
+      "description": "Smart, durable, and ready to go. Anker 65W GaN with for Anker, 45W, USB-C. Clean design with dependable performance.",
       "category": "Charger",
-      "rating": 4.8,
-      "reviewCount": 400,
+      "rating": 3.5,
+      "reviewCount": 494,
       "inStock": true,
-      "stock": 28,
+      "stock": 34,
       "specifications": {
         "power": "45W",
-        "connector": "Barrel",
+        "connector": "USB-C",
         "voltage": "19.5 V",
         "compatibility": "Anker"
       }

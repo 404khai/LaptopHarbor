@@ -91,9 +91,16 @@ class _SupportScreenState extends State<SupportScreen> {
         ],
       ),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(20),
+        child: SingleChildScrollView(
+          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+          padding: EdgeInsets.fromLTRB(
+            20,
+            20,
+            20,
+            20 + MediaQuery.viewInsetsOf(context).bottom,
+          ),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
@@ -152,11 +159,13 @@ class _SupportScreenState extends State<SupportScreen> {
                 ),
               ),
               const SizedBox(height: 8),
-              Expanded(
+              SizedBox(
+                height: 180,
                 child: TextField(
                   controller: _messageController,
+                  minLines: 6,
                   maxLines: null,
-                  expands: true,
+                  keyboardType: TextInputType.multiline,
                   textAlignVertical: TextAlignVertical.top,
                   decoration: const InputDecoration(
                     hintText: 'How can we help you?',

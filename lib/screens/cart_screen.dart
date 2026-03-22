@@ -251,7 +251,14 @@ class _CartScreenState extends State<CartScreen> {
                                       ),
                                       const SizedBox(height: 4),
                                       Text(
-                                        '\$${(item['price'] ?? 0).toStringAsFixed(2)}',
+                                        _formatMoney(
+                                          (item['price'] is num)
+                                              ? (item['price'] as num).toDouble()
+                                              : double.tryParse(
+                                                    '${item['price']}'.replaceAll(',', ''),
+                                                  ) ??
+                                                  0.0,
+                                        ),
                                         style: GoogleFonts.inter(
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold,

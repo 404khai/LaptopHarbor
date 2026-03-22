@@ -206,7 +206,7 @@ class _ProductCard extends StatelessWidget {
               product: {
                 ...product,
                 'title': '$brand $model'.trim(),
-                'price': '\$${price.toStringAsFixed(2)}',
+                'price': price,
                 'image': image,
                 'imageUrls': imageUrls.take(4).toList(),
               },
@@ -309,7 +309,7 @@ class _ProductCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    '\$${price.toStringAsFixed(2)}',
+                    '₦${price.toStringAsFixed(2)}',
                     style: GoogleFonts.inter(
                       fontSize: 14,
                       fontWeight: FontWeight.w900,

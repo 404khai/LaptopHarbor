@@ -74,6 +74,96 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     return '$m ${dt.day}, ${dt.year}';
   }
 
+  double _priceValue(dynamic value) {
+    if (value is num) return value.toDouble();
+    if (value is String) {
+      final cleaned = value
+          .replaceAll('₦', '')
+          .replaceAll('\$', '')
+          .replaceAll(',', '')
+          .trim();
+      return double.tryParse(cleaned) ?? 0.0;
+    }
+    return 0.0;
+  }
+
+  String _formatMoney(dynamic value) {
+    final v = _priceValue(value);
+    return '₦${v.toStringAsFixed(2)}';
+  }
+
+  String _titleText() {
+    final title = (widget.product['title'] ?? '').toString().trim();
+    if (title.isNotEmpty) return title;
+    final brand = (widget.product['brand'] ?? '').toString().trim();
+    final model = (widget.product['model'] ?? '').toString().trim();
+    final combined = [brand, model].where((e) => e.isNotEmpty).join(' ').trim();
+    return combined.isNotEmpty ? combined : 'Product';
+  }
+
+  Map<String, dynamic> _specsMap() {
+    final raw = widget.product['specifications'];
+    if (raw is Map) return Map<String, dynamic>.from(raw);
+    return <String, dynamic>{};
+  }
+
+  String _specValueText(dynamic v) {
+    if (v is bool) return v ? 'Yes' : 'No';
+    if (v is num) {
+      final i = v.toInt();
+      return v == i ? '$i' : v.toString();
+    }
+    return (v ?? '').toString().trim();
+  }
+
+  List<({String key, String label, IconData icon})> _specConfigForCategory(
+    String category,
+  ) {
+    switch (category) {
+      case 'Laptop':
+        return [
+          (key: 'cpu', label: 'CPU', icon: Icons.developer_board),
+          (key: 'ram', label: 'RAM', icon: Icons.memory),
+          (key: 'storage', label: 'Storage', icon: Icons.storage),
+          (key: 'gpu', label: 'GPU', icon: Icons.videogame_asset),
+        ];
+      case 'Mouse':
+        return [
+          (key: 'connectivity', label: 'Connection', icon: Icons.wifi),
+          (key: 'dpi', label: 'DPI', icon: Icons.speed),
+          (key: 'battery', label: 'Battery', icon: Icons.battery_full),
+          (key: 'weight', label: 'Weight', icon: Icons.monitor_weight),
+        ];
+      case 'Keyboard':
+        return [
+          (key: 'type', label: 'Type', icon: Icons.keyboard),
+          (key: 'switch', label: 'Switch', icon: Icons.tune),
+          (key: 'connectivity', label: 'Connection', icon: Icons.wifi),
+          (key: 'backlight', label: 'Backlight', icon: Icons.lightbulb_outline),
+        ];
+      case 'Laptop Bag':
+        return [
+          (key: 'material', label: 'Material', icon: Icons.checkroom),
+          (key: 'capacity', label: 'Capacity', icon: Icons.work_outline),
+          (
+            key: 'waterResistant',
+            label: 'Water Resistant',
+            icon: Icons.water_drop_outlined,
+          ),
+          (key: 'weight', label: 'Weight', icon: Icons.monitor_weight),
+        ];
+      case 'Charger':
+        return [
+          (key: 'power', label: 'Power', icon: Icons.bolt),
+          (key: 'connector', label: 'Connector', icon: Icons.cable),
+          (key: 'voltage', label: 'Voltage', icon: Icons.electric_bolt),
+          (key: 'compatibility', label: 'Compatibility', icon: Icons.devices),
+        ];
+      default:
+        return const [];
+    }
+  }
+
   Future<String> _resolveReviewerName(User user) async {
     final displayName = (user.displayName ?? '').trim();
     if (displayName.isNotEmpty) return displayName;
@@ -351,9 +441,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         children: [
                           // Title & Price
                           Text(
-                            (widget.product['title'] ??
-                                    'Quantum Pro X15 - Ultra Performance Laptop')
-                                .toString(),
+                            _titleText(),
                             style: GoogleFonts.inter(
                               fontSize: 22,
                               fontWeight: FontWeight.bold,
@@ -363,8 +451,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            (widget.product['price'] ?? '\$2,499.00')
-                                .toString(),
+                            _formatMoney(widget.product['price']),
                             style: GoogleFonts.inter(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
@@ -388,7 +475,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           _buildExpandableSection(
                             title: 'Description',
                             content: Text(
-                              'Experience uncompromised power with the Quantum Pro X15. Engineered for professionals and creators, it features a liquid-cooled thermal system and a stunning 4K OLED display.',
+                              (widget.product['description'] ??
+                                      'Product description not available.')
+                                  .toString(),
                               style: GoogleFonts.inter(
                                 fontSize: 14,
                                 color: Colors.grey[600],
@@ -399,13 +488,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           ),
                           _buildExpandableSection(
                             title: 'Specifications',
-                            content: Column(
-                              children: [
-                                _buildSpecRow('Screen', '15.6" OLED 4K'),
-                                _buildSpecRow('Battery', '99Wh (12 hrs)'),
-                                _buildSpecRow('Weight', '1.8 kg'),
-                              ],
-                            ),
+                            content: _buildSpecificationsList(),
                           ),
                           _buildExpandableSection(
                             title: 'Reviews',
@@ -683,6 +766,21 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   }
 
   Widget _buildSpecsGrid() {
+    final category = (widget.product['category'] ?? '').toString().trim();
+    final specs = _specsMap();
+    final config = _specConfigForCategory(category);
+    final tiles = config.isNotEmpty
+        ? config.map((c) {
+            final value = _specValueText(specs[c.key]);
+            final label = value.isEmpty ? c.label : '${c.label}: $value';
+            return _buildSpecItem(c.icon, label);
+          }).toList()
+        : specs.entries.take(4).map((e) {
+            final value = _specValueText(e.value);
+            final label = value.isEmpty ? e.key : '${e.key}: $value';
+            return _buildSpecItem(Icons.info_outline, label);
+          }).toList();
+
     return GridView.count(
       crossAxisCount: 2,
       shrinkWrap: true,
@@ -690,16 +788,52 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       mainAxisSpacing: 12,
       crossAxisSpacing: 12,
       childAspectRatio: 2.5,
-      children: [
-        _buildSpecItem(Icons.memory, '16GB RAM'),
-        _buildSpecItem(Icons.storage, '1TB SSD'), // storage icon for hard_drive
-        _buildSpecItem(
-          Icons.developer_board,
-          'Intel i9 Gen 14',
-        ), // developer_board for processing_cluster
-        _buildSpecItem(Icons.videogame_asset, 'RTX 4080'),
-      ],
+      children: tiles,
     );
+  }
+
+  Widget _buildSpecificationsList() {
+    final category = (widget.product['category'] ?? '').toString().trim();
+    final specs = _specsMap();
+    if (specs.isEmpty) {
+      return Text(
+        'No specifications available.',
+        style: GoogleFonts.inter(
+          fontSize: 14,
+          color: Colors.grey[600],
+          height: 1.5,
+        ),
+      );
+    }
+
+    final config = _specConfigForCategory(category);
+    final rows = <Widget>[];
+    final used = <String>{};
+
+    if (config.isNotEmpty) {
+      for (final c in config) {
+        used.add(c.key);
+        final value = _specValueText(specs[c.key]);
+        if (value.isEmpty) continue;
+        rows.add(_buildSpecRow(c.label, value));
+      }
+    }
+
+    for (final entry in specs.entries) {
+      if (used.contains(entry.key)) continue;
+      final value = _specValueText(entry.value);
+      if (value.isEmpty) continue;
+      final label = entry.key
+          .replaceAll(RegExp(r'[_\-]+'), ' ')
+          .trim()
+          .split(' ')
+          .where((p) => p.isNotEmpty)
+          .map((p) => p[0].toUpperCase() + p.substring(1))
+          .join(' ');
+      rows.add(_buildSpecRow(label, value));
+    }
+
+    return Column(children: rows);
   }
 
   Widget _buildSpecItem(IconData icon, String label) {
