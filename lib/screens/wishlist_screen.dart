@@ -372,6 +372,15 @@ class _WishlistScreenState extends State<WishlistScreen> {
 
   Widget _buildWishlistItem(Map<String, dynamic> item) {
     final wishlist = context.read<WishlistProvider>();
+    final cart = context.watch<CartProvider>();
+    final productId = (item['productId'] ?? item['id'] ?? '').toString().trim();
+    final cartItem = cart.cartItems.cast<Map<String, dynamic>?>().firstWhere(
+      (e) => e != null && (e['id'] ?? '').toString() == productId,
+      orElse: () => null,
+    );
+    final cartQuantity = (cartItem?['quantity'] is num)
+        ? (cartItem?['quantity'] as num).toInt()
+        : 0;
     return GestureDetector(
       onTap: () => _openProductDetails(context, item),
       child: Container(
@@ -489,86 +498,156 @@ class _WishlistScreenState extends State<WishlistScreen> {
                 Expanded(
                   child: SizedBox(
                     height: 44,
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        final messenger = ScaffoldMessenger.of(context);
-                        final cartProvider = context.read<CartProvider>();
-                        final uid = FirebaseAuth.instance.currentUser?.uid;
-                        if (uid == null) {
-                          messenger.showSnackBar(
-                            const SnackBar(
-                              content: Text('Please sign in to add to cart.'),
+                    child: cartQuantity <= 0
+                        ? ElevatedButton(
+                            onPressed: () async {
+                              final messenger = ScaffoldMessenger.of(context);
+                              final cartProvider = context.read<CartProvider>();
+                              final uid =
+                                  FirebaseAuth.instance.currentUser?.uid;
+                              if (uid == null) {
+                                messenger.showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                      'Please sign in to add to cart.',
+                                    ),
+                                  ),
+                                );
+                                return;
+                              }
+
+                              if (productId.isEmpty) {
+                                messenger.showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Invalid product.'),
+                                  ),
+                                );
+                                return;
+                              }
+
+                              Map<String, dynamic>
+                              productData = <String, dynamic>{
+                                'id': productId,
+                                'brand': '',
+                                'model': (item['title'] ?? '').toString(),
+                                'imageUrl': (item['image'] ?? '').toString(),
+                                'imageUrls': [(item['image'] ?? '').toString()],
+                                'price': item['price'],
+                                'description': '',
+                                'specifications': const <String, dynamic>{},
+                                'category': (item['category'] ?? '').toString(),
+                              };
+
+                              try {
+                                final doc = await FirebaseFirestore.instance
+                                    .collection('products')
+                                    .doc(productId)
+                                    .get();
+                                final data = doc.data();
+                                if (doc.exists && data != null) {
+                                  productData = <String, dynamic>{
+                                    ...data,
+                                    'id': doc.id,
+                                  };
+                                }
+                              } catch (_) {}
+
+                              final product = Product.fromJson(productData);
+                              await cartProvider.addToCart(product, 1);
+                              messenger.showSnackBar(
+                                const SnackBar(content: Text('Added to cart.')),
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.primary,
+                              foregroundColor: AppColors.slate900,
+                              elevation: 0,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
                             ),
-                          );
-                          return;
-                        }
-
-                        final productId =
-                            (item['productId'] ?? item['id'] ?? '')
-                                .toString()
-                                .trim();
-                        if (productId.isEmpty) {
-                          messenger.showSnackBar(
-                            const SnackBar(content: Text('Invalid product.')),
-                          );
-                          return;
-                        }
-
-                        Map<String, dynamic> productData = <String, dynamic>{
-                          'id': productId,
-                          'brand': '',
-                          'model': (item['title'] ?? '').toString(),
-                          'imageUrl': (item['image'] ?? '').toString(),
-                          'imageUrls': [(item['image'] ?? '').toString()],
-                          'price': item['price'],
-                          'description': '',
-                          'specifications': const <String, dynamic>{},
-                          'category': (item['category'] ?? '').toString(),
-                        };
-
-                        try {
-                          final doc = await FirebaseFirestore.instance
-                              .collection('products')
-                              .doc(productId)
-                              .get();
-                          final data = doc.data();
-                          if (doc.exists && data != null) {
-                            productData = <String, dynamic>{
-                              ...data,
-                              'id': doc.id,
-                            };
-                          }
-                        } catch (_) {}
-
-                        final product = Product.fromJson(productData);
-                        await cartProvider.addToCart(product, 1);
-                        messenger.showSnackBar(
-                          const SnackBar(content: Text('Added to cart.')),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primary,
-                        foregroundColor: AppColors.slate900,
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(Icons.shopping_cart, size: 20),
-                          const SizedBox(width: 8),
-                          Text(
-                            'Add to Cart',
-                            style: GoogleFonts.inter(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(Icons.shopping_cart, size: 20),
+                                const SizedBox(width: 8),
+                                Text(
+                                  'Add to Cart',
+                                  style: GoogleFonts.inter(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        : Container(
+                            width: double.infinity,
+                            height: 44,
+                            decoration: BoxDecoration(
+                              color: AppColors.primary,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  width: 36,
+                                  height: 36,
+                                  decoration: BoxDecoration(
+                                    color: AppColors.qtyBg,
+                                    borderRadius: BorderRadius.circular(50),
+                                  ),
+                                  child: IconButton(
+                                    onPressed: productId.isEmpty
+                                        ? null
+                                        : () {
+                                            if (cartQuantity <= 1) {
+                                              cart.removeFromCart(productId);
+                                            } else {
+                                              cart.updateQuantity(
+                                                productId,
+                                                -1,
+                                              );
+                                            }
+                                          },
+                                    icon: const Icon(Icons.remove),
+                                    color: AppColors.slate900,
+                                    padding: EdgeInsets.zero,
+                                    constraints: const BoxConstraints(),
+                                  ),
+                                ),
+                                Text(
+                                  '$cartQuantity',
+                                  style: GoogleFonts.inter(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: AppColors.background,
+                                  ),
+                                ),
+                                Container(
+                                  width: 36,
+                                  height: 36,
+                                  decoration: BoxDecoration(
+                                    color: AppColors.qtyBg,
+                                    borderRadius: BorderRadius.circular(50),
+                                  ),
+                                  child: IconButton(
+                                    onPressed: productId.isEmpty
+                                        ? null
+                                        : () {
+                                            cart.updateQuantity(productId, 1);
+                                          },
+                                    icon: const Icon(Icons.add),
+                                    color: AppColors.slate900,
+                                    padding: EdgeInsets.zero,
+                                    constraints: const BoxConstraints(),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                        ],
-                      ),
-                    ),
                   ),
                 ),
                 const SizedBox(width: 12),

@@ -10,7 +10,6 @@ import '../theme/app_theme.dart';
 import '../widgets/custom_back_button.dart';
 import '../utils/money.dart';
 import '../providers/cart_provider.dart';
-import '../models/product.dart';
 import 'cart_screen.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -901,70 +900,6 @@ class _SearchScreenState extends State<SearchScreen> {
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
                       color: AppColors.primary,
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  SizedBox(
-                    width: double.infinity,
-                    height: 36,
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        final messenger = ScaffoldMessenger.of(context);
-                        final cartProvider = context.read<CartProvider>();
-                        final user = FirebaseAuth.instance.currentUser;
-                        if (user == null) {
-                          messenger.showSnackBar(
-                            const SnackBar(
-                              content: Text('Please sign in to add to cart.'),
-                            ),
-                          );
-                          return;
-                        }
-
-                        final inStock =
-                            item['inStock'] == true ||
-                            ((item['stock'] is num) &&
-                                (item['stock'] as num).toInt() > 0) ||
-                            (item['stock'] ?? '').toString().toUpperCase() ==
-                                'IN STOCK';
-                        if (!inStock) {
-                          messenger.showSnackBar(
-                            const SnackBar(
-                              content: Text('Item is out of stock.'),
-                            ),
-                          );
-                          return;
-                        }
-
-                        final product = Product.fromJson(item);
-                        await cartProvider.addToCart(product, 1);
-                        messenger.showSnackBar(
-                          const SnackBar(content: Text('Added to cart.')),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primary,
-                        foregroundColor: Colors.black,
-                        elevation: 0,
-                        padding: EdgeInsets.zero,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(Icons.add_shopping_cart, size: 16),
-                          const SizedBox(width: 4),
-                          Text(
-                            'Add to Cart',
-                            style: GoogleFonts.inter(
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
                     ),
                   ),
                 ],
