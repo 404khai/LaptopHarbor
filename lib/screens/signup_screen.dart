@@ -42,10 +42,26 @@ class _SignupScreenState extends State<SignupScreen> {
     r'[!@#$%^&*(),.?":{}|<>_\-\\/\[\]=+;`~]',
   ).hasMatch(_passwordController.text);
 
-  bool get _hasMinLength => _passwordController.text.length >= 4;
+  bool get _hasMinLength => _passwordController.text.length >= 6;
 
   bool get _isPasswordStrong =>
       _hasUppercase && _hasNumber && _hasSpecialChar && _hasMinLength;
+
+  int get _strengthScore =>
+      (_hasMinLength ? 1 : 0) +
+      (_hasUppercase ? 1 : 0) +
+      (_hasNumber ? 1 : 0) +
+      (_hasSpecialChar ? 1 : 0);
+
+  String _strengthLabel() {
+    if (_strengthScore >= 4) return 'STRONG';
+    if (_strengthScore >= 2) return 'MEDIUM';
+    return 'WEAK';
+  }
+
+  double _strengthProgress() {
+    return (_strengthScore / 4).clamp(0.0, 1.0);
+  }
 
   void _handleSignup() async {
     if (!_agreedToTerms) {
@@ -84,7 +100,7 @@ class _SignupScreenState extends State<SignupScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text(
-            'Password must be at least 4 characters and include 1 uppercase letter, 1 number, and 1 special character',
+            'Password must be at least 6 characters and include 1 uppercase letter, 1 number, and 1 special character',
           ),
           backgroundColor: Colors.red,
         ),
@@ -360,6 +376,84 @@ class _SignupScreenState extends State<SignupScreen> {
                       ),
                       const SizedBox(height: 12),
 
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'PASSWORD STRENGTH',
+                                style: GoogleFonts.inter(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.text,
+                                ),
+                              ),
+                              Text(
+                                _strengthLabel(),
+                                style: GoogleFonts.inter(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.primary,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 8),
+                          Container(
+                            height: 10,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              color: Colors.grey[100],
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: FractionallySizedBox(
+                              alignment: Alignment.centerLeft,
+                              widthFactor: _strengthProgress(),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: AppColors.primary,
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          Row(
+                            children: [
+                              const Icon(
+                                Icons.verified_user_outlined,
+                                color: AppColors.primary,
+                                size: 18,
+                              ),
+                              const SizedBox(width: 4),
+                              Text(
+                                _strengthLabel().toLowerCase() == 'strong'
+                                    ? 'Strong password'
+                                    : _strengthLabel().toLowerCase() == 'medium'
+                                        ? 'Good password'
+                                        : 'Weak password',
+                                style: GoogleFonts.inter(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.primary,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            'Min 6 chars, 1 uppercase, 1 number, 1 special character',
+                            style: GoogleFonts.inter(
+                              fontSize: 12,
+                              color: Colors.grey[500],
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 12),
+
                       Text(
                         'Confirm Password',
                         style: GoogleFonts.inter(
@@ -414,68 +508,6 @@ class _SignupScreenState extends State<SignupScreen> {
                         style: GoogleFonts.inter(color: AppColors.text),
                       ),
                       const SizedBox(height: 12),
-
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Container(
-                              height: 4,
-                              decoration: BoxDecoration(
-                                color: _hasMinLength
-                                    ? AppColors.primary
-                                    : AppColors.primary.withValues(alpha: 0.3),
-                                borderRadius: BorderRadius.circular(2),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 4),
-                          Expanded(
-                            child: Container(
-                              height: 4,
-                              decoration: BoxDecoration(
-                                color: _hasUppercase
-                                    ? AppColors.primary
-                                    : AppColors.primary.withValues(alpha: 0.3),
-                                borderRadius: BorderRadius.circular(2),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 4),
-                          Expanded(
-                            child: Container(
-                              height: 4,
-                              decoration: BoxDecoration(
-                                color: (_hasNumber && _hasSpecialChar)
-                                    ? AppColors.primary
-                                    : AppColors.primary.withValues(alpha: 0.3),
-                                borderRadius: BorderRadius.circular(2),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 6),
-                      Text(
-                        _isPasswordStrong
-                            ? 'STRENGTH: STRONG'
-                            : 'STRENGTH: WEAK',
-                        style: GoogleFonts.inter(
-                          fontSize: 10,
-                          fontWeight: FontWeight.bold,
-                          color: _isPasswordStrong
-                              ? AppColors.primary
-                              : Colors.red,
-                          letterSpacing: 0.5,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        'Min 4 chars, 1 uppercase, 1 number, 1 special character',
-                        style: GoogleFonts.inter(
-                          fontSize: 12,
-                          color: Colors.grey[500],
-                        ),
-                      ),
                       const SizedBox(height: 24),
                     ],
                   ),

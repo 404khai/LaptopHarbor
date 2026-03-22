@@ -218,16 +218,17 @@ class WishlistProvider extends ChangeNotifier {
   }
 
   String _formatMoney(dynamic value) {
-    if (value == null) return '\$0.00';
+    if (value == null) return '₦0.00';
     if (value is String) {
       final trimmed = value.trim();
-      if (trimmed.startsWith('\$')) return trimmed;
-      final parsed = double.tryParse(trimmed);
-      if (parsed != null) return '\$${parsed.toStringAsFixed(2)}';
-      return '\$0.00';
+      if (trimmed.startsWith('₦')) return trimmed;
+      final cleaned = trimmed.replaceAll('₦', '').replaceAll('\$', '').replaceAll(',', '').trim();
+      final parsed = double.tryParse(cleaned);
+      if (parsed != null) return '₦${parsed.toStringAsFixed(2)}';
+      return '₦0.00';
     }
-    if (value is num) return '\$${value.toDouble().toStringAsFixed(2)}';
-    return '\$0.00';
+    if (value is num) return '₦${value.toDouble().toStringAsFixed(2)}';
+    return '₦0.00';
   }
 
   @override

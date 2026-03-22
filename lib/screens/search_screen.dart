@@ -553,7 +553,7 @@ class _SearchScreenState extends State<SearchScreen> {
               return <String, dynamic>{
                 ...p,
                 'title': '$brand $model'.trim(),
-                'price': '\$${price.toStringAsFixed(2)}',
+                'price': price,
                 'image': imageUrls.isNotEmpty ? imageUrls.first : '',
                 'imageUrls': imageUrls.take(4).toList(),
                 'stock': inStock ? 'IN STOCK' : 'OUT OF STOCK',
@@ -716,8 +716,8 @@ class _SearchScreenState extends State<SearchScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('\$${range.start.toStringAsFixed(0)}'),
-                      Text('\$${range.end.toStringAsFixed(0)}'),
+                      Text('₦${range.start.toStringAsFixed(0)}'),
+                      Text('₦${range.end.toStringAsFixed(0)}'),
                     ],
                   ),
                   RangeSlider(
@@ -993,7 +993,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 product: {
                   ...product,
                   'title': title,
-                  'price': '\$${price.toStringAsFixed(2)}',
+                  'price': price,
                   'image': imageUrl,
                   'imageUrls': imageUrls.take(4).toList(),
                 },
@@ -1037,7 +1037,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   ),
                   const SizedBox(height: 2),
                   Text(
-                    '\$${price.toStringAsFixed(2)}',
+                    '₦${price.toStringAsFixed(2)}',
                     style: GoogleFonts.inter(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,

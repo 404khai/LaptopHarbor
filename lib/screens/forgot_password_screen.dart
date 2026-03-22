@@ -121,7 +121,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
                   // Header Text
                   Text(
-                    'Reset Your Password',
+                    'Forgot Your Password ?',
                     style: GoogleFonts.inter(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
