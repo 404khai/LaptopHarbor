@@ -7,6 +7,7 @@ import '../screens/product_details_screen.dart';
 import '../screens/search_screen.dart';
 import '../providers/wishlist_provider.dart';
 import '../theme/app_theme.dart';
+import '../utils/money.dart';
 
 class FirestoreProductSection extends StatefulWidget {
   final String title;
@@ -309,7 +310,7 @@ class _ProductCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    '₦${price.toStringAsFixed(2)}',
+                    Money.ngn(price),
                     style: GoogleFonts.inter(
                       fontSize: 14,
                       fontWeight: FontWeight.w900,

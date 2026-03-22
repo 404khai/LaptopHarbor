@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../theme/app_theme.dart';
 import '../widgets/custom_back_button.dart';
 import 'package_tracking_screen.dart';
+import '../utils/money.dart';
 
 class OrderDetailsScreen extends StatefulWidget {
   final String orderId;
@@ -17,8 +18,7 @@ class OrderDetailsScreen extends StatefulWidget {
 
 class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
   String _formatMoney(num value) {
-    final v = value.toDouble();
-    return '₦${v.toStringAsFixed(2)}';
+    return Money.ngn(value);
   }
 
   String _statusFromCreatedAt(DateTime createdAt) {

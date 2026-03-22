@@ -8,6 +8,7 @@ import '../providers/wishlist_provider.dart';
 import '../providers/cart_provider.dart';
 import '../models/product.dart';
 import '../widgets/custom_back_button.dart';
+import '../utils/money.dart';
 
 enum _ReviewSortMode { all, recent, oldest }
 
@@ -89,7 +90,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
   String _formatMoney(dynamic value) {
     final v = _priceValue(value);
-    return '₦${v.toStringAsFixed(2)}';
+    return Money.ngn(v);
   }
 
   String _titleText() {
@@ -701,11 +702,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 },
                 color: isWishlisted ? Colors.red : AppColors.slate900,
               ),
-              IconButton(
-                icon: const Icon(Icons.share),
-                onPressed: () {},
-                color: AppColors.slate900,
-              ),
+              
             ],
           ),
         ],

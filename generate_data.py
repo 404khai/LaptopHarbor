@@ -632,8 +632,10 @@ def create_product(category, model_data, idx):
         base = f"{random.choice(openers)}. {brand} {model_name} with {summary}. {closer}"
         return clamp_words(base, 30)
 
-    price_ngn = round(float(price) * USD_TO_NGN, 2)
-    original_price_ngn = round(float(original_price) * USD_TO_NGN, 2) if original_price else None
+    price_ngn = int(round(float(price) * USD_TO_NGN, 0))
+    original_price_ngn = (
+        int(round(float(original_price) * USD_TO_NGN, 0)) if original_price else None
+    )
 
     return {
         "id": clean_id,
